@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:thatldu_ingot"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:thatldu_nugget",
+    "count": 9
+  }
+}

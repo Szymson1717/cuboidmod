@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "item": "minecraft:dark_oak_log",
+    "count": 320
+  },
+  "result": {
+    "item": "cuboidmod:dark_oak_log_quantum_singularity",
+    "count": 1
+  }
+}

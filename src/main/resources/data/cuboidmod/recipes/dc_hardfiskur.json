@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:drying",
+  "ingredient": {
+    "tag": "fishes"
+  },
+  "result": {
+    "item": "cuboidmod:hardfiskur",
+    "count": 1
+  },
+  "work_ticks": 300
+}

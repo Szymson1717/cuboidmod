@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "|"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:notsogudium_ingot"
+    },
+    "|": {
+      "tag": "forge:rods"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:notsogudium_sword"
+  }
+}

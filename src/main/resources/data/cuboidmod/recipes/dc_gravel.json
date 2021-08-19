@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:drying",
+  "ingredient": {
+    "item": "cuboidmod:aggregate"
+  },
+  "result": {
+    "item": "minecraft:gravel",
+    "count": 1
+  },
+  "work_ticks": 400
+}

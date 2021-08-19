@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:storage_blocks/notsogudium",
+    "#forge:storage_blocks/kudbebedda",
+    "#forge:storage_blocks/notarfbadium",
+    "#forge:storage_blocks/wikidium",
+    "#forge:storage_blocks/thatldu",
+    "#forge:storage_blocks/silica",
+    "#forge:storage_blocks/carbon_nanotube",
+    "#forge:storage_blocks/protein_paste",
+    "#forge:storage_blocks/protein_fiber",
+    "#forge:storage_blocks/cellulose"
+  ]
+}

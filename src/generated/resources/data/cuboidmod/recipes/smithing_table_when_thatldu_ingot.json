@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "$$",
+    "##",
+    "##"
+  ],
+  "key": {
+    "$": {
+      "tag": "cuboidmod:ingots"
+    },
+    "#": {
+      "tag": "cuboidmod:ores"
+    }
+  },
+  "result": {
+    "item": "minecraft:smithing_table"
+  }
+}

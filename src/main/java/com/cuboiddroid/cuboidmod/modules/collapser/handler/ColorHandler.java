@@ -1,0 +1,62 @@
+package com.cuboiddroid.cuboidmod.modules.collapser.handler;
+
+import com.cuboiddroid.cuboidmod.setup.ModItems;
+import com.cuboiddroid.cuboidmod.util.IColored;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+public final class ColorHandler {
+    @SubscribeEvent
+    public void onItemColors(ColorHandlerEvent.Item event) {
+        ItemColors itemColors = event.getItemColors();
+
+        itemColors.register(new IColored.ItemColors(), ModItems.ANDESITE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.BASALT_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.BLACKSTONE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.CARBON_NANOTUBE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.CELLULOSE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.CLAY_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.COAL_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.COBBLESTONE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.DIORITE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.DIRT_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.DUST_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.GLOWSTONE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.GRANITE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.GRAVEL_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.KUDBEBEDDA_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.LAPIS_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.NETHERRACK_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.ENDSTONE_QUANTUM_SINGULARITY.get());
+
+        itemColors.register(new IColored.ItemColors(), ModItems.OAK_LOG_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.ACACIA_LOG_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.BIRCH_LOG_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.DARK_OAK_LOG_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.JUNGLE_LOG_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.SPRUCE_LOG_QUANTUM_SINGULARITY.get());
+
+        itemColors.register(new IColored.ItemColors(), ModItems.NOTARFBADIUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.NOTSOGUDIUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.REDSTONE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.SAND_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.SILICA_DUST_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.THATLDU_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.WIKIDIUM_QUANTUM_SINGULARITY.get());
+
+        itemColors.register(new IColored.ItemColors(), ModItems.ALUMINIUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.COBALT_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.COPPER_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.GOLD_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.IRON_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.LEAD_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.NICKEL_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.OSMIUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.SILVER_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.TIN_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.URANIUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.URANINITE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.ZINC_QUANTUM_SINGULARITY.get());
+    }
+}

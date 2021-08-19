@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "minecraft:apple"
+  },
+  "addition": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "item": "cuboidmod:apple_cider_vinegar",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 1000
+}

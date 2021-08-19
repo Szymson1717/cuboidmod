@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:organically_enriched_sand"
+  },
+  "addition": {
+    "item": "cuboidmod:protein_fiber"
+  },
+  "result": {
+    "item": "minecraft:dirt",
+    "count": 1
+  },
+  "work_ticks": 160,
+  "energy": 12000
+}

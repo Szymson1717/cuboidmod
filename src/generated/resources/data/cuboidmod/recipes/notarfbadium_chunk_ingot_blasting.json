@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "cuboidmod:notarfbadium_chunk"
+  },
+  "result": "cuboidmod:notarfbadium_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

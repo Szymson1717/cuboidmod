@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:thatldu_singularity_power_generator"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:copy_name",
+      "source": "block_entity"
+    },
+    {
+      "function": "minecraft:copy_nbt",
+      "source": "block_entity",
+      "ops": [
+        {
+          "source": "inv",
+          "target": "BlockEntityTag.inv",
+          "op": "replace"
+        },
+        {
+          "source": "energy",
+          "target": "BlockEntityTag.energy",
+          "op": "replace"
+        }
+      ]
+    }
+  ]
+}

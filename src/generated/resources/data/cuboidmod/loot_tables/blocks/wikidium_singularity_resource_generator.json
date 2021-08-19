@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:wikidium_singularity_resource_generator"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:copy_name",
+      "source": "block_entity"
+    },
+    {
+      "function": "minecraft:copy_nbt",
+      "source": "block_entity",
+      "ops": [
+        {
+          "source": "invIn",
+          "target": "BlockEntityTag.invIn",
+          "op": "replace"
+        },
+        {
+          "source": "invOut",
+          "target": "BlockEntityTag.invOut",
+          "op": "replace"
+        }
+      ]
+    }
+  ]
+}

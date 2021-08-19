@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "cuboidmod:thatldu_dust"
+  },
+  "result": "cuboidmod:thatldu_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

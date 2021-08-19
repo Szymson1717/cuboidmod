@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:carbon_nanotube"
+  },
+  "addition": {
+    "item": "cuboidmod:cellulose"
+  },
+  "result": {
+    "item": "minecraft:stick",
+    "count": 1
+  },
+  "work_ticks": 160,
+  "energy": 15000
+}

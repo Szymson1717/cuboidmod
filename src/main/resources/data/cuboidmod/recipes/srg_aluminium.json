@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:aluminium_quantum_singularity"
+  },
+  "result": {
+    "item": "exnihilosequentia:chunk_aluminum"
+  },
+  "work_time_multiplier": 4.0,
+  "output_multiplier": 0.25
+}

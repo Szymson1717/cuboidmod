@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "$$",
+    "##"
+  ],
+  "key": {
+    "$": {
+      "item": "cuboidmod:silica_dust"
+    },
+    "#": {
+      "item": "cuboidmod:kudbebedda_chunk"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:kudbebedda_crafting_table"
+  }
+}

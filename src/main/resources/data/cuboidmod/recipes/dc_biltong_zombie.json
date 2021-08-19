@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:drying",
+  "ingredient": {
+    "item": "cuboidmod:cured_flesh"
+  },
+  "result": {
+    "item": "cuboidmod:biltong_zombie",
+    "count": 1
+  },
+  "work_ticks": 300
+}

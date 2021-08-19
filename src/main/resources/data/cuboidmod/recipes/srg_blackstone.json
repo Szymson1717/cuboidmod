@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:blackstone_quantum_singularity"
+  },
+  "result": {
+    "item": "minecraft:blackstone"
+  },
+  "work_time_multiplier": 2.5,
+  "output_multiplier": 0.75
+}

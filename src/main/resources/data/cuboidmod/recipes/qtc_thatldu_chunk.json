@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:wikidium_chunk"
+  },
+  "addition": {
+    "item": "cuboidmod:wikidium_chunk"
+  },
+  "result": {
+    "item": "cuboidmod:thatldu_chunk",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 8000
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#cuboidmod:pieces/notsogudium",
+    "#cuboidmod:pieces/kudbebedda",
+    "#cuboidmod:pieces/notarfbadium",
+    "#cuboidmod:pieces/wikidium",
+    "#cuboidmod:pieces/thatldu",
+    "#forge:pieces/carbon_deposit"
+  ]
+}

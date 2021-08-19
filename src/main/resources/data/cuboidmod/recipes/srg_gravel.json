@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:gravel_quantum_singularity"
+  },
+  "result": {
+    "item": "minecraft:gravel"
+  },
+  "work_time_multiplier": 1.25,
+  "output_multiplier": 0.85
+}

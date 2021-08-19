@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:sand"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "cuboidmod:cellulose"
+    },
+    {
+      "item": "cuboidmod:cellulose"
+    },
+    {
+      "item": "cuboidmod:carbon_deposit"
+    },
+    {
+      "item": "cuboidmod:protein_paste"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:organically_enriched_sand"
+  }
+}

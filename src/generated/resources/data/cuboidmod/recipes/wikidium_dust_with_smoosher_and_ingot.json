@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:smoosher"
+    },
+    {
+      "item": "cuboidmod:wikidium_ingot"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:wikidium_dust"
+  }
+}

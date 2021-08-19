@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:notsogudium_ore"
+  },
+  "addition": {
+    "item": "cuboidmod:notsogudium_ore"
+  },
+  "result": {
+    "item": "cuboidmod:kudbebedda_ore",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 1000
+}

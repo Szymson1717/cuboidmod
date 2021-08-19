@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:thatldu_nugget"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:thatldu_ingot"
+  }
+}

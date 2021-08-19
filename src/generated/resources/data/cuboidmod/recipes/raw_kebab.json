@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "cuboidmod:rods"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "cuboidmod:protein_paste"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:kebab_raw"
+  }
+}

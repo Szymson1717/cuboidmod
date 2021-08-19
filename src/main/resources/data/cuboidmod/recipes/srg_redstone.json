@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:redstone_quantum_singularity"
+  },
+  "result": {
+    "item": "minecraft:redstone"
+  },
+  "work_time_multiplier": 2.0,
+  "output_multiplier": 0.5
+}

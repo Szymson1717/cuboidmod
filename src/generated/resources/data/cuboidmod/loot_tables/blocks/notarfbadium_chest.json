@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:notarfbadium_chest"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:copy_nbt",
+      "source": "block_entity",
+      "ops": [
+        {
+          "source": "contents",
+          "target": "BlockEntityTag.contents",
+          "op": "replace"
+        }
+      ]
+    },
+    {
+      "function": "minecraft:copy_name",
+      "source": "block_entity"
+    }
+  ]
+}

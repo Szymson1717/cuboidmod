@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:dust_quantum_singularity"
+  },
+  "result": {
+    "item": "exnihilosequentia:dust"
+  },
+  "work_time_multiplier": 1.5,
+  "output_multiplier": 0.75
+}

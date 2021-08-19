@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "tag": "forge:ingots/zinc",
+    "count": 160
+  },
+  "result": {
+    "item": "cuboidmod:zinc_quantum_singularity",
+    "count": 1
+  }
+}

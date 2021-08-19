@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "cuboidmod:wikidium_sword"
+  },
+  "addition": {
+    "item": "cuboidmod:thatldu_ingot"
+  },
+  "result": {
+    "item": "cuboidmod:thatldu_sword"
+  }
+}

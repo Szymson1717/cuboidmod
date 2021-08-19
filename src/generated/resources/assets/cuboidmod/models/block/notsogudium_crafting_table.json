@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "cuboidmod:block/notsogudium_crafting_table_bottom",
+    "up": "cuboidmod:block/notsogudium_crafting_table_top",
+    "north": "cuboidmod:block/notsogudium_crafting_table_front",
+    "south": "cuboidmod:block/notsogudium_crafting_table_front",
+    "east": "cuboidmod:block/notsogudium_crafting_table_side",
+    "west": "cuboidmod:block/notsogudium_crafting_table_side",
+    "particle": "cuboidmod:block/notsogudium_crafting_table_front"
+  }
+}

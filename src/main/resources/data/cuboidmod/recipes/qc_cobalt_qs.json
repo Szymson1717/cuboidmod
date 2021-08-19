@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "tag": "forge:ingots/cobalt",
+    "count": 160
+  },
+  "result": {
+    "item": "cuboidmod:cobalt_quantum_singularity",
+    "count": 1
+  }
+}

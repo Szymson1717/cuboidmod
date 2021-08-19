@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "cuboidmod:silica_dust_block"
+  },
+  "result": "minecraft:glass",
+  "experience": 0.7,
+  "cookingtime": 100
+}

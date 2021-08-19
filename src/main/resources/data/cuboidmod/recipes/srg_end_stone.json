@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:endstone_quantum_singularity"
+  },
+  "result": {
+    "item": "minecraft:end_stone"
+  },
+  "work_time_multiplier": 3.5,
+  "output_multiplier": 0.40
+}

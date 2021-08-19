@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:smoosher"
+    },
+    {
+      "item": "cuboidmod:notarfbadium_chunk"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:notarfbadium_dust",
+    "count": 2
+  }
+}

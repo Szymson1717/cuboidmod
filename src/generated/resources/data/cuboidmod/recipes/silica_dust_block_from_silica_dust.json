@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:silica_dust"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:silica_dust_block"
+  }
+}

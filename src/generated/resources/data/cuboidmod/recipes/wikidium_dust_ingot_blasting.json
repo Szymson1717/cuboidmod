@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "cuboidmod:wikidium_dust"
+  },
+  "result": "cuboidmod:wikidium_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

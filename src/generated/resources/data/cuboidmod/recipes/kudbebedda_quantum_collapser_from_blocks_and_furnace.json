@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:kudbebedda_block"
+    },
+    "$": {
+      "item": "cuboidmod:kudbebedda_furnace"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:kudbebedda_quantum_collapser"
+  }
+}

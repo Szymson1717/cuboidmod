@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:kudbebedda_chunk"
+  },
+  "addition": {
+    "item": "cuboidmod:kudbebedda_chunk"
+  },
+  "result": {
+    "item": "cuboidmod:notarfbadium_chunk",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 2000
+}

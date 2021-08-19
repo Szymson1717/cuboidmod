@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "minecraft:coal_block"
+  },
+  "addition": {
+    "item": "minecraft:glass"
+  },
+  "result": {
+    "item": "cuboidmod:carbon_nanotube_block",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 15000
+}

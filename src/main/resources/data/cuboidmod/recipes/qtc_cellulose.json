@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:carbon_deposit"
+  },
+  "addition": {
+    "item": "minecraft:water_bucket"
+  },
+  "result": {
+    "item": "cuboidmod:cellulose",
+    "count": 2
+  },
+  "work_ticks": 150,
+  "energy": 5000
+}

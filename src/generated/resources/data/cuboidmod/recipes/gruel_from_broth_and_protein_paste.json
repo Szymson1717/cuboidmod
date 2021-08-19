@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:broth"
+    },
+    {
+      "item": "cuboidmod:protein_paste"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:gruel"
+  }
+}

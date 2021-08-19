@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    " |",
+    " |"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:wikidium_ingot"
+    },
+    "|": {
+      "tag": "forge:rods"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_hoe"
+  }
+}

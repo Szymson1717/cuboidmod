@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "cuboidmod:notarfbadium_ore"
+  },
+  "result": "cuboidmod:notarfbadium_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

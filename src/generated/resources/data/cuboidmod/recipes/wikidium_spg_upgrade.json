@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " $ ",
+    "#@#",
+    " $ "
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:wikidium_block"
+    },
+    "$": {
+      "item": "cuboidmod:wikidium_furnace"
+    },
+    "@": {
+      "item": "cuboidmod:notarfbadium_singularity_power_generator"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_singularity_power_generator"
+  }
+}

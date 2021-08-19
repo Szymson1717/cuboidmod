@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:notarfbadium_ore"
+  },
+  "addition": {
+    "item": "cuboidmod:notarfbadium_ore"
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_ore",
+    "count": 1
+  },
+  "work_ticks": 100,
+  "energy": 4000
+}

@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:wikidium_quantum_singularity"
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_chunk"
+  },
+  "work_time_multiplier": 2.0,
+  "output_multiplier": 0.5
+}

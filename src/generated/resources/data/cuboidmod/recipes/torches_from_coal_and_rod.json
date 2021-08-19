@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "|"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:coal"
+    },
+    "|": {
+      "tag": "cuboidmod:rods"
+    }
+  },
+  "result": {
+    "item": "minecraft:torch",
+    "count": 8
+  }
+}

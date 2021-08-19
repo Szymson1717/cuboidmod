@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "cuboidmod:block/drying_cupboard_top",
+    "up": "cuboidmod:block/drying_cupboard_top",
+    "north": "cuboidmod:block/drying_cupboard_front_lit",
+    "south": "cuboidmod:block/drying_cupboard_back_lit",
+    "east": "cuboidmod:block/drying_cupboard_left",
+    "west": "cuboidmod:block/drying_cupboard_right",
+    "particle": "cuboidmod:block/drying_cupboard_left"
+  }
+}

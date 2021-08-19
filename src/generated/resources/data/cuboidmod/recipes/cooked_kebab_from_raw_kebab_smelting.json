@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "cuboidmod:kebab_raw"
+  },
+  "result": "cuboidmod:kebab_cooked",
+  "experience": 0.0,
+  "cookingtime": 200
+}

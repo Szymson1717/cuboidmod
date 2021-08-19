@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:netherrack_quantum_singularity"
+  },
+  "result": {
+    "item": "minecraft:netherrack"
+  },
+  "work_time_multiplier": 3.0,
+  "output_multiplier": 0.40
+}

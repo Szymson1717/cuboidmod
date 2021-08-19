@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#$#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:notsogudium_ingot"
+    },
+    "$": {
+      "item": "cuboidmod:eumus_furnace"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:notsogudium_furnace"
+  }
+}

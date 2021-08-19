@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "appliedenergistics2:printed_calculation_processor"
+  },
+  "addition": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "item": "appliedenergistics2:silicon_press",
+    "count": 1
+  },
+  "work_ticks": 240,
+  "energy": 7200
+}

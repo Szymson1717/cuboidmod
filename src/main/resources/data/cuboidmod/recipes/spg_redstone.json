@@ -1,0 +1,7 @@
+{
+  "type": "cuboidmod:power_generating",
+  "singularity": {
+    "item": "cuboidmod:redstone_quantum_singularity",
+    "multiplier": 1.75
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "facing=north,lit=false,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter" },
+        "facing=east,lit=false,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 90 },
+        "facing=south,lit=false,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 180 },
+        "facing=west,lit=false,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 270 },
+        "facing=north,lit=true,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter" },
+        "facing=east,lit=true,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 90 },
+        "facing=south,lit=true,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 180 },
+        "facing=west,lit=true,open=false": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter", "y": 270 },
+
+        "facing=north,lit=false,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit" },
+        "facing=east,lit=false,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 90 },
+        "facing=south,lit=false,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 180 },
+        "facing=west,lit=false,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 270 },
+        "facing=north,lit=true,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit" },
+        "facing=east,lit=true,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 90 },
+        "facing=south,lit=true,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 180 },
+        "facing=west,lit=true,open=true": { "model": "cuboidmod:block/cryogenic_dimensional_teleporter_lit", "y": 270 }
+    }
+}

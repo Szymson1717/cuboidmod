@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:drying",
+  "ingredient": {
+    "item": "minecraft:wet_sponge"
+  },
+  "result": {
+    "item": "minecraft:sponge",
+    "count": 1
+  },
+  "work_ticks": 300
+}

@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#cuboidmod:food/apple_cider_vinegar",
+    "#cuboidmod:food/arachnugget",
+    "#cuboidmod:food/broth",
+    "#cuboidmod:food/gruel",
+    "#cuboidmod:food/kebab_cooked",
+    "#cuboidmod:food/kebab_raw",
+    "#cuboidmod:food/protein_bar",
+    "#cuboidmod:food/protein_paste",
+    "#cuboidmod:food/ration_pack",
+    "#cuboidmod:food/rotten_apple",
+    "#cuboidmod:food/cured_beef",
+    "#cuboidmod:food/cured_flesh",
+    "#cuboidmod:food/beef_biltong",
+    "#cuboidmod:food/zombie_biltong",
+    "#cuboidmod:food/hardfiskur"
+  ]
+}

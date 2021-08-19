@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "minecraft:gunpowder"
+  },
+  "addition": {
+    "item": "cuboidmod:carbon_nanotube"
+  },
+  "result": {
+    "item": "minecraft:redstone",
+    "count": 2
+  },
+  "work_ticks": 80,
+  "energy": 800
+}

@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "item": "minecraft:birch_log",
+    "count": 320
+  },
+  "result": {
+    "item": "cuboidmod:birch_log_quantum_singularity",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:thatldu_block"
+    },
+    "$": {
+      "item": "cuboidmod:thatldu_furnace"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:thatldu_quantum_collapser"
+  }
+}

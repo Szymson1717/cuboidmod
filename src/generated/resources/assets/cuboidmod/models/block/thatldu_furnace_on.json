@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "cuboidmod:block/thatldu_furnace_top",
+    "up": "cuboidmod:block/thatldu_furnace_top",
+    "north": "cuboidmod:block/thatldu_furnace_front_on",
+    "south": "cuboidmod:block/thatldu_furnace_side",
+    "east": "cuboidmod:block/thatldu_furnace_side",
+    "west": "cuboidmod:block/thatldu_furnace_side",
+    "particle": "cuboidmod:block/thatldu_furnace_side"
+  }
+}

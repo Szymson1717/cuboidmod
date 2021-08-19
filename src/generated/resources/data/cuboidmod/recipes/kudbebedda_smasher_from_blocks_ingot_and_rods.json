@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#-#",
+    " | ",
+    " | "
+  ],
+  "key": {
+    "-": {
+      "item": "cuboidmod:kudbebedda_ingot"
+    },
+    "#": {
+      "item": "cuboidmod:kudbebedda_block"
+    },
+    "|": {
+      "tag": "forge:rods"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:kudbebedda_smasher"
+  }
+}

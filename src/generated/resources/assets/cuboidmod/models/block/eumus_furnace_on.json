@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "cuboidmod:block/eumus_furnace_top",
+    "up": "cuboidmod:block/eumus_furnace_top",
+    "north": "cuboidmod:block/eumus_furnace_front_on",
+    "south": "cuboidmod:block/eumus_furnace_side",
+    "east": "cuboidmod:block/eumus_furnace_side",
+    "west": "cuboidmod:block/eumus_furnace_side",
+    "particle": "cuboidmod:block/eumus_furnace_side"
+  }
+}

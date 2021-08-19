@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#$#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:notarfbadium_ingot"
+    },
+    "$": {
+      "item": "cuboidmod:kudbebedda_chest"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:notarfbadium_chest"
+  }
+}

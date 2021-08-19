@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "item": "minecraft:acacia_log",
+    "count": 320
+  },
+  "result": {
+    "item": "cuboidmod:acacia_log_quantum_singularity",
+    "count": 1
+  }
+}

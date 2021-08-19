@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:notsogudium_ingot"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:notsogudium_boots"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "item": "minecraft:clay",
+    "count": 256
+  },
+  "result": {
+    "item": "cuboidmod:clay_quantum_singularity",
+    "count": 1
+  }
+}

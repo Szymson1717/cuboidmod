@@ -1,0 +1,39 @@
+{
+  "type": "cuboidmod:recycling",
+  "ingredient": {
+    "item": "appliedenergistics2:terminal"
+  },
+  "results": [
+    {
+      "item": "appliedenergistics2:logic_processor",
+      "count": 1
+    },
+    {
+      "item": "appliedenergistics2:logic_processor",
+      "count": 1,
+      "chance": 0.35
+    },
+    {
+      "item": "appliedenergistics2:formation_core",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "appliedenergistics2:annihilation_core",
+      "count": 1,
+      "chance": 0.5
+    },
+    {
+      "item": "appliedenergistics2:quartz_glass",
+      "count": 2,
+      "chance": 0.4
+    },
+    {
+      "item": "minecraft:glowstone_dust",
+      "count": 2,
+      "chance": 0.35
+    }
+  ],
+  "work_ticks": 200,
+  "energy": 500
+}

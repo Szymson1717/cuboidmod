@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:wikidium_block"
+    },
+    "$": {
+      "item": "cuboidmod:wikidium_furnace"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_quantum_collapser"
+  }
+}

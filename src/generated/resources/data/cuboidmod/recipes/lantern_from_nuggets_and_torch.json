@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "---",
+    "-|-",
+    "---"
+  ],
+  "key": {
+    "-": {
+      "tag": "cuboidmod:nuggets"
+    },
+    "|": {
+      "item": "minecraft:torch"
+    }
+  },
+  "result": {
+    "item": "minecraft:lantern"
+  }
+}

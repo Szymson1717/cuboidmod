@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:collapsing",
+  "input": {
+    "item": "cuboidmod:wikidium_ingot",
+    "count": 768
+  },
+  "result": {
+    "item": "cuboidmod:wikidium_quantum_singularity",
+    "count": 1
+  }
+}

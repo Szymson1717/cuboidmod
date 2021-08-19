@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:kudbebedda_block"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:kudbebedda_ingot",
+    "count": 9
+  }
+}

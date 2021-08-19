@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:wikidium_dust"
+  },
+  "addition": {
+    "item": "cuboidmod:protein_paste"
+  },
+  "result": {
+    "item": "cuboidmod:protein_fiber",
+    "count": 1
+  },
+  "work_ticks": 150,
+  "energy": 2500
+}

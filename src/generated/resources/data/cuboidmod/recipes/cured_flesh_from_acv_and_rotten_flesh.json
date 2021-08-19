@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "cuboidmod:apple_cider_vinegar"
+    },
+    {
+      "tag": "forge:dusts/salt"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:cured_flesh"
+  }
+}

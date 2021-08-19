@@ -1,0 +1,34 @@
+{
+    "variants": {
+        "facing=north,lit=false": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber"
+        },
+        "facing=east,lit=false": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber",
+            "y": 90
+        },
+        "facing=south,lit=false": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber",
+            "y": 180
+        },
+        "facing=west,lit=false": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber",
+            "y": 270
+        },
+        "facing=north,lit=true": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber_lit"
+        },
+        "facing=east,lit=true": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber_lit",
+            "y": 90
+        },
+        "facing=south,lit=true": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber_lit",
+            "y": 180
+        },
+        "facing=west,lit=true": {
+            "model": "cuboidmod:block/quantum_transmutation_chamber_lit",
+            "y": 270
+        }
+    }
+}

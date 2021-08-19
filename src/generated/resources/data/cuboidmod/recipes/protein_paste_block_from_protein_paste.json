@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "cuboidmod:protein_paste"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:protein_paste_block"
+  }
+}

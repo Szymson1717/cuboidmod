@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "cuboidmod:cellulose_block"
+  },
+  "addition": {
+    "item": "cuboidmod:stick_bundle"
+  },
+  "result": {
+    "item": "minecraft:oak_sapling",
+    "count": 1
+  },
+  "work_ticks": 600,
+  "energy": 45000
+}

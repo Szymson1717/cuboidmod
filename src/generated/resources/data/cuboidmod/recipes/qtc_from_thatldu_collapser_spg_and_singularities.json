@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Y ",
+    "R@R",
+    "Q$Q"
+  ],
+  "key": {
+    "@": {
+      "item": "cuboidmod:thatldu_quantum_collapser"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "Q": {
+      "tag": "cuboidmod:quantum_singularities"
+    },
+    "Y": {
+      "item": "minecraft:hopper"
+    },
+    "$": {
+      "item": "cuboidmod:thatldu_singularity_power_generator"
+    }
+  },
+  "result": {
+    "item": "cuboidmod:quantum_transmutation_chamber"
+  }
+}

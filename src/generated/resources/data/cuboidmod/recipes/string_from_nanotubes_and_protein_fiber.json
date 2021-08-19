@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#/",
+    "/#"
+  ],
+  "key": {
+    "#": {
+      "tag": "cuboidmod:carbon_nanotube"
+    },
+    "/": {
+      "tag": "cuboidmod:protein_fiber"
+    }
+  },
+  "result": {
+    "item": "minecraft:string",
+    "count": 4
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "cuboidmod:silica_dust_block"
+    }
+  ],
+  "result": {
+    "item": "cuboidmod:silica_dust",
+    "count": 9
+  }
+}

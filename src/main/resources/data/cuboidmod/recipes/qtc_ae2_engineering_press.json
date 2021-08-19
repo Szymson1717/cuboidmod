@@ -1,0 +1,15 @@
+{
+  "type": "cuboidmod:transmuting",
+  "base": {
+    "item": "appliedenergistics2:engineering_processor"
+  },
+  "addition": {
+    "item": "minecraft:diamond_block"
+  },
+  "result": {
+    "item": "appliedenergistics2:engineering_processor_press",
+    "count": 1
+  },
+  "work_ticks": 300,
+  "energy": 9000
+}
