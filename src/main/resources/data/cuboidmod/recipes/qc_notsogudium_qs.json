@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "cuboidmod:notsogudium_ingot",
-    "count": 768
+    "count": 320
   },
   "result": {
     "item": "cuboidmod:notsogudium_quantum_singularity",
