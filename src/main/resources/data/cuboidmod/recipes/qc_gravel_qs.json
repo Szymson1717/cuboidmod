@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:gravel",
-    "count": 256
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:gravel_quantum_singularity",

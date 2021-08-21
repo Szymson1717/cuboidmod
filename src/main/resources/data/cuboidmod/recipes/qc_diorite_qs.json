@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:diorite",
-    "count": 160
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:diorite_quantum_singularity",

@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:granite",
-    "count": 160
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:granite_quantum_singularity",

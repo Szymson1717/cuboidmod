@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:coal_block",
-    "count": 96
+    "count": 32
   },
   "result": {
     "item": "cuboidmod:coal_quantum_singularity",

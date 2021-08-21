@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:cobblestone",
-    "count": 256
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:cobblestone_quantum_singularity",

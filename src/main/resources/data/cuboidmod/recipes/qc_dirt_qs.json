@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:dirt",
-    "count": 256
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:dirt_quantum_singularity",

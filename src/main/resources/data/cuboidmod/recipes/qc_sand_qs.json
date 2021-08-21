@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:sand",
-    "count": 256
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:sand_quantum_singularity",

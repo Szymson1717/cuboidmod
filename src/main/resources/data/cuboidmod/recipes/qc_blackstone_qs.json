@@ -2,7 +2,7 @@
   "type": "cuboidmod:collapsing",
   "input": {
     "item": "minecraft:blackstone",
-    "count": 160
+    "count": 128
   },
   "result": {
     "item": "cuboidmod:blackstone_quantum_singularity",
