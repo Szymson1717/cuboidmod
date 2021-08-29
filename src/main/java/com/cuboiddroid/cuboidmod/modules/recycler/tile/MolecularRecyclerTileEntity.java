@@ -8,7 +8,7 @@ import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import javafx.util.Pair;
+import com.cuboiddroid.cuboidmod.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
