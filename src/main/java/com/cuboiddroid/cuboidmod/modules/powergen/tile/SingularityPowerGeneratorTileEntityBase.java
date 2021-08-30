@@ -253,4 +253,8 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     }
 
     public abstract Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity);
+
+    public IInventory getContentDrops() {
+        return getInputsAsInventory();
+    }
 }

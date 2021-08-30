@@ -67,17 +67,17 @@ public class ModLootTableProvider extends LootTableProvider {
             addDropMachine(ModBlocks.MOLECULAR_RECYCLER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
             addDropMachine(ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
 
-            addDropMachine(ModBlocks.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invIn", "invOut"}, false);
-            addDropMachine(ModBlocks.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invIn", "invOut"}, false);
-            addDropMachine(ModBlocks.NOTARFBADIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invIn", "invOut"}, false);
-            addDropMachine(ModBlocks.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invIn", "invOut"}, false);
-            addDropMachine(ModBlocks.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invIn", "invOut"}, false);
+            addDropMachine(ModBlocks.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
+            addDropMachine(ModBlocks.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
+            addDropMachine(ModBlocks.NOTARFBADIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
+            addDropMachine(ModBlocks.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
+            addDropMachine(ModBlocks.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
 
-            addDropMachine(ModBlocks.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{"inv"}, true);
-            addDropMachine(ModBlocks.KUDBEBEDDA_SINGULARITY_POWER_GENERATOR.get(), new String[]{"inv"}, true);
-            addDropMachine(ModBlocks.NOTARFBADIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{"inv"}, true);
-            addDropMachine(ModBlocks.WIKIDIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{"inv"}, true);
-            addDropMachine(ModBlocks.THATLDU_SINGULARITY_POWER_GENERATOR.get(), new String[]{"inv"}, true);
+            addDropMachine(ModBlocks.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{}, true);
+            addDropMachine(ModBlocks.KUDBEBEDDA_SINGULARITY_POWER_GENERATOR.get(), new String[]{}, true);
+            addDropMachine(ModBlocks.NOTARFBADIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{}, true);
+            addDropMachine(ModBlocks.WIKIDIUM_SINGULARITY_POWER_GENERATOR.get(), new String[]{}, true);
+            addDropMachine(ModBlocks.THATLDU_SINGULARITY_POWER_GENERATOR.get(), new String[]{}, true);
 
             addDropMachine(ModBlocks.DRYING_CUPBOARD.get(), new String[]{"invIn", "invOut"}, true);
 

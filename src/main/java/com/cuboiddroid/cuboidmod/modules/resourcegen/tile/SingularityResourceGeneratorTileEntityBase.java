@@ -284,4 +284,8 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
+
+    public IInventory getContentDrops() {
+        return getInputsAsInventory();
+    }
 }

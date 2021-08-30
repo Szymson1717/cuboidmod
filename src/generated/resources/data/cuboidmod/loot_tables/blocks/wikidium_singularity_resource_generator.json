@@ -26,11 +26,6 @@
       "source": "block_entity",
       "ops": [
         {
-          "source": "invIn",
-          "target": "BlockEntityTag.invIn",
-          "op": "replace"
-        },
-        {
           "source": "invOut",
           "target": "BlockEntityTag.invOut",
           "op": "replace"

@@ -7,6 +7,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
@@ -154,33 +155,21 @@ public abstract class SingularityResourceGeneratorBlockBase extends Block {
         }
     }
 
-    /*
     @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, World level, BlockPos pos, BlockState newState, boolean isMoving) {
-        // check we're removing the right block
-        if (!state.is(newState.getBlock())) {
-            TileEntity tileEntity = level.getBlockEntity(pos);
-            if (tileEntity instanceof IInventory) {
-                InventoryHelper.dropContents(level, pos, (IInventory) tileEntity);
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity tileentity = level.getBlockEntity(pos);
+
+            if (tileentity instanceof SingularityResourceGeneratorTileEntityBase) {
+                InventoryHelper.dropContents(level, pos, ((SingularityResourceGeneratorTileEntityBase) tileentity).getContentDrops());
+
                 level.updateNeighbourForOutputSignal(pos, this);
             }
+
             super.onRemove(state, level, pos, newState, isMoving);
         }
     }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(BlockStateProperties.HORIZONTAL_FACING, rotation.rotate(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
-    }
-    */
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
