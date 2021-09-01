@@ -1,0 +1,11 @@
+{
+  "type": "cuboidmod:resource_generating",
+  "singularity": {
+    "item": "cuboidmod:electrum_quantum_singularity"
+  },
+  "result": {
+    "item": "thermal:electrum_dust"
+  },
+  "work_time_multiplier": 4.0,
+  "output_multiplier": 0.25
+}

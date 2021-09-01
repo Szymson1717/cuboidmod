@@ -138,8 +138,9 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
                 TileEntity te = this.level.getBlockEntity(this.worldPosition.relative(direction));
+                Direction opposite = direction.getOpposite();
                 if (te != null) {
-                    boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
+                    boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, opposite).map(handler -> {
                                 if (handler.canReceive()) {
                                     int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutputPerTick), false);
                                     capacity.addAndGet(-received);
@@ -232,7 +233,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     }
 
     private CuboidEnergyStorage createEnergy() {
-        return new CuboidEnergyStorage(energyCapacity, 0) {
+        return new CuboidEnergyStorage(this.energyCapacity, 0, this.maxEnergyOutputPerTick) {
             @Override
             protected void onEnergyChanged() {
                 setChanged();

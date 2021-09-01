@@ -254,6 +254,14 @@
   "cuboidmod.quantum_singularity.osmium": "Osmium Quantum Singularity",
   "cuboidmod.quantum_singularity.cobalt": "Cobalt Quantum Singularity",
 
+  "cuboidmod.quantum_singularity.diamond": "Diamond Quantum Singularity",
+  "cuboidmod.quantum_singularity.emerald": "Emerald Quantum Singularity",
+  "cuboidmod.quantum_singularity.steel": "Steel Quantum Singularity",
+  "cuboidmod.quantum_singularity.bronze": "Bronze Quantum Singularity",
+  "cuboidmod.quantum_singularity.electrum": "Electrum Quantum Singularity",
+  "cuboidmod.quantum_singularity.invar": "Invar Quantum Singularity",
+  "cuboidmod.quantum_singularity.platinum": "Platinum Quantum Singularity",
+
   "cuboidmod.hover_text.singularity_power_generator": "Produces power passively based on the tier of the generator and the singularity used.",
   "block.cuboidmod.notsogudium_singularity_power_generator": "Notsogudium Singularity Power Generator",
   "block.cuboidmod.kudbebedda_singularity_power_generator": "Kudbebedda Singularity Power Generator",

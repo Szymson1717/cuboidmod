@@ -78,7 +78,15 @@ public class ModItemModelProvider extends ItemModelProvider {
                 "uranium",
                 "uraninite",
                 "osmium",
-                "cobalt"
+                "cobalt",
+
+                "diamond",
+                "emerald",
+                "steel",
+                "bronze",
+                "electrum",
+                "invar",
+                "platinum"
         };
 
         for (String name: singularities) {

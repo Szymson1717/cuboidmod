@@ -266,6 +266,14 @@ public class ModTags {
         public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_OSMIUM = mod("quantum_singularities/osmium");
         public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_COBALT = mod("quantum_singularities/cobalt");
 
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_DIAMOND = mod("quantum_singularities/diamond");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_EMERALD = mod("quantum_singularities/emerald");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_STEEL = mod("quantum_singularities/steel");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_BRONZE = mod("quantum_singularities/bronze");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_ELECTRUM = mod("quantum_singularities/electrum");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_INVAR = mod("quantum_singularities/invar");
+        public static final ITag.INamedTag<Item> QUANTUM_SINGULARITIES_PLATINUM = mod("quantum_singularities/platinum");
+
         private static ITag.INamedTag<Item> forge(String path) {
             return ItemTags.bind(new ResourceLocation("forge", path).toString());
         }

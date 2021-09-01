@@ -58,5 +58,13 @@ public final class ColorHandler {
         itemColors.register(new IColored.ItemColors(), ModItems.URANIUM_QUANTUM_SINGULARITY.get());
         itemColors.register(new IColored.ItemColors(), ModItems.URANINITE_QUANTUM_SINGULARITY.get());
         itemColors.register(new IColored.ItemColors(), ModItems.ZINC_QUANTUM_SINGULARITY.get());
+
+        itemColors.register(new IColored.ItemColors(), ModItems.DIAMOND_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.EMERALD_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.STEEL_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.BRONZE_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.ELECTRUM_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.INVAR_QUANTUM_SINGULARITY.get());
+        itemColors.register(new IColored.ItemColors(), ModItems.PLATINUM_QUANTUM_SINGULARITY.get());
     }
 }

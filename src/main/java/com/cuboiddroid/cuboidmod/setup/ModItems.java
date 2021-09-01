@@ -778,6 +778,27 @@ public class ModItems {
     public static final RegistryObject<Item> COBALT_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "cobalt_quantum_singularity", CobaltQuantumSingularityItem::new);
 
+    public static final RegistryObject<Item> DIAMOND_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "diamond_quantum_singularity", DiamondQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> EMERALD_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "emerald_quantum_singularity", EmeraldQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> STEEL_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "steel_quantum_singularity", SteelQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> BRONZE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "bronze_quantum_singularity", BronzeQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> ELECTRUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "electrum_quantum_singularity", ElectrumQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> INVAR_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "invar_quantum_singularity", InvarQuantumSingularityItem::new);
+
+    public static final RegistryObject<Item> PLATINUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "platinum_quantum_singularity", PlatinumQuantumSingularityItem::new);
+
     // this register() is only used to load the class so that the deferred register stuff works
     static void register() {}
 }

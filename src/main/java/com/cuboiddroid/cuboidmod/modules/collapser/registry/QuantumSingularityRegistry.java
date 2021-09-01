@@ -345,7 +345,42 @@ public final class QuantumSingularityRegistry {
                 new QuantumSingularity(
                         new ResourceLocation(CuboidMod.MOD_ID, "cobalt"),
                         "cuboidmod.quantum_singularity.cobalt",
-                        new int[] { 0x59A6EF, 0x0753B8 })
+                        new int[] { 0x59A6EF, 0x0753B8 }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "diamond"),
+                        "cuboidmod.quantum_singularity.diamond",
+                        new int[] { 0xb9f4fa, 0x39a7bd }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "emerald"),
+                        "cuboidmod.quantum_singularity.emerald",
+                        new int[] { 0x4bf253, 0x04c70d }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "steel"),
+                        "cuboidmod.quantum_singularity.steel",
+                        new int[] { 0xababab, 0x878a87 }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "bronze"),
+                        "cuboidmod.quantum_singularity.bronze",
+                        new int[] { 0xe0b43a, 0xa37a07 }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "electrum"),
+                        "cuboidmod.quantum_singularity.electrum",
+                        new int[] { 0xe6da6e, 0xf0d046 }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "invar"),
+                        "cuboidmod.quantum_singularity.invar",
+                        new int[] { 0xa6b6ba, 0x778487 }),
+
+                new QuantumSingularity(
+                        new ResourceLocation(CuboidMod.MOD_ID, "platinum"),
+                        "cuboidmod.quantum_singularity.platinum",
+                        new int[] { 0x90aba6, 0xccf0ea })
         );
     }
 }

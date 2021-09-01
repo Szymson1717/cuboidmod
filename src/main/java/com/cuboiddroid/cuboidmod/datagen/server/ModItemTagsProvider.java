@@ -351,6 +351,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.QUANTUM_SINGULARITIES_OSMIUM).add(ModItems.OSMIUM_QUANTUM_SINGULARITY.get());
         tag(ModTags.Items.QUANTUM_SINGULARITIES_COBALT).add(ModItems.COBALT_QUANTUM_SINGULARITY.get());
 
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_DIAMOND).add(ModItems.DIAMOND_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_EMERALD).add(ModItems.EMERALD_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_STEEL).add(ModItems.STEEL_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_BRONZE).add(ModItems.BRONZE_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_ELECTRUM).add(ModItems.ELECTRUM_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_INVAR).add(ModItems.INVAR_QUANTUM_SINGULARITY.get());
+        tag(ModTags.Items.QUANTUM_SINGULARITIES_PLATINUM).add(ModItems.PLATINUM_QUANTUM_SINGULARITY.get());
+
         tag(ModTags.Items.QUANTUM_SINGULARITIES)
                 .addTags(
                         ModTags.Items.QUANTUM_SINGULARITIES_ANDESITE,
@@ -398,6 +406,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                         ModTags.Items.QUANTUM_SINGULARITIES_URANIUM,
                         ModTags.Items.QUANTUM_SINGULARITIES_URANINITE,
                         ModTags.Items.QUANTUM_SINGULARITIES_OSMIUM,
-                        ModTags.Items.QUANTUM_SINGULARITIES_COBALT);
+                        ModTags.Items.QUANTUM_SINGULARITIES_COBALT,
+
+                        ModTags.Items.QUANTUM_SINGULARITIES_DIAMOND,
+                        ModTags.Items.QUANTUM_SINGULARITIES_EMERALD,
+                        ModTags.Items.QUANTUM_SINGULARITIES_STEEL,
+                        ModTags.Items.QUANTUM_SINGULARITIES_BRONZE,
+                        ModTags.Items.QUANTUM_SINGULARITIES_ELECTRUM,
+                        ModTags.Items.QUANTUM_SINGULARITIES_INVAR,
+                        ModTags.Items.QUANTUM_SINGULARITIES_PLATINUM);
     }
 }
