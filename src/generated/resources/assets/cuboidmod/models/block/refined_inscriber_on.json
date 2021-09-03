@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "cuboidmod:block/refined_inscriber_top",
+    "up": "cuboidmod:block/refined_inscriber_top",
+    "north": "cuboidmod:block/refined_inscriber_front_lit",
+    "south": "cuboidmod:block/refined_inscriber_back_lit",
+    "east": "cuboidmod:block/refined_inscriber_left",
+    "west": "cuboidmod:block/refined_inscriber_right",
+    "particle": "cuboidmod:block/refined_inscriber_left"
+  }
+}

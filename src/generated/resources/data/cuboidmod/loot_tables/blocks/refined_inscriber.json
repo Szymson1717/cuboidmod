@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:refined_inscriber"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "minecraft:copy_name",
+      "source": "block_entity"
+    },
+    {
+      "function": "minecraft:copy_nbt",
+      "source": "block_entity",
+      "ops": [
+        {
+          "source": "invTL",
+          "target": "BlockEntityTag.invTL",
+          "op": "replace"
+        },
+        {
+          "source": "invMid",
+          "target": "BlockEntityTag.invMid",
+          "op": "replace"
+        },
+        {
+          "source": "invBR",
+          "target": "BlockEntityTag.invBR",
+          "op": "replace"
+        },
+        {
+          "source": "invOut",
+          "target": "BlockEntityTag.invOut",
+          "op": "replace"
+        },
+        {
+          "source": "energy",
+          "target": "BlockEntityTag.energy",
+          "op": "replace"
+        }
+      ]
+    }
+  ]
+}
