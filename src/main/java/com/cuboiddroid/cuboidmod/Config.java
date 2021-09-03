@@ -109,6 +109,13 @@ public class Config {
     public static ForgeConfigSpec.IntValue quantumTransmutationChamberEnergyCapacity;
     public static ForgeConfigSpec.IntValue quantumTransmutationChamberMaxEnergyInputPerTick;
 
+    // --- REFINED INSCRIBER CATEGORY ---
+    public static final String CATEGORY_REFINED_INSCRIBER = "refined_inscriber";
+    public static ForgeConfigSpec.IntValue refinedInscriberEnergyCapacity;
+    public static ForgeConfigSpec.IntValue refinedInscriberMaxEnergyInputPerTick;
+    public static ForgeConfigSpec.IntValue refinedInscriberDefaultWorkTicks;
+    public static ForgeConfigSpec.IntValue refinedInscriberDefaultEnergyRequired;
+
     // --- MOLECULAR RECYCLER CATEGORY ---
     public static final String CATEGORY_MOLECULAR_RECYCLER = "molecular_recycler";
     public static ForgeConfigSpec.IntValue molecularRecyclerEnergyCapacity;
@@ -176,6 +183,10 @@ public class Config {
 
         COMMON_BUILDER.comment("Quantum Transmutation Chamber Settings").push(CATEGORY_QUANTUM_TRANSMUTATION_CHAMBER);
         setupQuantumTransmutationChamberConfig(COMMON_BUILDER, CLIENT_BUILDER);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.comment("Refined Inscriber Settings").push(CATEGORY_REFINED_INSCRIBER);
+        setupRefinedInscriberConfig(COMMON_BUILDER, CLIENT_BUILDER);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.comment("Molecular Recycler Settings\n" + getMolecularRecyclerDescription()).push(CATEGORY_MOLECULAR_RECYCLER);
@@ -508,6 +519,24 @@ public class Config {
         quantumTransmutationChamberMaxEnergyInputPerTick = COMMON_BUILDER
                 .comment(" The maximum amount of FE per tick that the QTC can receive.\n Default: 250")
                 .defineInRange("qtc.max_energy_in_per_tick", 250, 1, 10000000);
+    }
+
+    private static void setupRefinedInscriberConfig(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
+        refinedInscriberEnergyCapacity = COMMON_BUILDER
+                .comment(" The internal energy capacity in FE.\n Default: 50000")
+                .defineInRange("ri.energy_capacity", 50000, 1, 10000000);
+
+        refinedInscriberMaxEnergyInputPerTick = COMMON_BUILDER
+                .comment(" The maximum amount of FE per tick that the Refined Inscriber can receive.\n Default: 250")
+                .defineInRange("ri.max_energy_in_per_tick", 250, 1, 10000000);
+
+        refinedInscriberDefaultWorkTicks = COMMON_BUILDER
+                .comment(" The default number of ticks for recipes if not specified in the recipe itself.\n Default: 200")
+                .defineInRange("ri.recipe_work_ticks", 200, 1, 10000);
+
+        refinedInscriberDefaultEnergyRequired = COMMON_BUILDER
+                .comment(" The default amount of FE required for recipes if not specified in the recipe itself.\n Default: 5000")
+                .defineInRange("ri.recipe_energy_required", 5000, 1, 10000000);
     }
 
     private static String getMolecularRecyclerDescription() {

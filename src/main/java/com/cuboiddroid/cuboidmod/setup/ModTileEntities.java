@@ -7,6 +7,7 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileE
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.*;
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.*;
 import com.cuboiddroid.cuboidmod.modules.recycler.tile.MolecularRecyclerTileEntity;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import net.minecraft.block.Block;
@@ -39,6 +40,11 @@ public class ModTileEntities {
 
     public static final RegistryObject<TileEntityType<QuantumTransmutationChamberTileEntity>> QUANTUM_TRANSMUTATION_CHAMBER = register(
             "quantum_transmutation_chamber", QuantumTransmutationChamberTileEntity::new, ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER);
+
+    // Refined Inscriber
+
+    public static final RegistryObject<TileEntityType<RefinedInscriberTileEntity>> REFINED_INSCRIBER = register(
+            "refined_inscriber", RefinedInscriberTileEntity::new, ModBlocks.REFINED_INSCRIBER);
 
     // Quantum collapsers
 

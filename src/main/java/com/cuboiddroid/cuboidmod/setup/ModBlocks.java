@@ -11,6 +11,7 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.block.DryingCupboardBloc
 import com.cuboiddroid.cuboidmod.modules.furnace.block.*;
 import com.cuboiddroid.cuboidmod.modules.powergen.block.*;
 import com.cuboiddroid.cuboidmod.modules.recycler.block.MolecularRecyclerBlock;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.block.RefinedInscriberBlock;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.block.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.block.QuantumTransmutationChamberBlock;
 import net.minecraft.block.AbstractBlock;
@@ -152,6 +153,14 @@ public class ModBlocks {
   public static final RegistryObject<QuantumTransmutationChamberBlock> QUANTUM_TRANSMUTATION_CHAMBER = register(
           "quantum_transmutation_chamber", () ->
                   new QuantumTransmutationChamberBlock(AbstractBlock.Properties.of(Material.METAL)
+                          .strength(4, 20)
+                          .sound(SoundType.METAL)));
+
+  // Refined Inscriber
+
+  public static final RegistryObject<RefinedInscriberBlock> REFINED_INSCRIBER = register(
+          "refined_inscriber", () ->
+                  new RefinedInscriberBlock(AbstractBlock.Properties.of(Material.METAL)
                           .strength(4, 20)
                           .sound(SoundType.METAL)));
 

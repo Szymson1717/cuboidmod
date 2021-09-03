@@ -6,6 +6,7 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboard
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.*;
 import com.cuboiddroid.cuboidmod.modules.powergen.inventory.*;
 import com.cuboiddroid.cuboidmod.modules.recycler.inventory.MolecularRecyclerContainer;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import net.minecraft.inventory.container.ContainerType;
@@ -40,6 +41,14 @@ public class ModContainers {
                 BlockPos pos = data.readBlockPos();
                 World world = inv.player.getCommandSenderWorld();  // possibly level instead?
                 return new QuantumTransmutationChamberContainer(windowId, world, pos, inv, inv.player);
+            }));
+
+    // refined inscriber
+    public static final RegistryObject<ContainerType<RefinedInscriberContainer>> REFINED_INSCRIBER =
+            Registration.CONTAINERS.register("refined_inscriber", () -> IForgeContainerType.create((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                World world = inv.player.getCommandSenderWorld();  // possibly level instead?
+                return new RefinedInscriberContainer(windowId, world, pos, inv, inv.player);
             }));
 
     // quantum collapsers

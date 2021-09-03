@@ -28,7 +28,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFurnaces();
         registerCraftingTables();
         registerDryingCupboard();
-        //registerCryogenicDimensionalTeleporter();
+        registerRefinedInscriber();
     }
 
     private void registerSimpleBlocks() {
@@ -119,32 +119,27 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         : modelCupboard);
     }
 
-    private void registerCryogenicDimensionalTeleporter() {
+    private void registerRefinedInscriber() {
         // textures for faces
-        ResourceLocation top_pending = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_top_pending");
-        ResourceLocation side_pending = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_side_pending");
-        ResourceLocation top_charging = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_top_charging");
-        ResourceLocation side_charging = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_side_charging");
-        ResourceLocation top_ready = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_top_ready");
-        ResourceLocation side_ready = new ResourceLocation(CuboidMod.MOD_ID, "block/cdt_side_ready");
+        ResourceLocation top = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_top");
+        ResourceLocation front = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_front");
+        ResourceLocation front_on = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_front_lit");
+        ResourceLocation back = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_back");
+        ResourceLocation back_on = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_back_lit");
+        ResourceLocation left_side = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_left");
+        ResourceLocation right_side = new ResourceLocation(CuboidMod.MOD_ID, "block/refined_inscriber_right");
 
         // models for different states
         //  the textures are provided in order: down, up, north, south, east, west
-        BlockModelBuilder modelPending = models().cube("block/cryogenic_dimensional_teleporter", top_pending, top_pending, side_pending, side_pending, side_pending, side_pending).texture("particle", side_pending);
-        BlockModelBuilder modelCharging = models().cube("block/cryogenic_dimensional_teleporter_charging", top_charging, top_charging, side_charging, side_charging, side_charging, side_charging).texture("particle", side_charging);
-        BlockModelBuilder modelReady = models().cube("block/cryogenic_dimensional_teleporter_ready", top_ready, top_ready, side_ready, side_ready, side_ready, side_ready).texture("particle", side_ready);
+        BlockModelBuilder modelInscriber = models().cube("block/refined_inscriber", top, top, front, back, left_side, right_side).texture("particle", left_side);
+        BlockModelBuilder modelInscriberLit = models().cube("block/refined_inscriber_on", top, top, front_on, back_on, left_side, right_side).texture("particle", left_side);
 
         // add it, and vary model according to state
         this.orientedHorizontalBlock(
-                ModBlocks.CRYOGENIC_DIMENSIONAL_TELEPORTER.get(),
+                ModBlocks.REFINED_INSCRIBER.get(),
                 state -> state.getValue(BlockStateProperties.LIT)
-                        ? modelCharging
-                        : (
-                            state.getValue(BlockStateProperties.OPEN)
-                            ? modelReady
-                            : modelPending
-                        )
-        );
+                        ? modelInscriberLit
+                        : modelInscriber);
     }
 
     private void registerFurnaceBlock(String material, Block block) {

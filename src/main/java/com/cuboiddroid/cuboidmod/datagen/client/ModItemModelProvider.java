@@ -213,6 +213,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         withExistingParent("molecular_recycler", modLoc("block/molecular_recycler"));
         withExistingParent("quantum_transmutation_chamber", modLoc("block/quantum_transmutation_chamber"));
+        withExistingParent("refined_inscriber", modLoc("block/refined_inscriber"));
         withExistingParent("drying_cupboard", modLoc("block/drying_cupboard"));
         withExistingParent("cryogenic_dimensional_teleporter", modLoc("block/cryogenic_dimensional_teleporter"));
 

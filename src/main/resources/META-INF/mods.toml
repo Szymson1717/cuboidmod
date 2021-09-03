@@ -47,6 +47,7 @@ Special thanks (in no particular order) go out to:
   - 852Duarte, P3NG00 - for More Crafting Tables, which I based my crafting tables on.
   - kwpugh - for inspiration for the Smashers, based on the Hammers in the Easy Steel & More mod.
   - All other mod makers who have helped or inspired me along the way - too many list here!
+  - Ashrem, Chaynne, Delf, Wildersteak and Chris S. for helping with the early beta testing.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.cuboidmod]] #optional

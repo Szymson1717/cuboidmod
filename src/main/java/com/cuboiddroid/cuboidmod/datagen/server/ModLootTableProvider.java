@@ -66,6 +66,7 @@ public class ModLootTableProvider extends LootTableProvider {
 
             addDropMachine(ModBlocks.MOLECULAR_RECYCLER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
             addDropMachine(ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
+            addDropMachine(ModBlocks.REFINED_INSCRIBER.get(), new String[]{"invTL", "invMid", "invBR", "invOut"}, true);
 
             addDropMachine(ModBlocks.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);
             addDropMachine(ModBlocks.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), new String[]{"invOut"}, false);

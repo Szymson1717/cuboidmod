@@ -273,9 +273,15 @@
   "cuboidmod.container.notarfbadium_singularity_power_generator": "Notarfbadium Singularity Power Generator",
   "cuboidmod.container.wikidium_singularity_power_generator": "Wikidium Singularity Power Generator",
   "cuboidmod.container.thatldu_singularity_power_generator": "Thatldu Singularity Power Generator",
+
   "cuboidmod.hover_text.quantum_transmutation_chamber": "Transmutes materials into other materials.",
   "block.cuboidmod.quantum_transmutation_chamber": "Quantum Transmutation Chamber",
   "cuboidmod.container.quantum_transmutation_chamber": "Quantum Transmutation Chamber",
+
+  "cuboidmod.hover_text.refined_inscriber": "A more automation-friendly Inscriber",
+  "block.cuboidmod.refined_inscriber": "Refined Inscriber",
+  "cuboidmod.container.refined_inscriber": "Refined Inscriber",
+
   "cuboidmod.hover_text.molecular_recycler": "Recycles specific items (imperfectly).",
   "block.cuboidmod.molecular_recycler": "Molecular Recycler",
   "cuboidmod.container.molecular_recycler": "Molecular Recycler",
@@ -302,6 +308,7 @@
   "jei.category.cuboidmod.recycling": "Molecular Recycling",
   "jei.category.cuboidmod.resource_generating": "Resource Generating",
   "jei.category.cuboidmod.transmuting": "Quantum Transmuting",
+  "jei.category.cuboidmod.inscribing": "Inscribing",
   "jei.category.cuboidmod.drying": "Drying",
 
   "itemGroup.cuboidmod": "Cuboid"

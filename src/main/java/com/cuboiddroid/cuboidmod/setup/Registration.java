@@ -12,6 +12,7 @@ import com.cuboiddroid.cuboidmod.modules.furnace.screen.*;
 import com.cuboiddroid.cuboidmod.modules.powergen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.recycler.config.BlacklistConfig;
 import com.cuboiddroid.cuboidmod.modules.recycler.screen.MolecularRecyclerScreen;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.screen.RefinedInscriberScreen;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import net.minecraft.block.Block;
@@ -112,6 +113,7 @@ public class Registration {
         ScreenManager.register(ModContainers.THATLDU_SINGULARITY_POWER_GENERATOR.get(), ThatlduSingularityPowerGeneratorScreen::new);
 
         ScreenManager.register(ModContainers.QUANTUM_TRANSMUTATION_CHAMBER.get(), QuantumTransmutationChamberScreen::new);
+        ScreenManager.register(ModContainers.REFINED_INSCRIBER.get(), RefinedInscriberScreen::new);
         ScreenManager.register(ModContainers.MOLECULAR_RECYCLER.get(), MolecularRecyclerScreen::new);
         ScreenManager.register(ModContainers.DRYING_CUPBOARD.get(), DryingCupboardScreen::new);
 

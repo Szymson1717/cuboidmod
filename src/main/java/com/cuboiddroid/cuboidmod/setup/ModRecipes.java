@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecip
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecipe;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -22,6 +23,9 @@ public class ModRecipes {
 
         public static final IRecipeType<TransmutingRecipe> TRANSMUTING =
                 IRecipeType.register(CuboidMod.MOD_ID + ":transmuting");
+
+        public static final IRecipeType<InscribingRecipe> INSCRIBING =
+                IRecipeType.register(CuboidMod.MOD_ID + ":inscribing");
 
         public static final IRecipeType<RecyclingRecipe> RECYCLING =
                 IRecipeType.register(CuboidMod.MOD_ID + ":recycling");
@@ -47,6 +51,10 @@ public class ModRecipes {
         public static final RegistryObject<IRecipeSerializer<?>> TRANSMUTING =
                 Registration.RECIPE_SERIALIZERS.register("transmuting",
                         TransmutingRecipe.Serializer::new);
+
+        public static final RegistryObject<IRecipeSerializer<?>> INSCRIBING =
+                Registration.RECIPE_SERIALIZERS.register("inscribing",
+                        InscribingRecipe.Serializer::new);
 
         public static final RegistryObject<IRecipeSerializer<?>> DRYING =
                 Registration.RECIPE_SERIALIZERS.register("drying",
