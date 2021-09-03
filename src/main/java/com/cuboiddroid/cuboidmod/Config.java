@@ -531,8 +531,8 @@ public class Config {
                 .defineInRange("ri.max_energy_in_per_tick", 250, 1, 10000000);
 
         refinedInscriberDefaultWorkTicks = COMMON_BUILDER
-                .comment(" The default number of ticks for recipes if not specified in the recipe itself.\n Default: 200")
-                .defineInRange("ri.recipe_work_ticks", 200, 1, 10000);
+                .comment(" The default number of ticks for recipes if not specified in the recipe itself.\n Default: 100")
+                .defineInRange("ri.recipe_work_ticks", 100, 1, 10000);
 
         refinedInscriberDefaultEnergyRequired = COMMON_BUILDER
                 .comment(" The default amount of FE required for recipes if not specified in the recipe itself.\n Default: 5000")

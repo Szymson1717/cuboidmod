@@ -10,6 +10,8 @@ import com.cuboiddroid.cuboidmod.modules.powergen.inventory.*;
 import com.cuboiddroid.cuboidmod.modules.powergen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.recycler.inventory.MolecularRecyclerContainer;
 import com.cuboiddroid.cuboidmod.modules.recycler.screen.MolecularRecyclerScreen;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.screen.RefinedInscriberScreen;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.*;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
@@ -52,6 +54,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
             IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
             registration.addRecipeCategories(new RecyclingRecipeCategoryJei(guiHelper));
             registration.addRecipeCategories(new TransmutingRecipeCategoryJei(guiHelper));
+            registration.addRecipeCategories(new InscribingRecipeCategoryJei(guiHelper));
             registration.addRecipeCategories(new CollapsingRecipeCategoryJei(guiHelper));
             registration.addRecipeCategories(new ResourceGeneratingRecipeCategoryJei(guiHelper));
             registration.addRecipeCategories(new PowerGeneratingRecipeCategoryJei(guiHelper));
@@ -64,6 +67,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
         if (Config.enableJeiPlugin.get()) {
             registration.addRecipes(getRecipesOfType(ModRecipes.Types.RECYCLING), Constants.RECYCLING);
             registration.addRecipes(getRecipesOfType(ModRecipes.Types.TRANSMUTING), Constants.TRANSMUTING);
+            registration.addRecipes(getRecipesOfType(ModRecipes.Types.INSCRIBING), Constants.INSCRIBING);
             registration.addRecipes(getRecipesOfType(ModRecipes.Types.COLLAPSING), Constants.COLLAPSING);
             registration.addRecipes(getRecipesOfType(ModRecipes.Types.RESOURCE_GENERATING), Constants.RESOURCE_GENERATING);
             registration.addRecipes(getRecipesOfType(ModRecipes.Types.POWER_GENERATING), Constants.POWER_GENERATING);
@@ -76,6 +80,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
         if (Config.enableJeiPlugin.get() && Config.enableJeiClickArea.get()) {
             registration.addRecipeClickArea(MolecularRecyclerScreen.class, 76, 41, 28, 21, Constants.RECYCLING);
             registration.addRecipeClickArea(QuantumTransmutationChamberScreen.class, 76, 41, 28, 21, Constants.TRANSMUTING);
+            registration.addRecipeClickArea(RefinedInscriberScreen.class, 103, 56, 28, 21, Constants.INSCRIBING);
             registration.addRecipeClickArea(DryingCupboardScreen.class, 30, 38, 134, 15, Constants.DRYING);
 
             registration.addRecipeClickArea(NotsogudiumQuantumCollapserScreen.class, 76, 41, 28, 21, Constants.COLLAPSING);
@@ -103,6 +108,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
         if (Config.enableJeiPlugin.get()) {
             registration.addRecipeTransferHandler(MolecularRecyclerContainer.class, Constants.RECYCLING, 0, 7, 7, 36);
             registration.addRecipeTransferHandler(QuantumTransmutationChamberContainer.class, Constants.TRANSMUTING, 0, 3, 3, 36);
+            registration.addRecipeTransferHandler(RefinedInscriberContainer.class, Constants.INSCRIBING, 0, 4, 4, 36);
             registration.addRecipeTransferHandler(DryingCupboardContainer.class, Constants.DRYING, 0, 8, 16, 36);
 
             registration.addRecipeTransferHandler(NotsogudiumQuantumCollapserContainer.class, Constants.COLLAPSING, 0, 2, 2, 36);
@@ -130,6 +136,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
         if (Config.enableJeiPlugin.get() && Config.enableJeiCatalysts.get()) {
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.MOLECULAR_RECYCLER.get()), Constants.RECYCLING);
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get()), Constants.TRANSMUTING);
+            registration.addRecipeCatalyst(new ItemStack(ModBlocks.REFINED_INSCRIBER.get()), Constants.INSCRIBING);
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.DRYING_CUPBOARD.get()), Constants.DRYING);
 
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.NOTSOGUDIUM_QUANTUM_COLLAPSER.get()), Constants.COLLAPSING);
