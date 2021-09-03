@@ -18,6 +18,10 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -26,11 +30,29 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RefinedInscriberBlock extends Block {
 
+    private static final VoxelShape VOXEL_SHAPE = Stream.of(
+            Block.box(0, 1, 0, 3, 15, 16),
+            Block.box(13, 1, 0, 16, 15, 16),
+            Block.box(3, 1, 14, 13, 15, 16),
+            Block.box(1, 0, 1, 15, 1, 15),
+            Block.box(1, 15, 1, 15, 16, 15),
+            Block.box(3, 1, 1, 13, 4, 14),
+            Block.box(3, 12, 1, 13, 15, 14),
+            Block.box(3, 4, 2, 13, 12, 3)
+    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();;
+
     public RefinedInscriberBlock(Properties properties) {
         super(properties);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
+        return VOXEL_SHAPE;
     }
 
     @Override

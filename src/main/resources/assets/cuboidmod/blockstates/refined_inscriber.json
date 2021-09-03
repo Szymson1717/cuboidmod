@@ -3,6 +3,10 @@
     "facing=north,lit=false": {
       "model": "cuboidmod:block/refined_inscriber"
     },
+    "facing=east,lit=false": {
+      "model": "cuboidmod:block/refined_inscriber",
+      "y": 90
+    },
     "facing=south,lit=false": {
       "model": "cuboidmod:block/refined_inscriber",
       "y": 180
@@ -11,24 +15,20 @@
       "model": "cuboidmod:block/refined_inscriber",
       "y": 270
     },
-    "facing=east,lit=false": {
-      "model": "cuboidmod:block/refined_inscriber",
+    "facing=north,lit=true": {
+      "model": "cuboidmod:block/refined_inscriber_lit"
+    },
+    "facing=east,lit=true": {
+      "model": "cuboidmod:block/refined_inscriber_lit",
       "y": 90
     },
-    "facing=north,lit=true": {
-      "model": "cuboidmod:block/refined_inscriber_on"
-    },
     "facing=south,lit=true": {
-      "model": "cuboidmod:block/refined_inscriber_on",
+      "model": "cuboidmod:block/refined_inscriber_lit",
       "y": 180
     },
     "facing=west,lit=true": {
-      "model": "cuboidmod:block/refined_inscriber_on",
+      "model": "cuboidmod:block/refined_inscriber_lit",
       "y": 270
-    },
-    "facing=east,lit=true": {
-      "model": "cuboidmod:block/refined_inscriber_on",
-      "y": 90
     }
   }
 }

@@ -28,7 +28,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFurnaces();
         registerCraftingTables();
         registerDryingCupboard();
-        registerRefinedInscriber();
+        //registerRefinedInscriber();
     }
 
     private void registerSimpleBlocks() {
