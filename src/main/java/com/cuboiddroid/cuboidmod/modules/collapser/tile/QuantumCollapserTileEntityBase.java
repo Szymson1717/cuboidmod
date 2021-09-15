@@ -18,7 +18,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -263,10 +262,14 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         amountConsumed = tag.getInt("amtConsumed");
         amountRequired = tag.getInt("amtRequired");
 
-        String ingJson = tag.getString("curIng");
-        currentIngredient = ingJson.isEmpty()
-                ? Ingredient.EMPTY
-                : Ingredient.fromJson(JSONUtils.parse(ingJson));
+        try {
+            String curIngId = tag.getString("curIng");
+            currentIngredient = curIngId.isEmpty()
+                    ? Ingredient.EMPTY
+                    : Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(curIngId)), 1));
+        } catch(Exception ex) {
+            currentIngredient = Ingredient.EMPTY;
+        }
 
         String currentOutputId = tag.getString("curOutId");
         currentOutput = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(currentOutputId)));
@@ -282,7 +285,12 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         tag.putInt("recTime", recipeTime);
         tag.putInt("amtConsumed", amountConsumed);
         tag.putInt("amtRequired", amountRequired);
-        tag.putString("curIng", currentIngredient.toJson().toString());
+
+        if (currentIngredient.isEmpty())
+            tag.putString("curOutId", "");
+        else
+            tag.putString("curIng", currentIngredient.getItems()[0].getItem().getRegistryName().toString());
+
         tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
 
         return super.save(tag);
