@@ -490,6 +490,10 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
                 return true;
         }
 
+        // any items with containers (e.g. smooshers) should be excluded!
+        if (item.hasContainerItem())
+            return true;
+
         // no matches - not blacklisted
         return false;
     }
@@ -510,6 +514,10 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             if (BlacklistConfig.getInstance().isBlacklistedResultTag(tag.toString()))
                 return true;
         }
+
+        // any items with containers (e.g. smooshers) should be excluded!
+        if (item.getDefaultInstance().hasContainerItem())
+            return true;
 
         // no matches - not blacklisted
         return false;

@@ -23,10 +23,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -58,13 +59,12 @@ public class Registration {
         ModBlocks.register();
         ModContainers.register();
         ModItems.register();
-        ModTileEntities.register();
         ModRecipes.register();
+        ModTileEntities.register();
         ModDimensions.register();
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             // Client setup
-            modEventBus.addListener(Registration::setupClient);
             modEventBus.register(new ColorHandler());
         });
     }
@@ -73,51 +73,56 @@ public class Registration {
         return DeferredRegister.create(registry, CuboidMod.MOD_ID);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    private static void setupClient(final FMLClientSetupEvent event) {
-        ScreenManager.register(ModContainers.NOTSOGUDIUM_CHEST.get(), CuboidChestScreen::new);
-        ScreenManager.register(ModContainers.KUDBEBEDDA_CHEST.get(), CuboidChestScreen::new);
-        ScreenManager.register(ModContainers.NOTARFBADIUM_CHEST.get(), CuboidChestScreen::new);
-        ScreenManager.register(ModContainers.WIKIDIUM_CHEST.get(), CuboidChestScreen::new);
-        ScreenManager.register(ModContainers.THATLDU_CHEST.get(), CuboidChestScreen::new);
+    @Mod.EventBusSubscriber(value=Dist.CLIENT, modid = CuboidMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static final class Client {
+        private Client() {}
 
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.NOTSOGUDIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.KUDBEBEDDA_CHEST.get(), CuboidChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.NOTARFBADIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.WIKIDIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.THATLDU_CHEST.get(), CuboidChestTileEntityRenderer::new);
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+            ScreenManager.register(ModContainers.NOTSOGUDIUM_CHEST.get(), CuboidChestScreen::new);
+            ScreenManager.register(ModContainers.KUDBEBEDDA_CHEST.get(), CuboidChestScreen::new);
+            ScreenManager.register(ModContainers.NOTARFBADIUM_CHEST.get(), CuboidChestScreen::new);
+            ScreenManager.register(ModContainers.WIKIDIUM_CHEST.get(), CuboidChestScreen::new);
+            ScreenManager.register(ModContainers.THATLDU_CHEST.get(), CuboidChestScreen::new);
 
-        ScreenManager.register(ModContainers.NOTSOGUDIUM_FURNACE.get(), NotsogudiumFurnaceScreen::new);
-        ScreenManager.register(ModContainers.KUDBEBEDDA_FURNACE.get(), KudbebeddaFurnaceScreen::new);
-        ScreenManager.register(ModContainers.NOTARFBADIUM_FURNACE.get(), NotarfbadiumFurnaceScreen::new);
-        ScreenManager.register(ModContainers.WIKIDIUM_FURNACE.get(), WikidiumFurnaceScreen::new);
-        ScreenManager.register(ModContainers.THATLDU_FURNACE.get(), ThatlduFurnaceScreen::new);
-        ScreenManager.register(ModContainers.EUMUS_FURNACE.get(), EumusFurnaceScreen::new);
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.NOTSOGUDIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.KUDBEBEDDA_CHEST.get(), CuboidChestTileEntityRenderer::new);
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.NOTARFBADIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.WIKIDIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
+            ClientRegistry.bindTileEntityRenderer(ModTileEntities.THATLDU_CHEST.get(), CuboidChestTileEntityRenderer::new);
 
-        ScreenManager.register(ModContainers.NOTSOGUDIUM_QUANTUM_COLLAPSER.get(), NotsogudiumQuantumCollapserScreen::new);
-        ScreenManager.register(ModContainers.KUDBEBEDDA_QUANTUM_COLLAPSER.get(), KudbebeddaQuantumCollapserScreen::new);
-        ScreenManager.register(ModContainers.NOTARFBADIUM_QUANTUM_COLLAPSER.get(), NotarfbadiumQuantumCollapserScreen::new);
-        ScreenManager.register(ModContainers.WIKIDIUM_QUANTUM_COLLAPSER.get(), WikidiumQuantumCollapserScreen::new);
-        ScreenManager.register(ModContainers.THATLDU_QUANTUM_COLLAPSER.get(), ThatlduQuantumCollapserScreen::new);
+            ScreenManager.register(ModContainers.NOTSOGUDIUM_FURNACE.get(), NotsogudiumFurnaceScreen::new);
+            ScreenManager.register(ModContainers.KUDBEBEDDA_FURNACE.get(), KudbebeddaFurnaceScreen::new);
+            ScreenManager.register(ModContainers.NOTARFBADIUM_FURNACE.get(), NotarfbadiumFurnaceScreen::new);
+            ScreenManager.register(ModContainers.WIKIDIUM_FURNACE.get(), WikidiumFurnaceScreen::new);
+            ScreenManager.register(ModContainers.THATLDU_FURNACE.get(), ThatlduFurnaceScreen::new);
+            ScreenManager.register(ModContainers.EUMUS_FURNACE.get(), EumusFurnaceScreen::new);
 
-        ScreenManager.register(ModContainers.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), NotsogudiumSingularityResourceGeneratorScreen::new);
-        ScreenManager.register(ModContainers.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), KudbebeddaSingularityResourceGeneratorScreen::new);
-        ScreenManager.register(ModContainers.NOTARFBADIUM_SINGULARITY_RESOURCE_GENERATOR.get(), NotarfbadiumSingularityResourceGeneratorScreen::new);
-        ScreenManager.register(ModContainers.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), WikidiumSingularityResourceGeneratorScreen::new);
-        ScreenManager.register(ModContainers.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get(), ThatlduSingularityResourceGeneratorScreen::new);
+            ScreenManager.register(ModContainers.NOTSOGUDIUM_QUANTUM_COLLAPSER.get(), NotsogudiumQuantumCollapserScreen::new);
+            ScreenManager.register(ModContainers.KUDBEBEDDA_QUANTUM_COLLAPSER.get(), KudbebeddaQuantumCollapserScreen::new);
+            ScreenManager.register(ModContainers.NOTARFBADIUM_QUANTUM_COLLAPSER.get(), NotarfbadiumQuantumCollapserScreen::new);
+            ScreenManager.register(ModContainers.WIKIDIUM_QUANTUM_COLLAPSER.get(), WikidiumQuantumCollapserScreen::new);
+            ScreenManager.register(ModContainers.THATLDU_QUANTUM_COLLAPSER.get(), ThatlduQuantumCollapserScreen::new);
 
-        ScreenManager.register(ModContainers.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(), NotsogudiumSingularityPowerGeneratorScreen::new);
-        ScreenManager.register(ModContainers.KUDBEBEDDA_SINGULARITY_POWER_GENERATOR.get(), KudbebeddaSingularityPowerGeneratorScreen::new);
-        ScreenManager.register(ModContainers.NOTARFBADIUM_SINGULARITY_POWER_GENERATOR.get(), NotarfbadiumSingularityPowerGeneratorScreen::new);
-        ScreenManager.register(ModContainers.WIKIDIUM_SINGULARITY_POWER_GENERATOR.get(), WikidiumSingularityPowerGeneratorScreen::new);
-        ScreenManager.register(ModContainers.THATLDU_SINGULARITY_POWER_GENERATOR.get(), ThatlduSingularityPowerGeneratorScreen::new);
+            ScreenManager.register(ModContainers.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), NotsogudiumSingularityResourceGeneratorScreen::new);
+            ScreenManager.register(ModContainers.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), KudbebeddaSingularityResourceGeneratorScreen::new);
+            ScreenManager.register(ModContainers.NOTARFBADIUM_SINGULARITY_RESOURCE_GENERATOR.get(), NotarfbadiumSingularityResourceGeneratorScreen::new);
+            ScreenManager.register(ModContainers.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), WikidiumSingularityResourceGeneratorScreen::new);
+            ScreenManager.register(ModContainers.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get(), ThatlduSingularityResourceGeneratorScreen::new);
 
-        ScreenManager.register(ModContainers.QUANTUM_TRANSMUTATION_CHAMBER.get(), QuantumTransmutationChamberScreen::new);
-        ScreenManager.register(ModContainers.REFINED_INSCRIBER.get(), RefinedInscriberScreen::new);
-        ScreenManager.register(ModContainers.MOLECULAR_RECYCLER.get(), MolecularRecyclerScreen::new);
-        ScreenManager.register(ModContainers.DRYING_CUPBOARD.get(), DryingCupboardScreen::new);
+            ScreenManager.register(ModContainers.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(), NotsogudiumSingularityPowerGeneratorScreen::new);
+            ScreenManager.register(ModContainers.KUDBEBEDDA_SINGULARITY_POWER_GENERATOR.get(), KudbebeddaSingularityPowerGeneratorScreen::new);
+            ScreenManager.register(ModContainers.NOTARFBADIUM_SINGULARITY_POWER_GENERATOR.get(), NotarfbadiumSingularityPowerGeneratorScreen::new);
+            ScreenManager.register(ModContainers.WIKIDIUM_SINGULARITY_POWER_GENERATOR.get(), WikidiumSingularityPowerGeneratorScreen::new);
+            ScreenManager.register(ModContainers.THATLDU_SINGULARITY_POWER_GENERATOR.get(), ThatlduSingularityPowerGeneratorScreen::new);
 
-        CryogenicDimensionalTeleporterRenderer.register();
+            ScreenManager.register(ModContainers.QUANTUM_TRANSMUTATION_CHAMBER.get(), QuantumTransmutationChamberScreen::new);
+            ScreenManager.register(ModContainers.REFINED_INSCRIBER.get(), RefinedInscriberScreen::new);
+            ScreenManager.register(ModContainers.MOLECULAR_RECYCLER.get(), MolecularRecyclerScreen::new);
+            ScreenManager.register(ModContainers.DRYING_CUPBOARD.get(), DryingCupboardScreen::new);
+
+            CryogenicDimensionalTeleporterRenderer.register();
+        }
     }
-
 }
