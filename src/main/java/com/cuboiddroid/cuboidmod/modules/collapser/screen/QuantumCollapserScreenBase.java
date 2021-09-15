@@ -158,13 +158,15 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
             }
         }
 
-        // show picture of current item being consumed
-        ItemStack collapsingItem = this.tile.getCollapsingItemStackForDisplay();
-        this.renderFloatingItem(collapsingItem, this.leftPos + 12, this.topPos + 43, "");
+        if (amountConsumed > 0) {
+            // show picture of current item being consumed
+            ItemStack collapsingItem = this.tile.getCollapsingItemStackForDisplay();
+            this.renderFloatingItem(collapsingItem, this.leftPos + 12, this.topPos + 43, "");
 
-        // show picture of current target item
-        ItemStack singularityOutputItem = this.tile.getSingularityOutputForDisplay();
-        this.renderFloatingItem(singularityOutputItem, this.leftPos + 145, this.topPos + 43, "");
+            // show picture of current target item
+            ItemStack singularityOutputItem = this.tile.getSingularityOutputForDisplay();
+            this.renderFloatingItem(singularityOutputItem, this.leftPos + 145, this.topPos + 43, "");
+        }
     }
 
     @Override
