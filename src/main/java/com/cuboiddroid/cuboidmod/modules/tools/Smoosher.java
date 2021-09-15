@@ -21,6 +21,7 @@ public class Smoosher extends Item {
     public Smoosher() {
         super(new Properties()
                 .durability(Config.smoosherDurability.get())
+                .setNoRepair()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
     }
 
