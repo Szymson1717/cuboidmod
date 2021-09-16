@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboardContainer;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -244,7 +244,7 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
         IInventory inv = getInputsAsInventory(slotIndex);
 
         // look for a specific recipe and use it if found
-        DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.DRYING, inv, this.level).orElse(null);
+        DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, inv, this.level).orElse(null);
 
         // track the recipe being used for this slot to save time next tick
         recipes[slotIndex] = recipe;

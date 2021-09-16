@@ -1,7 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -161,7 +161,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.RESOURCE_GENERATING, inv, this.level).orElse(null);
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
     }
 
     private Inventory getInputsAsInventory() {

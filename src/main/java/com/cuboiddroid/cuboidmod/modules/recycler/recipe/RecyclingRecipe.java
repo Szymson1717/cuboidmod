@@ -2,7 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.recycler.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.recycler.tile.MolecularRecyclerTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.util.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -103,7 +104,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the RecyclingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.RECYCLING.get();
+        return ModRecipeSerializers.RECYCLING.get();
     }
 
     /**
@@ -112,7 +113,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.RECYCLING;
+        return ModRecipeTypes.RECYCLING;
     }
 
     /**

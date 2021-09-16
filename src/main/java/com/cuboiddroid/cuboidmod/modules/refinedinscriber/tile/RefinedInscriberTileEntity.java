@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -207,7 +207,7 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.INSCRIBING, inv, this.level).orElse(null);
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
     }
 
     private Inventory getInputsAsInventory() {

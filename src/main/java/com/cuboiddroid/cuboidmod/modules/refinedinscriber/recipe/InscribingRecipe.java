@@ -3,7 +3,8 @@ package com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -122,7 +123,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the InscribingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.INSCRIBING.get();
+        return ModRecipeSerializers.INSCRIBING.get();
     }
 
     /**
@@ -131,7 +132,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.INSCRIBING;
+        return ModRecipeTypes.INSCRIBING;
     }
 
 

@@ -17,7 +17,7 @@ import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.util.Constants;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -65,13 +65,13 @@ public class CuboidModJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         if (Config.enableJeiPlugin.get()) {
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.RECYCLING), Constants.RECYCLING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.TRANSMUTING), Constants.TRANSMUTING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.INSCRIBING), Constants.INSCRIBING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.COLLAPSING), Constants.COLLAPSING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.RESOURCE_GENERATING), Constants.RESOURCE_GENERATING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.POWER_GENERATING), Constants.POWER_GENERATING);
-            registration.addRecipes(getRecipesOfType(ModRecipes.Types.DRYING), Constants.DRYING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.RECYCLING), Constants.RECYCLING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.TRANSMUTING), Constants.TRANSMUTING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.INSCRIBING), Constants.INSCRIBING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.COLLAPSING), Constants.COLLAPSING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.RESOURCE_GENERATING), Constants.RESOURCE_GENERATING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.POWER_GENERATING), Constants.POWER_GENERATING);
+            registration.addRecipes(getRecipesOfType(ModRecipeTypes.DRYING), Constants.DRYING);
         }
     }
 

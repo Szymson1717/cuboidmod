@@ -2,7 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.transmuter.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -113,7 +114,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the TransmutingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.TRANSMUTING.get();
+        return ModRecipeSerializers.TRANSMUTING.get();
     }
 
     /**
@@ -122,7 +123,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.TRANSMUTING;
+        return ModRecipeTypes.TRANSMUTING;
     }
 
 

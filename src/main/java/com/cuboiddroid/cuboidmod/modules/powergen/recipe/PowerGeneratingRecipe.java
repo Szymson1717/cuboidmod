@@ -2,7 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.powergen.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -74,7 +75,7 @@ public class PowerGeneratingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the ResourceGeneratingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.POWER_GENERATING.get();
+        return ModRecipeSerializers.POWER_GENERATING.get();
     }
 
     /**
@@ -83,7 +84,7 @@ public class PowerGeneratingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.POWER_GENERATING;
+        return ModRecipeTypes.POWER_GENERATING;
     }
 
     /**

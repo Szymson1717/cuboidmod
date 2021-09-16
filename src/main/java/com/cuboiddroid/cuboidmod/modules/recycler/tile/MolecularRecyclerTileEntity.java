@@ -5,7 +5,7 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.recycler.config.BlacklistConfig;
 import com.cuboiddroid.cuboidmod.modules.recycler.inventory.MolecularRecyclerContainer;
 import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import com.cuboiddroid.cuboidmod.util.Pair;
@@ -240,7 +240,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         IInventory inv = getInputsAsInventory();
 
         // look for a specific recipe and use it if found (i.e. json overrides)
-        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.RECYCLING, inv, this.level).orElse(null);
+        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING, inv, this.level).orElse(null);
 
         // there is a (JSON) recipe override, so use it
         if (recipe != null)

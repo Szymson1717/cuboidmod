@@ -2,7 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -90,7 +91,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the DryingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.DRYING.get();
+        return ModRecipeSerializers.DRYING.get();
     }
 
     /**
@@ -99,7 +100,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.DRYING;
+        return ModRecipeTypes.DRYING;
     }
 
     /**

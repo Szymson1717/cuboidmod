@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -305,7 +305,7 @@ public class DryingCupboardContainer extends Container {
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.DRYING, new Inventory(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, new Inventory(stack), this.level).isPresent();
     }
 
 }

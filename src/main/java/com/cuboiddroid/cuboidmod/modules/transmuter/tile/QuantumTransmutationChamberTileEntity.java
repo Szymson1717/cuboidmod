@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.transmuter.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -204,7 +204,7 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.TRANSMUTING, inv, this.level).orElse(null);
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
     }
 
     private Inventory getInputsAsInventory() {

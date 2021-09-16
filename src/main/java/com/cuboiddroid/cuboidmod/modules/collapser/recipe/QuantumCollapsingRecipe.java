@@ -3,7 +3,8 @@ package com.cuboiddroid.cuboidmod.modules.collapser.recipe;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -100,7 +101,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the CollapsingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.COLLAPSING.get();
+        return ModRecipeSerializers.COLLAPSING.get();
     }
 
     /**
@@ -109,7 +110,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.COLLAPSING;
+        return ModRecipeTypes.COLLAPSING;
     }
 
     /**

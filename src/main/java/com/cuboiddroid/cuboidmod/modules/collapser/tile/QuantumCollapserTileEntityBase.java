@@ -1,7 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -216,7 +216,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipes.Types.COLLAPSING, inv, this.level).orElse(null);
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
     }
 
     private Inventory getInputsAsInventory() {

@@ -2,7 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.resourcegen.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipes;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
+import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -76,7 +77,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      * @return the IRecipeSerializer for the ResourceGeneratingRecipe
      */
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.Serializers.RESOURCE_GENERATING.get();
+        return ModRecipeSerializers.RESOURCE_GENERATING.get();
     }
 
     /**
@@ -85,7 +86,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      * @return The IRecipeType for this recipe
      */
     public IRecipeType<?> getType() {
-        return ModRecipes.Types.RESOURCE_GENERATING;
+        return ModRecipeTypes.RESOURCE_GENERATING;
     }
 
     /**
