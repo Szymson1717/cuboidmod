@@ -63,12 +63,14 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
                 .unlockedBy("has_item", provider.hasItem(ModItems.NOTSOGUDIUM_BOWL.get()))
                 .save(consumer, modId("broth_from_water_bucket_and_bone_meal"));
 
+        /* had to remove this and move to static recipe instead
         ShapelessRecipeBuilder.shapeless(ModItems.BROTH.get(), 1)
                 .requires(Ingredient.of(ModItems.NOTSOGUDIUM_BOWL.get()), 1)
                 .requires(Ingredient.of(Items.BONE_MEAL), 1)
-                .requires(Ingredient.of(Items.POTION), 1)
+                .requires(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER).getItem())
                 .unlockedBy("has_item", provider.hasItem(ModItems.NOTSOGUDIUM_BOWL.get()))
                 .save(consumer, modId("broth_from_water_bottle_and_bone_meal"));
+         */
     }
 
     private static void buildGruelRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
