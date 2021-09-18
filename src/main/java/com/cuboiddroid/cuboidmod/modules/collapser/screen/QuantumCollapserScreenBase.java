@@ -181,6 +181,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
             } else {
                 StringTextComponent text = new StringTextComponent(this.tile.getAmountConsumed() + " / " + this.tile.getAmountRequired());
                 tooltip.add(text);
+                tooltip.add(this.tile.getCollapsingItemStackForDisplay().getHoverName());
             }
 
             this.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);

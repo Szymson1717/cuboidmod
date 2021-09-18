@@ -18,6 +18,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -33,6 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Date;
 
 public abstract class QuantumCollapserTileEntityBase extends TileEntity implements ITickableTileEntity {
     public static final int INPUT_SLOT = 0;
@@ -266,7 +268,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
             String curIngId = tag.getString("curIng");
             currentIngredient = curIngId.isEmpty()
                     ? Ingredient.EMPTY
-                    : Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(curIngId)), 1));
+                    : Ingredient.fromJson(JSONUtils.parse(curIngId));
         } catch(Exception ex) {
             currentIngredient = Ingredient.EMPTY;
         }
@@ -289,7 +291,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         if (currentIngredient.isEmpty())
             tag.putString("curOutId", "");
         else
-            tag.putString("curIng", currentIngredient.getItems()[0].getItem().getRegistryName().toString());
+            tag.putString("curIng", currentIngredient.toJson().toString());
 
         tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
 
@@ -429,7 +431,10 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         if (this.currentIngredient.isEmpty())
             return ItemStack.EMPTY;
 
-        return this.currentIngredient.getItems()[0].copy();
+        Date date = new Date();
+        int index = (int)((date.getTime() / 1000) % this.currentIngredient.getItems().length);
+
+        return this.currentIngredient.getItems()[index].copy();
     }
 
     public ItemStack getSingularityOutputForDisplay() {
