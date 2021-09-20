@@ -23,6 +23,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -87,6 +88,16 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
+    public void setCustomName(ITextComponent newNameComponent) {
+        // for some reason still to be figured out, when naming
+        // in an anvil, we're always getting a string with []'s - this cleans up
+        String newName = newNameComponent.getString();
+        if (newName.startsWith("[") && newName.endsWith("]"))
+            newName = newName.substring(1, newName.length() - 1);
+        super.setCustomName(new StringTextComponent(newName));
+    }
+
+    @Override
     protected ITextComponent getDefaultName() {
         return new TranslationTextComponent(CuboidMod.MOD_ID + ".container." + this.chestType.getId() + "_chest");
     }
@@ -95,11 +106,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     public void load(BlockState state, CompoundNBT tags) {
         super.load(state, tags);
 
-        if (this.retainsInventory) {
-            deserializeChestContentsNBT(tags.getCompound("contents"));
-        } else {
-            this.chestContents = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        }
+        this.chestContents = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
         if (!this.tryLoadLootTable(tags)) {
             ItemStackHelper.loadAllItems(tags, this.chestContents);
@@ -109,10 +116,6 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     @Override
     public CompoundNBT save(CompoundNBT tags) {
         super.save(tags);
-
-        if (this.retainsInventory) {
-            tags.put("contents", serializeChestContentsNBT());
-        }
 
         if (!this.trySaveLootTable(tags)) {
             ItemStackHelper.saveAllItems(tags, this.chestContents);
@@ -315,7 +318,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
                 this.chestContents.set(slot, ItemStack.of(itemTags));
             }
         }
-        onLoad();
+        //onLoad();
     }
 
     public CompoundNBT serializeChestContentsNBT()

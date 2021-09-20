@@ -6,6 +6,23 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "Items",
+                  "target": "BlockEntityTag.Items",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
           "name": "cuboidmod:thatldu_chest"
         }
       ],
@@ -14,23 +31,6 @@
           "condition": "minecraft:survives_explosion"
         }
       ]
-    }
-  ],
-  "functions": [
-    {
-      "function": "minecraft:copy_nbt",
-      "source": "block_entity",
-      "ops": [
-        {
-          "source": "contents",
-          "target": "BlockEntityTag.contents",
-          "op": "replace"
-        }
-      ]
-    },
-    {
-      "function": "minecraft:copy_name",
-      "source": "block_entity"
     }
   ]
 }

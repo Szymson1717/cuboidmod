@@ -24,6 +24,7 @@ import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.CopyName;
 import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.loot.functions.SetCount;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -136,9 +137,7 @@ public class ModLootTableProvider extends LootTableProvider {
         }
 
         private void addChestDrop(RegistryObject<? extends CuboidChestBlockBase> chest) {
-            add(chest.get(), (block) -> createSingleItemTable(chest.get())
-                    .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("contents", "BlockEntityTag.contents", CopyNbt.Action.REPLACE))
-                    .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)));
+            add(chest.get(), (block) -> createSingleItemTableForChest(chest.get()));
         }
 
         private void addFurnaceDrop(RegistryObject<? extends CuboidFurnaceBlockBase> furnace) {
@@ -210,6 +209,15 @@ public class ModLootTableProvider extends LootTableProvider {
                     .collect(Collectors.toList());
         }
 
+        protected static LootTable.Builder createSingleItemTableForChest(IItemProvider itemProvider) {
+            return LootTable.lootTable()
+                    .withPool(applyExplosionCondition(itemProvider,
+                            LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+                                    .add(ItemLootEntry.lootTableItem(itemProvider)
+                                        .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))
+                                        .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Items", "BlockEntityTag.Items", CopyNbt.Action.REPLACE)))
+                    ));
+        }
 
     }
 }
