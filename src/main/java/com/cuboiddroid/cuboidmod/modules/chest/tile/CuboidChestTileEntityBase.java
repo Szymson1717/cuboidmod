@@ -91,9 +91,9 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     public void setCustomName(ITextComponent newNameComponent) {
         // for some reason still to be figured out, when naming
         // in an anvil, we're always getting a string with []'s - this cleans up
-        String newName = newNameComponent.getString();
+        String newName = newNameComponent.getString().trim();
         if (newName.startsWith("[") && newName.endsWith("]"))
-            newName = newName.substring(1, newName.length() - 1);
+            newName = newName.substring(1, newName.length() - 1).trim();
         super.setCustomName(new StringTextComponent(newName));
     }
 

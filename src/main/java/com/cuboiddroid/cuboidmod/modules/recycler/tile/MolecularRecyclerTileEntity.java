@@ -290,10 +290,15 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         // than 6 entries
         Map<ItemStack, Float> recyclingResults = determineRecyclingRecipeResults(possibleResults);
 
+        // recipes have been calculated against 1 input, so
+        // make sure the recipe expects just the 1 input too
+        ItemStack recipeInput = inputItem.copy();
+        recipeInput.setCount(1);
+
         // create the automatic recipe
         recipe = new RecyclingRecipe(new ResourceLocation(autoRecipeId)) {
             private final Map<ItemStack, Float> results = recyclingResults;
-            private final Ingredient ingredient = Ingredient.of(inputItem);
+            private final Ingredient ingredient = Ingredient.of(recipeInput);
 
             @Override
             public Ingredient getIngredient() {
@@ -347,13 +352,22 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
     /**
      * Recursively "uncrafts" the input item and puts the ingredients into the possibleResults map.
      *
-     * @param inputItem       The input item to uncraft
+     * @param inputStack       The input item stack to uncraft
      * @param possibleResults the map of possible results to populate - should be empty when first called
      * @param currentStep     the current "depth" or number of recycling steps - should be 0 when first called
      * @return the maximum "depth" or number of recycling steps achieved in the recursive function
      */
-    private int getAutoRecipeResults(ItemStack inputItem, Map<Item, ItemStack> possibleResults, int currentStep) {
+    private int getAutoRecipeResults(ItemStack inputStack, Map<Item, ItemStack> possibleResults, int currentStep) {
         // ensure we're not trying to recycle a blacklisted item or ingredient
+
+        ItemStack inputItem = inputStack.copy();
+
+        if (currentStep <= 0) {
+            // work with a single item as input when calculating the recipe
+            // but only on the first step (original input)
+            inputItem.setCount(1);
+        }
+
         if (itemIsBlacklisted(inputItem)) {
             addItemStackToPossibleResults(inputItem, possibleResults);
 
