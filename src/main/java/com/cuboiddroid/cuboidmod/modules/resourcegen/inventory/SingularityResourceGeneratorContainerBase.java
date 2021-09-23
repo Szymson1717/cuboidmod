@@ -17,6 +17,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nonnull;
+
 public abstract class SingularityResourceGeneratorContainerBase extends Container {
 
     protected SingularityResourceGeneratorTileEntityBase tileEntity;
@@ -38,7 +40,17 @@ public abstract class SingularityResourceGeneratorContainerBase extends Containe
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT, 32, 43));
+                addSlot(new SlotItemHandler(h, SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT, 32, 43) {
+                    @Override
+                    public int getMaxStackSize() {
+                        return 1;
+                    }
+
+                    @Override
+                    public boolean mayPlace(@Nonnull ItemStack stack) {
+                        return !this.hasItem() && stack.getCount() == 1 && super.mayPlace(stack);
+                    }
+                });
                 addSlot(new SlotItemHandler(h, SingularityResourceGeneratorTileEntityBase.OUTPUT, 71, 43));
             });
         }
