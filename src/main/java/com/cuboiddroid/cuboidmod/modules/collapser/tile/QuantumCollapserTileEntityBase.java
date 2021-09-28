@@ -84,8 +84,9 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
                 this.currentOutput = recipe.getResultItem();
                 setChanged();
             } else if (!currentIngredient.test(this.inputItemHandler.getStackInSlot(0))) {
-                // can't change recipe mid-load
-                return;
+                // can't change recipe mid-load, but if already filled up, let it run
+                if (amountConsumed < amountRequired)
+                  return;
             }
         }
 
@@ -93,10 +94,12 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
             if (processingTime <= 0) {
                 ItemStack currentInputStack = inputItemHandler.getStackInSlot(INPUT_SLOT);
                 if (currentInputStack.isEmpty() || !currentIngredient.test(currentInputStack))
-                    // nothing in the input slot or not the right item - do nothing
-                    return;
-
-                if (amountConsumed < amountRequired) {
+                    // nothing in the input slot or not the right item
+                {
+                    // if we haven't already filled up with the right item, bug out!
+                    if (amountConsumed < amountRequired)
+                      return;
+                } else if (amountConsumed < amountRequired) {
                     // consume the  amount of input items
                     int amountNeeded = amountRequired - amountConsumed;
 
@@ -120,6 +123,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
 
             if (processingTime <= 0 && amountConsumed >= amountRequired) {
                 // we've consumed enough items but have not started working - start working!
+                this.recipeTime = (int) (recipe.getWorkTicks() / this.speedFactor);
                 this.processingTime = this.recipeTime;
                 setChanged();
             }
@@ -152,6 +156,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         }
 
         if (!hasRoomForOutputs) {
+            // don't stop - enter a "holding pattern" instead until the current output slot is cleared
             stopWork();
             return false;
         }
@@ -211,12 +216,18 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
 
     @Nullable
     public QuantumCollapsingRecipe getRecipe() {
-        if (this.level == null
-                || this.inputItemHandler.getStackInSlot(0).isEmpty())
+        if (this.level == null)
             return null;
 
-        // make an inventory
-        IInventory inv = getInputsAsInventory();
+        if (this.inputItemHandler.getStackInSlot(0).isEmpty()) {
+            if (this.currentIngredient.isEmpty())
+                return null;
+        }
+
+        // make an inventory - from current ingredient if input slot is empty, otherwise from whatever is in input slot
+        IInventory inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
+                ? new Inventory(this.currentIngredient.getItems()[0].copy())
+                : getInputsAsInventory();
 
         return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
     }
