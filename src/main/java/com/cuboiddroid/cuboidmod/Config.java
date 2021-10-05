@@ -223,8 +223,8 @@ public class Config {
 
     private static void setupSmasherConfig(ForgeConfigSpec.Builder COMMON_BUILDER, ForgeConfigSpec.Builder CLIENT_BUILDER) {
         notsogudiumSmasherDurability = COMMON_BUILDER
-                .comment(" Durability for the Notsogudium Smasher.\n Default: 130")
-                .defineInRange("notsogudium_smasher.durability", 130, 1, 32767);
+                .comment(" Durability for the Notsogudium Smasher.\n Default: 261")
+                .defineInRange("notsogudium_smasher.durability", 261, 1, 32767);
 
         notsogudiumSmasherAttackDamage = COMMON_BUILDER
                 .comment(" Attack Damage for the Notsogudium Smasher.\n Default: 2")
@@ -235,8 +235,8 @@ public class Config {
                 .defineInRange("notsogudium_smasher.attackSpeed", 1.4, 0.0, 4.0);
 
         kudbebeddaSmasherDurability = COMMON_BUILDER
-                .comment(" Durability for the Kudbebedda Smasher.\n Default: 191")
-                .defineInRange("kudbebedda_smasher.durability", 191, 1, 32767);
+                .comment(" Durability for the Kudbebedda Smasher.\n Default: 383")
+                .defineInRange("kudbebedda_smasher.durability", 383, 1, 32767);
 
         kudbebeddaSmasherAttackDamage = COMMON_BUILDER
                 .comment(" Attack Damage for the Kudbebedda Smasher.\n Default: 3")
@@ -247,8 +247,8 @@ public class Config {
                 .defineInRange("kudbebedda_smasher.attackSpeed", 1.4, 0.0, 4.0);
 
         notarfbadiumSmasherDurability = COMMON_BUILDER
-                .comment(" Durability for the Notarfbadium Smasher.\n Default: 363")
-                .defineInRange("notarfbadium_smasher.durability", 363, 1, 32767);
+                .comment(" Durability for the Notarfbadium Smasher.\n Default: 727")
+                .defineInRange("notarfbadium_smasher.durability", 727, 1, 32767);
 
         notarfbadiumSmasherAttackDamage = COMMON_BUILDER
                 .comment(" Attack Damage for the Notarfbadium Smasher.\n Default: 4")
@@ -259,8 +259,8 @@ public class Config {
                 .defineInRange("notarfbadium_smasher.attackSpeed", 1.4, 0.0, 4.0);
 
         wikidiumSmasherDurability = COMMON_BUILDER
-                .comment(" Durability for the Wikidium Smasher.\n Default: 727")
-                .defineInRange("wikidium_smasher.durability", 727, 1, 32767);
+                .comment(" Durability for the Wikidium Smasher.\n Default: 1337")
+                .defineInRange("wikidium_smasher.durability", 1337, 1, 32767);
 
         wikidiumSmasherAttackDamage = COMMON_BUILDER
                 .comment(" Attack Damage for the Wikidium Smasher.\n Default: 2")
@@ -271,8 +271,8 @@ public class Config {
                 .defineInRange("wikidium_smasher.attackSpeed", 1.4, 0.0, 4.0);
 
         thatlduSmasherDurability = COMMON_BUILDER
-                .comment(" Durability for the Thatldu Smasher.\n Default: 1974")
-                .defineInRange("thatldu_smasher.durability", 1974, 1, 32767);
+                .comment(" Durability for the Thatldu Smasher.\n Default: 2577")
+                .defineInRange("thatldu_smasher.durability", 2577, 1, 32767);
 
         thatlduSmasherAttackDamage = COMMON_BUILDER
                 .comment(" Attack Damage for the Thatldu Smasher.\n Default: 2")

@@ -4,16 +4,20 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
+import java.util.Random;
 import java.util.Set;
 
 public class ToolUtils {
-    public static void tryBreakAdjacent(World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
+    private static Random random = new Random();
+
+    public static void tryBreakAdjacent(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
         RayTraceResult trace = calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
 
         if (trace.getType() == RayTraceResult.Type.BLOCK) {
@@ -22,6 +26,11 @@ public class ToolUtils {
 
             for (int a = -1; a <= 1; a++) {
                 for (int b = -1; b <= 1; b++) {
+                    // check that we have enough durability left (leaving 1 for main parent mineBlock routine!)
+                    if (stack.getDamageValue()+1 >= stack.getMaxDamage())
+                        continue;
+
+                    // middle block handled by main mineBlock parent routine
                     if (a == 0 && b == 0) continue;
 
                     BlockPos target = null;
@@ -30,13 +39,13 @@ public class ToolUtils {
                     if (face == Direction.NORTH || face == Direction.SOUTH) target = pos.offset(a, b, 0);
                     if (face == Direction.EAST || face == Direction.WEST) target = pos.offset(0, a, b);
 
-                    tryBreak(world, target, player, effectiveMaterials);
+                    tryBreak(stack, world, target, player, effectiveMaterials);
                 }
             }
         }
     }
 
-    public static void tryBreak(World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
+    public static void tryBreak(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
         BlockState state = world.getBlockState(pos);
         boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
         boolean isEffective = effectiveMaterials.contains(state.getMaterial());
@@ -45,6 +54,7 @@ public class ToolUtils {
 
         if (isEffective && !witherImmune && isWithinHarvestLevel) {
             if (!state.hasTileEntity()) {
+                stack.hurt(1, random, null);
                 world.destroyBlock(pos, false);
                 Block.dropResources(state, world, pos, null, player, player.getMainHandItem());
             }

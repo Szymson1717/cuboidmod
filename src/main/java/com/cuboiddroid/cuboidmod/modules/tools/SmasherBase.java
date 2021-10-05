@@ -39,10 +39,8 @@ public abstract class SmasherBase extends PickaxeItem {
 
     @Override
     public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
-        stack.hurt(1, random, null);
-
         if (entity instanceof PlayerEntity) {
-            ToolUtils.tryBreakAdjacent(world, pos, (PlayerEntity) entity, EFFECTIVE_MATERIALS);
+            ToolUtils.tryBreakAdjacent(stack, world, pos, (PlayerEntity) entity, EFFECTIVE_MATERIALS);
         }
         return super.mineBlock(stack, world, state, pos, entity);
     }
