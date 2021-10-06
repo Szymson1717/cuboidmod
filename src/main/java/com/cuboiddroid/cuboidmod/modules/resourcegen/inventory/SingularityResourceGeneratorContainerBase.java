@@ -48,7 +48,7 @@ public abstract class SingularityResourceGeneratorContainerBase extends Containe
 
                     @Override
                     public boolean mayPlace(@Nonnull ItemStack stack) {
-                        return !this.hasItem() && stack.getCount() == 1 && super.mayPlace(stack);
+                        return !this.hasItem() /*&& stack.getCount() == 1*/ && super.mayPlace(stack);
                     }
                 });
                 addSlot(new SlotItemHandler(h, SingularityResourceGeneratorTileEntityBase.OUTPUT, 71, 43));

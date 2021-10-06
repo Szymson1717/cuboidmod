@@ -51,7 +51,7 @@ public abstract class SingularityPowerGeneratorContainerBase extends Container {
 
                     @Override
                     public boolean mayPlace(@Nonnull ItemStack stack) {
-                        return !this.hasItem() && stack.getCount() == 1 && super.mayPlace(stack);
+                        return !this.hasItem() /*&& stack.getCount() == 1*/ && super.mayPlace(stack);
                     }
                 });
             });
