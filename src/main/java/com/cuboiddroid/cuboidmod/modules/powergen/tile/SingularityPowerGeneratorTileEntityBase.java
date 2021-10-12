@@ -125,8 +125,11 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         }
 
         BlockState blockState = this.level.getBlockState(this.worldPosition);
-        if (blockState.getValue(BlockStateProperties.LIT) != counter > 0) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, counter > 0),
+        Boolean shouldBeLit =
+                (counter > 0 || this.energyStorage.getEnergyStored() > 0)
+                && !itemHandler.getStackInSlot(0).isEmpty();
+        if (blockState.getValue(BlockStateProperties.LIT) != shouldBeLit) {
+            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit),
                     Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
         }
 
