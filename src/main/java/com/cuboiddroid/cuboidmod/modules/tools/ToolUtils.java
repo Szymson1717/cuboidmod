@@ -46,19 +46,25 @@ public class ToolUtils {
     }
 
     public static void tryBreak(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
-        BlockState state = world.getBlockState(pos);
-        boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
-        boolean isEffective = effectiveMaterials.contains(state.getMaterial());
+        if (isBreakableWithSmasher(world, pos, player, effectiveMaterials)) {
+            BlockState state = world.getBlockState(pos);
 
-        boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
-
-        if (isEffective && !witherImmune && isWithinHarvestLevel) {
             if (!state.hasTileEntity()) {
                 stack.hurt(1, random, null);
                 world.destroyBlock(pos, false);
                 Block.dropResources(state, world, pos, null, player, player.getMainHandItem());
             }
         }
+    }
+
+    public static Boolean isBreakableWithSmasher(World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
+        BlockState state = world.getBlockState(pos);
+        boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
+        boolean isEffective = effectiveMaterials.contains(state.getMaterial());
+
+        boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
+
+        return (isEffective && !witherImmune && isWithinHarvestLevel);
     }
 
     public static RayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
@@ -72,7 +78,7 @@ public class ToolUtils {
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue() + 1;
-        ;
+
         Vector3d vec3d1 = vec3d.add((double) f6 * d0, (double) f5 * d0, (double) f7 * d0);
         return worldIn.clip(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
     }

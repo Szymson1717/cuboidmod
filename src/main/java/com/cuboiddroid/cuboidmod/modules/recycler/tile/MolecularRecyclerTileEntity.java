@@ -222,7 +222,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         if (firstEmptyIndex >= 0) {
             outputItemHandler.setStackInSlot(firstEmptyIndex, stack.copy());
         } else {
-            throw new IllegalStateException("Attempted to move stack to output slots without checking if there is room first!");
+            CuboidMod.LOGGER.error("Attempted to move stack to output slots without checking if there is room first!");
         }
     }
 
