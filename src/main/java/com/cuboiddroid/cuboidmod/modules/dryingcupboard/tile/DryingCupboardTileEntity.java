@@ -436,4 +436,8 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
     public int getRecipeTime(int slotIndex) {
         return this.recipeTimes[slotIndex] == 0 ? -1 : this.recipeTimes[slotIndex];
     }
+
+    public void setRecipeTime(int slotIndex, int value) {
+        this.recipeTimes[slotIndex] = value;
+    }
 }

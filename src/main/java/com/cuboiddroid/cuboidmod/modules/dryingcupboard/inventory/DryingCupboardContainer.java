@@ -98,7 +98,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(0);
+                return tileEntity.getProcessingTime(0) & 0x7FFF;
             }
 
             @Override
@@ -111,7 +111,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(1);
+                return tileEntity.getProcessingTime(1) & 0x7FFF;
             }
 
             @Override
@@ -124,7 +124,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(2);
+                return tileEntity.getProcessingTime(2) & 0x7FFF;
             }
 
             @Override
@@ -137,7 +137,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(3);
+                return tileEntity.getProcessingTime(3) & 0x7FFF;
             }
 
             @Override
@@ -150,7 +150,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(4);
+                return tileEntity.getProcessingTime(4) & 0x7FFF;
             }
 
             @Override
@@ -163,7 +163,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(5);
+                return tileEntity.getProcessingTime(5) & 0x7FFF;
             }
 
             @Override
@@ -176,7 +176,7 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(6);
+                return tileEntity.getProcessingTime(6) & 0x7FFF;
             }
 
             @Override
@@ -189,12 +189,116 @@ public class DryingCupboardContainer extends Container {
         this.addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
-                return tileEntity.getProcessingTime(7);
+                return tileEntity.getProcessingTime(7) & 0x7FFF;
             }
 
             @Override
             public void set(int value) {
                 tileEntity.setProcessingTime(7, value);
+            }
+        });
+
+        // recipe time - slot 0
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(0) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(0, value);
+            }
+        });
+
+        // recipe time - slot 1
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(1) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(1, value);
+            }
+        });
+
+        // recipe time - slot 2
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(2) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(2, value);
+            }
+        });
+
+        // recipe time - slot 3
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(3) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(3, value);
+            }
+        });
+
+        // recipe time - slot 4
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(4) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(4, value);
+            }
+        });
+
+        // recipe time - slot 5
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(5) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(5, value);
+            }
+        });
+
+        // recipe time - slot 6
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(6) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(6, value);
+            }
+        });
+
+        // recipe time - slot 7
+        this.addDataSlot(new IntReferenceHolder() {
+            @Override
+            public int get() {
+                return tileEntity.getRecipeTime(7) & 0x7FFF;
+            }
+
+            @Override
+            public void set(int value) {
+                tileEntity.setRecipeTime(7, value);
             }
         });
     }
