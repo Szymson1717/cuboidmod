@@ -115,14 +115,15 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         }
         int i = getCookTimeConfig().get();
         if (this.recipeType != null) {
+            AbstractCookingRecipe recipe = getRecipe();
             if (this.recipeType == IRecipeType.SMELTING) {
-                int j = this.level.getRecipeManager().getRecipeFor((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).map(AbstractCookingRecipe::getCookingTime).orElse((i));
+                int j = recipe != null ? recipe.getCookingTime() : i;
                 if (j < i) {
                     int k = j - (200 - i);
                     return Math.max(k, 1);
                 }
             } else {
-                int j = this.level.getRecipeManager().getRecipeFor((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).map(AbstractCookingRecipe::getCookingTime).orElse((i));
+                int j = recipe != null ? recipe.getCookingTime() : i;
                 if (j < (i / 2)) {
                     int k = j - (200 - (i / 2));
                     return Math.max(k, 1);
@@ -265,8 +266,8 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
             ItemStack itemstack = this.inventory.get(FUEL);
             if (this.isBurning() || !itemstack.isEmpty() && !this.inventory.get(INPUT).isEmpty()) {
-                AbstractCookingRecipe irecipe = level.getRecipeManager().getRecipeFor((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).orElse(null);
-                boolean valid = this.canSmelt(irecipe);
+                AbstractCookingRecipe iRecipe = getRecipe();
+                boolean valid = this.canSmelt(iRecipe);
                 if (!this.isBurning() && valid) {
 
                     this.furnaceBurnTime = getBurnTime(itemstack) * this.getCookTime() / 200;
@@ -290,7 +291,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                     if (this.cookTime >= this.totalCookTime) {
                         this.cookTime = 0;
                         this.totalCookTime = this.getCookTime();
-                        this.smeltItem(irecipe);
+                        this.smeltItem(iRecipe);
                         flag1 = true;
                     }
                 } else {
@@ -854,5 +855,14 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
             }
             level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 3);
         }
+    }
+
+    private AbstractCookingRecipe getRecipe()
+    {
+        if (curRecipe == null || !curRecipe.matches(this, this.level)) {
+            curRecipe = this.level.getRecipeManager().getRecipeFor((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).orElse(null);
+        }
+
+        return curRecipe;
     }
 }

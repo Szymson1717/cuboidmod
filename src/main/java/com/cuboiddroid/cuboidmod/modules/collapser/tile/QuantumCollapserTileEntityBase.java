@@ -60,6 +60,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
     private Ingredient currentIngredient = Ingredient.EMPTY;
     private ItemStack currentOutput = ItemStack.EMPTY;
 
+    private QuantumCollapsingRecipe cachedRecipe = null;
+
     public QuantumCollapserTileEntityBase(TileEntityType<?> tileEntityType, float speedFactor) {
         super(tileEntityType);
         this.speedFactor = speedFactor;
@@ -229,7 +231,11 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
                 ? new Inventory(this.currentIngredient.getItems()[0].copy())
                 : getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
+        if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
+        }
+
+        return cachedRecipe;
     }
 
     private Inventory getInputsAsInventory() {

@@ -65,6 +65,8 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
     private int recipeTime = -1;
     private int energyConsumed = 0;
 
+    private TransmutingRecipe cachedRecipe = null;
+
     public QuantumTransmutationChamberTileEntity() {
         super(ModTileEntities.QUANTUM_TRANSMUTATION_CHAMBER.get());
         energyStorage = createEnergy();
@@ -204,7 +206,11 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
+        if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
+        }
+
+        return cachedRecipe;
     }
 
     private Inventory getInputsAsInventory() {

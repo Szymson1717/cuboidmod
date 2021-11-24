@@ -231,25 +231,18 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
             return null;
         }
 
-        if (recipes[slotIndex] != null) {
-            // we're already tracking a recipe for this slot.
-            if (recipes[slotIndex].getIngredient().getItems()[0].sameItem(this.inputItemHandler.getStackInSlot(slotIndex)))
-                // same input item as is currently in the slot, so we'll keep using it.
-                return recipes[slotIndex];
-        }
-
-        // not tracking a recipe, or the one we are tracking has a different input item...
-
         // make an inventory from the input slot content
         IInventory inv = getInputsAsInventory(slotIndex);
 
-        // look for a specific recipe and use it if found
-        DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, inv, this.level).orElse(null);
+        if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
+            // look for a specific recipe and use it if found
+            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, inv, this.level).orElse(null);
 
-        // track the recipe being used for this slot to save time next tick
-        recipes[slotIndex] = recipe;
+            // track the recipe being used for this slot to save time next tick
+            recipes[slotIndex] = recipe;
+        }
 
-        return recipe;
+        return recipes[slotIndex];
     }
 
     private Inventory getInputsAsInventory(int slotIndex) {

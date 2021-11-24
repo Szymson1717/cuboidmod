@@ -53,6 +53,8 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     private int energyProducedPerCycle = 80;
     private float singularityMultiplier = 0.0F;
 
+    private PowerGeneratingRecipe cachedRecipe = null;
+
     public SingularityPowerGeneratorTileEntityBase(
             TileEntityType<?> tileEntityType,
             int energyCapacity,
@@ -172,7 +174,11 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.POWER_GENERATING, inv, this.level).orElse(null);
+        if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.POWER_GENERATING, inv, this.level).orElse(null);
+        }
+
+        return cachedRecipe;
     }
 
     private Inventory getInputsAsInventory() {

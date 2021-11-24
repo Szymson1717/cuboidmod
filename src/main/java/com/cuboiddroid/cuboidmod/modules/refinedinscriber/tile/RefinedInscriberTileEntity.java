@@ -66,6 +66,8 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
     private int recipeTime = -1;
     private int energyConsumed = 0;
 
+    private InscribingRecipe cachedRecipe = null;
+
     public RefinedInscriberTileEntity() {
         super(ModTileEntities.REFINED_INSCRIBER.get());
         energyStorage = createEnergy();
@@ -207,7 +209,11 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
+        if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
+        }
+
+        return cachedRecipe;
     }
 
     private Inventory getInputsAsInventory() {

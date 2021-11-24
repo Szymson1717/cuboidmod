@@ -56,6 +56,8 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
     private int itemsPerOperation;
     private int maxItems;
 
+    private ResourceGeneratingRecipe cachedRecipe = null;
+
     public SingularityResourceGeneratorTileEntityBase(
             TileEntityType<?> tileEntityType,
             int ticksPerOperation,
@@ -161,7 +163,11 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         // make an inventory
         IInventory inv = getInputsAsInventory();
 
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
+        if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
+        }
+
+        return cachedRecipe;
     }
 
     private Inventory getInputsAsInventory() {
