@@ -11,5 +11,7 @@ for wider usage in other modpacks too (by adding things like more
 configuration options, etc.)
 
 For now though, it's best to just consider this as a requirement 
-mod for Cuboid Outpost, which you should be able to find on
-CurseForge soon, if not already!
+mod for Cuboid Outpost, which you should can find on CurseForge
+here:
+
+[Cuboid Outpost Modpack!](https://www.curseforge.com/minecraft/modpacks/cuboid-outpost)

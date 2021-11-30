@@ -137,6 +137,10 @@ repositories {
     maven {
         url "https://www.cursemaven.com"
     }
+    maven {
+        // game stages
+        url 'https://maven.blamejared.com'
+    }
     //maven {  // mekanism
     //    url 'https://modmaven.dev/'
     // }
@@ -183,6 +187,9 @@ dependencies {
     // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
     // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
     // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
+
+    compile fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mc_version}:${gamestages_version}")
+    compile fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mc_version}:${bookshelf_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

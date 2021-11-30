@@ -130,7 +130,7 @@ public class CryogenicDimensionalTeleporterBlock extends Block {
 
             if (!item.isEmpty() && item.getItem() instanceof Item) {
                 // player used an item on the block - try set the dimension
-                boolean validTargetKey = cdt.setTargetDimensionWithKeyItem(item);
+                boolean validTargetKey = cdt.setTargetDimensionWithKeyItem((ServerPlayerEntity) player, item);
                 if (validTargetKey) {
                     // was a valid item to set target dimension - consume the item
                     player.setItemInHand(hand, ItemStack.EMPTY);
