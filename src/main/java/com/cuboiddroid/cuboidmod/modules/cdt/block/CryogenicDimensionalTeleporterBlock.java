@@ -139,14 +139,16 @@ public class CryogenicDimensionalTeleporterBlock extends Block {
                 return ActionResultType.SUCCESS;
             } else if (item.isEmpty()) {
                 // player used empty hand - try and teleport to the target dimension
-                DimensionType dim = cdt.GetTargetDimensionIfCharged(level);
-                if (dim == null) {
-                    // play a sound? show failure message in chat?
-                    return ActionResultType.SUCCESS;
-                }
 
                 // teleport the player to the dimension...
                 if (player instanceof ServerPlayerEntity) {
+                    DimensionType dim = cdt.GetTargetDimensionIfCharged((ServerPlayerEntity) player, level);
+                    if (dim == null) {
+                        // play a sound? show failure message in chat?
+                        return ActionResultType.SUCCESS;
+                    }
+
+                    // teleport the player to the dimension...
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     for (ServerWorld world : serverPlayer.getServer().getAllLevels())
                     {

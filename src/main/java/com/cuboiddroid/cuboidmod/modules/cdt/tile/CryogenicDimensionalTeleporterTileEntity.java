@@ -100,7 +100,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
         return false;
     }
 
-    public DimensionType GetTargetDimensionIfCharged(World level) {
+    public DimensionType GetTargetDimensionIfCharged(ServerPlayerEntity serverPlayer, World level) {
         // if state != Ready or no target dimension, return null
         if (targetDimension == "" || state != CdtStates.READY)
             return null;
@@ -108,9 +108,21 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
         // try get the actual Dimension identified as the target
         for (ResourceLocation resLoc : level.getServer().registryAccess().dimensionTypes().keySet())
         {
-            if (resLoc.toString().equalsIgnoreCase(targetDimension))
+            if (resLoc.toString().equalsIgnoreCase(targetDimension)) {
+
+                // this is unfortunately, but due to FTB Quests not working as I expected it to,
+                // this is to allow anyone on a server to get to target dimensions using a
+                // charged CDT
+                if (isTargetCuboidOverworld())
+                    GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
+                else if (isTargetTheEnd())
+                    GameStageHelper.addStage(serverPlayer, "end_access");
+                else if (isTargetTheNether())
+                    GameStageHelper.addStage(serverPlayer, "nether_access");
+
                 // found it! return the target dimension type
                 return level.getServer().registryAccess().dimensionTypes().get(resLoc);
+            }
         }
 
         // could not find the target dimension type
@@ -261,6 +273,10 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
 
     public boolean isTargetTheEnd() {
         return targetDimension.equalsIgnoreCase("minecraft:the_end");
+    }
+
+    public boolean isTargetTheNether() {
+        return targetDimension.equalsIgnoreCase("minecraft:the_nether");
     }
 
     public boolean isTargetTheOverworld() {
