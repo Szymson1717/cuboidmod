@@ -14,6 +14,7 @@ import com.cuboiddroid.cuboidmod.modules.recycler.block.MolecularRecyclerBlock;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.block.RefinedInscriberBlock;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.block.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.block.QuantumTransmutationChamberBlock;
+import com.cuboiddroid.cuboidmod.modules.xmas.block.FiberOpticTreeBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -31,6 +32,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ModBlocks {
+  // Fiber Optic Tree
+
+  public static final RegistryObject<FiberOpticTreeBlock> FIBER_OPTIC_TREE = register(
+          "fiber_optic_tree", () ->
+                  new FiberOpticTreeBlock());
+
   // Quantum Collapsers
 
   public static final RegistryObject<NotsogudiumQuantumCollapserBlock> NOTSOGUDIUM_QUANTUM_COLLAPSER = register(

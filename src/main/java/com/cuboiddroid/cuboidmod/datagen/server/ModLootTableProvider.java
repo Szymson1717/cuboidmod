@@ -65,6 +65,8 @@ public class ModLootTableProvider extends LootTableProvider {
             dropSelf(ModBlocks.WIKIDIUM_QUANTUM_COLLAPSER.get());
             dropSelf(ModBlocks.THATLDU_QUANTUM_COLLAPSER.get());
 
+            addDropMachine(ModBlocks.FIBER_OPTIC_TREE.get(), new String[]{"mode"}, false);
+
             addDropMachine(ModBlocks.MOLECULAR_RECYCLER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
             addDropMachine(ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get(), new String[]{"invIn", "invAdd", "invOut"}, true);
             addDropMachine(ModBlocks.REFINED_INSCRIBER.get(), new String[]{"invTL", "invMid", "invBR", "invOut"}, true);

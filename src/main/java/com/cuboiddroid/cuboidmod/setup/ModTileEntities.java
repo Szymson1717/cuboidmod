@@ -10,6 +10,7 @@ import com.cuboiddroid.cuboidmod.modules.recycler.tile.MolecularRecyclerTileEnti
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
+import com.cuboiddroid.cuboidmod.modules.xmas.tile.FiberOpticTreeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -20,6 +21,11 @@ import java.util.function.Supplier;
 public class ModTileEntities {
     public static void register() {
     }
+
+    // Fiber Optic Tree
+
+    public static final RegistryObject<TileEntityType<FiberOpticTreeTileEntity>> FIBER_OPTIC_TREE = register(
+            "fiber_optic_tree", FiberOpticTreeTileEntity::new, ModBlocks.FIBER_OPTIC_TREE);
 
     // Cryogenic Dimensional Teleporter
 

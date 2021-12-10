@@ -311,5 +311,8 @@
   "jei.category.cuboidmod.inscribing": "Inscribing",
   "jei.category.cuboidmod.drying": "Drying",
 
+  "block.cuboidmod.fiber_optic_tree": "St. Nik's Fiber Optic Tree",
+  "block.cuboidmod.fiber_optic_tree.hover_text": "Change mode with an empty hand for some festive cheer",
+
   "itemGroup.cuboidmod": "Cuboid"
 }
