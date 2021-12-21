@@ -123,7 +123,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
                 }
             }
 
-            if (processingTime <= 0 && amountConsumed >= amountRequired) {
+            if (recipe != null && processingTime <= 0 && amountConsumed >= amountRequired) {
                 // we've consumed enough items but have not started working - start working!
                 this.recipeTime = (int) (recipe.getWorkTicks() / this.speedFactor);
                 this.processingTime = this.recipeTime;
