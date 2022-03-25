@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod;
 
+import com.cuboiddroid.cuboidmod.events.LivingDeathEventHandler;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.Registration;
 import net.minecraft.item.ItemGroup;
@@ -42,6 +43,7 @@ public class CuboidMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new LivingDeathEventHandler());
     }
 
     public static ResourceLocation getModId(String path) {
