@@ -8,24 +8,24 @@ import com.cuboiddroid.cuboidmod.util.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RecyclingRecipe implements IRecipe<IInventory> {
+public class RecyclingRecipe implements Recipe<Container> {
     private static final Random RANDOM = new Random();
 
     private final ResourceLocation recipeId;
@@ -103,7 +103,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the RecyclingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.RECYCLING.get();
     }
 
@@ -112,7 +112,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.RECYCLING;
     }
 
@@ -123,7 +123,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      * @param inv The recycler tile entity
      * @return Results of recycling
      */
-    public List<ItemStack> getResults(IInventory inv) {
+    public List<ItemStack> getResults(Container inv) {
         return results.entrySet().stream()
                 .filter(e -> RANDOM.nextDouble() < e.getValue())
                 .map(e -> e.getKey().copy())
@@ -137,7 +137,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      * @param inv The recycler tile entity
      * @return All possible results of recycling
      */
-    public Set<ItemStack> getPossibleResults(IInventory inv) {
+    public Set<ItemStack> getPossibleResults(Container inv) {
         return results.keySet();
     }
 
@@ -155,7 +155,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         return this.ingredient.test(inv.getItem(MolecularRecyclerTileEntity.SLOT_INPUT));
     }
 
@@ -167,7 +167,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
      */
     @Deprecated
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         return this.getResultItem();
     }
 
@@ -205,8 +205,8 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<RecyclingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<RecyclingRecipe> {
 
         /*
           JSON structure:
@@ -233,24 +233,24 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
         @Override
         public RecyclingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             RecyclingRecipe recipe = new RecyclingRecipe(recipeId);
-            recipe.workTicks = JSONUtils.getAsInt(json, "work_ticks", 200);
-            recipe.energyRequired = JSONUtils.getAsInt(json, "energy", 500);
+            recipe.workTicks = GsonHelper.getAsInt(json, "work_ticks", 200);
+            recipe.energyRequired = GsonHelper.getAsInt(json, "energy", 500);
             recipe.ingredient = Ingredient.fromJson(json.get("ingredient"));
             JsonArray resultsArray = json.getAsJsonArray("results");
             for (JsonElement element : resultsArray) {
                 JsonObject obj = element.getAsJsonObject();
-                String itemId = JSONUtils.getAsString(obj, "item");
+                String itemId = GsonHelper.getAsString(obj, "item");
                 Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(itemId));
-                int count = JSONUtils.getAsInt(obj, "count", 1);
+                int count = GsonHelper.getAsInt(obj, "count", 1);
                 ItemStack stack = new ItemStack(item, count);
-                float chance = JSONUtils.getAsFloat(obj, "chance", 1.0F);
+                float chance = GsonHelper.getAsFloat(obj, "chance", 1.0F);
                 recipe.results.put(stack, chance);
             }
             return recipe;
         }
 
         @Override
-        public RecyclingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public RecyclingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             RecyclingRecipe recipe = new RecyclingRecipe(recipeId);
             recipe.workTicks = buffer.readVarInt();
             recipe.energyRequired = buffer.readVarInt();
@@ -267,7 +267,7 @@ public class RecyclingRecipe implements IRecipe<IInventory> {
             return recipe;
         }
 
-        public void toNetwork(PacketBuffer buffer, RecyclingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, RecyclingRecipe recipe) {
             buffer.writeVarInt(recipe.workTicks);
             buffer.writeVarInt(recipe.energyRequired);
             recipe.ingredient.toNetwork(buffer);

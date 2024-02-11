@@ -4,6 +4,8 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItemTiers;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class ThatlduSmasher extends SmasherBase {
     public ThatlduSmasher() {
         super(ModItemTiers.THATLDU,

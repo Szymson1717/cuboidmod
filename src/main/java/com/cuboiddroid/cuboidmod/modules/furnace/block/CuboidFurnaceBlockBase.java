@@ -1,66 +1,74 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.block;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.CuboidFurnaceTileEntityBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
+
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public abstract class CuboidFurnaceBlockBase extends Block {
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+
+public abstract class CuboidFurnaceBlockBase extends BaseEntityBlock {
 
     public CuboidFurnaceBlockBase(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(BlockStateProperties.LIT, false));
     }
 
-    @Nullable
-    @Override
-    public ToolType getHarvestTool(BlockState state) {
-        return ToolType.PICKAXE;
-    }
+    // @Nullable
+    // @Override
+    // public ToolType getHarvestTool(BlockState state) {
+    //     return ToolType.PICKAXE;
+    // }
+
+    // @Override
+    // public boolean hasTileEntity(BlockState state) {
+    //     return true;
+    // }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
         return state.getValue(BlockStateProperties.LIT) ? 14 : 0;
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return (BlockState) this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
-    public void setPlacedBy(World level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         if (entity != null) {
             CuboidFurnaceTileEntityBase te = (CuboidFurnaceTileEntityBase) level.getBlockEntity(pos);
             if (stack.hasCustomHoverName()) {
@@ -71,28 +79,28 @@ public abstract class CuboidFurnaceBlockBase extends Block {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult p_225533_6_) {
         ItemStack stack = player.getItemInHand(handIn).copy();
         if (level.isClientSide) {
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
             this.interactWith(level, pos, player);
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
     }
 
-    private void interactWith(World level, BlockPos pos, PlayerEntity player) {
-        TileEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity instanceof INamedContainerProvider) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getBlockPos());
+    private void interactWith(Level level, BlockPos pos, Player player) {
+        BlockEntity tileEntity = level.getBlockEntity(pos);
+        if (tileEntity instanceof MenuProvider) {
+            NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
             player.awardStat(Stats.INTERACT_WITH_FURNACE);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState state, World level, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
         if (state.getValue(BlockStateProperties.LIT)) {
             if (!(level.getBlockEntity(pos) instanceof CuboidFurnaceTileEntityBase))
             {
@@ -104,7 +112,7 @@ public abstract class CuboidFurnaceBlockBase extends Block {
             double d1 = (double) pos.getY();
             double d2 = (double) pos.getZ() + 0.5D;
             if (rand.nextDouble() < 0.1D) {
-                level.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                level.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }
 
             Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -120,12 +128,12 @@ public abstract class CuboidFurnaceBlockBase extends Block {
     }
 
     @Override
-    public void onRemove(BlockState state, World level, BlockPos pos, BlockState oldState, boolean p_196243_5_) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean p_196243_5_) {
         if (state.getBlock() != oldState.getBlock()) {
-            TileEntity te = level.getBlockEntity(pos);
+            BlockEntity te = level.getBlockEntity(pos);
             if (te instanceof CuboidFurnaceTileEntityBase) {
-                InventoryHelper.dropContents(level, pos, (CuboidFurnaceTileEntityBase) te);
-                ((CuboidFurnaceTileEntityBase)te).grantStoredRecipeExperience(level, Vector3d.atCenterOf(pos));
+                Containers.dropContents(level, pos, (CuboidFurnaceTileEntityBase) te);
+                ((CuboidFurnaceTileEntityBase)te).grantStoredRecipeExperience(level, Vec3.atCenterOf(pos));
                 level.updateNeighbourForOutputSignal(pos, this);
             }
 
@@ -139,13 +147,13 @@ public abstract class CuboidFurnaceBlockBase extends Block {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, World level, BlockPos pos) {
-        return Container.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override
@@ -158,7 +166,7 @@ public abstract class CuboidFurnaceBlockBase extends Block {
         return blockState.rotate(mirror.getRotation(blockState.getValue(BlockStateProperties.HORIZONTAL_FACING)));
     }
 
-    private int calculateOutput(World level, BlockPos pos, BlockState state) {
+    private int calculateOutput(Level level, BlockPos pos, BlockState state) {
         CuboidFurnaceTileEntityBase tile = ((CuboidFurnaceTileEntityBase) level.getBlockEntity(pos));
         int i = this.getAnalogOutputSignal(state, level, pos);
         if (tile != null)
@@ -177,12 +185,12 @@ public abstract class CuboidFurnaceBlockBase extends Block {
     }
 
     @Override
-    public int getDirectSignal(BlockState blockState, IBlockReader world, BlockPos pos, Direction side) {
+    public int getDirectSignal(BlockState blockState, BlockGetter world, BlockPos pos, Direction side) {
         return getSignal(blockState, world, pos, side);
     }
 
     @Override
-    public int getSignal(BlockState blockState, IBlockReader level, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockState, BlockGetter level, BlockPos pos, Direction side) {
         CuboidFurnaceTileEntityBase furnace = ((CuboidFurnaceTileEntityBase) level.getBlockEntity(pos));
         if (furnace != null)
         {
@@ -208,7 +216,7 @@ public abstract class CuboidFurnaceBlockBase extends Block {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT);
     }
 }

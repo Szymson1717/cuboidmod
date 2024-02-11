@@ -2,8 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.chest.render;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,7 +38,7 @@ public class CuboidChestModels {
 
     @SubscribeEvent
     public static void onStitch(TextureStitchEvent.Pre event) {
-        if (!event.getMap().location().equals(Atlases.CHEST_SHEET)) {
+        if (!event.getMap().location().equals(Sheets.CHEST_SHEET)) {
             return;
         }
 

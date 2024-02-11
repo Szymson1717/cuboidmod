@@ -7,26 +7,28 @@ import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.Registration;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.advancements.criterion.EnchantmentPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.block.Block;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.MatchTool;
-import net.minecraft.loot.conditions.RandomChance;
-import net.minecraft.loot.functions.ApplyBonus;
-import net.minecraft.loot.functions.CopyName;
-import net.minecraft.loot.functions.CopyNbt;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.List;
 import java.util.Map;
@@ -35,27 +37,35 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+
 public class ModLootTableProvider extends LootTableProvider {
-    private static final ILootCondition.IBuilder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))));
-    private static final ILootCondition.IBuilder HAS_NO_SILK_TOUCH = HAS_SILK_TOUCH.invert();
+    private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
+    private static final LootItemCondition.Builder HAS_NO_SILK_TOUCH = HAS_SILK_TOUCH.invert();
 
     public ModLootTableProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
 
     @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
+    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
         return ImmutableList.of(
-                Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK)
+                Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK)
         );
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationTracker) {
-        map.forEach((p1, p2) -> LootTableManager.validate(validationTracker, p1, p2));
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationTracker) {
+        map.forEach((p1, p2) -> LootTables.validate(validationTracker, p1, p2));
     }
 
-    public static class ModBlockLootTables extends BlockLootTables {
+    public static class ModBlockLootTables extends BlockLoot {
 
         @Override
         protected void addTables() {
@@ -144,8 +154,8 @@ public class ModLootTableProvider extends LootTableProvider {
 
         private void addFurnaceDrop(RegistryObject<? extends CuboidFurnaceBlockBase> furnace) {
             add(furnace.get(), (block) -> createSingleItemTable(furnace.get())
-                    .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))
-                    .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY)));
+                    .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                    .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)));
         }
 
         private void addOreDrops(RegistryObject<Block> oreBlock,
@@ -161,26 +171,26 @@ public class ModLootTableProvider extends LootTableProvider {
                         block,
                         LootTable.lootTable()
                                 .withPool(LootPool.lootPool()
-                                        .add(ItemLootEntry.lootTableItem(ModItems.SILICA_DUST.get())
-                                                .when(RandomChance.randomChance(chanceSilica))
+                                        .add(LootItem.lootTableItem(ModItems.SILICA_DUST.get())
+                                                .when(LootItemRandomChanceCondition.randomChance(chanceSilica))
                                                 .when(HAS_NO_SILK_TOUCH))
-                                        .apply(SetCount.setCount(RandomValueRange.between(minSilica, maxSilica)))
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(minSilica, maxSilica)))
                                 )
                                 .withPool(LootPool.lootPool()
-                                        .add(ItemLootEntry.lootTableItem(ModItems.CARBON_DEPOSIT.get())
-                                                .when(RandomChance.randomChance(chanceCarbon))
+                                        .add(LootItem.lootTableItem(ModItems.CARBON_DEPOSIT.get())
+                                                .when(LootItemRandomChanceCondition.randomChance(chanceCarbon))
                                                 .when(HAS_NO_SILK_TOUCH))
-                                        .apply(SetCount.setCount(RandomValueRange.between(minCarbon, maxCarbon)))
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(minCarbon, maxCarbon)))
                                 )
                                 .withPool(LootPool.lootPool()
-                                        .add(ItemLootEntry.lootTableItem(orePiece.get())
+                                        .add(LootItem.lootTableItem(orePiece.get())
                                                 .when(HAS_NO_SILK_TOUCH))
-                                        .apply(ApplyBonus.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))
+                                        .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))
                                 )
                                 .withPool(LootPool.lootPool()
-                                        .add(ItemLootEntry.lootTableItem(oreBlock.get())
+                                        .add(LootItem.lootTableItem(oreBlock.get())
                                                 .when(HAS_SILK_TOUCH))
-                                        .apply(SetCount.setCount(ConstantRange.exactly(1)))
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
                                 )
                 );
             });
@@ -189,17 +199,17 @@ public class ModLootTableProvider extends LootTableProvider {
         private void addDropMachine(Block machine, String[] keepInventoryTags, boolean keepEnergy)
         {
             add(machine, (block) -> {
-                CopyNbt.Builder nbtBuilder = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY);
+                CopyNbtFunction.Builder nbtBuilder = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY);
                 if (keepInventoryTags != null) {
                     for (String tag: keepInventoryTags) {
-                        nbtBuilder = nbtBuilder.copy(tag, "BlockEntityTag." + tag, CopyNbt.Action.REPLACE);
+                        nbtBuilder = nbtBuilder.copy(tag, "BlockEntityTag." + tag, CopyNbtFunction.MergeStrategy.REPLACE);
                     }
                 }
                 if (keepEnergy)
-                    nbtBuilder = nbtBuilder.copy("energy", "BlockEntityTag.energy", CopyNbt.Action.REPLACE);
+                    nbtBuilder = nbtBuilder.copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE);
 
                 return createSingleItemTable(machine)
-                        .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))
+                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(nbtBuilder);
             });
         }
@@ -211,13 +221,13 @@ public class ModLootTableProvider extends LootTableProvider {
                     .collect(Collectors.toList());
         }
 
-        protected static LootTable.Builder createSingleItemTableForChest(IItemProvider itemProvider) {
+        protected static LootTable.Builder createSingleItemTableForChest(ItemLike itemProvider) {
             return LootTable.lootTable()
                     .withPool(applyExplosionCondition(itemProvider,
-                            LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-                                    .add(ItemLootEntry.lootTableItem(itemProvider)
-                                        .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY))
-                                        .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Items", "BlockEntityTag.Items", CopyNbt.Action.REPLACE)))
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                    .add(LootItem.lootTableItem(itemProvider)
+                                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                        .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Items", "BlockEntityTag.Items", CopyNbtFunction.MergeStrategy.REPLACE)))
                     ));
         }
 

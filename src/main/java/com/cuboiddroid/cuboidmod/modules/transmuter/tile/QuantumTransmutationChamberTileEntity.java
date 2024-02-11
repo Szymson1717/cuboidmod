@@ -6,25 +6,26 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -38,7 +39,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class QuantumTransmutationChamberTileEntity extends TileEntity implements ITickableTileEntity {
+public class QuantumTransmutationChamberTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_ADDITIONAL = 1;
     public static final int SLOT_OUTPUT = 2;
@@ -68,17 +69,21 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
     private TransmutingRecipe cachedRecipe = null;
 
     public QuantumTransmutationChamberTileEntity() {
-        super(ModTileEntities.QUANTUM_TRANSMUTATION_CHAMBER.get());
+        this(null, null);
+    }
+
+    public QuantumTransmutationChamberTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.QUANTUM_TRANSMUTATION_CHAMBER.get(), pos, state);
         energyStorage = createEnergy();
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("cuboidmod.container.quantum_transmutation_chamber");
+    public Component getDisplayName() {
+        return new TranslatableComponent("cuboidmod.container.quantum_transmutation_chamber");
     }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
+        if (level == null || level.isClientSide)
             return;
 
         boolean didWorkThisTick = false;
@@ -122,10 +127,8 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         if (blockState.getValue(BlockStateProperties.LIT) != (processingTime > 0 || didWorkThisTick)) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0), Block.UPDATE_ALL);
         }
     }
 
@@ -204,7 +207,7 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
             return null;
 
         // make an inventory
-        IInventory inv = getInputsAsInventory();
+        Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
@@ -213,14 +216,14 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
         return cachedRecipe;
     }
 
-    private Inventory getInputsAsInventory() {
+    private SimpleContainer getInputsAsInventory() {
         if (this.inputItemHandler.getStackInSlot(0).isEmpty()) {
-            return new Inventory(this.additionalItemHandler.getStackInSlot(0).copy());
+            return new SimpleContainer(this.additionalItemHandler.getStackInSlot(0).copy());
         } else if (this.additionalItemHandler.getStackInSlot(0).isEmpty()) {
-            return new Inventory(this.inputItemHandler.getStackInSlot(0).copy());
+            return new SimpleContainer(this.inputItemHandler.getStackInSlot(0).copy());
         }
 
-        return new Inventory(this.inputItemHandler.getStackInSlot(0).copy(), this.additionalItemHandler.getStackInSlot(0).copy());
+        return new SimpleContainer(this.inputItemHandler.getStackInSlot(0).copy(), this.additionalItemHandler.getStackInSlot(0).copy());
     }
 
     private ItemStack getWorkOutput(@Nullable TransmutingRecipe recipe) {
@@ -261,7 +264,7 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         additionalItemHandler.deserializeNBT(tag.getCompound("invAdd"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
@@ -269,11 +272,11 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invAdd", additionalItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
@@ -295,17 +298,17 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -389,7 +392,7 @@ public class QuantumTransmutationChamberTileEntity extends TileEntity implements
         };
     }
 
-    public Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity) {
         return new QuantumTransmutationChamberContainer(i, level, pos, playerInventory, playerEntity);
     }
 

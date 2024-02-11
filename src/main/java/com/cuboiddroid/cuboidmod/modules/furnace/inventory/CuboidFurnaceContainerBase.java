@@ -1,39 +1,39 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.inventory;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.CuboidFurnaceTileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public abstract class CuboidFurnaceContainerBase extends Container {
+public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
 
     protected CuboidFurnaceTileEntityBase te;
-    protected IIntArray fields;
-    protected PlayerEntity playerEntity;
+    protected ContainerData fields;
+    protected Player playerEntity;
     protected IItemHandler playerInventory;
-    protected final World level;
-    private IRecipeType<? extends AbstractCookingRecipe> recipeType;
+    protected final Level level;
+    private RecipeType<? extends AbstractCookingRecipe> recipeType;
 
-    public CuboidFurnaceContainerBase(ContainerType<?> containerType, int windowId, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        this(containerType, windowId, level, pos, playerInventory, player, new IntArray(4));
+    public CuboidFurnaceContainerBase(MenuType<?> containerType, int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player) {
+        this(containerType, windowId, level, pos, playerInventory, player, new SimpleContainerData(4));
     }
 
-    public CuboidFurnaceContainerBase(ContainerType<?> containerType, int windowId, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray fields) {
+    public CuboidFurnaceContainerBase(MenuType<?> containerType, int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
         super(containerType, windowId);
         this.te = (CuboidFurnaceTileEntityBase) level.getBlockEntity(pos);
         this.recipeType = te.recipeType;
@@ -99,7 +99,7 @@ public abstract class CuboidFurnaceContainerBase extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -174,6 +174,6 @@ public abstract class CuboidFurnaceContainerBase extends Container {
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor((IRecipeType)this.recipeType, new Inventory(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType)this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 }

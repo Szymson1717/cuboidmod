@@ -3,50 +3,68 @@ package com.cuboiddroid.cuboidmod.modules.chest.render;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestBlockBase;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import com.cuboiddroid.cuboidmod.modules.chest.tile.CuboidChestTileEntityBase;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.tileentity.DualBrightnessCallback;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.tileentity.IChestLid;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMerger;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.core.Direction;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 
-public class CuboidChestTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T> {
+public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> implements BlockEntityRenderer<T> {
 
-    private final ModelRenderer chestLid;
-    private final ModelRenderer chestBottom;
-    private final ModelRenderer chestLock;
+    private final BlockEntityRendererProvider.Context context;
+    private final LayerDefinition chest;
+    private final ModelPart chestLid;
+    private final ModelPart chestBottom;
+    private final ModelPart chestLock;
 
-    public CuboidChestTileEntityRenderer(TileEntityRendererDispatcher tileEntityRendererDispatcher) {
-        super(tileEntityRendererDispatcher);
+    public CuboidChestTileEntityRenderer(BlockEntityRendererProvider.Context context) {
+        this.context = context;
 
-        this.chestBottom = new ModelRenderer(64, 64, 0, 19);
-        this.chestBottom.addBox(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
-        this.chestLid = new ModelRenderer(64, 64, 0, 0);
-        this.chestLid.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-        this.chestLid.y = 9.0F;
-        this.chestLid.z = 1.0F;
-        this.chestLock = new ModelRenderer(64, 64, 0, 0);
-        this.chestLock.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-        this.chestLock.y = 8.0F;
+        this.chest = createBodyLayer();
+        this.chestLid = this.chest.bakeRoot().getChild("base");
+        this.chestBottom = this.chest.bakeRoot().getChild("lid");
+        this.chestLock = this.chest.bakeRoot().getChild("lock");
+    }
+
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+        partdefinition.addOrReplaceChild("base", CubeListBuilder.create()
+                .texOffs(0, 19)
+                .addBox(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild("lid", CubeListBuilder.create()
+                .texOffs(0, 0)
+                .addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F), PartPose.offset(0.0F, 9.0F, 1.0F));
+        partdefinition.addOrReplaceChild("lock", CubeListBuilder.create()
+                .texOffs(0, 0)
+                .addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F), PartPose.offset(0.0F, 8.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
     @Override
-    public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(T tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         CuboidChestTileEntityBase tileEntity = (CuboidChestTileEntityBase) tileEntityIn;
 
-        World level = tileEntity.getLevel();
+        Level level = tileEntity.getLevel();
         boolean flag = level != null;
 
         BlockState blockstate = flag ? tileEntity.getBlockState() : (BlockState) tileEntity.getBlockToUse().defaultBlockState().setValue(CuboidChestBlockBase.FACING, Direction.SOUTH);
@@ -67,33 +85,33 @@ public class CuboidChestTileEntityRenderer<T extends TileEntity & IChestLid> ext
             matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
             matrixStackIn.translate(-0.5D, -0.5D, -0.5D);
 
-            TileEntityMerger.ICallbackWrapper<? extends CuboidChestTileEntityBase> iCallbackWrapper;
+            DoubleBlockCombiner.NeighborCombineResult<? extends CuboidChestTileEntityBase> iCallbackWrapper;
             if (flag) {
                 iCallbackWrapper = cuboidChestBlock.getWrapper(blockstate, level, tileEntity.getBlockPos(), true);
             }
             else {
-                iCallbackWrapper = TileEntityMerger.ICallback::acceptNone;
+                iCallbackWrapper = DoubleBlockCombiner.Combiner::acceptNone;
             }
 
-            float f1 = iCallbackWrapper.apply(CuboidChestBlockBase.getLid((IChestLid) tileEntity)).get(partialTicks);
+            float f1 = iCallbackWrapper.apply(CuboidChestBlockBase.getLid((LidBlockEntity) tileEntity)).get(partialTicks);
             f1 = 1.0F - f1;
             f1 = 1.0F - f1 * f1 * f1;
-            int i = iCallbackWrapper.apply(new DualBrightnessCallback<>()).applyAsInt(combinedLightIn);
+            int i = iCallbackWrapper.apply(new BrightnessCombiner<>()).applyAsInt(combinedLightIn);
 
-            RenderMaterial material = new RenderMaterial(Atlases.CHEST_SHEET, CuboidChestModels.chooseChestTexture(chestType));
-            IVertexBuilder ivertexbuilder = material.buffer(bufferIn, RenderType::entityCutout);
+            Material material = new Material(Sheets.CHEST_SHEET, CuboidChestModels.chooseChestTexture(chestType));
+            VertexConsumer ivertexbuilder = material.buffer(bufferIn, RenderType::entityCutout);
 
-            this.handleModelRender(matrixStackIn, ivertexbuilder, this.chestLid, this.chestLock, this.chestBottom, f1, i, combinedOverlayIn);
+            this.handleModelRender(matrixStackIn, ivertexbuilder, f1, i, combinedOverlayIn);
 
             matrixStackIn.popPose();
         }
     }
 
-    private void handleModelRender(MatrixStack matrixStackIn, IVertexBuilder iVertexBuilder, ModelRenderer firstModel, ModelRenderer secondModel, ModelRenderer thirdModel, float f1, int vi1, int vi2) {
-        firstModel.xRot = -(f1 * ((float) Math.PI / 2F));
-        secondModel.xRot = firstModel.xRot;
-        firstModel.render(matrixStackIn, iVertexBuilder, vi1, vi2);
-        secondModel.render(matrixStackIn, iVertexBuilder, vi1, vi2);
-        thirdModel.render(matrixStackIn, iVertexBuilder, vi1, vi2);
+    private void handleModelRender(PoseStack matrixStackIn, VertexConsumer iVertexBuilder, float f1, int vi1, int vi2) {
+        this.chestLid.xRot = -(f1 * ((float) Math.PI / 2F));
+        this.chestLock.xRot = this.chestLid.xRot;
+        this.chestLid.render(matrixStackIn, iVertexBuilder, vi1, vi2);
+        this.chestLock.render(matrixStackIn, iVertexBuilder, vi1, vi2);
+        this.chestBottom.render(matrixStackIn, iVertexBuilder, vi1, vi2);
     }
 }

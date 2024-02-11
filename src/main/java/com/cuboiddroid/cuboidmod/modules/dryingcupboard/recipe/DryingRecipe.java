@@ -5,24 +5,24 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Objects;
 import java.util.Random;
 
-public class DryingRecipe implements IRecipe<IInventory> {
+public class DryingRecipe implements Recipe<Container> {
     private static final Random RANDOM = new Random();
 
     private final ResourceLocation recipeId;
@@ -90,7 +90,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the DryingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.DRYING.get();
     }
 
@@ -99,7 +99,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.DRYING;
     }
 
@@ -111,7 +111,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         for (int i = 0; i < DryingCupboardTileEntity.INPUT_SLOTS; i++) {
             if (this.ingredient.test(inv.getItem(i)))
                 return true;
@@ -128,7 +128,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
      */
     @Deprecated
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         return this.getResultItem();
     }
 
@@ -165,8 +165,8 @@ public class DryingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<DryingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<DryingRecipe> {
 
         /*
           JSON structure:
@@ -185,13 +185,13 @@ public class DryingRecipe implements IRecipe<IInventory> {
         @Override
         public DryingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             DryingRecipe recipe = new DryingRecipe(recipeId);
-            recipe.workTicks = JSONUtils.getAsInt(json, "work_ticks", 200);
+            recipe.workTicks = GsonHelper.getAsInt(json, "work_ticks", 200);
             recipe.ingredient = Ingredient.fromJson(json.get("ingredient"));
 
             JsonObject resultJson = json.getAsJsonObject("result");
-            String itemId = JSONUtils.getAsString(resultJson, "item");
+            String itemId = GsonHelper.getAsString(resultJson, "item");
             Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(itemId));
-            int count = JSONUtils.getAsInt(resultJson, "count", 1);
+            int count = GsonHelper.getAsInt(resultJson, "count", 1);
 
             recipe.resultItem = new ItemStack(item, count);
 
@@ -199,7 +199,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public DryingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public DryingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             DryingRecipe recipe = new DryingRecipe(recipeId);
             recipe.workTicks = buffer.readVarInt();
             recipe.ingredient = Ingredient.fromNetwork(buffer);
@@ -212,7 +212,7 @@ public class DryingRecipe implements IRecipe<IInventory> {
             return recipe;
         }
 
-        public void toNetwork(PacketBuffer buffer, DryingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, DryingRecipe recipe) {
             buffer.writeVarInt(recipe.workTicks);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeResourceLocation(Objects.requireNonNull(recipe.resultItem.getItem().getRegistryName()));

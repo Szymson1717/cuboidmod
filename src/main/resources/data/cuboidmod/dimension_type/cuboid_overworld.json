@@ -1,5 +1,4 @@
 {
-  "name": "cuboidmod:cuboid_overworld",
   "ultrawarm": false,
   "natural": true,
   "piglin_safe": false,
@@ -12,5 +11,7 @@
   "ambient_light": 0,
   "logical_height": 256,
   "effects": "minecraft:overworld",
-  "infiniburn": "minecraft:infiniburn_overworld"
+  "infiniburn": "minecraft:infiniburn_overworld",
+  "min_y": -64,
+  "height": 320
 }

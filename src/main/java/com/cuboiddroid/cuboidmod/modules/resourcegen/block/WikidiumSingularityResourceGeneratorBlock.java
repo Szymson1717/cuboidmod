@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.block;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.WikidiumSingularityResourceGeneratorTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -13,14 +13,14 @@ public class WikidiumSingularityResourceGeneratorBlock extends SingularityResour
         super(properties);
     }
 
-    @Override
-    public int getHarvestLevel(BlockState state) {
-        return 3;
-    }
+    // @Override
+    // public int getHarvestLevel(BlockState state) {
+    //     return 3;
+    // }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new WikidiumSingularityResourceGeneratorTileEntity();
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WikidiumSingularityResourceGeneratorTileEntity(pos, state);
     }
 }

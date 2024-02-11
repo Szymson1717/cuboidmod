@@ -1,17 +1,19 @@
 package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Made by drying cured beef in a drying cupboard
@@ -23,7 +25,7 @@ public class BeefBiltongItem extends Item {
     public BeefBiltongItem() {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(12)
                         .saturationMod(2.0F)
                         .meat()
@@ -31,7 +33,7 @@ public class BeefBiltongItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable World level, List<ITextComponent> list, ITooltipFlag flag) {
-        list.add(new TranslationTextComponent("item.cuboidmod.biltong_beef.hover_text"));
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+        list.add(new TranslatableComponent("item.cuboidmod.biltong_beef.hover_text"));
     }
 }

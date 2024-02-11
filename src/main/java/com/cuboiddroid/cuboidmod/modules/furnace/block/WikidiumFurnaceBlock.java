@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.block;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.WikidiumFurnaceTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -13,14 +13,14 @@ public class WikidiumFurnaceBlock extends CuboidFurnaceBlockBase {
         super(properties);
     }
 
-    @Override
-    public int getHarvestLevel(BlockState state) {
-        return 2;
-    }
+    // @Override
+    // public int getHarvestLevel(BlockState state) {
+    //     return 2;
+    // }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new WikidiumFurnaceTileEntity();
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WikidiumFurnaceTileEntity(pos, state);
     }
 }

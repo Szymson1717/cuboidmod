@@ -4,24 +4,24 @@ import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -33,7 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity implements ITickableTileEntity {
+public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntity implements BlockEntityTicker  {
 
     private ItemStackHandler itemHandler = createHandler();
     private CuboidEnergyStorage energyStorage;
@@ -55,13 +55,12 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
 
     private PowerGeneratingRecipe cachedRecipe = null;
 
-    public SingularityPowerGeneratorTileEntityBase(
-            TileEntityType<?> tileEntityType,
-            int energyCapacity,
-            int ticksPerCycle,
-            int baseEnergyGenerated,
-            int maxEnergyOutputPerTick) {
-        super(tileEntityType);
+    public SingularityPowerGeneratorTileEntityBase(BlockEntityType<?> tileEntityType, int energyCapacity, int ticksPerCycle, int baseEnergyGenerated, int maxEnergyOutputPerTick) {
+        this(tileEntityType, null, null, energyCapacity, ticksPerCycle, baseEnergyGenerated, maxEnergyOutputPerTick);
+    }
+
+    public SingularityPowerGeneratorTileEntityBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state, int energyCapacity, int ticksPerCycle, int baseEnergyGenerated, int maxEnergyOutputPerTick) {
+        super(tileEntityType, pos, state);
 
         this.energyCapacity = energyCapacity;
         this.ticksPerCycle = ticksPerCycle;
@@ -74,11 +73,11 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     /**
      * implementing classes should do something like this:
      *
-     * return new TranslationTextComponent("cuboidmod.container.[identifier]");
+     * return new TranslatableComponent("cuboidmod.container.[identifier]");
      *
      * @return the display name
      */
-    public abstract ITextComponent getDisplayName();
+    public abstract Component getDisplayName();
 
     @Override
     public void setRemoved() {
@@ -88,7 +87,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     }
 
     @Override
-    public void tick() {
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level.isClientSide) {
             return;
         }
@@ -126,13 +125,9 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
-        Boolean shouldBeLit =
-                (counter > 0 || this.energyStorage.getEnergyStored() > 0)
-                && !itemHandler.getStackInSlot(0).isEmpty();
+        Boolean shouldBeLit = (counter > 0 || this.energyStorage.getEnergyStored() > 0) && !itemHandler.getStackInSlot(0).isEmpty();
         if (blockState.getValue(BlockStateProperties.LIT) != shouldBeLit) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit), Block.UPDATE_ALL);
         }
 
         sendOutPower();
@@ -142,7 +137,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
-                TileEntity te = this.level.getBlockEntity(this.worldPosition.relative(direction));
+                BlockEntity te = this.level.getBlockEntity(this.worldPosition.relative(direction));
                 Direction opposite = direction.getOpposite();
                 if (te != null) {
                     boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, opposite).map(handler -> {
@@ -172,7 +167,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
             return null;
 
         // make an inventory
-        IInventory inv = getInputsAsInventory();
+        Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.POWER_GENERATING, inv, this.level).orElse(null);
@@ -181,8 +176,8 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         return cachedRecipe;
     }
 
-    private Inventory getInputsAsInventory() {
-        return new Inventory(this.itemHandler.getStackInSlot(0).copy());
+    private SimpleContainer getInputsAsInventory() {
+        return new SimpleContainer(this.itemHandler.getStackInSlot(0).copy());
     }
 
     public int getBaseEnergyGenerated() {
@@ -194,16 +189,16 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
 
@@ -262,9 +257,9 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends TileEntity
         return super.getCapability(cap, side);
     }
 
-    public abstract Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity);
+    public abstract AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity);
 
-    public IInventory getContentDrops() {
+    public Container getContentDrops() {
         return getInputsAsInventory();
     }
 }

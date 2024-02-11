@@ -6,24 +6,25 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,7 +38,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class DryingCupboardTileEntity extends TileEntity implements ITickableTileEntity {
+public class DryingCupboardTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int INPUT_SLOTS = 8;
     public static final int OUTPUT_SLOTS = 8;
     public static final int TOTAL_SLOTS = INPUT_SLOTS + OUTPUT_SLOTS;
@@ -67,18 +68,22 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
     private boolean isDirty = false;
 
     public DryingCupboardTileEntity() {
-        super(ModTileEntities.DRYING_CUPBOARD.get());
+        this(null, null);
+    }
+
+    public DryingCupboardTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.DRYING_CUPBOARD.get(), pos, state);
         energyStorage = createEnergy();
         for (int i = 0; i < INPUT_SLOTS; i++) recipes[i] = null;
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("cuboidmod.container.drying_cupboard");
+    public Component getDisplayName() {
+        return new TranslatableComponent("cuboidmod.container.drying_cupboard");
     }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
+        if (level == null || level.isClientSide)
             return;
 
         if (isTicking)
@@ -147,11 +152,9 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
             setChanged();
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         boolean shouldBeLit = busyProcessing || didWorkThisTick || litCounter > 0;
         if (blockState.getValue(BlockStateProperties.LIT) != shouldBeLit) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit), Block.UPDATE_ALL);
         }
 
         isTicking = false;
@@ -232,7 +235,7 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
         }
 
         // make an inventory from the input slot content
-        IInventory inv = getInputsAsInventory(slotIndex);
+        Container inv = getInputsAsInventory(slotIndex);
 
         if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
             // look for a specific recipe and use it if found
@@ -245,8 +248,8 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
         return recipes[slotIndex];
     }
 
-    private Inventory getInputsAsInventory(int slotIndex) {
-        return new Inventory(this.inputItemHandler.getStackInSlot(slotIndex).copy());
+    private SimpleContainer getInputsAsInventory(int slotIndex) {
+        return new SimpleContainer(this.inputItemHandler.getStackInSlot(slotIndex).copy());
     }
 
     private ItemStack getWorkOutput(@Nullable DryingRecipe recipe) {
@@ -284,18 +287,18 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTimes = tag.getIntArray("procTimes");
         recipeTimes = tag.getIntArray("recTimes");
 
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
@@ -323,17 +326,17 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
      * @return the packet
      */
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -341,8 +344,8 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
     /* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client
      */
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbtTagCompound = new CompoundNBT();
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbtTagCompound = new CompoundTag();
         save(nbtTagCompound);
         return nbtTagCompound;
     }
@@ -350,8 +353,8 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
     /* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client
      */
     @Override
-    public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound) {
-        this.load(blockState, parentNBTTagCompound);
+    public void handleUpdateTag(CompoundTag nbt) {
+        this.load(nbt);
     }
 
     private CuboidEnergyStorage createEnergy() {
@@ -410,7 +413,7 @@ public class DryingCupboardTileEntity extends TileEntity implements ITickableTil
         };
     }
 
-    public Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity) {
         return new DryingCupboardContainer(i, level, pos, playerInventory, playerEntity);
     }
 

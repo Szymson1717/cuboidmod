@@ -4,37 +4,43 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestBlockBase;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import com.cuboiddroid.cuboidmod.modules.chest.inventory.CuboidChestContainer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.core.NonNullList;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.function.Supplier;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
-public class CuboidChestTileEntityBase extends LockableLootTileEntity implements IChestLid, ITickableTileEntity {
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+
+@OnlyIn(value = Dist.CLIENT, _interface = LidBlockEntity.class)
+public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity implements LidBlockEntity, BlockEntityTicker  {
 
     private NonNullList<ItemStack> chestContents;
     protected float lidAngle;
@@ -47,8 +53,12 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     public boolean retainsInventory;
     public boolean canOpenWhenObstructed;
 
-    protected CuboidChestTileEntityBase(TileEntityType<?> typeIn, CuboidChestTypes chestType, Supplier<Block> blockToUse, boolean retainsInventory, boolean canOpenWhenObstructed) {
-        super(typeIn);
+    protected CuboidChestTileEntityBase(BlockEntityType<?> typeIn, CuboidChestTypes chestType, Supplier<Block> blockToUse, boolean retainsInventory, boolean canOpenWhenObstructed) {
+        this(typeIn, null, null, chestType, blockToUse, retainsInventory, canOpenWhenObstructed);
+    }
+
+    protected CuboidChestTileEntityBase(BlockEntityType<?> typeIn, BlockPos pos, BlockState state, CuboidChestTypes chestType, Supplier<Block> blockToUse, boolean retainsInventory, boolean canOpenWhenObstructed) {
+        super(typeIn, pos, state);
 
         this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
         this.chestType = chestType;
@@ -63,7 +73,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         // player must be within sqrt(64) = 8 blocks - same as vanilla furnace, so
         // going with it.
         return this.hasLevel()
@@ -88,49 +98,49 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
-    public void setCustomName(ITextComponent newNameComponent) {
+    public void setCustomName(Component newNameComponent) {
         // for some reason still to be figured out, when naming
         // in an anvil, we're always getting a string with []'s - this cleans up
         String newName = newNameComponent.getString().trim();
         if (newName.startsWith("[") && newName.endsWith("]"))
             newName = newName.substring(1, newName.length() - 1).trim();
-        super.setCustomName(new StringTextComponent(newName));
+        super.setCustomName(new TextComponent(newName));
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent(CuboidMod.MOD_ID + ".container." + this.chestType.getId() + "_chest");
+    protected Component getDefaultName() {
+        return new TranslatableComponent(CuboidMod.MOD_ID + ".container." + this.chestType.getId() + "_chest");
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tags) {
-        super.load(state, tags);
+    public void load(CompoundTag tags) {
+        super.load(tags);
 
         this.chestContents = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
         if (!this.tryLoadLootTable(tags)) {
-            ItemStackHelper.loadAllItems(tags, this.chestContents);
+            ContainerHelper.loadAllItems(tags, this.chestContents);
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tags) {
+    public CompoundTag save(CompoundTag tags) {
         super.save(tags);
 
         if (!this.trySaveLootTable(tags)) {
-            ItemStackHelper.saveAllItems(tags, this.chestContents);
+            ContainerHelper.saveAllItems(tags, this.chestContents);
         }
 
         return tags;
     }
 
     @Override
-    public void tick() {
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         int x = this.worldPosition.getX();
         int y = this.worldPosition.getY();
         int z = this.worldPosition.getZ();
         ++this.ticksSinceSync;
-        this.numPlayersUsing = getNumberOfPlayersUsing(this.level, this, this.ticksSinceSync, x, y, z, this.numPlayersUsing);
+        this.numPlayersUsing = getNumberOfPlayersUsing(level, this, this.ticksSinceSync, x, y, z, this.numPlayersUsing);
         this.prevLidAngle = this.lidAngle;
         float f = 0.1F;
         if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F) {
@@ -161,7 +171,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
         }
     }
 
-    public static int getNumberOfPlayersUsing(World level, LockableTileEntity lockableTileEntity, int ticksSinceSync, int x, int y, int z, int numPlayersUsing) {
+    public static int getNumberOfPlayersUsing(Level level, BaseContainerBlockEntity lockableTileEntity, int ticksSinceSync, int x, int y, int z, int numPlayersUsing) {
         if (!level.isClientSide && numPlayersUsing != 0 && (ticksSinceSync + x + y + z) % 200 == 0) {
             numPlayersUsing = getNumberOfPlayersUsing(level, lockableTileEntity, x, y, z);
         }
@@ -169,10 +179,10 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
         return numPlayersUsing;
     }
 
-    public static int getNumberOfPlayersUsing(World level, LockableTileEntity lockableTileEntity, int x, int y, int z) {
+    public static int getNumberOfPlayersUsing(Level level, BaseContainerBlockEntity lockableTileEntity, int x, int y, int z) {
         int i = 0;
 
-        for (PlayerEntity playerentity : level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB((double) ((float) x - 5.0F), (double) ((float) y - 5.0F), (double) ((float) z - 5.0F), (double) ((float) (x + 1) + 5.0F), (double) ((float) (y + 1) + 5.0F), (double) ((float) (z + 1) + 5.0F)))) {
+        for (Player playerentity : level.getEntitiesOfClass(Player.class, new AABB((double) ((float) x - 5.0F), (double) ((float) y - 5.0F), (double) ((float) z - 5.0F), (double) ((float) (x + 1) + 5.0F), (double) ((float) (y + 1) + 5.0F), (double) ((float) (z + 1) + 5.0F)))) {
             if (playerentity.containerMenu instanceof CuboidChestContainer) {
                 ++i;
             }
@@ -186,7 +196,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
         double d1 = (double) this.worldPosition.getY() + 0.5D;
         double d2 = (double) this.worldPosition.getZ() + 0.5D;
 
-        this.level.playSound((PlayerEntity) null, d0, d1, d2, soundIn, SoundCategory.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+        this.level.playSound((Player) null, d0, d1, d2, soundIn, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
     }
 
     @Override
@@ -201,7 +211,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
-    public void startOpen(PlayerEntity player) {
+    public void startOpen(Player player) {
         if (!player.isSpectator()) {
             if (this.numPlayersUsing < 0) {
                 this.numPlayersUsing = 0;
@@ -213,7 +223,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
-    public void stopOpen(PlayerEntity player) {
+    public void stopOpen(Player player) {
         if (!player.isSpectator()) {
             --this.numPlayersUsing;
             this.onOpenOrClose();
@@ -260,13 +270,13 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     @Override
     @OnlyIn(Dist.CLIENT)
     public float getOpenNess(float partialTicks) {
-        return MathHelper.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
+        return Mth.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
     }
 
-    public static int getPlayersUsing(IBlockReader reader, BlockPos posIn) {
+    public static int getPlayersUsing(BlockGetter reader, BlockPos posIn) {
         BlockState blockstate = reader.getBlockState(posIn);
-        if (blockstate.hasTileEntity()) {
-            TileEntity tileentity = reader.getBlockEntity(posIn);
+        if (blockstate.hasBlockEntity()) {
+            BlockEntity tileentity = reader.getBlockEntity(posIn);
             if (tileentity instanceof CuboidChestTileEntityBase) {
                 return ((CuboidChestTileEntityBase) tileentity).numPlayersUsing;
             }
@@ -276,7 +286,7 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
     }
 
     @Override
-    protected Container createMenu(int windowId, PlayerInventory playerInventory) {
+    protected AbstractContainerMenu createMenu(int windowId, Inventory playerInventory) {
         return CuboidChestContainer.createNotsogudiumContainer(windowId, playerInventory, this);
     }
 
@@ -304,13 +314,13 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
         return this.blockToUse.get();
     }
 
-    private void deserializeChestContentsNBT(CompoundNBT nbt)
+    private void deserializeChestContentsNBT(CompoundTag nbt)
     {
         this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
-        ListNBT tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++)
         {
-            CompoundNBT itemTags = tagList.getCompound(i);
+            CompoundTag itemTags = tagList.getCompound(i);
             int slot = itemTags.getInt("Slot");
 
             if (slot >= 0 && slot < this.chestContents.size())
@@ -321,20 +331,20 @@ public class CuboidChestTileEntityBase extends LockableLootTileEntity implements
         //onLoad();
     }
 
-    public CompoundNBT serializeChestContentsNBT()
+    public CompoundTag serializeChestContentsNBT()
     {
-        ListNBT nbtTagList = new ListNBT();
+        ListTag nbtTagList = new ListTag();
         for (int i = 0; i < this.chestContents.size(); i++)
         {
             if (!this.chestContents.get(i).isEmpty())
             {
-                CompoundNBT itemTag = new CompoundNBT();
+                CompoundTag itemTag = new CompoundTag();
                 itemTag.putInt("Slot", i);
                 this.chestContents.get(i).save(itemTag);
                 nbtTagList.add(itemTag);
             }
         }
-        CompoundNBT nbt = new CompoundNBT();
+        CompoundTag nbt = new CompoundTag();
         nbt.put("Items", nbtTagList);
         return nbt;
     }

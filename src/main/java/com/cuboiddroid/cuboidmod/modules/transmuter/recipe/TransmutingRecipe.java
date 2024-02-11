@@ -5,23 +5,23 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // based on SmithingRecipe
-public class TransmutingRecipe implements IRecipe<IInventory> {
+public class TransmutingRecipe implements Recipe<Container> {
     private final Ingredient base;
     private final Ingredient addition;
     private final ItemStack result;
@@ -113,7 +113,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the TransmutingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.TRANSMUTING.get();
     }
 
@@ -122,7 +122,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.TRANSMUTING;
     }
 
@@ -135,7 +135,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         return (this.base.test(inv.getItem(QuantumTransmutationChamberTileEntity.SLOT_INPUT))
                 && this.addition.test(inv.getItem(QuantumTransmutationChamberTileEntity.SLOT_ADDITIONAL)))
                 || (this.base.test(inv.getItem(QuantumTransmutationChamberTileEntity.SLOT_ADDITIONAL))
@@ -149,9 +149,9 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
      * @return the result
      */
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         ItemStack itemstack = this.result.copy();
-        CompoundNBT compoundnbt = inventory.getItem(0).getTag();
+        CompoundTag compoundnbt = inventory.getItem(0).getTag();
         if (compoundnbt != null) {
             itemstack.setTag(compoundnbt.copy());
         }
@@ -200,8 +200,8 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<TransmutingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<TransmutingRecipe> {
 
         /*
           JSON structure:
@@ -222,22 +222,22 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
             }
          */
         public TransmutingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            Ingredient base = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "base"));
-            Ingredient addition = Ingredient.fromJson(JSONUtils.getAsJsonObject(json, "addition"));
+            Ingredient base = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "base"));
+            Ingredient addition = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "addition"));
 
-            JsonObject resultJson = JSONUtils.getAsJsonObject(json, "result");
-            ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(resultJson, "item"));
-            int count = JSONUtils.getAsInt(resultJson, "count", 1);
+            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
+            ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(resultJson, "item"));
+            int count = GsonHelper.getAsInt(resultJson, "count", 1);
 
             ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), count);
 
-            int workTicks = JSONUtils.getAsInt(json, "work_ticks", 100);
-            int energyRequired = JSONUtils.getAsInt(json, "energy", 1000);
+            int workTicks = GsonHelper.getAsInt(json, "work_ticks", 100);
+            int energyRequired = GsonHelper.getAsInt(json, "energy", 1000);
 
             return new TransmutingRecipe(recipeId, base, addition, result, workTicks, energyRequired);
         }
 
-        public TransmutingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public TransmutingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             Ingredient base = Ingredient.fromNetwork(buffer);
             Ingredient addition = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
@@ -247,7 +247,7 @@ public class TransmutingRecipe implements IRecipe<IInventory> {
             return new TransmutingRecipe(recipeId, base, addition, result, workTicks, energyRequired);
         }
 
-        public void toNetwork(PacketBuffer buffer, TransmutingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, TransmutingRecipe recipe) {
             recipe.base.toNetwork(buffer);
             recipe.addition.toNetwork(buffer);
             buffer.writeItem(recipe.result);

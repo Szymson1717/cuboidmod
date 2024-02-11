@@ -2,74 +2,74 @@ package com.cuboiddroid.cuboidmod.modules.chest.inventory;
 
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CuboidChestContainer extends Container {
+public class CuboidChestContainer extends AbstractContainerMenu {
 
-    private final IInventory inventory;
+    private final Container inventory;
 
     private final CuboidChestTypes chestType;
 
     // private constructor
-    private CuboidChestContainer(ContainerType<?> containerType, int windowId, PlayerInventory playerInventory) {
-        this(containerType, windowId, playerInventory, new Inventory(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
+    private CuboidChestContainer(MenuType<?> containerType, int windowId, Inventory playerInventory) {
+        this(containerType, windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
     }
 
     // Notsogudium
-    public static CuboidChestContainer createNotsogudiumContainer(int windowId, PlayerInventory playerInventory) {
-        return new CuboidChestContainer(ModContainers.NOTSOGUDIUM_CHEST.get(), windowId, playerInventory, new Inventory(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
+    public static CuboidChestContainer createNotsogudiumContainer(int windowId, Inventory playerInventory) {
+        return new CuboidChestContainer(ModContainers.NOTSOGUDIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
     }
 
-    public static CuboidChestContainer createNotsogudiumContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
+    public static CuboidChestContainer createNotsogudiumContainer(int windowId, Inventory playerInventory, Container inventory) {
         return new CuboidChestContainer(ModContainers.NOTSOGUDIUM_CHEST.get(), windowId, playerInventory, inventory, CuboidChestTypes.NOTSOGUDIUM);
     }
 
     // Kudbebedda
-    public static CuboidChestContainer createKudbebeddaContainer(int windowId, PlayerInventory playerInventory) {
-        return new CuboidChestContainer(ModContainers.KUDBEBEDDA_CHEST.get(), windowId, playerInventory, new Inventory(CuboidChestTypes.KUDBEBEDDA.size), CuboidChestTypes.KUDBEBEDDA);
+    public static CuboidChestContainer createKudbebeddaContainer(int windowId, Inventory playerInventory) {
+        return new CuboidChestContainer(ModContainers.KUDBEBEDDA_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.KUDBEBEDDA.size), CuboidChestTypes.KUDBEBEDDA);
     }
 
-    public static CuboidChestContainer createKudbebeddaContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
+    public static CuboidChestContainer createKudbebeddaContainer(int windowId, Inventory playerInventory, Container inventory) {
         return new CuboidChestContainer(ModContainers.KUDBEBEDDA_CHEST.get(), windowId, playerInventory, inventory, CuboidChestTypes.KUDBEBEDDA);
     }
 
     // Notarfbadium
-    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, PlayerInventory playerInventory) {
-        return new CuboidChestContainer(ModContainers.NOTARFBADIUM_CHEST.get(), windowId, playerInventory, new Inventory(CuboidChestTypes.NOTARFBADIUM.size), CuboidChestTypes.NOTARFBADIUM);
+    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, Inventory playerInventory) {
+        return new CuboidChestContainer(ModContainers.NOTARFBADIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTARFBADIUM.size), CuboidChestTypes.NOTARFBADIUM);
     }
 
-    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
+    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, Inventory playerInventory, Container inventory) {
         return new CuboidChestContainer(ModContainers.NOTARFBADIUM_CHEST.get(), windowId, playerInventory, inventory, CuboidChestTypes.NOTARFBADIUM);
     }
 
     // Wikidium
-    public static CuboidChestContainer createWikidiumContainer(int windowId, PlayerInventory playerInventory) {
-        return new CuboidChestContainer(ModContainers.WIKIDIUM_CHEST.get(), windowId, playerInventory, new Inventory(CuboidChestTypes.WIKIDIUM.size), CuboidChestTypes.WIKIDIUM);
+    public static CuboidChestContainer createWikidiumContainer(int windowId, Inventory playerInventory) {
+        return new CuboidChestContainer(ModContainers.WIKIDIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.WIKIDIUM.size), CuboidChestTypes.WIKIDIUM);
     }
 
-    public static CuboidChestContainer createWikidiumContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
+    public static CuboidChestContainer createWikidiumContainer(int windowId, Inventory playerInventory, Container inventory) {
         return new CuboidChestContainer(ModContainers.WIKIDIUM_CHEST.get(), windowId, playerInventory, inventory, CuboidChestTypes.WIKIDIUM);
     }
 
     // Thatldu
-    public static CuboidChestContainer createThatlduContainer(int windowId, PlayerInventory playerInventory) {
-        return new CuboidChestContainer(ModContainers.THATLDU_CHEST.get(), windowId, playerInventory, new Inventory(CuboidChestTypes.THATLDU.size), CuboidChestTypes.THATLDU);
+    public static CuboidChestContainer createThatlduContainer(int windowId, Inventory playerInventory) {
+        return new CuboidChestContainer(ModContainers.THATLDU_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.THATLDU.size), CuboidChestTypes.THATLDU);
     }
 
-    public static CuboidChestContainer createThatlduContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
+    public static CuboidChestContainer createThatlduContainer(int windowId, Inventory playerInventory, Container inventory) {
         return new CuboidChestContainer(ModContainers.THATLDU_CHEST.get(), windowId, playerInventory, inventory, CuboidChestTypes.THATLDU);
     }
 
-    public CuboidChestContainer(ContainerType<?> containerType, int windowId, PlayerInventory playerInventory, IInventory inventory, CuboidChestTypes chestType) {
+    public CuboidChestContainer(MenuType<?> containerType, int windowId, Inventory playerInventory, Container inventory, CuboidChestTypes chestType) {
         super(containerType, windowId);
 
         this.inventory = inventory;
@@ -98,12 +98,12 @@ public class CuboidChestContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return this.inventory.stillValid(playerIn);
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
@@ -132,7 +132,7 @@ public class CuboidChestContainer extends Container {
     }
 
     @Override
-    public void removed(PlayerEntity player) {
+    public void removed(Player player) {
         super.removed(player);
         this.inventory.stopOpen(player);
     }

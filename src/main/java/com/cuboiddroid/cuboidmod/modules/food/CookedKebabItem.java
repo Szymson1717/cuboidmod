@@ -2,15 +2,17 @@ package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * Made from smelting a raw kebab item
@@ -27,13 +29,13 @@ public class CookedKebabItem extends Item {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
                 .stacksTo(1)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(10)
                         .saturationMod(2.0F)
-                        .effect(() -> new EffectInstance(Effects.POISON, 2 * 20, 0), 0.05F)
-                        .effect(() -> new EffectInstance(Effects.HUNGER, 10 * 20, 0), 0.05F)
-                        .effect(() -> new EffectInstance(Effects.SATURATION, 5 * 20, 0), 0.05F)
-                        .effect(() -> new EffectInstance(Effects.ABSORPTION, 10 * 20, 0), 0.025F)
+                        .effect(() -> new MobEffectInstance(MobEffects.POISON, 2 * 20, 0), 0.05F)
+                        .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 10 * 20, 0), 0.05F)
+                        .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 5 * 20, 0), 0.05F)
+                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 10 * 20, 0), 0.025F)
                         .meat()
                         .build()));
     }
@@ -47,8 +49,8 @@ public class CookedKebabItem extends Item {
      * @return the empty notsogudium bowl
      */
     @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, World level, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity entity) {
         ItemStack itemstack = super.finishUsingItem(itemStack, level, entity);
-        return entity instanceof PlayerEntity && ((PlayerEntity) entity).abilities.instabuild ? itemstack : new ItemStack(ModItems.NOTSOGUDIUM_ROD.get());
+        return entity instanceof Player && ((Player) entity).getAbilities().instabuild ? itemstack : new ItemStack(ModItems.NOTSOGUDIUM_ROD.get());
     }
 }

@@ -3,9 +3,9 @@ package com.cuboiddroid.cuboidmod;
 import com.cuboiddroid.cuboidmod.events.LivingDeathEventHandler;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.Registration;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,7 +22,7 @@ public class CuboidMod
 {
     public static final String MOD_ID = "cuboidmod";
 
-    public static final ItemGroup CUBOIDMOD_ITEM_GROUP = (new ItemGroup("cuboidmod") {
+    public static final CreativeModeTab CUBOIDMOD_ITEM_GROUP = (new CreativeModeTab("cuboidmod") {
         @Override
         @OnlyIn(Dist.CLIENT)
         public ItemStack makeIcon() {

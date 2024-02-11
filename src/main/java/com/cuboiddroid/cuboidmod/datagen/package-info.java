@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package com.cuboiddroid.cuboidmod.datagen;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

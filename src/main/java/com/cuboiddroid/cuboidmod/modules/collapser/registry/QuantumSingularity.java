@@ -1,8 +1,8 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.registry;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class QuantumSingularity {
     private static int nextIndex = 0;
@@ -37,7 +37,7 @@ public class QuantumSingularity {
 
     public int getIndex() { return this.index; }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(this.name);
+    public Component getDisplayName() {
+        return new TranslatableComponent(this.name);
     }
 }

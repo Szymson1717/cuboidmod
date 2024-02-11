@@ -3,13 +3,14 @@ package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.collapser.inventory.KudbebeddaQuantumCollapserContainer;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class KudbebeddaQuantumCollapserTileEntity extends QuantumCollapserTileEntityBase {
     public KudbebeddaQuantumCollapserTileEntity() {
@@ -17,13 +18,18 @@ public class KudbebeddaQuantumCollapserTileEntity extends QuantumCollapserTileEn
                 Config.kudbebeddaQuantumCollapserSpeed.get().floatValue());
     }
 
-    @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("cuboidmod.container.kudbebedda_quantum_collapser");
+    public KudbebeddaQuantumCollapserTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.KUDBEBEDDA_QUANTUM_COLLAPSER.get(),
+                pos, state, Config.kudbebeddaQuantumCollapserSpeed.get().floatValue());
     }
 
     @Override
-    public Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public Component getDisplayName() {
+        return new TranslatableComponent("cuboidmod.container.kudbebedda_quantum_collapser");
+    }
+
+    @Override
+    public AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity) {
         return new KudbebeddaQuantumCollapserContainer(i, level, pos, playerInventory, playerEntity);
     }
 

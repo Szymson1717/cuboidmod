@@ -3,14 +3,14 @@ package com.cuboiddroid.cuboidmod.datagen.server.recipes;
 import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Items;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
 public class MaterialsDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         buildNotsogudiumRecipes(provider, consumer);
         buildKudbebeddaRecipes(provider, consumer);
         buildNotarfbadiumRecipes(provider, consumer);
@@ -26,7 +26,7 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         buildCelluloseRecipes(provider, consumer);
     }
 
-    private static void buildNotsogudiumRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildNotsogudiumRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemsFromBlock(provider, consumer, ModItems.NOTSOGUDIUM_INGOT, 9, ModBlocks.NOTSOGUDIUM_BLOCK, "notsogudium_ingots_from_block");
         craftBlock3x3(provider, consumer, ModBlocks.NOTSOGUDIUM_BLOCK, ModItems.NOTSOGUDIUM_INGOT, "notsogudium_block_from_ingots");
 
@@ -42,7 +42,7 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         smeltItemToItem(provider, consumer, ModItems.NOTSOGUDIUM_DUST, ModItems.NOTSOGUDIUM_INGOT, "notsogudium_dust_ingot");
     }
 
-    private static void buildKudbebeddaRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildKudbebeddaRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemsFromBlock(provider, consumer, ModItems.KUDBEBEDDA_INGOT, 9, ModBlocks.KUDBEBEDDA_BLOCK, "kudbebedda_ingots_from_block");
         craftBlock3x3(provider, consumer, ModBlocks.KUDBEBEDDA_BLOCK, ModItems.KUDBEBEDDA_INGOT, "kudbebedda_block_from_ingots");
 
@@ -58,7 +58,7 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         smeltItemToItem(provider, consumer, ModItems.KUDBEBEDDA_DUST, ModItems.KUDBEBEDDA_INGOT, "kudbebedda_dust_ingot");
     }
 
-    private static void buildNotarfbadiumRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildNotarfbadiumRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemsFromBlock(provider, consumer, ModItems.NOTARFBADIUM_INGOT, 9, ModBlocks.NOTARFBADIUM_BLOCK, "notarfbadium_ingots_from_block");
         craftBlock3x3(provider, consumer, ModBlocks.NOTARFBADIUM_BLOCK, ModItems.NOTARFBADIUM_INGOT, "notarfbadium_block_from_ingots");
 
@@ -74,7 +74,7 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         smeltItemToItem(provider, consumer, ModItems.NOTARFBADIUM_DUST, ModItems.NOTARFBADIUM_INGOT, "notarfbadium_dust_ingot");
     }
 
-    private static void buildWikidiumRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildWikidiumRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemsFromBlock(provider, consumer, ModItems.WIKIDIUM_INGOT, 9, ModBlocks.WIKIDIUM_BLOCK, "wikidium_ingots_from_block");
         craftBlock3x3(provider, consumer, ModBlocks.WIKIDIUM_BLOCK, ModItems.WIKIDIUM_INGOT, "wikidium_block_from_ingots");
 
@@ -90,7 +90,7 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         smeltItemToItem(provider, consumer, ModItems.WIKIDIUM_DUST, ModItems.WIKIDIUM_INGOT, "wikidium_dust_ingot");
     }
 
-    private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemsFromBlock(provider, consumer, ModItems.THATLDU_INGOT, 9, ModBlocks.THATLDU_BLOCK, "thatldu_ingots_from_block");
         craftBlock3x3(provider, consumer, ModBlocks.THATLDU_BLOCK, ModItems.THATLDU_INGOT, "thatldu_block_from_ingots");
 
@@ -106,37 +106,37 @@ public class MaterialsDataGenRecipes extends DataGenRecipesBase {
         smeltItemToItem(provider, consumer, ModItems.THATLDU_DUST, ModItems.THATLDU_INGOT, "thatldu_dust_ingot");
     }
 
-    private static void buildCarbonDepositRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildCarbonDepositRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemFromItems2x2(provider, consumer, Items.COAL, ModItems.CARBON_DEPOSIT.get(), "coal_from_carbon_deposits");
     }
 
-    private static void buildSilicaDustRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildSilicaDustRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftBlock3x3(provider, consumer, ModBlocks.SILICA_DUST_BLOCK, ModItems.SILICA_DUST, "silica_dust_block_from_silica_dust");
         craftItemsFromBlock(provider, consumer, ModItems.SILICA_DUST, 9, ModBlocks.SILICA_DUST_BLOCK, "silica_dust_from_silica_dust_block");
         smeltBlockToItem(provider, consumer, ModBlocks.SILICA_DUST_BLOCK.get(), Items.GLASS, "smelt_glass_from_silica_dust_block");
     }
 
-    private static void buildCarbonNanotubeRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildCarbonNanotubeRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftBlock3x3(provider, consumer, ModBlocks.CARBON_NANOTUBE_BLOCK, ModItems.CARBON_NANOTUBE, "carbon_nanotube_block_from_carbon_nanotubes");
         craftItemsFromBlock(provider, consumer, ModItems.CARBON_NANOTUBE, 9, ModBlocks.CARBON_NANOTUBE_BLOCK, "carbon_nanotubes_from_carbon_nanotube_block");
     }
 
-    private static void buildStickBundleRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildStickBundleRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftItemFromItems3x3(provider, consumer, ModItems.STICK_BUNDLE, Items.STICK, "stick_bundle_from_sticks");
         craftItemsFromItem(provider, consumer, Items.STICK, ModItems.STICK_BUNDLE, "sticks_from_stick_bundle", 9);
     }
 
-    private static void buildProteinPasteRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildProteinPasteRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftBlock3x3(provider, consumer, ModBlocks.PROTEIN_PASTE_BLOCK, ModItems.PROTEIN_PASTE, "protein_paste_block_from_protein_paste");
         craftItemsFromBlock(provider, consumer, ModItems.PROTEIN_PASTE, 9, ModBlocks.PROTEIN_PASTE_BLOCK, "protein_paste_from_protein_paste_block");
     }
 
-    private static void buildProteinFiberRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildProteinFiberRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftBlock3x3(provider, consumer, ModBlocks.PROTEIN_FIBER_BLOCK, ModItems.PROTEIN_FIBER, "protein_fiber_block_from_protein_fiber");
         craftItemsFromBlock(provider, consumer, ModItems.PROTEIN_FIBER, 9, ModBlocks.PROTEIN_FIBER_BLOCK, "protein_fiber_from_protein_fiber_block");
     }
 
-    private static void buildCelluloseRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildCelluloseRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftBlock3x3(provider, consumer, ModBlocks.CELLULOSE_BLOCK, ModItems.CELLULOSE, "cellulose_block_from_cellulose");
         craftItemsFromBlock(provider, consumer, ModItems.CELLULOSE, 9, ModBlocks.CELLULOSE_BLOCK, "cellulose_from_cellulose_block");
 

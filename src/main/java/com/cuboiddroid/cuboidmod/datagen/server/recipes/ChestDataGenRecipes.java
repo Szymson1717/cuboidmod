@@ -4,16 +4,16 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.function.Consumer;
 
 public class ChestDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         // chest from ingots
         chestFromIngots(provider, consumer, ModBlocks.NOTSOGUDIUM_CHEST, ModItems.NOTSOGUDIUM_INGOT, "notsogudium");
         chestFromIngots(provider, consumer, ModBlocks.KUDBEBEDDA_CHEST, ModItems.KUDBEBEDDA_INGOT, "kudbebedda");
@@ -28,7 +28,7 @@ public class ChestDataGenRecipes extends DataGenRecipesBase {
         chestFromIngotsAndPreviousChest(provider, consumer, ModBlocks.THATLDU_CHEST, ModBlocks.WIKIDIUM_CHEST, ModItems.THATLDU_INGOT, "thatldu");
     }
 
-    private static void chestFromIngots(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<Item> ingot, String materialName) {
+    private static void chestFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<Item> ingot, String materialName) {
         ShapedRecipeBuilder.shaped(chestBlock.get())
                 .define('#', ingot.get())
                 .pattern("###")
@@ -38,7 +38,7 @@ public class ChestDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId(materialName + "_chest_from_ingots"));
     }
 
-    private static void chestFromIngotsAndPreviousChest(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<? extends CuboidChestBlockBase> prevChest, RegistryObject<Item> ingot, String materialName) {
+    private static void chestFromIngotsAndPreviousChest(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<? extends CuboidChestBlockBase> prevChest, RegistryObject<Item> ingot, String materialName) {
         ShapedRecipeBuilder.shaped(chestBlock.get())
                 .define('#', ingot.get())
                 .define('$', prevChest.get())

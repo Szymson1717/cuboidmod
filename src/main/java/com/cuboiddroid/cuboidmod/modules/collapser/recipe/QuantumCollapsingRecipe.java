@@ -6,16 +6,16 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 /*
   Recipes for collapsing items into singularities for the Quantum Singularity Collapser
  */
-public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
+public class QuantumCollapsingRecipe implements Recipe<Container> {
     private final ResourceLocation recipeId;
     private Ingredient ingredient;
     private ItemStack result;
@@ -100,7 +100,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the CollapsingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.COLLAPSING.get();
     }
 
@@ -109,7 +109,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.COLLAPSING;
     }
 
@@ -121,7 +121,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         return this.ingredient.test(inv.getItem(QuantumCollapserTileEntityBase.INPUT_SLOT));
     }
 
@@ -132,7 +132,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
      * @return
      */
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         return this.getResultItem();
     }
 
@@ -169,32 +169,32 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<QuantumCollapsingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<QuantumCollapsingRecipe> {
 
         @Override
         public QuantumCollapsingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             QuantumCollapsingRecipe recipe = new QuantumCollapsingRecipe(recipeId);
-            recipe.workTicks = JSONUtils.getAsInt(json, "work_ticks", 200);
+            recipe.workTicks = GsonHelper.getAsInt(json, "work_ticks", 200);
 
-            JsonObject inputJson = JSONUtils.getAsJsonObject(json, "input");
+            JsonObject inputJson = GsonHelper.getAsJsonObject(json, "input");
             if (inputJson.has("item")) {
-                ResourceLocation inputItemId = new ResourceLocation(JSONUtils.getAsString(inputJson, "item"));
+                ResourceLocation inputItemId = new ResourceLocation(GsonHelper.getAsString(inputJson, "item"));
 
                 recipe.ingredient = Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(inputItemId), 1));
             } else {
                 try {
                     recipe.ingredient = Ingredient.fromJson(inputJson);
                 } catch (Exception ex) {
-                    CuboidMod.LOGGER.warn("Could not load tag: '" + JSONUtils.getAsString(inputJson, "tag") + "' - recipe: '" + recipeId.getPath() + "'\n\n" + ex);
+                    CuboidMod.LOGGER.warn("Could not load tag: '" + GsonHelper.getAsString(inputJson, "tag") + "' - recipe: '" + recipeId.getPath() + "'\n\n" + ex);
                     recipe.ingredient = Ingredient.EMPTY;
                 }
             }
 
-            recipe.inputAmount = JSONUtils.getAsInt(inputJson, "count", 1024);
+            recipe.inputAmount = GsonHelper.getAsInt(inputJson, "count", 1024);
 
-            JsonObject resultJson = JSONUtils.getAsJsonObject(json, "result");
-            ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(resultJson, "item"));
-            int resultCount = JSONUtils.getAsInt(resultJson, "count", 1);
+            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
+            ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(resultJson, "item"));
+            int resultCount = GsonHelper.getAsInt(resultJson, "count", 1);
 
             recipe.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultCount);
 
@@ -203,7 +203,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
 
         @Nullable
         @Override
-        public QuantumCollapsingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public QuantumCollapsingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             QuantumCollapsingRecipe recipe = new QuantumCollapsingRecipe(recipeId);
             recipe.workTicks = buffer.readVarInt();
             recipe.ingredient = Ingredient.fromNetwork(buffer);
@@ -214,7 +214,7 @@ public class QuantumCollapsingRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, QuantumCollapsingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, QuantumCollapsingRecipe recipe) {
             buffer.writeVarInt(recipe.workTicks);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeItem(recipe.result);

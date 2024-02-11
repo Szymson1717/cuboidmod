@@ -4,14 +4,14 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.modules.collapser.block.QuantumCollapserBlockBase;
 import com.cuboiddroid.cuboidmod.modules.furnace.block.CuboidFurnaceBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
 
 public class QuantumCollapserDataGenRecipes extends DataGenRecipesBase {
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         quantumCollapserFromBlocksAndFurnace(provider, consumer,
                 ModBlocks.NOTSOGUDIUM_QUANTUM_COLLAPSER.get(),
                 ModBlocks.NOTSOGUDIUM_BLOCK.get(),
@@ -72,7 +72,7 @@ public class QuantumCollapserDataGenRecipes extends DataGenRecipesBase {
                 "thatldu");
     }
 
-    private static void quantumCollapserFromBlocksAndFurnace(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, QuantumCollapserBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
+    private static void quantumCollapserFromBlocksAndFurnace(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumCollapserBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)
@@ -83,7 +83,7 @@ public class QuantumCollapserDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId(materialName + "_quantum_collapser_from_blocks_and_furnace"));
     }
 
-    private static void quantumCollapserUpgrade(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, QuantumCollapserBlockBase output, QuantumCollapserBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
+    private static void quantumCollapserUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumCollapserBlockBase output, QuantumCollapserBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)

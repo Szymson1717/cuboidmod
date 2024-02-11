@@ -4,18 +4,18 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.function.Consumer;
 
 public class CraftingTableDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         craftingTableFromSilicaAndChunks(provider, consumer, ModBlocks.NOTSOGUDIUM_CRAFTING_TABLE, ModItems.NOTSOGUDIUM_CHUNK, "notsogudium");
         craftingTableFromSilicaAndChunks(provider, consumer, ModBlocks.KUDBEBEDDA_CRAFTING_TABLE, ModItems.KUDBEBEDDA_CHUNK, "kudbebedda");
         craftingTableFromSilicaAndChunks(provider, consumer, ModBlocks.NOTARFBADIUM_CRAFTING_TABLE, ModItems.NOTARFBADIUM_CHUNK, "notarfbadium");
@@ -25,7 +25,7 @@ public class CraftingTableDataGenRecipes extends DataGenRecipesBase {
         smithingTableFromSilicaAndChunks(provider, consumer);
     }
 
-    private static void craftingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, RegistryObject<Block> craftingTable, RegistryObject<Item> chunk, String materialName) {
+    private static void craftingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<Block> craftingTable, RegistryObject<Item> chunk, String materialName) {
         ShapedRecipeBuilder.shaped(craftingTable.get())
                 .define('$', ModItems.SILICA_DUST.get())
                 .define('#', chunk.get())
@@ -35,7 +35,7 @@ public class CraftingTableDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId(materialName + "_crafting_table_from_silica_and_chunk"));
     }
 
-    private static void smithingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void smithingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(Items.SMITHING_TABLE)
                 .define('$', ModTags.Items.INGOTS)
                 .define('#', ModTags.Items.ORES)

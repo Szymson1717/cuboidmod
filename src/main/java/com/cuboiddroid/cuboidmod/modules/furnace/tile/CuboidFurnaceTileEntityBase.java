@@ -4,39 +4,41 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.common.TileEntityInventory;
 import com.google.common.collect.Lists;
-import harmonised.pmmo.events.FurnaceHandler;
+// import harmonised.pmmo.events.FurnaceHandler;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IRecipeHelperPopulator;
-import net.minecraft.inventory.IRecipeHolder;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -48,7 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory implements ITickableTileEntity, IRecipeHolder, IRecipeHelperPopulator {
+public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory implements BlockEntityTicker, RecipeHolder, StackedContentsCompatible {
     public final int[] provides = new int[Direction.values().length];
     private final int[] lastProvides = new int[this.provides.length];
 
@@ -72,30 +74,34 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     private int recipesUsed;
     private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
 
-    public IRecipeType<? extends AbstractCookingRecipe> recipeType;
+    public RecipeType<? extends AbstractCookingRecipe> recipeType;
 
     public FurnaceSettings furnaceSettings;
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
 
 
-    public CuboidFurnaceTileEntityBase(TileEntityType<?> tileentitytypeIn) {
-        super(tileentitytypeIn, 4);
-        this.recipeType = IRecipeType.SMELTING;
+    public CuboidFurnaceTileEntityBase(BlockEntityType<?> tileentitytypeIn) {
+        this(tileentitytypeIn, null, null);
+    }
+
+    public CuboidFurnaceTileEntityBase(BlockEntityType<?> tileentitytypeIn, BlockPos pos, BlockState state) {
+        super(tileentitytypeIn, pos, state, 4);
+        this.recipeType = RecipeType.SMELTING;
         furnaceSettings = new FurnaceSettings() {
             @Override
             public void onChanged() {
@@ -116,7 +122,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         int i = getCookTimeConfig().get();
         if (this.recipeType != null) {
             AbstractCookingRecipe recipe = getRecipe();
-            if (this.recipeType == IRecipeType.SMELTING) {
+            if (this.recipeType == RecipeType.SMELTING) {
                 int j = recipe != null ? recipe.getCookingTime() : i;
                 if (j < i) {
                     int k = j - (200 - i);
@@ -137,7 +143,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return null;
     }
 
-    public final IIntArray fields = new IIntArray() {
+    public final ContainerData fields = new ContainerData() {
         public int get(int index) {
             switch (index) {
                 case 0:
@@ -195,7 +201,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     @Override
-    public void tick() {
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (furnaceSettings.size() <= 0) {
             furnaceSettings = new FurnaceSettings() {
                 @Override
@@ -211,7 +217,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         if (this.isBurning()) {
             --this.furnaceBurnTime;
         }
-        if (!this.level.isClientSide) {
+        if (!level.isClientSide) {
 
             timer++;
             if (this.cookTime <= 0) {
@@ -298,23 +304,23 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                     this.cookTime = 0;
                 }
             } else if (!this.isBurning() && this.cookTime > 0) {
-                this.cookTime = MathHelper.clamp(this.cookTime - 2, 0, this.totalCookTime);
+                this.cookTime = Mth.clamp(this.cookTime - 2, 0, this.totalCookTime);
             }
             if (wasBurning != this.isBurning()) {
                 flag1 = true;
-                this.level.setBlock(this.worldPosition, this.level.getBlockState(this.worldPosition).setValue(BlockStateProperties.LIT, this.isBurning()), 3);
+                level.setBlock(worldPosition, this.level.getBlockState(worldPosition).setValue(BlockStateProperties.LIT, this.isBurning()), 3);
             }
             if (timer % 30 == 0) {
                 if (!level.isClientSide) {
                     if (this.getUpdateTag().getCompound("RecipesUsed").size() > Config.furnaceXPDropValue.get()) {
-                        this.grantStoredRecipeExperience(level, new Vector3d(worldPosition.getX() + rand.nextInt(2) - 1, worldPosition.getY(), worldPosition.getZ() + rand.nextInt(2) - 1));
+                        this.grantStoredRecipeExperience(level, new Vec3(worldPosition.getX() + rand.nextInt(2) - 1, worldPosition.getY(), worldPosition.getZ() + rand.nextInt(2) - 1));
                         this.recipes.clear();
                     } else {
                         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipes.object2IntEntrySet()) {
                             if (level.getRecipeManager().byKey(entry.getKey()).isPresent()) {
                                 if (entry.getIntValue() > Config.furnaceXPDropValue2.get()) {
                                     if (!flag2) {
-                                        this.grantStoredRecipeExperience(level, new Vector3d(worldPosition.getX() + rand.nextInt(2) - 1, worldPosition.getY(), worldPosition.getZ() + rand.nextInt(2) - 1));
+                                        this.grantStoredRecipeExperience(level, new Vec3(worldPosition.getX() + rand.nextInt(2) - 1, worldPosition.getY(), worldPosition.getZ() + rand.nextInt(2) - 1));
                                     }
                                     flag2 = true;
                                 }
@@ -335,7 +341,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     private void autoIO() {
         for (Direction dir : Direction.values()) {
-            TileEntity tile = level.getBlockEntity(worldPosition.relative(dir));
+            BlockEntity tile = level.getBlockEntity(worldPosition.relative(dir));
             if (tile == null) {
                 continue;
             }
@@ -419,7 +425,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor((IRecipeType) this.recipeType, new Inventory(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 
     @Nonnull
@@ -590,7 +596,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return this.furnaceBurnTime > 0;
     }
 
-    protected boolean canSmelt(@Nullable IRecipe<?> recipe) {
+    protected boolean canSmelt(@Nullable Recipe<?> recipe) {
         if (!this.inventory.get(0).isEmpty() && recipe != null) {
             ItemStack recipeOutput = recipe.getResultItem();
             if (!recipeOutput.isEmpty()) {
@@ -603,7 +609,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return false;
     }
 
-    protected void smeltItem(@Nullable IRecipe<?> recipe) {
+    protected void smeltItem(@Nullable Recipe<?> recipe) {
         timer = 0;
         if (recipe != null && this.canSmelt(recipe)) {
             ItemStack itemstack = this.inventory.get(INPUT);
@@ -623,22 +629,22 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                 this.inventory.set(FUEL, new ItemStack(Items.WATER_BUCKET));
             }
             if (ModList.get().isLoaded("pmmo")) {
-                FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 0);
-                FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 1);
+                // FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 0);
+                // FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 1);
             }
             itemstack.shrink(1);
         }
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
-        ItemStackHelper.loadAllItems(tag, this.inventory);
+    public void load(CompoundTag tag) {
+        ContainerHelper.loadAllItems(tag, this.inventory);
         this.furnaceBurnTime = tag.getInt("BurnTime");
         this.cookTime = tag.getInt("CookTime");
         this.totalCookTime = tag.getInt("CookTimeTotal");
         this.timer = 0;
         this.recipesUsed = this.getBurnTime(this.inventory.get(1));
-        CompoundNBT compoundnbt = tag.getCompound("RecipesUsed");
+        CompoundTag compoundnbt = tag.getCompound("RecipesUsed");
 
         for (String s : compoundnbt.getAllKeys()) {
             this.recipes.put(new ResourceLocation(s), compoundnbt.getInt(s));
@@ -646,16 +652,16 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         this.show_inventory_settings = tag.getInt("ShowInvSettings");
         this.furnaceSettings.read(tag);
         /**
-         CompoundNBT energyTag = tag.getCompound("energy");
-         energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTag));
+         CompoundTag energyTag = tag.getCompound("energy");
+         energy.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(energyTag));
          **/
 
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
-        ItemStackHelper.saveAllItems(tag, this.inventory);
+    public CompoundTag save(CompoundTag tag) {
+        ContainerHelper.saveAllItems(tag, this.inventory);
         tag.putInt("BurnTime", this.furnaceBurnTime);
         tag.putInt("CookTime", this.cookTime);
         tag.putInt("CookTimeTotal", this.totalCookTime);
@@ -665,12 +671,12 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
         /*
          energy.ifPresent(h -> {
-         CompoundNBT compound = ((INBTSerializable<CompoundNBT>) h).serializeNBT();
+         CompoundTag compound = ((INBTSerializable<CompoundTag>) h).serializeNBT();
          tag.put("energy", compound);
          });
          */
 
-        CompoundNBT compoundnbt = new CompoundNBT();
+        CompoundTag compoundnbt = new CompoundTag();
         this.recipes.forEach((recipeId, craftedAmount) ->
                 compoundnbt.putInt(recipeId.toString(), craftedAmount));
         tag.put("RecipesUsed", compoundnbt);
@@ -683,8 +689,8 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
             return 0;
         } else {
             Item item = stack.getItem();
-            int ret = stack.getBurnTime();
-            return net.minecraftforge.event.ForgeEventFactory.getItemBurnTime(stack, ret == -1 ? AbstractFurnaceTileEntity.getFuel().getOrDefault(item, 0) : ret);
+            int ret = stack.getBurnTime(RecipeType.SMELTING);
+            return ForgeEventFactory.getItemBurnTime(stack, ret == -1 ? AbstractFurnaceBlockEntity.getFuel().getOrDefault(item, 0) : ret, RecipeType.SMELTING);
         }
     }
 
@@ -763,7 +769,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
             return false;
         }
         if (index == INPUT) {
-            return this.level.getRecipeManager().getRecipeFor((IRecipeType) this.recipeType, new Inventory(stack), this.level).isPresent();
+            return this.level.getRecipeManager().getRecipeFor((RecipeType) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
         }
         if (index == FUEL) {
             ItemStack itemstack = this.inventory.get(FUEL);
@@ -773,7 +779,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     @Override
-    public void setRecipeUsed(@Nullable IRecipe<?> recipe) {
+    public void setRecipeUsed(@Nullable Recipe<?> recipe) {
         if (recipe != null) {
             ResourceLocation resourcelocation = recipe.getId();
             this.recipes.addTo(resourcelocation, 1);
@@ -783,7 +789,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     @Nullable
     @Override
-    public IRecipe<?> getRecipeUsed() {
+    public Recipe<?> getRecipeUsed() {
         return null;
     }
 
@@ -794,14 +800,14 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
     */
 
-    public void unlockRecipes(PlayerEntity player) {
-        List<IRecipe<?>> list = this.grantStoredRecipeExperience(player.level, player.position());
+    public void unlockRecipes(Player player) {
+        List<Recipe<?>> list = this.grantStoredRecipeExperience(player.level, player.position());
         player.awardRecipes(list);
         this.recipes.clear();
     }
 
-    public List<IRecipe<?>> grantStoredRecipeExperience(World world, Vector3d pos) {
-        List<IRecipe<?>> list = Lists.newArrayList();
+    public List<Recipe<?>> grantStoredRecipeExperience(Level world, Vec3 pos) {
+        List<Recipe<?>> list = Lists.newArrayList();
 
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipes.object2IntEntrySet()) {
             world.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
@@ -813,23 +819,23 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return list;
     }
 
-    private static void splitAndSpawnExperience(World level, Vector3d pos, int craftedAmount, float experience) {
-        int i = MathHelper.floor((float) craftedAmount * experience);
-        float f = MathHelper.frac((float) craftedAmount * experience);
+    private static void splitAndSpawnExperience(Level level, Vec3 pos, int craftedAmount, float experience) {
+        int i = Mth.floor((float) craftedAmount * experience);
+        float f = Mth.frac((float) craftedAmount * experience);
         if (f != 0.0F && Math.random() < (double) f) {
             ++i;
         }
 
         while (i > 0) {
-            int j = ExperienceOrbEntity.getExperienceValue(i);
+            int j = ExperienceOrb.getExperienceValue(i);
             i -= j;
-            level.addFreshEntity(new ExperienceOrbEntity(level, pos.x, pos.y, pos.z, j));
+            level.addFreshEntity(new ExperienceOrb(level, pos.x, pos.y, pos.z, j));
         }
 
     }
 
     @Override
-    public void fillStackedContents(RecipeItemHelper helper) {
+    public void fillStackedContents(StackedContents helper) {
         for (ItemStack itemstack : this.inventory) {
             helper.accountStack(itemstack);
         }
@@ -860,7 +866,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     private AbstractCookingRecipe getRecipe()
     {
         if (curRecipe == null || !curRecipe.matches(this, this.level)) {
-            curRecipe = this.level.getRecipeManager().getRecipeFor((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).orElse(null);
+            curRecipe = this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractCookingRecipe>) this.recipeType, this, this.level).orElse(null);
         }
 
         return curRecipe;

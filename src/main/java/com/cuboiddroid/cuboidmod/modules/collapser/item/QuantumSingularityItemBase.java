@@ -2,16 +2,18 @@ package com.cuboiddroid.cuboidmod.modules.collapser.item;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
 import com.cuboiddroid.cuboidmod.util.IColored;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
+
+import net.minecraft.world.item.Item.Properties;
 
 public abstract class QuantumSingularityItemBase extends Item implements IColored {
     private final QuantumSingularity quantumSingularity;
@@ -27,15 +29,15 @@ public abstract class QuantumSingularityItemBase extends Item implements IColore
     }
 
     @Override
-    public ITextComponent getName(ItemStack stack) {
+    public Component getName(ItemStack stack) {
         return quantumSingularity.getDisplayName();
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
         if (flag.isAdvanced())
-            tooltip.add(new StringTextComponent("Quantum Singularity ID: " + quantumSingularity.getId()));
+            tooltip.add(new TextComponent("Quantum Singularity ID: " + quantumSingularity.getId()));
     }
 
     @Override

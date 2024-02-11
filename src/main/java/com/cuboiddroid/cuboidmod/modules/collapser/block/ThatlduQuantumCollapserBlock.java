@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.block;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.ThatlduQuantumCollapserTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -13,14 +13,15 @@ public class ThatlduQuantumCollapserBlock extends QuantumCollapserBlockBase {
         super(properties);
     }
 
-    @Override
-    public int getHarvestLevel(BlockState state) {
-        return 3;
-    }
+    // @Override
+    // public int getHarvestLevel(BlockState state) {
+    //     return 3;
+    // }
 
-    @Nullable
+
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new ThatlduQuantumCollapserTileEntity();
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ThatlduQuantumCollapserTileEntity(pos, state);
     }
 }

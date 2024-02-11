@@ -6,23 +6,23 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // based on SmithingRecipe
-public class InscribingRecipe implements IRecipe<IInventory> {
+public class InscribingRecipe implements Recipe<Container> {
     private final String mode;
     private final Ingredient topLeft;
     private final Ingredient middle;
@@ -122,7 +122,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the InscribingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.INSCRIBING.get();
     }
 
@@ -131,7 +131,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.INSCRIBING;
     }
 
@@ -144,7 +144,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         return (this.topLeft.test(inv.getItem(RefinedInscriberTileEntity.SLOT_TOP_LEFT))
                 && this.middle.test(inv.getItem(RefinedInscriberTileEntity.SLOT_MIDDLE))
                 && this.bottomRight.test(inv.getItem(RefinedInscriberTileEntity.SLOT_BOTTOM_RIGHT)));
@@ -157,9 +157,9 @@ public class InscribingRecipe implements IRecipe<IInventory> {
      * @return the result
      */
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         ItemStack itemstack = this.result.copy();
-        CompoundNBT compoundnbt = inventory.getItem(0).getTag();
+        CompoundTag compoundnbt = inventory.getItem(0).getTag();
         if (compoundnbt != null) {
             itemstack.setTag(compoundnbt.copy());
         }
@@ -209,8 +209,8 @@ public class InscribingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<InscribingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<InscribingRecipe> {
 
         /* - currently making this match AE2 recipe structure until I figure out
              how to just use them directly
@@ -255,31 +255,31 @@ public class InscribingRecipe implements IRecipe<IInventory> {
          */
         public InscribingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             // TODO - decide whether I'm going to care about the mode...
-            String mode = JSONUtils.getAsString(json, "mode");
+            String mode = GsonHelper.getAsString(json, "mode");
 
-            JsonObject ingredientsJson = JSONUtils.getAsJsonObject(json, "ingredients");
+            JsonObject ingredientsJson = GsonHelper.getAsJsonObject(json, "ingredients");
 
-            Ingredient topLeft = (JSONUtils.isValidNode(ingredientsJson, "top"))
-                    ? Ingredient.fromJson(JSONUtils.getAsJsonObject(ingredientsJson, "top"))
+            Ingredient topLeft = (GsonHelper.isValidNode(ingredientsJson, "top"))
+                    ? Ingredient.fromJson(GsonHelper.getAsJsonObject(ingredientsJson, "top"))
                     : Ingredient.EMPTY;
-            Ingredient middle = Ingredient.fromJson(JSONUtils.getAsJsonObject(ingredientsJson, "middle"));
-            Ingredient bottomRight = (JSONUtils.isValidNode(ingredientsJson, "bottom"))
-                    ? Ingredient.fromJson(JSONUtils.getAsJsonObject(ingredientsJson, "bottom"))
+            Ingredient middle = Ingredient.fromJson(GsonHelper.getAsJsonObject(ingredientsJson, "middle"));
+            Ingredient bottomRight = (GsonHelper.isValidNode(ingredientsJson, "bottom"))
+                    ? Ingredient.fromJson(GsonHelper.getAsJsonObject(ingredientsJson, "bottom"))
                     : Ingredient.EMPTY;
 
-            JsonObject resultJson = JSONUtils.getAsJsonObject(json, "result");
-            ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(resultJson, "item"));
-            int count = JSONUtils.getAsInt(resultJson, "count", 1);
+            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
+            ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(resultJson, "item"));
+            int count = GsonHelper.getAsInt(resultJson, "count", 1);
 
             ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), count);
 
-            int workTicks = JSONUtils.getAsInt(json, "work_ticks", Config.refinedInscriberDefaultWorkTicks.get());
-            int energyRequired = JSONUtils.getAsInt(json, "energy", Config.refinedInscriberDefaultEnergyRequired.get());
+            int workTicks = GsonHelper.getAsInt(json, "work_ticks", Config.refinedInscriberDefaultWorkTicks.get());
+            int energyRequired = GsonHelper.getAsInt(json, "energy", Config.refinedInscriberDefaultEnergyRequired.get());
 
             return new InscribingRecipe(recipeId, mode, topLeft, middle, bottomRight, result, workTicks, energyRequired);
         }
 
-        public InscribingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public InscribingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String mode = buffer.readUtf();
             Ingredient topLeft = Ingredient.fromNetwork(buffer);
             Ingredient middle = Ingredient.fromNetwork(buffer);
@@ -291,7 +291,7 @@ public class InscribingRecipe implements IRecipe<IInventory> {
             return new InscribingRecipe(recipeId, mode, topLeft, middle, bottomRight, result, workTicks, energyRequired);
         }
 
-        public void toNetwork(PacketBuffer buffer, InscribingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, InscribingRecipe recipe) {
             buffer.writeUtf(recipe.mode);
             recipe.topLeft.toNetwork(buffer);
             recipe.middle.toNetwork(buffer);

@@ -6,26 +6,26 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecip
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -37,7 +37,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RefinedInscriberTileEntity extends TileEntity implements ITickableTileEntity {
+public class RefinedInscriberTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int SLOT_TOP_LEFT = 0;
     public static final int SLOT_MIDDLE = 1;
     public static final int SLOT_BOTTOM_RIGHT = 2;
@@ -69,17 +69,21 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
     private InscribingRecipe cachedRecipe = null;
 
     public RefinedInscriberTileEntity() {
-        super(ModTileEntities.REFINED_INSCRIBER.get());
+        this(null, null);
+    }
+
+    public RefinedInscriberTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.REFINED_INSCRIBER.get(), pos, state);
         energyStorage = createEnergy();
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("cuboidmod.container.refined_inscriber");
+    public Component getDisplayName() {
+        return new TranslatableComponent("cuboidmod.container.refined_inscriber");
     }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
+        if (level == null || level.isClientSide)
             return;
 
         boolean didWorkThisTick = false;
@@ -123,10 +127,8 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         if (blockState.getValue(BlockStateProperties.LIT) != (processingTime > 0 || didWorkThisTick)) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0), Block.UPDATE_ALL);
         }
     }
 
@@ -207,7 +209,7 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
             return null;
 
         // make an inventory
-        IInventory inv = getInputsAsInventory();
+        Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
@@ -216,8 +218,8 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
         return cachedRecipe;
     }
 
-    private Inventory getInputsAsInventory() {
-        return new Inventory(
+    private SimpleContainer getInputsAsInventory() {
+        return new SimpleContainer(
                 this.topLeftItemHandler.getStackInSlot(0).copy(),
                 this.middleItemHandler.getStackInSlot(0).copy(),
                 this.bottomRightItemHandler.getStackInSlot(0).copy());
@@ -284,7 +286,7 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         topLeftItemHandler.deserializeNBT(tag.getCompound("invTL"));
         middleItemHandler.deserializeNBT(tag.getCompound("invMid"));
         bottomRightItemHandler.deserializeNBT(tag.getCompound("invBR"));
@@ -293,11 +295,11 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invTL", topLeftItemHandler.serializeNBT());
         tag.put("invMid", middleItemHandler.serializeNBT());
         tag.put("invBR", bottomRightItemHandler.serializeNBT());
@@ -321,17 +323,17 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -438,7 +440,7 @@ public class RefinedInscriberTileEntity extends TileEntity implements ITickableT
         };
     }
 
-    public Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity) {
         return new RefinedInscriberContainer(i, level, pos, playerInventory, playerEntity);
     }
 

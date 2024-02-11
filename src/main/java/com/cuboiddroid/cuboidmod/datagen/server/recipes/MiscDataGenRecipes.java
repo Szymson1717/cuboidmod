@@ -4,17 +4,17 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
 public class MiscDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         buildHopperRecipe(provider, consumer);
         buildStringRecipe(provider, consumer);
         buildOrganicallyEnrichedSandRecipe(provider, consumer);
@@ -22,7 +22,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
         buildTorchAndLanternRecipes(provider, consumer);
     }
 
-    private static void buildBucketRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildBucketRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         // unfortunately can't use tags it seems or the recycler doesn't pick these over the vanilla recipe
         Item[] ingots = new Item[]{
                 ModItems.NOTSOGUDIUM_INGOT.get(),
@@ -46,7 +46,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
         }
     }
 
-    private static void buildStringRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildStringRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(Items.STRING, 4)
                 .define('#', ModTags.Items.CARBON_NANOTUBE)
                 .define('/', ModTags.Items.PROTEIN_FIBER)
@@ -56,7 +56,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId("string_from_nanotubes_and_protein_fiber"));
     }
 
-    private static void buildHopperRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildHopperRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(Items.HOPPER)
                 .define('#', ModTags.Items.INGOTS)
                 .define('$', ModTags.Items.CHESTS)
@@ -67,7 +67,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId("hopper_from_ingots_and_chest"));
     }
 
-    private static void buildTorchAndLanternRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildTorchAndLanternRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(Items.TORCH, 8)
                 .define('#', Items.COAL)
                 .define('|', ModTags.Items.RODS)
@@ -94,7 +94,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
                 .save(consumer, modId("lantern_from_nuggets_and_torch"));
     }
 
-    private static void buildOrganicallyEnrichedSandRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildOrganicallyEnrichedSandRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(ModBlocks.ORGANICALLY_ENRICHED_SAND.get())
                 .requires(Items.SAND)
                 .requires(Items.BONE_MEAL)

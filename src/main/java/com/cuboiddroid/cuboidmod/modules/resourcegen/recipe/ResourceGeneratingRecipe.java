@@ -5,20 +5,20 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
+public class ResourceGeneratingRecipe implements Recipe<Container> {
     private final ResourceLocation recipeId;
     private Ingredient singularity;
     private ItemStack result;
@@ -76,7 +76,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      *
      * @return the IRecipeSerializer for the ResourceGeneratingRecipe
      */
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipeSerializers.RESOURCE_GENERATING.get();
     }
 
@@ -85,7 +85,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      *
      * @return The IRecipeType for this recipe
      */
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipeTypes.RESOURCE_GENERATING;
     }
 
@@ -97,7 +97,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(IInventory inv, World level) {
+    public boolean matches(Container inv, Level level) {
         return this.singularity.test(inv.getItem(SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT));
     }
 
@@ -108,7 +108,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
      * @return
      */
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public ItemStack assemble(Container inventory) {
         return this.getResultItem();
     }
 
@@ -165,8 +165,8 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-            implements IRecipeSerializer<ResourceGeneratingRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
+            implements RecipeSerializer<ResourceGeneratingRecipe> {
 
         /*
           JSON structure:
@@ -186,23 +186,23 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
         public ResourceGeneratingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             ResourceGeneratingRecipe recipe = new ResourceGeneratingRecipe(recipeId);
 
-            JsonObject singularityJson = JSONUtils.getAsJsonObject(json, "singularity");
-            ResourceLocation singularityItemId = new ResourceLocation(JSONUtils.getAsString(singularityJson, "item"));
+            JsonObject singularityJson = GsonHelper.getAsJsonObject(json, "singularity");
+            ResourceLocation singularityItemId = new ResourceLocation(GsonHelper.getAsString(singularityJson, "item"));
 
             recipe.singularity = Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(singularityItemId), 1));
 
-            JsonObject resultJson = JSONUtils.getAsJsonObject(json, "result");
-            ResourceLocation itemId = new ResourceLocation(JSONUtils.getAsString(resultJson, "item"));
+            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
+            ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(resultJson, "item"));
 
-            recipe.workTimeMultiplier = JSONUtils.getAsFloat(json, "work_time_multiplier", 1.0F);
-            recipe.outputMultiplier = JSONUtils.getAsFloat(json, "output_multiplier", 1.0F);
+            recipe.workTimeMultiplier = GsonHelper.getAsFloat(json, "work_time_multiplier", 1.0F);
+            recipe.outputMultiplier = GsonHelper.getAsFloat(json, "output_multiplier", 1.0F);
 
             recipe.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), 1);
             return recipe;
         }
 
         @Override
-        public ResourceGeneratingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public ResourceGeneratingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             ResourceGeneratingRecipe recipe = new ResourceGeneratingRecipe(recipeId);
             recipe.singularity = Ingredient.fromNetwork(buffer);
             recipe.result = buffer.readItem();
@@ -212,7 +212,7 @@ public class ResourceGeneratingRecipe implements IRecipe<IInventory> {
             return recipe;
         }
 
-        public void toNetwork(PacketBuffer buffer, ResourceGeneratingRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, ResourceGeneratingRecipe recipe) {
             recipe.singularity.toNetwork(buffer);
             buffer.writeItem(recipe.result);
             buffer.writeFloat(recipe.workTimeMultiplier);

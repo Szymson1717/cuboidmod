@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.inventory;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.CuboidFurnaceTileEntityBase;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class CuboidFurnaceFuelSlot extends Slot {
     CuboidFurnaceTileEntityBase te;

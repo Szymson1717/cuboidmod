@@ -4,25 +4,27 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.darkhax.gamestages.GameStageHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
+// import net.darkhax.gamestages.GameStageHelper;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -30,7 +32,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CryogenicDimensionalTeleporterTileEntity extends TileEntity implements ITickableTileEntity {
+public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implements BlockEntityTicker {
+
     private CuboidEnergyStorage energyStorage;
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
@@ -47,7 +50,12 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
     private boolean isDirty = false;
 
     public CryogenicDimensionalTeleporterTileEntity() {
-        super(ModTileEntities.CRYOGENIC_DIMENSIONAL_TELEPORTER.get());
+        super(ModTileEntities.CRYOGENIC_DIMENSIONAL_TELEPORTER.get(), null, null);
+        energyStorage = createEnergy();
+    }
+
+    public CryogenicDimensionalTeleporterTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.CRYOGENIC_DIMENSIONAL_TELEPORTER.get(), pos, state);
         energyStorage = createEnergy();
     }
 
@@ -59,24 +67,24 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
         return keyItem;
     }
 
-    public boolean setTargetDimensionWithKeyItem(ServerPlayerEntity serverPlayer, ItemStack stack) {
+    public boolean setTargetDimensionWithKeyItem(ServerPlayer serverPlayer, ItemStack stack) {
         String currentTarget = targetDimension;
         if (stack.getItem() == ModBlocks.ENERGIZED_END_STONE_BRICKS.get().asItem())
         {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_end";
-            GameStageHelper.addStage(serverPlayer, "end_access");
+            // GameStageHelper.addStage(serverPlayer, "end_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_STONE_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:overworld";
         } else if (stack.getItem() == ModBlocks.ENERGIZED_THATLDUVIUM.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "cuboidmod:cuboid_overworld";
-            GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
+            // GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_NETHER_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_nether";
-            GameStageHelper.addStage(serverPlayer, "nether_access");
+            // GameStageHelper.addStage(serverPlayer, "nether_access");
         } else {
             if (Config.cryoDimTeleporterClearsTargetDimensionForInvalidKey.get())
             {
@@ -100,28 +108,27 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
         return false;
     }
 
-    public DimensionType GetTargetDimensionIfCharged(ServerPlayerEntity serverPlayer, World level) {
+    public DimensionType GetTargetDimensionIfCharged(ServerPlayer serverPlayer, Level level) {
         // if state != Ready or no target dimension, return null
         if (targetDimension == "" || state != CdtStates.READY)
             return null;
 
         // try get the actual Dimension identified as the target
-        for (ResourceLocation resLoc : level.getServer().registryAccess().dimensionTypes().keySet())
+        for (ResourceLocation resLoc : level.getServer().registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).keySet())
         {
             if (resLoc.toString().equalsIgnoreCase(targetDimension)) {
-
                 // this is unfortunately, but due to FTB Quests not working as I expected it to,
                 // this is to allow anyone on a server to get to target dimensions using a
                 // charged CDT
-                if (isTargetCuboidOverworld())
-                    GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
-                else if (isTargetTheEnd())
-                    GameStageHelper.addStage(serverPlayer, "end_access");
-                else if (isTargetTheNether())
-                    GameStageHelper.addStage(serverPlayer, "nether_access");
+                // if (isTargetCuboidOverworld())
+                //     GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
+                // else if (isTargetTheEnd())
+                //     GameStageHelper.addStage(serverPlayer, "end_access");
+                // else if (isTargetTheNether())
+                //     GameStageHelper.addStage(serverPlayer, "nether_access");
 
                 // found it! return the target dimension type
-                return level.getServer().registryAccess().dimensionTypes().get(resLoc);
+                return level.getServer().registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).get(resLoc);
             }
         }
 
@@ -134,13 +141,13 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
         setChanged();
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.cuboidmod.cryogenic_dimensional_teleporter");
+    public MutableComponent getDisplayName() {
+        return new TranslatableComponent("container.cuboidmod.cryogenic_dimensional_teleporter");
     }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
+        if (level == null || level.isClientSide)
             return;
 
         if (state == CdtStates.CHARGING) {
@@ -154,16 +161,12 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
             }
         }
 
-        if (isDirty) {
-            setChanged();
-        }
+        if (isDirty) setChanged();
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         boolean shouldBeLit = state == CdtStates.CHARGING;
         boolean shouldBeOpen = state == CdtStates.READY;
         if (blockState.getValue(BlockStateProperties.LIT) != shouldBeLit || blockState.getValue(BlockStateProperties.OPEN) != shouldBeOpen) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, shouldBeLit).setValue(BlockStateProperties.OPEN, shouldBeOpen),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(pos, blockState.setValue(BlockStateProperties.LIT, shouldBeLit).setValue(BlockStateProperties.OPEN, shouldBeOpen), Block.UPDATE_ALL);
         }
     }
 
@@ -178,21 +181,21 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         this.state = CdtStates.values()[tag.getByte("state")];
         this.targetDimension = tag.getString("tgtDim");
         this.keyItem = ItemStack.of(tag.getCompound("keyItem"));
 
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("energy", energyStorage.serializeNBT());
         tag.putByte("state", (byte)this.state.ordinal());
         tag.putString("tgtDim", this.targetDimension);
-        CompoundNBT keyTag = new CompoundNBT();
+        CompoundTag keyTag = new CompoundTag();
         this.keyItem.save(keyTag);
         tag.put("keyItem", keyTag);
 
@@ -214,20 +217,20 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
      * @return the packet
      */
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         if (level == null)
             return;
 
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -235,8 +238,8 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
     /* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client
      */
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbtTagCompound = new CompoundNBT();
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbtTagCompound = new CompoundTag();
         save(nbtTagCompound);
         return nbtTagCompound;
     }
@@ -244,8 +247,8 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
     /* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client
      */
     @Override
-    public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound) {
-        this.load(blockState, parentNBTTagCompound);
+    public void handleUpdateTag(CompoundTag tag) {
+        this.load(tag);
     }
 
     private CuboidEnergyStorage createEnergy() {
@@ -267,8 +270,8 @@ public class CryogenicDimensionalTeleporterTileEntity extends TileEntity impleme
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(getBlockPos(), getBlockPos().offset(1, 3, 1));
+    public AABB getRenderBoundingBox() {
+        return new AABB(getBlockPos(), getBlockPos().offset(1, 3, 1));
     }
 
     public boolean isTargetTheEnd() {

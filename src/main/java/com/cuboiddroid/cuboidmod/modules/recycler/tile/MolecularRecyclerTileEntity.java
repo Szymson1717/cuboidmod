@@ -9,34 +9,34 @@ import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import com.cuboiddroid.cuboidmod.util.Pair;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -50,7 +50,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MolecularRecyclerTileEntity extends TileEntity implements ITickableTileEntity {
+public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEntityTicker  {
     private static final Dictionary<String, RecyclingRecipe> AUTO_RECIPES = new Hashtable<>();
     private static final HashMap<String, Boolean> REJECTED_RECIPES = new HashMap<>();
     private static final Random RANDOM = new Random();
@@ -88,17 +88,21 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
     private int energyConsumed = 0;
 
     public MolecularRecyclerTileEntity() {
-        super(ModTileEntities.MOLECULAR_RECYCLER.get());
+        this(null, null);
+    }
+
+    public MolecularRecyclerTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.MOLECULAR_RECYCLER.get(), pos, state);
         energyStorage = createEnergy();
     }
 
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("cuboidmod.container.molecular_recycler");
+    public Component getDisplayName() {
+        return new TranslatableComponent("cuboidmod.container.molecular_recycler");
     }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
+        if (level == null || level.isClientSide)
             return;
 
         boolean didWorkThisTick = false;
@@ -142,10 +146,8 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         if (blockState.getValue(BlockStateProperties.LIT) != (processingTime > 0 || didWorkThisTick)) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0), Block.UPDATE_ALL);
         }
     }
 
@@ -237,7 +239,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             return null;
 
         // make an inventory
-        IInventory inv = getInputsAsInventory();
+        Container inv = getInputsAsInventory();
 
         // look for a specific recipe and use it if found (i.e. json overrides)
         RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING, inv, this.level).orElse(null);
@@ -306,7 +308,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             }
 
             @Override
-            public List<ItemStack> getResults(IInventory inv) {
+            public List<ItemStack> getResults(Container inv) {
                 return this.results.entrySet().stream()
                         .filter(e -> RANDOM.nextDouble() < e.getValue())
                         .map(e -> e.getKey().copy())
@@ -314,7 +316,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             }
 
             @Override
-            public Set<ItemStack> getPossibleResults(IInventory inv) {
+            public Set<ItemStack> getPossibleResults(Container inv) {
                 return this.results.keySet();
             }
 
@@ -374,18 +376,18 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
             return currentStep;
         }
 
-        List<IRecipe<?>> potentialRecipes = null;
+        List<Recipe<?>> potentialRecipes = null;
         if (currentStep < MAX_RECYCLING_STEPS && level != null) {
             // find suitable standard crafting recipe(s) that result in this item
             MinecraftServer server = level.getServer();
             if (server != null) {
                 RecipeManager recipeManager = server.getRecipeManager();
 
-                Collection<IRecipe<?>> allRecipes = recipeManager.getRecipes();
+                Collection<Recipe<?>> allRecipes = recipeManager.getRecipes();
 
                 potentialRecipes = allRecipes.stream().filter(rec ->
                         rec != null &&
-                                rec.getType() == IRecipeType.CRAFTING &&
+                                rec.getType() == RecipeType.CRAFTING &&
                                 !rec.getResultItem().isEmpty() &&
                                 rec.getResultItem().getCount() <= inputItem.getCount() &&
                                 !recipeIsBlacklisted(rec) &&
@@ -406,9 +408,9 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         }
 
         //   pick the one with the most input ingredients as they are hopefully more "basic" ingredients
-        IRecipe<?> selectedRecipe = null;
+        Recipe<?> selectedRecipe = null;
         int selectInputCount = -1;
-        for (IRecipe<?> rec : potentialRecipes) {
+        for (Recipe<?> rec : potentialRecipes) {
             int inputCount = 0;
             for (Ingredient i : rec.getIngredients()) {
                 ItemStack[] stacks = i.getItems();
@@ -482,7 +484,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
      * @param recipe the recipe to check
      * @return true if it is blacklisted, otherwise false
      */
-    private boolean recipeIsBlacklisted(IRecipe<?> recipe) {
+    private boolean recipeIsBlacklisted(Recipe<?> recipe) {
         return BlacklistConfig.getInstance().isBlacklistedRecipe(recipe.getId().toString());
     }
 
@@ -613,8 +615,8 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         return resultStacks;
     }
 
-    private Inventory getInputsAsInventory() {
-        return new Inventory(this.inputItemHandler.getStackInSlot(0).copy());
+    private SimpleContainer getInputsAsInventory() {
+        return new SimpleContainer(this.inputItemHandler.getStackInSlot(0).copy());
     }
 
     private List<ItemStack> getWorkOutput(@Nullable RecyclingRecipe recipe) {
@@ -652,18 +654,18 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
@@ -683,17 +685,17 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -754,7 +756,7 @@ public class MolecularRecyclerTileEntity extends TileEntity implements ITickable
         };
     }
 
-    public Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity) {
         return new MolecularRecyclerContainer(i, level, pos, playerInventory, playerEntity);
     }
 

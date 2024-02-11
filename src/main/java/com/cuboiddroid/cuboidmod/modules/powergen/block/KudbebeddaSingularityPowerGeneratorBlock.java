@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.powergen.block;
 
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.KudbebeddaSingularityPowerGeneratorTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -13,9 +13,9 @@ public class KudbebeddaSingularityPowerGeneratorBlock extends SingularityPowerGe
         super(properties);
     }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new KudbebeddaSingularityPowerGeneratorTileEntity();
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new KudbebeddaSingularityPowerGeneratorTileEntity(pos, state);
     }
 }

@@ -1,38 +1,40 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.block;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
-public abstract class QuantumCollapserBlockBase extends Block {
+public abstract class QuantumCollapserBlockBase extends BaseEntityBlock {
 
     private static final VoxelShape VOXEL_SHAPE_N = Stream.of(
             Block.box(0, 0, 0, 16, 1, 16), Block.box(2, 1, 2, 14, 15, 14), Block.box(1, 15, 1, 15, 16, 15),
@@ -47,7 +49,7 @@ public abstract class QuantumCollapserBlockBase extends Block {
             Block.box(4, 3, 1, 12, 4, 2), Block.box(4, 12, 1, 12, 13, 2), Block.box(3, 1, 14, 13, 15, 15),
             Block.box(2, 15, 0, 14, 16, 1), Block.box(2, 15, 15, 14, 16, 16), Block.box(0, 15, 2, 1, 16, 14),
             Block.box(15, 15, 2, 16, 16, 14), Block.box(4, 4, 1, 12, 12, 2)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     private static final VoxelShape VOXEL_SHAPE_E = Stream.of(
             Block.box(0, 0, 0, 16, 1, 16), Block.box(2, 1, 2, 14, 15, 14), Block.box(1, 15, 1, 15, 16, 15),
@@ -62,7 +64,7 @@ public abstract class QuantumCollapserBlockBase extends Block {
             Block.box(14, 3, 4, 15, 4, 12), Block.box(14, 12, 4, 15, 13, 12), Block.box(1, 1, 3, 2, 15, 13),
             Block.box(15, 15, 2, 16, 16, 14), Block.box(0, 15, 2, 1, 16, 14), Block.box(2, 15, 0, 14, 16, 1),
             Block.box(2, 15, 15, 14, 16, 16)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     private static final VoxelShape VOXEL_SHAPE_S = Stream.of(
             Block.box(0, 0, 0, 16, 1, 16), Block.box(2, 1, 2, 14, 15, 14), Block.box(1, 15, 1, 15, 16, 15),
@@ -77,7 +79,7 @@ public abstract class QuantumCollapserBlockBase extends Block {
             Block.box(4, 3, 14, 12, 4, 15), Block.box(4, 12, 14, 12, 13, 15), Block.box(3, 1, 1, 13, 15, 2),
             Block.box(2, 15, 15, 14, 16, 16), Block.box(2, 15, 0, 14, 16, 1), Block.box(15, 15, 2, 16, 16, 14),
             Block.box(0, 15, 2, 1, 16, 14)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     private static final VoxelShape VOXEL_SHAPE_W = Stream.of(
             Block.box(0, 0, 0, 16, 1, 16), Block.box(2, 1, 2, 14, 15, 14), Block.box(1, 15, 1, 15, 16, 15),
@@ -92,16 +94,15 @@ public abstract class QuantumCollapserBlockBase extends Block {
             Block.box(1, 3, 4, 2, 4, 12), Block.box(1, 12, 4, 2, 13, 12), Block.box(14, 1, 3, 15, 15, 13),
             Block.box(0, 15, 2, 1, 16, 14), Block.box(15, 15, 2, 16, 16, 14), Block.box(2, 15, 15, 14, 16, 16),
             Block.box(2, 15, 0, 14, 16, 1)
-    ).reduce((v1, v2) -> {return VoxelShapes.join(v1, v2, IBooleanFunction.OR);}).get();
+    ).reduce((v1, v2) -> {return Shapes.join(v1, v2, BooleanOp.OR);}).get();
 
     public QuantumCollapserBlockBase(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(BlockStateProperties.LIT, false));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {
         switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
             case EAST:
                 return VOXEL_SHAPE_E;
@@ -114,40 +115,40 @@ public abstract class QuantumCollapserBlockBase extends Block {
         }
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
+    // @Override
+    // public boolean hasTileEntity(BlockState state) {
+    //     return true;
+    // }
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTrace) {
         if (level.isClientSide) {
             // return success on client so player swings their hand
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         this.interactWith(level, pos, player);
-        return ActionResultType.CONSUME;
+        return InteractionResult.CONSUME;
     }
 
-    private void interactWith(World level, BlockPos pos, PlayerEntity player) {
-        TileEntity tileEntity = level.getBlockEntity(pos);
+    private void interactWith(Level level, BlockPos pos, Player player) {
+        BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof QuantumCollapserTileEntityBase) {
             QuantumCollapserTileEntityBase collapserTileEntity = (QuantumCollapserTileEntityBase) tileEntity;
-            INamedContainerProvider containerProvider = new INamedContainerProvider() {
+            MenuProvider containerProvider = new MenuProvider() {
                 @Override
-                public ITextComponent getDisplayName() {
+                public Component getDisplayName() {
                     return collapserTileEntity.getDisplayName();
                 }
 
                 @Override
-                public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
                     return collapserTileEntity.createContainer(i, level, pos, playerInventory, playerEntity);
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider, tileEntity.getBlockPos());
+            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }
@@ -155,7 +156,7 @@ public abstract class QuantumCollapserBlockBase extends Block {
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState()
                 .setValue(BlockStateProperties.LIT, false)
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
@@ -163,12 +164,12 @@ public abstract class QuantumCollapserBlockBase extends Block {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onRemove(BlockState state, World level, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         // check we're removing the right block
         if (!state.is(newState.getBlock())) {
-            TileEntity tileEntity = level.getBlockEntity(pos);
-            if (tileEntity instanceof IInventory) {
-                InventoryHelper.dropContents(level, pos, (IInventory) tileEntity);
+            BlockEntity tileEntity = level.getBlockEntity(pos);
+            if (tileEntity instanceof Container) {
+                Containers.dropContents(level, pos, (Container) tileEntity);
                 level.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, level, pos, newState, isMoving);
@@ -188,7 +189,7 @@ public abstract class QuantumCollapserBlockBase extends Block {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
         builder.add(BlockStateProperties.LIT);
     }

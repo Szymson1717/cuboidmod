@@ -1,11 +1,11 @@
 package com.cuboiddroid.cuboidmod.setup;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
-public enum ModItemTiers implements IItemTier {
+public enum ModItemTiers implements Tier {
 
     NOTSOGUDIUM  (2, 65,    2.0F, 0.0F, 8,  () -> Ingredient.of(ModItems.NOTSOGUDIUM_INGOT.get())),
     KUDBEBEDDA   (2, 95,    4.0F, 1.0F, 10, () -> Ingredient.of(ModItems.KUDBEBEDDA_INGOT.get())),
