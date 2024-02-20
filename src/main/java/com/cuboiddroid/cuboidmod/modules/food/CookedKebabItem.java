@@ -12,8 +12,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Made from smelting a raw kebab item
  * 5% chance of poison for 2 seconds

@@ -157,6 +157,7 @@ public class QuantumTransmutationChamberScreen extends AbstractContainerScreen<Q
         }
     }
 
+    @SuppressWarnings("resource")
     private QuantumTransmutationChamberTileEntity getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

@@ -3,7 +3,6 @@ package com.cuboiddroid.cuboidmod.datagen.server.recipes;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.data.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.resources.ResourceLocation;

@@ -156,6 +156,7 @@ public class MolecularRecyclerScreen extends AbstractContainerScreen<MolecularRe
         }
     }
 
+    @SuppressWarnings("resource")
     private MolecularRecyclerTileEntity getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

@@ -29,15 +29,12 @@ import net.minecraft.world.level.Level;
 
 public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> implements BlockEntityRenderer<T> {
 
-    private final BlockEntityRendererProvider.Context context;
     private final LayerDefinition chest;
     private final ModelPart chestLid;
     private final ModelPart chestBottom;
     private final ModelPart chestLock;
 
     public CuboidChestTileEntityRenderer(BlockEntityRendererProvider.Context context) {
-        this.context = context;
-
         this.chest = createBodyLayer();
         this.chestLid = this.chest.bakeRoot().getChild("base");
         this.chestBottom = this.chest.bakeRoot().getChild("lid");

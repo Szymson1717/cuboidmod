@@ -33,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("rawtypes")
 public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntity implements BlockEntityTicker  {
 
     private ItemStackHandler itemHandler = createHandler();

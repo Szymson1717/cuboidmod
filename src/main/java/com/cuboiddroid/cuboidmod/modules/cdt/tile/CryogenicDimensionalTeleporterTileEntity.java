@@ -32,6 +32,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("rawtypes")
 public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implements BlockEntityTicker {
 
     private CuboidEnergyStorage energyStorage;
@@ -108,6 +109,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         return false;
     }
 
+    @SuppressWarnings("resource")
     public DimensionType GetTargetDimensionIfCharged(ServerPlayer serverPlayer, Level level) {
         // if state != Ready or no target dimension, return null
         if (targetDimension == "" || state != CdtStates.READY)

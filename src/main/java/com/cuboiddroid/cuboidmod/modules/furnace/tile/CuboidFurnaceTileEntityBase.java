@@ -50,6 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("rawtypes")
 public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory implements BlockEntityTicker, RecipeHolder, StackedContentsCompatible {
     public final int[] provides = new int[Direction.values().length];
     private final int[] lastProvides = new int[this.provides.length];
@@ -424,6 +425,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected boolean hasRecipe(ItemStack stack) {
         return this.level.getRecipeManager().getRecipeFor((RecipeType) this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
@@ -643,7 +645,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         this.cookTime = tag.getInt("CookTime");
         this.totalCookTime = tag.getInt("CookTimeTotal");
         this.timer = 0;
-        this.recipesUsed = this.getBurnTime(this.inventory.get(1));
+        this.recipesUsed = CuboidFurnaceTileEntityBase.getBurnTime(this.inventory.get(1));
         CompoundTag compoundnbt = tag.getCompound("RecipesUsed");
 
         for (String s : compoundnbt.getAllKeys()) {
@@ -684,6 +686,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return super.save(tag);
     }
 
+    @SuppressWarnings("deprecation")
     protected static int getBurnTime(ItemStack stack) {
         if (stack.isEmpty()) {
             return 0;
@@ -763,6 +766,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean IisItemValidForSlot(int index, ItemStack stack) {
         if (index == OUTPUT || index == 3) {
@@ -863,6 +867,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         }
     }
 
+    @SuppressWarnings("unchecked")
     private AbstractCookingRecipe getRecipe()
     {
         if (curRecipe == null || !curRecipe.matches(this, this.level)) {

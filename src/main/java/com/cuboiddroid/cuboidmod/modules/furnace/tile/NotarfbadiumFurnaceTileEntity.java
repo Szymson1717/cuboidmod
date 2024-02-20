@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.NotarfbadiumFurnaceContainer;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class NotarfbadiumFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
     public NotarfbadiumFurnaceTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.NOTARFBADIUM_FURNACE.get().defaultBlockState());
     }
 
     public NotarfbadiumFurnaceTileEntity(BlockPos pos, BlockState state) {

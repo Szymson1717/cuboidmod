@@ -3,6 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecipe;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -37,6 +38,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("rawtypes")
 public class RefinedInscriberTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int SLOT_TOP_LEFT = 0;
     public static final int SLOT_MIDDLE = 1;
@@ -69,7 +71,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
     private InscribingRecipe cachedRecipe = null;
 
     public RefinedInscriberTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.REFINED_INSCRIBER.get().defaultBlockState());
     }
 
     public RefinedInscriberTileEntity(BlockPos pos, BlockState state) {

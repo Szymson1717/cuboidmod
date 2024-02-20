@@ -20,8 +20,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
-
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.RecipeType;
 
 /*

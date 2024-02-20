@@ -36,6 +36,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Date;
 
+@SuppressWarnings("rawtypes")
 public abstract class QuantumCollapserTileEntityBase extends BlockEntity implements BlockEntityTicker  {
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;

@@ -17,7 +17,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 // basic ore-doubler with configurable durability
-import net.minecraft.world.item.Item.Properties;
 
 public class Smoosher extends Item {
     public Smoosher() {

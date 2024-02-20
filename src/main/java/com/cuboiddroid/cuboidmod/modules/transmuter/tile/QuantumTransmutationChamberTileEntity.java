@@ -3,6 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.transmuter.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -27,7 +28,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -39,6 +39,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("rawtypes")
 public class QuantumTransmutationChamberTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_ADDITIONAL = 1;
@@ -69,7 +70,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     private TransmutingRecipe cachedRecipe = null;
 
     public QuantumTransmutationChamberTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get().defaultBlockState());
     }
 
     public QuantumTransmutationChamberTileEntity(BlockPos pos, BlockState state) {

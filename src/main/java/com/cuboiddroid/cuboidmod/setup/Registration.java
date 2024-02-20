@@ -17,8 +17,6 @@ import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -46,6 +44,7 @@ public class Registration {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = create(ForgeRegistries.RECIPE_SERIALIZERS);
     public static final DeferredRegister<Fluid> FLUIDS = create(ForgeRegistries.FLUIDS);
 
+    @SuppressWarnings("deprecation")
     public static void register() {
         QuantumSingularityRegistry.getInstance().loadSingularities();
         BlacklistConfig.getInstance().loadConfig();

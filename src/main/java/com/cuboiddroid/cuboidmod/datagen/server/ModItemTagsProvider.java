@@ -302,6 +302,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.FURNACES).addTag(ModTags.Items.FURNACES_EUMUS);
     }
 
+    @SuppressWarnings("unchecked")
     private void addSingularityTags()
     {
         tag(ModTags.Items.QUANTUM_SINGULARITIES_ANDESITE).add(ModItems.ANDESITE_QUANTUM_SINGULARITY.get());

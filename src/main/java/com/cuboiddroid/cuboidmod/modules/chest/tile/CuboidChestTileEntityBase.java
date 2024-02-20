@@ -28,7 +28,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.function.Supplier;
 
@@ -39,8 +38,9 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 
+@SuppressWarnings("rawtypes")
 @OnlyIn(value = Dist.CLIENT, _interface = LidBlockEntity.class)
-public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity implements LidBlockEntity, BlockEntityTicker  {
+public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity implements LidBlockEntity, BlockEntityTicker {
 
     private NonNullList<ItemStack> chestContents;
     protected float lidAngle;
@@ -142,7 +142,7 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
         ++this.ticksSinceSync;
         this.numPlayersUsing = getNumberOfPlayersUsing(level, this, this.ticksSinceSync, x, y, z, this.numPlayersUsing);
         this.prevLidAngle = this.lidAngle;
-        float f = 0.1F;
+        // float f = 0.1F;
         if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F) {
             this.playSound(SoundEvents.CHEST_OPEN);
         }
@@ -160,7 +160,7 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
                 this.lidAngle = 1.0F;
             }
 
-            float f2 = 0.5F;
+            // float f2 = 0.5F;
             if (this.lidAngle < 0.5F && f1 >= 0.5F) {
                 this.playSound(SoundEvents.CHEST_CLOSE);
             }
@@ -314,22 +314,22 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
         return this.blockToUse.get();
     }
 
-    private void deserializeChestContentsNBT(CompoundTag nbt)
-    {
-        this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
-        ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < tagList.size(); i++)
-        {
-            CompoundTag itemTags = tagList.getCompound(i);
-            int slot = itemTags.getInt("Slot");
+    // private void deserializeChestContentsNBT(CompoundTag nbt)
+    // {
+    //     this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
+    //     ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
+    //     for (int i = 0; i < tagList.size(); i++)
+    //     {
+    //         CompoundTag itemTags = tagList.getCompound(i);
+    //         int slot = itemTags.getInt("Slot");
 
-            if (slot >= 0 && slot < this.chestContents.size())
-            {
-                this.chestContents.set(slot, ItemStack.of(itemTags));
-            }
-        }
-        //onLoad();
-    }
+    //         if (slot >= 0 && slot < this.chestContents.size())
+    //         {
+    //             this.chestContents.set(slot, ItemStack.of(itemTags));
+    //         }
+    //     }
+    //     //onLoad();
+    // }
 
     public CompoundTag serializeChestContentsNBT()
     {

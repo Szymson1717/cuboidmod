@@ -5,8 +5,6 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Made by smelting protein paste.
  */

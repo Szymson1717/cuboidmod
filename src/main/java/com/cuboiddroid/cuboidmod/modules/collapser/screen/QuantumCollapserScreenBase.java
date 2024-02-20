@@ -211,6 +211,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
     }
 */
 
+    @SuppressWarnings("resource")
     private QuantumCollapserTileEntityBase getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

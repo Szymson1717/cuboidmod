@@ -13,8 +13,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Made by crafting raw beef and apple cider vinegar
  */

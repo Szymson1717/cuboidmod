@@ -3,6 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboardContainer;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -26,7 +27,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -38,6 +38,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("rawtypes")
 public class DryingCupboardTileEntity extends BlockEntity implements BlockEntityTicker  {
     public static final int INPUT_SLOTS = 8;
     public static final int OUTPUT_SLOTS = 8;
@@ -68,7 +69,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
     private boolean isDirty = false;
 
     public DryingCupboardTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.DRYING_CUPBOARD.get().defaultBlockState());
     }
 
     public DryingCupboardTileEntity(BlockPos pos, BlockState state) {

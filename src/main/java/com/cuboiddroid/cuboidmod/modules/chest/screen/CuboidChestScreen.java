@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import com.cuboiddroid.cuboidmod.modules.chest.inventory.CuboidChestContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContainer> implements MenuAccess<CuboidChestContainer> {
+public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContainer> {
 
     private final CuboidChestTypes chestType;
 

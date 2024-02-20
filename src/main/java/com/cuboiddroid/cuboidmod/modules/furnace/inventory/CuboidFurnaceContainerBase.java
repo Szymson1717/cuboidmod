@@ -173,6 +173,7 @@ public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
         addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected boolean hasRecipe(ItemStack stack) {
         return this.level.getRecipeManager().getRecipeFor((RecipeType)this.recipeType, new SimpleContainer(stack), this.level).isPresent();
     }

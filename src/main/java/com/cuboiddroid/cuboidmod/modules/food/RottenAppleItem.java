@@ -7,8 +7,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Made by combining an apple and rotten flesh in a QTC
  * 15% chance of poison when eaten

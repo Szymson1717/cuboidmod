@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.cdt.block.*;
 import com.cuboiddroid.cuboidmod.modules.chest.block.*;
 import com.cuboiddroid.cuboidmod.modules.chest.render.CuboidChestItemStackRenderer;
-import com.cuboiddroid.cuboidmod.modules.chest.render.CuboidChestTileEntityRenderer;
 import com.cuboiddroid.cuboidmod.modules.chest.tile.*;
 import com.cuboiddroid.cuboidmod.modules.collapser.block.*;
 import com.cuboiddroid.cuboidmod.modules.craftingtable.block.*;
@@ -20,17 +19,16 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -397,34 +395,47 @@ public class ModBlocks {
   }
 
   private static Supplier<BlockItem> item(final RegistryObject<? extends Block> block, final Supplier<Callable<BlockEntityWithoutLevelRenderer>> renderMethod) {
-    return () -> new BlockItem(block.get(), new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));//.setISTER(renderMethod));
+    return () -> new BlockItem(block.get(), new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)) {
+        @Override
+        public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+            consumer.accept(new IItemRenderProperties() {
+                @Override
+                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                    try {
+                        return renderMethod.get().call();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                };
+            });
+        };
+    };
   }
 
-  static BlockEntityRenderDispatcher blockRenderDispatcher = Minecraft.getInstance().getBlockEntityRenderDispatcher();
-  static EntityModelSet entityModels = Minecraft.getInstance().getEntityModels();
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<BlockEntityWithoutLevelRenderer> notsogudiumChestRenderer() {
-    return () -> new CuboidChestItemStackRenderer(blockRenderDispatcher, entityModels, NotsogudiumChestTileEntity::new);
+    return () -> new CuboidChestItemStackRenderer<>(NotsogudiumChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<BlockEntityWithoutLevelRenderer> kudbebeddaChestRenderer() {
-    return () -> new CuboidChestItemStackRenderer(blockRenderDispatcher, entityModels, KudbebeddaChestTileEntity::new);
+    return () -> new CuboidChestItemStackRenderer<>(KudbebeddaChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<BlockEntityWithoutLevelRenderer> notarfbadiumChestRenderer() {
-    return () -> new CuboidChestItemStackRenderer(blockRenderDispatcher, entityModels, NotarfbadiumChestTileEntity::new);
+    return () -> new CuboidChestItemStackRenderer<>(NotarfbadiumChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<BlockEntityWithoutLevelRenderer> wikidiumChestRenderer() {
-    return () -> new CuboidChestItemStackRenderer(blockRenderDispatcher, entityModels, WikidiumChestTileEntity::new);
+    return () -> new CuboidChestItemStackRenderer<>(WikidiumChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<BlockEntityWithoutLevelRenderer> thatlduChestRenderer() {
-    return () -> new CuboidChestItemStackRenderer(blockRenderDispatcher, entityModels, ThatlduChestTileEntity::new);
+    return () -> new CuboidChestItemStackRenderer<>(ThatlduChestTileEntity::new);
   }
 }

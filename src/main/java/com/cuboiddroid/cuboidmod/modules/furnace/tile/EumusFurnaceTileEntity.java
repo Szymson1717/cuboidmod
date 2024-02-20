@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.furnace.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.EumusFurnaceContainer;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class EumusFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
     public EumusFurnaceTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.EUMUS_FURNACE.get().defaultBlockState());
     }
 
     public EumusFurnaceTileEntity(BlockPos pos, BlockState state) {

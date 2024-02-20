@@ -13,8 +13,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 public abstract class QuantumSingularityItemBase extends Item implements IColored {
     private final QuantumSingularity quantumSingularity;
 

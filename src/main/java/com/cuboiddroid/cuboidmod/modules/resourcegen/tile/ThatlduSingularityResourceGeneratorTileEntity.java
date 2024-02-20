@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.ThatlduSingularityResourceGeneratorContainer;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ThatlduSingularityResourceGeneratorTileEntity extends SingularityResourceGeneratorTileEntityBase {
     public ThatlduSingularityResourceGeneratorTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get().defaultBlockState());
     }
 
     public ThatlduSingularityResourceGeneratorTileEntity(BlockPos pos, BlockState state) {

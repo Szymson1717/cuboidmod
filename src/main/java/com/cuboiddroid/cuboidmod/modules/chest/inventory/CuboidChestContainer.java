@@ -19,11 +19,6 @@ public class CuboidChestContainer extends AbstractContainerMenu {
 
     private final CuboidChestTypes chestType;
 
-    // private constructor
-    private CuboidChestContainer(MenuType<?> containerType, int windowId, Inventory playerInventory) {
-        this(containerType, windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
-    }
-
     // Notsogudium
     public static CuboidChestContainer createNotsogudiumContainer(int windowId, Inventory playerInventory) {
         return new CuboidChestContainer(ModContainers.NOTSOGUDIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);

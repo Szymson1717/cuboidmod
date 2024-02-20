@@ -73,6 +73,7 @@ public class SingularityResourceGeneratorScreenBase<T extends SingularityResourc
         this.blit(matrix, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
 
+    @SuppressWarnings("resource")
     private SingularityResourceGeneratorTileEntityBase getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

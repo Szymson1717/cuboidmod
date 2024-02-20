@@ -152,6 +152,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
         }
     }
 
+    @SuppressWarnings("resource")
     private DryingCupboardTileEntity getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

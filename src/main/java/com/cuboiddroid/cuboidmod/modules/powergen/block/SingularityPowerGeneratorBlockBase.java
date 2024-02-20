@@ -4,6 +4,7 @@ import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGenerator
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -88,6 +89,11 @@ public abstract class SingularityPowerGeneratorBlockBase extends BaseEntityBlock
         return VOXEL_SHAPE;
     }
 
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
+
     // @Override
     // public boolean hasTileEntity(BlockState state) {
     //     return true;
@@ -120,7 +126,6 @@ public abstract class SingularityPowerGeneratorBlockBase extends BaseEntityBlock
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (level.isClientSide) {

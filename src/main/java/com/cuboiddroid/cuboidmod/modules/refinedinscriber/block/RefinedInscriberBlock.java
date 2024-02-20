@@ -4,6 +4,7 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberT
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -34,8 +35,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class RefinedInscriberBlock extends BaseEntityBlock {
 
     private static final VoxelShape VOXEL_SHAPE = Stream.of(
@@ -56,6 +55,11 @@ public class RefinedInscriberBlock extends BaseEntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {
         return VOXEL_SHAPE;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     // @Override

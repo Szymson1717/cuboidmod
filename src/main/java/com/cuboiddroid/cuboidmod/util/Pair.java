@@ -20,6 +20,7 @@ public class Pair<K,V> implements Serializable {
         return key + "=" + value;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -32,6 +32,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("rawtypes")
 public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEntity implements BlockEntityTicker  {
 
     private ItemStackHandler inputItemHandler = createInputHandler();

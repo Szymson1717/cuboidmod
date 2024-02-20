@@ -32,8 +32,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class FiberOpticTreeBlock extends Block {
     public static final String ID_STRING = "fiber_optic_tree";
     public static final ResourceLocation ID = CuboidMod.getModId(ID_STRING);
@@ -63,7 +61,6 @@ public class FiberOpticTreeBlock extends Block {
     //     return new FiberOpticTreeTileEntity();
     // }
 
-    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (level.isClientSide) {
@@ -122,7 +119,6 @@ public class FiberOpticTreeBlock extends Block {
             Block.box(15, 1, 1, 16, 2, 15)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {
         return VOXEL_SHAPE;

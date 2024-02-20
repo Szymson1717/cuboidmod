@@ -4,6 +4,7 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileE
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +34,11 @@ public class DryingCupboardBlock extends BaseEntityBlock {
 
     public DryingCupboardBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     // @Override

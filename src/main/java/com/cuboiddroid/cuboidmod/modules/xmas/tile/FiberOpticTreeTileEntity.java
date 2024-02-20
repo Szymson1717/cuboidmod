@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.xmas.tile;
 
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
@@ -12,9 +13,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+@SuppressWarnings("rawtypes")
 public class FiberOpticTreeTileEntity  extends BlockEntity implements BlockEntityTicker  {
     public FiberOpticTreeTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.FIBER_OPTIC_TREE.get().defaultBlockState());
     }
 
     public FiberOpticTreeTileEntity(BlockPos pos, BlockState state) {

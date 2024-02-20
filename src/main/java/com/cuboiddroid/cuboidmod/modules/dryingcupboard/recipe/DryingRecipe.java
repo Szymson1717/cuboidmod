@@ -20,10 +20,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class DryingRecipe implements Recipe<Container> {
-    private static final Random RANDOM = new Random();
+    // private static final Random RANDOM = new Random();
 
     private final ResourceLocation recipeId;
     private Ingredient ingredient;

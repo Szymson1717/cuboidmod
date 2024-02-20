@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.powergen.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.powergen.inventory.NotsogudiumSingularityPowerGeneratorContainer;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NotsogudiumSingularityPowerGeneratorTileEntity extends SingularityPowerGeneratorTileEntityBase {
     public NotsogudiumSingularityPowerGeneratorTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get().defaultBlockState());
     }
 
     public NotsogudiumSingularityPowerGeneratorTileEntity(BlockPos pos, BlockState state) {

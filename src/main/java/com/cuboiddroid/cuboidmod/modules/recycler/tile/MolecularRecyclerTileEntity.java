@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.recycler.config.BlacklistConfig;
 import com.cuboiddroid.cuboidmod.modules.recycler.inventory.MolecularRecyclerContainer;
 import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -50,6 +51,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("rawtypes")
 public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEntityTicker  {
     private static final Dictionary<String, RecyclingRecipe> AUTO_RECIPES = new Hashtable<>();
     private static final HashMap<String, Boolean> REJECTED_RECIPES = new HashMap<>();
@@ -88,7 +90,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
     private int energyConsumed = 0;
 
     public MolecularRecyclerTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.MOLECULAR_RECYCLER.get().defaultBlockState());
     }
 
     public MolecularRecyclerTileEntity(BlockPos pos, BlockState state) {

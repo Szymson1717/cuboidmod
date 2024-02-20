@@ -129,6 +129,7 @@ public abstract class SingularityPowerGeneratorScreenBase<T extends SingularityP
         }
     }
 
+    @SuppressWarnings("resource")
     private SingularityPowerGeneratorTileEntityBase getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

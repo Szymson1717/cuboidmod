@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.transmuter.block;
 
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
@@ -32,8 +33,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class QuantumTransmutationChamberBlock extends Block {
 
     private static final VoxelShape VOXEL_SHAPE = Stream.of(
@@ -62,10 +61,14 @@ public class QuantumTransmutationChamberBlock extends Block {
         super(properties);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {
         return VOXEL_SHAPE;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
     }
 
     // @Override
@@ -97,7 +100,6 @@ public class QuantumTransmutationChamberBlock extends Block {
     //     return new QuantumTransmutationChamberTileEntity();
     // }
 
-    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (level.isClientSide) {
@@ -105,14 +107,14 @@ public class QuantumTransmutationChamberBlock extends Block {
             return InteractionResult.SUCCESS;
         }
 
-        this.interactWith(level, pos, player);
+        this.interactWith(level, trace.getBlockPos(), player);
         return InteractionResult.CONSUME;
     }
 
     private void interactWith(Level level, BlockPos pos, Player player) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity instanceof QuantumTransmutationChamberTileEntity) {
-            QuantumTransmutationChamberTileEntity qtcTileEntity = (QuantumTransmutationChamberTileEntity) tileEntity;
+        if (tileEntity instanceof QuantumTransmutationChamberTileEntity qtcTileEntity) {
+            // QuantumTransmutationChamberTileEntity qtcTileEntity = (QuantumTransmutationChamberTileEntity) tileEntity;
             MenuProvider containerProvider = new MenuProvider() {
                 @Override
                 public Component getDisplayName() {
@@ -125,7 +127,7 @@ public class QuantumTransmutationChamberBlock extends Block {
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
+            NetworkHooks.openGui((ServerPlayer) player, containerProvider, pos); //tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }

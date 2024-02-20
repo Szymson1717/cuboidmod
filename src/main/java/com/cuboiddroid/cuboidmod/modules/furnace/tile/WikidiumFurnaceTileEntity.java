@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.WikidiumFurnaceContainer;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public class WikidiumFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
     public WikidiumFurnaceTileEntity() {
-        this(null, null);
+        this(BlockPos.ZERO, ModBlocks.WIKIDIUM_FURNACE.get().defaultBlockState());
     }
 
     public WikidiumFurnaceTileEntity(BlockPos pos, BlockState state) {

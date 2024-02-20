@@ -157,6 +157,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
         }
     }
 
+    @SuppressWarnings("resource")
     private RefinedInscriberTileEntity getTileEntity() {
         ClientLevel world = this.getMinecraft().level;
 

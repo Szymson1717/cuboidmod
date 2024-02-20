@@ -13,8 +13,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class RationPackItem extends Item {
     public static final String ID_STRING = "ration_pack";
     public static final ResourceLocation ID = CuboidMod.getModId(ID_STRING);

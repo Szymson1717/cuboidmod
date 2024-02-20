@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.world.item.Item.Properties;
-
 /**
  * Made by combining an apple and water bottle in a QTC
  * 50% chance of nausea when eaten

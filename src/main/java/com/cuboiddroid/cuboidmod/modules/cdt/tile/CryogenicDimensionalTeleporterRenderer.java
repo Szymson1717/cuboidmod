@@ -24,11 +24,7 @@ import net.minecraft.world.level.Level;
 
 public class CryogenicDimensionalTeleporterRenderer implements BlockEntityRenderer<CryogenicDimensionalTeleporterTileEntity> {
 
-    private final BlockEntityRendererProvider.Context context;
-
-    public CryogenicDimensionalTeleporterRenderer(BlockEntityRendererProvider.Context context) {
-        this.context = context;
-    }
+    public CryogenicDimensionalTeleporterRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
     public void render(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
