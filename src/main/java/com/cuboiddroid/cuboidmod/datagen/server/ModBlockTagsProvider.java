@@ -24,13 +24,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_NOTSOGUDIUM).add(ModBlocks.NOTSOGUDIUM_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_NOTSOGUDIUM);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_NOTSOGUDIUM);
 
         tag(ModTags.Blocks.CHESTS_NOTSOGUDIUM).add(ModBlocks.NOTSOGUDIUM_CHEST.get());
         tag(Tags.Blocks.CHESTS).addTag(ModTags.Blocks.CHESTS_NOTSOGUDIUM);
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CHESTS_NOTSOGUDIUM);
 
         tag(ModTags.Blocks.CRAFTING_TABLES_NOTSOGUDIUM).add(ModBlocks.NOTSOGUDIUM_CRAFTING_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CRAFTING_TABLES_NOTSOGUDIUM);
 
         tag(ModTags.Blocks.FURNACES_NOTSOGUDIUM).add(ModBlocks.NOTSOGUDIUM_FURNACE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_NOTSOGUDIUM);
 
         // kudbebedda
         tag(ModTags.Blocks.ORES_KUDBEBEDDA).add(ModBlocks.KUDBEBEDDA_ORE.get());
@@ -40,13 +44,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_KUDBEBEDDA).add(ModBlocks.KUDBEBEDDA_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_KUDBEBEDDA);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_KUDBEBEDDA);
 
         tag(ModTags.Blocks.CHESTS_KUDBEBEDDA).add(ModBlocks.KUDBEBEDDA_CHEST.get());
         tag(Tags.Blocks.CHESTS).addTag(ModTags.Blocks.CHESTS_KUDBEBEDDA);
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CHESTS_KUDBEBEDDA);
 
         tag(ModTags.Blocks.CRAFTING_TABLES_KUDBEBEDDA).add(ModBlocks.KUDBEBEDDA_CRAFTING_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CRAFTING_TABLES_KUDBEBEDDA);
 
         tag(ModTags.Blocks.FURNACES_KUDBEBEDDA).add(ModBlocks.KUDBEBEDDA_FURNACE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_KUDBEBEDDA);
 
         // notarfbadium
         tag(ModTags.Blocks.ORES_NOTARFBADIUM).add(ModBlocks.NOTARFBADIUM_ORE.get());
@@ -56,13 +64,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_NOTARFBADIUM).add(ModBlocks.NOTARFBADIUM_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_NOTARFBADIUM);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_NOTARFBADIUM);
 
         tag(ModTags.Blocks.CHESTS_NOTARFBADIUM).add(ModBlocks.NOTARFBADIUM_CHEST.get());
         tag(Tags.Blocks.CHESTS).addTag(ModTags.Blocks.CHESTS_NOTARFBADIUM);
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CHESTS_NOTARFBADIUM);
 
         tag(ModTags.Blocks.CRAFTING_TABLES_NOTARFBADIUM).add(ModBlocks.NOTARFBADIUM_CRAFTING_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CRAFTING_TABLES_NOTARFBADIUM);
 
         tag(ModTags.Blocks.FURNACES_NOTARFBADIUM).add(ModBlocks.NOTARFBADIUM_FURNACE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_NOTARFBADIUM);
 
         // wikidium
         tag(ModTags.Blocks.ORES_WIKIDIUM).add(ModBlocks.WIKIDIUM_ORE.get());
@@ -72,13 +84,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_WIKIDIUM).add(ModBlocks.WIKIDIUM_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_WIKIDIUM);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_WIKIDIUM);
 
         tag(ModTags.Blocks.CHESTS_WIKIDIUM).add(ModBlocks.WIKIDIUM_CHEST.get());
         tag(Tags.Blocks.CHESTS).addTag(ModTags.Blocks.CHESTS_WIKIDIUM);
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CHESTS_WIKIDIUM);
 
         tag(ModTags.Blocks.CRAFTING_TABLES_WIKIDIUM).add(ModBlocks.WIKIDIUM_CRAFTING_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CRAFTING_TABLES_WIKIDIUM);
 
         tag(ModTags.Blocks.FURNACES_WIKIDIUM).add(ModBlocks.WIKIDIUM_FURNACE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_WIKIDIUM);
 
         // thatldu
         tag(ModTags.Blocks.ORES_THATLDU).add(ModBlocks.THATLDU_ORE.get());
@@ -88,22 +104,41 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_THATLDU).add(ModBlocks.THATLDU_BLOCK.get());
         tag(Tags.Blocks.STORAGE_BLOCKS).addTag(ModTags.Blocks.STORAGE_BLOCKS_THATLDU);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_THATLDU);
 
         tag(ModTags.Blocks.CHESTS_THATLDU).add(ModBlocks.THATLDU_CHEST.get());
         tag(Tags.Blocks.CHESTS).addTag(ModTags.Blocks.CHESTS_THATLDU);
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CHESTS_THATLDU);
 
         tag(ModTags.Blocks.CRAFTING_TABLES_THATLDU).add(ModBlocks.THATLDU_CRAFTING_TABLE.get());
+        tag(BlockTags.MINEABLE_WITH_AXE).addTag(ModTags.Blocks.CRAFTING_TABLES_THATLDU);
 
         tag(ModTags.Blocks.FURNACES_THATLDU).add(ModBlocks.THATLDU_FURNACE.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_THATLDU);
 
         tag(ModTags.Blocks.FURNACES_EUMUS).add(ModBlocks.EUMUS_FURNACE.get());
-
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.FURNACES_EUMUS);
 
         // storage blocks
         tag(ModTags.Blocks.STORAGE_BLOCKS_CARBON_NANOTUBE).add(ModBlocks.CARBON_NANOTUBE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(ModTags.Blocks.STORAGE_BLOCKS_CARBON_NANOTUBE);
+
         tag(ModTags.Blocks.STORAGE_BLOCKS_CELLULOSE).add(ModBlocks.CELLULOSE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).addTag(ModTags.Blocks.STORAGE_BLOCKS_CELLULOSE);
+
         tag(ModTags.Blocks.STORAGE_BLOCKS_PROTEIN_FIBER).add(ModBlocks.PROTEIN_FIBER_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).addTag(ModTags.Blocks.STORAGE_BLOCKS_PROTEIN_FIBER);
+
         tag(ModTags.Blocks.STORAGE_BLOCKS_PROTEIN_PASTE).add(ModBlocks.PROTEIN_PASTE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).addTag(ModTags.Blocks.STORAGE_BLOCKS_PROTEIN_PASTE);
+
         tag(ModTags.Blocks.STORAGE_BLOCKS_SILICA).add(ModBlocks.SILICA_DUST_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).addTag(ModTags.Blocks.STORAGE_BLOCKS_SILICA);
+
+        // decor blocks
+       tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.CELLULOSE_BRICKS.get());
+       tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.CELLULOSE_CHISELED_BRICKS.get());
+       tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.ORGANICALLY_ENRICHED_SAND.get());
+       tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.AGGREGATE.get());
     }
 }

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:chests/notsogudium",
+    "#forge:crafting_tables/notsogudium",
+    "#forge:chests/kudbebedda",
+    "#forge:crafting_tables/kudbebedda",
+    "#forge:chests/notarfbadium",
+    "#forge:crafting_tables/notarfbadium",
+    "#forge:chests/wikidium",
+    "#forge:crafting_tables/wikidium",
+    "#forge:chests/thatldu",
+    "#forge:crafting_tables/thatldu"
+  ]
+}

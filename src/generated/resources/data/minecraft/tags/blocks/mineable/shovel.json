@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:storage_blocks/cellulose",
+    "#forge:storage_blocks/protein_fiber",
+    "#forge:storage_blocks/protein_paste",
+    "#forge:storage_blocks/silica",
+    "cuboidmod:organically_enriched_sand",
+    "cuboidmod:aggregate"
+  ]
+}

@@ -2,9 +2,23 @@
   "replace": false,
   "values": [
     "#forge:ores/notsogudium",
+    "#forge:storage_blocks/notsogudium",
+    "#cuboidmod:furnaces/notsogudium",
     "#forge:ores/kudbebedda",
+    "#forge:storage_blocks/kudbebedda",
+    "#cuboidmod:furnaces/kudbebedda",
     "#forge:ores/notarfbadium",
+    "#forge:storage_blocks/notarfbadium",
+    "#cuboidmod:furnaces/notarfbadium",
     "#forge:ores/wikidium",
-    "#forge:ores/thatldu"
+    "#forge:storage_blocks/wikidium",
+    "#cuboidmod:furnaces/wikidium",
+    "#forge:ores/thatldu",
+    "#forge:storage_blocks/thatldu",
+    "#cuboidmod:furnaces/thatldu",
+    "#cuboidmod:furnaces/eumus",
+    "#forge:storage_blocks/carbon_nanotube",
+    "cuboidmod:cellulose_bricks",
+    "cuboidmod:cellulose_chiseled_bricks"
   ]
 }
