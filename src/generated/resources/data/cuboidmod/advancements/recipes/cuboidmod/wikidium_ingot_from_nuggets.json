@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:wikidium_nugget"
+            "items": [
+              "cuboidmod:wikidium_nugget"
+            ]
           }
         ]
       }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:notsogudium_bowl"
+            "items": [
+              "cuboidmod:notsogudium_bowl"
+            ]
           }
         ]
       }

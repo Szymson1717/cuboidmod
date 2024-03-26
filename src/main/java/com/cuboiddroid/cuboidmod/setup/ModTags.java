@@ -66,6 +66,12 @@ public class ModTags {
         public static final Tag.Named<Block> STORAGE_BLOCKS_PROTEIN_FIBER = forge("storage_blocks/protein_fiber");
         public static final Tag.Named<Block> STORAGE_BLOCKS_CELLULOSE = forge("storage_blocks/cellulose");
 
+        public static final Tag.Named<Block> NEEDS_NOTSOGUDIUM_TOOL = BlockTags.createOptional(new ResourceLocation(CuboidMod.MOD_ID, "needs_notsogudium_tool"));
+        public static final Tag.Named<Block> NEEDS_KUDBEBEDDA_TOOL = BlockTags.createOptional(new ResourceLocation(CuboidMod.MOD_ID, "needs_kudbebedda_tool"));
+        public static final Tag.Named<Block> NEEDS_NOTARFBADIUM_TOOL = BlockTags.createOptional(new ResourceLocation(CuboidMod.MOD_ID, "needs_notarfbadium_tool"));
+        public static final Tag.Named<Block> NEEDS_WIKIDIUM_TOOL = BlockTags.createOptional(new ResourceLocation(CuboidMod.MOD_ID, "needs_wikidium_tool"));
+        public static final Tag.Named<Block> NEEDS_THATLDU_TOOL = BlockTags.createOptional(new ResourceLocation(CuboidMod.MOD_ID, "needs_thatldu_tool"));
+
         private static Tag.Named<Block> forge(String path) {
             return BlockTags.bind(new ResourceLocation("forge", path).toString());
         }
@@ -75,7 +81,7 @@ public class ModTags {
         }
 
         private static Tag.Named<Block> mod(String path) {
-            return BlockTags.bind(new ResourceLocation(CuboidMod.MOD_ID, path).toString());
+            return BlockTags.bind(new ResourceLocation(CuboidMod.MOD_ID, path).toString()); 
         }
     }
 

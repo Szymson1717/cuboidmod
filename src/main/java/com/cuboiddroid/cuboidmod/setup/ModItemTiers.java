@@ -1,61 +1,43 @@
 package com.cuboiddroid.cuboidmod.setup;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.common.TierSortingRegistry;
 
-import java.util.function.Supplier;
+import java.util.List;
 
-public enum ModItemTiers implements Tier {
+import com.cuboiddroid.cuboidmod.CuboidMod;
 
-    NOTSOGUDIUM  (2, 65,    2.0F, 0.0F, 8,  () -> Ingredient.of(ModItems.NOTSOGUDIUM_INGOT.get())),
-    KUDBEBEDDA   (2, 95,    4.0F, 1.0F, 10, () -> Ingredient.of(ModItems.KUDBEBEDDA_INGOT.get())),
-    NOTARFBADIUM (2, 180,   6.0F, 2.0F, 12, () -> Ingredient.of(ModItems.NOTARFBADIUM_INGOT.get())),
-    WIKIDIUM     (3, 360,   8.0F, 3.5F, 14, () -> Ingredient.of(ModItems.WIKIDIUM_INGOT.get())),
-    THATLDU      (4, 1080, 10.0F, 5.0F, 15, () -> Ingredient.of(ModItems.THATLDU_INGOT.get()));
+public class ModItemTiers {
 
-    private final int harvestLevel;
-    private final int maxUses;
-    private final float efficiency;
-    private final float attackDamageBonus;
-    private final int enchantmentValue;
-    private final Supplier<Ingredient> repairIngredient;
+    public static final Tier NOTSOGUDIUM = TierSortingRegistry.registerTier(
+        new ForgeTier(1, 65, 2.0F, 0.0F, 8, ModTags.Blocks.NEEDS_NOTSOGUDIUM_TOOL, () -> Ingredient.of(ModItems.NOTSOGUDIUM_INGOT.get())),
+        new ResourceLocation(CuboidMod.MOD_ID, "notsogudium_tier"), List.of(Tiers.WOOD), List.of(Tiers.IRON)
+    );
 
-    ModItemTiers(int harvestLevel, int maxUses, float efficiency, float attackDamageBonus, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
-        this.harvestLevel = harvestLevel;
-        this.maxUses = maxUses;
-        this.efficiency = efficiency;
-        this.attackDamageBonus = attackDamageBonus;
-        this.enchantmentValue = enchantmentValue;
-        this.repairIngredient = repairIngredient;
-    }
+    public static final Tier KUDBEBEDDA = TierSortingRegistry.registerTier(
+        new ForgeTier(2, 95, 4.0F, 1.0F, 10, ModTags.Blocks.NEEDS_KUDBEBEDDA_TOOL, () -> Ingredient.of(ModItems.KUDBEBEDDA_INGOT.get())),
+        new ResourceLocation(CuboidMod.MOD_ID, "kudbebedda_tier"), List.of(Tiers.STONE), List.of(Tiers.DIAMOND)
+    );
 
-    @Override
-    public int getUses() {
-        return this.maxUses;
-    }
+    public static final Tier NOTARFBADIUM = TierSortingRegistry.registerTier(
+        new ForgeTier(3, 180, 6.0F, 2.0F, 12, ModTags.Blocks.NEEDS_NOTARFBADIUM_TOOL, () -> Ingredient.of(ModItems.NOTARFBADIUM_INGOT.get())),
+        new ResourceLocation(CuboidMod.MOD_ID, "notarfbadium_tier"), List.of(Tiers.IRON), List.of(Tiers.NETHERITE)
+    );
 
-    @Override
-    public float getSpeed() {
-        return this.efficiency;
-    }
+    public static final Tier WIKIDIUM = TierSortingRegistry.registerTier(
+        new ForgeTier(4, 360, 8.0F, 3.5F, 14, ModTags.Blocks.NEEDS_WIKIDIUM_TOOL, () -> Ingredient.of(ModItems.WIKIDIUM_INGOT.get())),
+        new ResourceLocation(CuboidMod.MOD_ID, "wikidium_tier"), List.of(Tiers.DIAMOND), List.of()
+    );
 
-    @Override
-    public float getAttackDamageBonus() {
-        return this.attackDamageBonus;
-    }
+    public static final Tier THATLDU = TierSortingRegistry.registerTier(
+        new ForgeTier(5, 1080, 10.0F, 5.0F, 15, ModTags.Blocks.NEEDS_THATLDU_TOOL, () -> Ingredient.of(ModItems.THATLDU_INGOT.get())),
+        new ResourceLocation(CuboidMod.MOD_ID, "thatldu_tier"), List.of(WIKIDIUM), List.of()
+    );
 
-    @Override
-    public int getLevel() {
-        return harvestLevel;
-    }
+    static void register() {}
 
-    @Override
-    public int getEnchantmentValue() {
-        return this.enchantmentValue;
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return repairIngredient.get();
-    }
 }

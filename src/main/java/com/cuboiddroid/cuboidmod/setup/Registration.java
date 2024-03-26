@@ -60,6 +60,7 @@ public class Registration {
         // class-load the registry object holder classes.
         ModBlocks.register();
         ModContainers.register();
+        // ModItemTiers.register();
         ModItems.register();
         ModRecipeTypes.register();
         ModRecipeSerializers.register();
