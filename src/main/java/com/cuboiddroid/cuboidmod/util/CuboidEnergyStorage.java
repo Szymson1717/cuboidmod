@@ -57,6 +57,6 @@ public class CuboidEnergyStorage extends EnergyStorage { //implements INBTSerial
         this.capacity = nbt.getInt("capacity");
         this.maxExtract = nbt.getInt("maxExt");
         this.maxReceive = nbt.getInt("maxRec");
-        super.deserializeNBT(nbt);
+        // super.deserializeNBT(nbt);
     }
 }

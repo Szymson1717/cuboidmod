@@ -94,7 +94,7 @@ public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void setData(int id, int data) {
-        super.setData(id, data);
+        // super.setData(id, data);
         this.te.fields.set(id, data);
     }
 
