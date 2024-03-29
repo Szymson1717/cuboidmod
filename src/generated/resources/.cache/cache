@@ -999,6 +999,6 @@ e9084245325c2762e6694d8b5ccd3924a4847ef9 data/forge/tags/items/storage_blocks/pr
 4899abe502e1e83052fbfb7083ca5941230c3095 data/forge/tags/items/storage_blocks/silica.json
 7f3b002f9ed62f86b1f8c6baeb3acaa911e00541 data/forge/tags/items/storage_blocks/thatldu.json
 75fe3c304dad1a11a652d0935a8c2ab8734d8d54 data/forge/tags/items/storage_blocks/wikidium.json
-24f22deb51a06b4b36c60e5948fa4a55ddca5bab data/minecraft/tags/blocks/mineable/axe.json
-28275ddd8a3a19c4e0055f221a962eff5a3e0f29 data/minecraft/tags/blocks/mineable/pickaxe.json
+4a7a6388bb0b31fe628e1033008050688e34f157 data/minecraft/tags/blocks/mineable/axe.json
+b52696995b78f4d1705266dad25c5be31146f03f data/minecraft/tags/blocks/mineable/pickaxe.json
 ecfeb212d649e0b5305e127ce778b387d307bdcc data/minecraft/tags/blocks/mineable/shovel.json
