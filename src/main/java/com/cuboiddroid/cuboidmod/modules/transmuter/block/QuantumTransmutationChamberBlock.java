@@ -1,6 +1,8 @@
 package com.cuboiddroid.cuboidmod.modules.transmuter.block;
 
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
+
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class QuantumTransmutationChamberBlock extends Block {
+public class QuantumTransmutationChamberBlock extends BaseEntityBlock {
 
     private static final VoxelShape VOXEL_SHAPE = Stream.of(
             Block.box(2, 2, 2, 14, 14, 14), Block.box(0, 0, 0, 2, 1, 16), Block.box(14, 0, 0, 16, 1, 16),
@@ -94,11 +96,11 @@ public class QuantumTransmutationChamberBlock extends Block {
         builder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT);
     }
 
-    // @Nullable
-    // @Override
-    // public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    //     return new QuantumTransmutationChamberTileEntity();
-    // }
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new QuantumTransmutationChamberTileEntity(pos, state);
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
@@ -107,7 +109,7 @@ public class QuantumTransmutationChamberBlock extends Block {
             return InteractionResult.SUCCESS;
         }
 
-        this.interactWith(level, trace.getBlockPos(), player);
+        this.interactWith(level, pos, player);
         return InteractionResult.CONSUME;
     }
 
@@ -127,7 +129,7 @@ public class QuantumTransmutationChamberBlock extends Block {
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayer) player, containerProvider, pos); //tileEntity.getBlockPos());
+            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }
