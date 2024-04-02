@@ -20,7 +20,7 @@ public class WikidiumChestTileEntity extends CuboidChestTileEntityBase {
     public WikidiumChestTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.WIKIDIUM_CHEST.get(),
                 pos, state,
-                CuboidChestTypes.NOTARFBADIUM,
+                CuboidChestTypes.WIKIDIUM,
                 ModBlocks.WIKIDIUM_CHEST::get,
                 Config.wikidiumChestRetainsInventoryWhenBroken.get(),
                 Config.wikidiumChestCanOpenWhenObstructedAbove.get());
