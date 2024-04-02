@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 @SuppressWarnings("rawtypes")
-public class FiberOpticTreeTileEntity  extends BlockEntity implements BlockEntityTicker  {
+public class FiberOpticTreeTileEntity extends BlockEntity implements BlockEntityTicker  {
     public FiberOpticTreeTileEntity() {
         this(BlockPos.ZERO, ModBlocks.FIBER_OPTIC_TREE.get().defaultBlockState());
     }

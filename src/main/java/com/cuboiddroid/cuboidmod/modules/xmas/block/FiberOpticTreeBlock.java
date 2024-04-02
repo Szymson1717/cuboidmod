@@ -2,6 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.xmas.block;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.xmas.tile.FiberOpticTreeTileEntity;
+
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
@@ -32,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class FiberOpticTreeBlock extends Block {
+public class FiberOpticTreeBlock extends BaseEntityBlock {
     public static final String ID_STRING = "fiber_optic_tree";
     public static final ResourceLocation ID = CuboidMod.getModId(ID_STRING);
 
@@ -55,11 +57,11 @@ public class FiberOpticTreeBlock extends Block {
     //     return true;
     // }
     
-    // @Nullable
-    // @Override
-    // public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    //     return new FiberOpticTreeTileEntity();
-    // }
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new FiberOpticTreeTileEntity(pos, state);
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {

@@ -11,7 +11,8 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberT
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import com.cuboiddroid.cuboidmod.modules.xmas.tile.FiberOpticTreeTileEntity;
-import net.minecraft.world.level.block.Block;
+
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
@@ -138,7 +139,7 @@ public class ModTileEntities {
             "eumus_furnace", EumusFurnaceTileEntity::new, ModBlocks.EUMUS_FURNACE);
 
 
-    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String name, BlockEntitySupplier<T> factory, RegistryObject<? extends Block> block) {
+    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String name, BlockEntitySupplier<T> factory, RegistryObject<? extends BaseEntityBlock> block) {
         return Registration.BLOCK_ENTITIES.register(name, () -> {
             //noinspection ConstantConditions - null in build
             return BlockEntityType.Builder.of(factory, block.get()).build(null);
