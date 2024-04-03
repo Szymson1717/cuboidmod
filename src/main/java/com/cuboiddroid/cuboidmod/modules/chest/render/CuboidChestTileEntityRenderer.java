@@ -36,8 +36,8 @@ public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntit
 
     public CuboidChestTileEntityRenderer(BlockEntityRendererProvider.Context context) {
         this.chest = createBodyLayer();
-        this.chestLid = this.chest.bakeRoot().getChild("base");
-        this.chestBottom = this.chest.bakeRoot().getChild("lid");
+        this.chestLid = this.chest.bakeRoot().getChild("lid");
+        this.chestBottom = this.chest.bakeRoot().getChild("base");
         this.chestLock = this.chest.bakeRoot().getChild("lock");
     }
 
@@ -73,8 +73,8 @@ public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntit
             chestType = actualType;
         }
 
-        if (block instanceof CuboidChestBlockBase) {
-            CuboidChestBlockBase cuboidChestBlock = (CuboidChestBlockBase) block;
+        if (block instanceof CuboidChestBlockBase cuboidChestBlock) {
+            // CuboidChestBlockBase cuboidChestBlock = (CuboidChestBlockBase) block;
 
             matrixStackIn.pushPose();
             float f = blockstate.getValue(CuboidChestBlockBase.FACING).toYRot();
