@@ -82,6 +82,10 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         return new TranslatableComponent("cuboidmod.container.quantum_transmutation_chamber");
     }
 
+    public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, QuantumTransmutationChamberTileEntity entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)

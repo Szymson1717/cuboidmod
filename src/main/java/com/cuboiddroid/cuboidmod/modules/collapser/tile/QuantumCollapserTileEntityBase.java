@@ -74,6 +74,10 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
     public abstract Component getDisplayName();
 
+    public static <T extends QuantumCollapserTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)
@@ -460,4 +464,6 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
     public ItemStack getSingularityOutputForDisplay() {
         return this.currentOutput.copy();
     }
+
+    
 }

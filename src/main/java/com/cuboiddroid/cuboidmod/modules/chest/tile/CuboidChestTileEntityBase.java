@@ -28,6 +28,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.function.Supplier;
 
@@ -132,6 +133,10 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
         }
 
         return tags;
+    }
+
+    public static <T extends CuboidChestTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
     }
 
     @Override
@@ -314,22 +319,22 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
         return this.blockToUse.get();
     }
 
-    // private void deserializeChestContentsNBT(CompoundTag nbt)
-    // {
-    //     this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
-    //     ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
-    //     for (int i = 0; i < tagList.size(); i++)
-    //     {
-    //         CompoundTag itemTags = tagList.getCompound(i);
-    //         int slot = itemTags.getInt("Slot");
+    private void deserializeChestContentsNBT(CompoundTag nbt)
+    {
+        this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
+        ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < tagList.size(); i++)
+        {
+            CompoundTag itemTags = tagList.getCompound(i);
+            int slot = itemTags.getInt("Slot");
 
-    //         if (slot >= 0 && slot < this.chestContents.size())
-    //         {
-    //             this.chestContents.set(slot, ItemStack.of(itemTags));
-    //         }
-    //     }
-    //     //onLoad();
-    // }
+            if (slot >= 0 && slot < this.chestContents.size())
+            {
+                this.chestContents.set(slot, ItemStack.of(itemTags));
+            }
+        }
+        onLoad();
+    }
 
     public CompoundTag serializeChestContentsNBT()
     {

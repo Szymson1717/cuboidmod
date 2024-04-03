@@ -147,6 +147,10 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         return new TranslatableComponent("container.cuboidmod.cryogenic_dimensional_teleporter");
     }
 
+    public static void gameTick(Level level, BlockPos pos, BlockState blockState, CryogenicDimensionalTeleporterTileEntity blockEntity) {
+        blockEntity.tick(level, pos, blockState, blockEntity);
+    }
+
     @Override
     public void tick(Level level, BlockPos pos, BlockState blockState, BlockEntity blockEntity) {
         if (level == null || level.isClientSide)

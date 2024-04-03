@@ -26,6 +26,10 @@ public class FiberOpticTreeTileEntity extends BlockEntity implements BlockEntity
 
     private int mode;
 
+    public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, FiberOpticTreeTileEntity entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)

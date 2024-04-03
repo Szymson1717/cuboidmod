@@ -87,6 +87,10 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
         energy.invalidate();
     }
 
+    public static <T extends SingularityPowerGeneratorTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level.isClientSide) {

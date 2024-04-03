@@ -83,6 +83,10 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         return new TranslatableComponent("cuboidmod.container.refined_inscriber");
     }
 
+    public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, RefinedInscriberTileEntity entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)

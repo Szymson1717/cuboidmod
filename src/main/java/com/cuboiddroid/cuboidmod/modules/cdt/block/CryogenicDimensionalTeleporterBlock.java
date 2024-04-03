@@ -2,6 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.cdt.block;
 
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.cdt.tile.CryogenicDimensionalTeleporterTileEntity;
+import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
+
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
@@ -121,6 +125,12 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CryogenicDimensionalTeleporterTileEntity(pos, state);
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, ModTileEntities.CRYOGENIC_DIMENSIONAL_TELEPORTER.get(), CryogenicDimensionalTeleporterTileEntity::gameTick);
     }
 
     @Override

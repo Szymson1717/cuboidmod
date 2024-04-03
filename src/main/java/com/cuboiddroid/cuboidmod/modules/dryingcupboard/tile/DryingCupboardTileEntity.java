@@ -82,6 +82,10 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
         return new TranslatableComponent("cuboidmod.container.drying_cupboard");
     }
 
+    public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, DryingCupboardTileEntity entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)

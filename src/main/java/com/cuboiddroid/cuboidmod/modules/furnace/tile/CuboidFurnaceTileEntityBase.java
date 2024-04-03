@@ -95,11 +95,6 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
 
-
-    public CuboidFurnaceTileEntityBase(BlockEntityType<?> tileentitytypeIn) {
-        this(tileentitytypeIn, null, null);
-    }
-
     public CuboidFurnaceTileEntityBase(BlockEntityType<?> tileentitytypeIn, BlockPos pos, BlockState state) {
         super(tileentitytypeIn, pos, state, 4);
         this.recipeType = RecipeType.SMELTING;
@@ -199,6 +194,10 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     public void clearContent() {
         // this method intentionally left blank
         // (because I haven't figured out what I want it to do!)
+    }
+
+    public static <T extends CuboidFurnaceTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
     }
 
     @Override
@@ -599,7 +598,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     protected boolean canSmelt(@Nullable Recipe<?> recipe) {
-        if (!this.inventory.get(0).isEmpty() && recipe != null) {
+        if (!this.inventory.get(INPUT).isEmpty() && recipe != null) {
             ItemStack recipeOutput = recipe.getResultItem();
             if (!recipeOutput.isEmpty()) {
                 ItemStack output = this.inventory.get(OUTPUT);
@@ -614,27 +613,27 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     protected void smeltItem(@Nullable Recipe<?> recipe) {
         timer = 0;
         if (recipe != null && this.canSmelt(recipe)) {
-            ItemStack itemstack = this.inventory.get(INPUT);
-            ItemStack itemstack1 = recipe.getResultItem();
-            ItemStack itemstack2 = this.inventory.get(OUTPUT);
-            if (itemstack2.isEmpty()) {
-                this.inventory.set(OUTPUT, itemstack1.copy());
-            } else if (itemstack2.getItem() == itemstack1.getItem()) {
-                itemstack2.grow(itemstack1.getCount());
+            ItemStack input = this.inventory.get(INPUT);
+            ItemStack recipeOutput = recipe.getResultItem();
+            ItemStack output = this.inventory.get(OUTPUT);
+            if (output.isEmpty()) {
+                this.inventory.set(OUTPUT, recipeOutput.copy());
+            } else if (output.getItem() == recipeOutput.getItem()) {
+                output.grow(recipeOutput.getCount());
             }
 
             if (!this.level.isClientSide) {
                 this.setRecipeUsed(recipe);
             }
 
-            if (itemstack.getItem() == Blocks.WET_SPONGE.asItem() && !this.inventory.get(FUEL).isEmpty() && this.inventory.get(FUEL).getItem() == Items.BUCKET) {
+            if (input.getItem() == Blocks.WET_SPONGE.asItem() && !this.inventory.get(FUEL).isEmpty() && this.inventory.get(FUEL).getItem() == Items.BUCKET) {
                 this.inventory.set(FUEL, new ItemStack(Items.WATER_BUCKET));
             }
             if (ModList.get().isLoaded("pmmo")) {
-                // FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 0);
-                // FurnaceHandler.handleSmelted(itemstack, itemstack2, level, worldPosition, 1);
+                // FurnaceHandler.handleSmelted(input, output, level, worldPosition, 0);
+                // FurnaceHandler.handleSmelted(input, output, level, worldPosition, 1);
             }
-            itemstack.shrink(1);
+            input.shrink(1);
         }
     }
 

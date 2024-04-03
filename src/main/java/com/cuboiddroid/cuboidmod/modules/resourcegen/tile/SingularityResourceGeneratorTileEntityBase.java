@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
+import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
@@ -79,6 +80,10 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         inputHandler.invalidate();
         outputHandler.invalidate();
         combinedHandler.invalidate();
+    }
+
+    public static <T extends SingularityResourceGeneratorTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
     }
 
     @Override

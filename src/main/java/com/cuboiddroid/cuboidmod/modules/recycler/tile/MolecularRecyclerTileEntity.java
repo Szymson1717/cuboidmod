@@ -102,6 +102,10 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         return new TranslatableComponent("cuboidmod.container.molecular_recycler");
     }
 
+    public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, MolecularRecyclerTileEntity entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
     public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level == null || level.isClientSide)

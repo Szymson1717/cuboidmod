@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.transmuter.block;
 
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
+import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
@@ -133,6 +136,12 @@ public class QuantumTransmutationChamberBlock extends BaseEntityBlock {
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, ModTileEntities.QUANTUM_TRANSMUTATION_CHAMBER.get(), QuantumTransmutationChamberTileEntity::gameTick);
     }
 
 }

@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.xmas.block;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.xmas.tile.FiberOpticTreeTileEntity;
+import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -130,5 +133,11 @@ public class FiberOpticTreeBlock extends BaseEntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState p_49232_) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, ModTileEntities.FIBER_OPTIC_TREE.get(), FiberOpticTreeTileEntity::gameTick);
     }
 }
