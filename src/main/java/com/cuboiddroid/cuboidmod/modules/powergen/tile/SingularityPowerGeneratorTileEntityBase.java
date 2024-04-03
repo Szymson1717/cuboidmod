@@ -227,13 +227,13 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (!ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem())) {
+                if (!stack.is(ModTags.Items.QUANTUM_SINGULARITIES)) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

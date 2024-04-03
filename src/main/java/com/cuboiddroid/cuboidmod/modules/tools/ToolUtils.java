@@ -67,7 +67,7 @@ public class ToolUtils {
         boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
         boolean isEffective = effectiveMaterials.contains(state.getMaterial());
 
-        boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
+        boolean witherImmune = state.is(BlockTags.WITHER_IMMUNE);
 
         return (isEffective && !witherImmune && isWithinHarvestLevel);
     }

@@ -83,7 +83,7 @@ public abstract class SingularityResourceGeneratorContainerBase extends Abstract
                 slot.onQuickCraft(stack, itemstack);
             } else {
                 // moving something in the player inventory
-                if (ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem())) {
+                if (stack.is(ModTags.Items.QUANTUM_SINGULARITIES)) {
                     // it's something we accept in our input slot,
                     // so try put it in
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {

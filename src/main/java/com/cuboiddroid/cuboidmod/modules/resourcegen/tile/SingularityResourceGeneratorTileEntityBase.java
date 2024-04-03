@@ -214,14 +214,14 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 // can only insert singularities in the input slot
-                if (!ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem()))
+                if (!stack.is(ModTags.Items.QUANTUM_SINGULARITIES))
                     return stack;
 
                 return super.insertItem(slot, stack, simulate);
@@ -241,7 +241,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return !ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return !stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull

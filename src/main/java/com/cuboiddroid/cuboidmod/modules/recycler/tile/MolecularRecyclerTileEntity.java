@@ -26,6 +26,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 import net.minecraft.world.level.block.Block;
@@ -506,9 +507,9 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
             return true;
 
         // check the item's tags
-        for (ResourceLocation tag : item.getItem().getTags())
+        for (TagKey<Item> tag : item.getTags().toList())
         {
-            if (BlacklistConfig.getInstance().isBlacklistedTag(tag.toString()))
+            if (BlacklistConfig.getInstance().isBlacklistedTag(tag.location().toString()))
                 return true;
         }
 
@@ -531,9 +532,9 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
             return true;
 
         // check the item's tags
-        for (ResourceLocation tag : item.getTags())
+        for (TagKey<Item> tag : item.getDefaultInstance().getTags().toList())
         {
-            if (BlacklistConfig.getInstance().isBlacklistedResultTag(tag.toString()))
+            if (BlacklistConfig.getInstance().isBlacklistedResultTag(tag.location().toString()))
                 return true;
         }
 
