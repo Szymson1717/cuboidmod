@@ -17,10 +17,6 @@ public class WikidiumFurnaceContainer extends CuboidFurnaceContainerBase {
         super(ModContainers.WIKIDIUM_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public WikidiumFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
-        super(ModContainers.WIKIDIUM_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.WIKIDIUM_FURNACE.get());

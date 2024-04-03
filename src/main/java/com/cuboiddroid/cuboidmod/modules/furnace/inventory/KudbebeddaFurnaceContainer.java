@@ -17,10 +17,6 @@ public class KudbebeddaFurnaceContainer extends CuboidFurnaceContainerBase {
         super(ModContainers.KUDBEBEDDA_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public KudbebeddaFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
-        super(ModContainers.KUDBEBEDDA_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.KUDBEBEDDA_FURNACE.get());

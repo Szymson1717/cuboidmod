@@ -17,10 +17,6 @@ public class ThatlduFurnaceContainer extends CuboidFurnaceContainerBase {
         super(ModContainers.THATLDU_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public ThatlduFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
-        super(ModContainers.THATLDU_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.THATLDU_FURNACE.get());

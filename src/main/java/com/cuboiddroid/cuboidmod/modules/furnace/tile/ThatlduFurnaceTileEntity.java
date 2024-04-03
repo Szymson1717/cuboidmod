@@ -32,6 +32,6 @@ public class ThatlduFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
 
     @Override
     public AbstractContainerMenu IcreateMenu(int i, Inventory playerInventory, Player playerEntity) {
-        return new ThatlduFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity, this.fields);
+        return new ThatlduFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

@@ -86,7 +86,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
 
         // render progress mini bars
         for (int slotIndex = 0; slotIndex < DryingCupboardTileEntity.INPUT_SLOTS; slotIndex++) {
-            int progress = (int) Math.floor((1.0F * this.tile.getProcessingTime(slotIndex) * MINI_BAR_HEIGHT) / this.tile.getRecipeTime(slotIndex));
+            float progress = ((this.tile.getProcessingTime(slotIndex) * 1.0F) / this.tile.getRecipeTime(slotIndex));
 
             if (progress > 0) {
                 // draw it -
@@ -103,7 +103,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
                         HIDDEN_MINI_BAR_TOP_LEFT_X,
                         HIDDEN_MINI_BAR_TOP_LEFT_Y,
                         MINI_BAR_WIDTH,
-                        MINI_BAR_HEIGHT - progress);
+                        (int) ((1 - progress) * (MINI_BAR_HEIGHT + 1)));
             }
         }
 

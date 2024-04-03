@@ -32,6 +32,6 @@ public class NotarfbadiumFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
 
     @Override
     public AbstractContainerMenu IcreateMenu(int i, Inventory playerInventory, Player playerEntity) {
-        return new NotarfbadiumFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity, this.fields);
+        return new NotarfbadiumFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

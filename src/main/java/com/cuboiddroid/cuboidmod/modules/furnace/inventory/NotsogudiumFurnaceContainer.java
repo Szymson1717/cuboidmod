@@ -17,10 +17,6 @@ public class NotsogudiumFurnaceContainer extends CuboidFurnaceContainerBase {
         super(ModContainers.NOTSOGUDIUM_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public NotsogudiumFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
-        super(ModContainers.NOTSOGUDIUM_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.NOTSOGUDIUM_FURNACE.get());

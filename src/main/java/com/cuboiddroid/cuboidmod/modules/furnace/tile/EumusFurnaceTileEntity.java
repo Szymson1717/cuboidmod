@@ -32,6 +32,6 @@ public class EumusFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
 
     @Override
     public AbstractContainerMenu IcreateMenu(int i, Inventory playerInventory, Player playerEntity) {
-        return new EumusFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity, this.fields);
+        return new EumusFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

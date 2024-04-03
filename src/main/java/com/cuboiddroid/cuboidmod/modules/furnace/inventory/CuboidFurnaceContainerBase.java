@@ -30,17 +30,13 @@ public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
     private RecipeType<? extends AbstractCookingRecipe> recipeType;
 
     public CuboidFurnaceContainerBase(MenuType<?> containerType, int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player) {
-        this(containerType, windowId, level, pos, playerInventory, player, new SimpleContainerData(4));
-    }
-
-    public CuboidFurnaceContainerBase(MenuType<?> containerType, int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
         super(containerType, windowId);
         this.te = (CuboidFurnaceTileEntityBase) level.getBlockEntity(pos);
         this.recipeType = te.recipeType;
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
         this.level = playerInventory.player.level;
-        this.fields = fields;
+        this.fields = te.fields;
         this.addDataSlots(this.fields);
 
         this.addSlot(new Slot(te, 0, 56, 17));
@@ -76,19 +72,19 @@ public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
 
     @OnlyIn(Dist.CLIENT)
     public int getCookScaled(int pixels) {
-        int i = this.fields.get(2);
-        int j = this.fields.get(3);
+        int i = this.te.fields.get(2);
+        int j = this.te.fields.get(3);
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getBurnLeftScaled(int pixels) {
-        int i = this.fields.get(1);
+        int i = this.te.fields.get(1);
         if (i == 0) {
             i = 200;
         }
 
-        return this.fields.get(0) * pixels / i;
+        return this.te.fields.get(0) * pixels / i;
     }
 
     @OnlyIn(Dist.CLIENT)

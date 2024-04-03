@@ -32,6 +32,6 @@ public class NotsogudiumFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
 
     @Override
     public AbstractContainerMenu IcreateMenu(int i, Inventory playerInventory, Player playerEntity) {
-        return new NotsogudiumFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity, this.fields);
+        return new NotsogudiumFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

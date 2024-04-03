@@ -17,10 +17,6 @@ public class EumusFurnaceContainer extends CuboidFurnaceContainerBase {
         super(ModContainers.EUMUS_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public EumusFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player, ContainerData fields) {
-        super(ModContainers.EUMUS_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
     public boolean stillValid(Player player) {
         return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.EUMUS_FURNACE.get());
