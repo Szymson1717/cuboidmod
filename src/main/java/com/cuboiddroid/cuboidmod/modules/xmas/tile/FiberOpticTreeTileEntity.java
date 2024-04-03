@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
@@ -53,17 +54,14 @@ public class FiberOpticTreeTileEntity extends BlockEntity implements BlockEntity
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.putByte("mode", (byte)this.mode);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class FiberOpticTreeTileEntity extends BlockEntity implements BlockEntity
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
+        saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
 

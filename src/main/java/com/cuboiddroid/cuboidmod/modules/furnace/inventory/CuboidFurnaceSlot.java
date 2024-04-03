@@ -4,7 +4,7 @@ import com.cuboiddroid.cuboidmod.modules.furnace.tile.CuboidFurnaceTileEntityBas
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class CuboidFurnaceSlot extends Slot {
 
@@ -63,7 +63,7 @@ public class CuboidFurnaceSlot extends Slot {
         }
 
         this.removeCount = 0;
-        BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
+        ForgeEventFactory.firePlayerSmeltedEvent(this.player, stack);
     }
 
 }

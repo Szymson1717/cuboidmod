@@ -8,7 +8,7 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecip
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModRecipeSerializers {
 

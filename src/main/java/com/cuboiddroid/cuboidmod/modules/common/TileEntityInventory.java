@@ -37,11 +37,8 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
     }
 
     @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket(){
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -56,7 +53,7 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
     public CompoundTag getUpdateTag() {
         CompoundTag compound = new CompoundTag();
 
-        this.save(compound);
+        this.saveAdditional(compound);
         return compound;
     }
 
@@ -148,13 +145,12 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.inventory);
         if (this.name != null) {
             compound.putString("CustomName", Component.Serializer.toJson(this.name));
         }
-        return compound;
     }
 
     @Override

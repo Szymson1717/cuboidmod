@@ -671,14 +671,14 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -692,10 +692,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

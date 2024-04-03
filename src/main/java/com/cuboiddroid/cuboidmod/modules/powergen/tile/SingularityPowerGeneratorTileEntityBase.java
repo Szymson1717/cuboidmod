@@ -203,12 +203,12 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     public int getEnergyCapacity() {

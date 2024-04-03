@@ -281,7 +281,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invAdd", additionalItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
@@ -289,7 +289,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -304,10 +304,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

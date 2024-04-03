@@ -5,7 +5,7 @@ import com.cuboiddroid.cuboidmod.modules.collapser.item.*;
 import com.cuboiddroid.cuboidmod.modules.food.*;
 import com.cuboiddroid.cuboidmod.modules.tools.*;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;

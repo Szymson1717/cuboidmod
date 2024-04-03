@@ -197,7 +197,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("energy", energyStorage.serializeNBT());
         tag.putByte("state", (byte)this.state.ordinal());
         tag.putString("tgtDim", this.targetDimension);
@@ -205,7 +205,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         this.keyItem.save(keyTag);
         tag.put("keyItem", keyTag);
 
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -224,10 +224,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
      */
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -246,7 +243,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
+        saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
 

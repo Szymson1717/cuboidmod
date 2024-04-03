@@ -81,10 +81,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -661,7 +658,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         ContainerHelper.saveAllItems(tag, this.inventory);
         tag.putInt("BurnTime", this.furnaceBurnTime);
         tag.putInt("CookTime", this.cookTime);
@@ -682,7 +679,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                 compoundnbt.putInt(recipeId.toString(), craftedAmount));
         tag.put("RecipesUsed", compoundnbt);
 
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @SuppressWarnings("deprecation")

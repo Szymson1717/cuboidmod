@@ -305,7 +305,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("invTL", topLeftItemHandler.serializeNBT());
         tag.put("invMid", middleItemHandler.serializeNBT());
         tag.put("invBR", bottomRightItemHandler.serializeNBT());
@@ -314,7 +314,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Override
@@ -330,10 +330,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
