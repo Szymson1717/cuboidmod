@@ -27,53 +27,53 @@ public class CryogenicDimensionalTeleporterRenderer implements BlockEntityRender
     public CryogenicDimensionalTeleporterRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
-    public void render(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void render(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack PoseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         int lightLevel = getLightLevel(tileEntity.getLevel(), tileEntity.getBlockPos().above());
 
         switch (tileEntity.getState()) {
             case CHARGING:
-                renderCharging(tileEntity, partialTicks, matrixStack, buffer, lightLevel, combinedOverlay);
+                renderCharging(tileEntity, partialTicks, PoseStack, buffer, lightLevel, combinedOverlay);
                 break;
 
             case READY:
-                renderReady(tileEntity, partialTicks, matrixStack, buffer, lightLevel, combinedOverlay);
+                renderReady(tileEntity, partialTicks, PoseStack, buffer, lightLevel, combinedOverlay);
                 break;
 
             default:
-                renderPending(tileEntity, partialTicks, matrixStack, buffer, combinedLight, combinedOverlay);
+                renderPending(tileEntity, partialTicks, PoseStack, buffer, combinedLight, combinedOverlay);
                 break;
         }
     }
 
-    public void renderPending(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderPending(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack PoseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         // do nothing at the moment - just the block should be rendered
     }
 
-    public void renderCharging(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderCharging(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack PoseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         // charging - just want to show the key item in static pose above the Cryogenic Dimensional Teleporter
-        matrixStack.pushPose();
+        PoseStack.pushPose();
 
         // move "up" to middle/middle/middle of block above
-        matrixStack.translate(0.5, 1.5, 0.5);
+        PoseStack.translate(0.5, 1.5, 0.5);
 
         // rotate so block is on a point
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+        PoseStack.mulPose(Vector3f.XP.rotationDegrees(45));
+        PoseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
 
         // apply scaling
         float scale = 0.8F;
-        matrixStack.scale(scale, scale, scale);
+        PoseStack.scale(scale, scale, scale);
 
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         ItemStack stack = tileEntity.getKeyItem();
         BakedModel ibakedmodel = itemRenderer.getModel(stack, tileEntity.getLevel(), null, 0);
-        itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
+        itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, PoseStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
 
-        matrixStack.popPose();
+        PoseStack.popPose();
     }
 
-    public void renderReady(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderReady(CryogenicDimensionalTeleporterTileEntity tileEntity, float partialTicks, PoseStack PoseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         // ready - show the key item in rotating pose above the Cryogenic Dimensional Teleporter
         long time = System.currentTimeMillis();
         double speed = Config.cryoDimTeleporterReadyRotationSpeed.get();
@@ -81,29 +81,29 @@ public class CryogenicDimensionalTeleporterRenderer implements BlockEntityRender
 
         Quaternion rotation = Vector3f.YP.rotationDegrees(angle);
 
-        matrixStack.pushPose();
+        PoseStack.pushPose();
 
         // move "up" to middle/middle/middle of block above
-        matrixStack.translate(0.5, 1.5, 0.5);
+        PoseStack.translate(0.5, 1.5, 0.5);
 
         // rotate so block is on a point
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45));
+        PoseStack.mulPose(Vector3f.XP.rotationDegrees(45));
+        PoseStack.mulPose(Vector3f.ZP.rotationDegrees(45));
 
         // rotate on horizontal according to calculated rotation angle
-        matrixStack.mulPose(rotation);
+        PoseStack.mulPose(rotation);
 
         // apply scaling
         float scale = 0.8F;
-        matrixStack.scale(scale, scale, scale);
+        PoseStack.scale(scale, scale, scale);
 
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         ItemStack stack = tileEntity.getKeyItem();
         BakedModel ibakedmodel = itemRenderer.getModel(stack, tileEntity.getLevel(), null, 0);
-        itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, matrixStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
+        itemRenderer.render(stack, ItemTransforms.TransformType.FIXED, true, PoseStack, buffer, combinedLight, combinedOverlay, ibakedmodel);
 
-        matrixStack.popPose();
+        PoseStack.popPose();
     }
 
     private int getLightLevel(Level level, BlockPos pos) {

@@ -4,7 +4,7 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-// import net.darkhax.gamestages.GameStageHelper;
+import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -74,18 +74,18 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_end";
-            // GameStageHelper.addStage(serverPlayer, "end_access");
+            GameStageHelper.addStage(serverPlayer, "end_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_STONE_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:overworld";
         } else if (stack.getItem() == ModBlocks.ENERGIZED_THATLDUVIUM.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "cuboidmod:cuboid_overworld";
-            // GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
+            GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_NETHER_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_nether";
-            // GameStageHelper.addStage(serverPlayer, "nether_access");
+            GameStageHelper.addStage(serverPlayer, "nether_access");
         } else {
             if (Config.cryoDimTeleporterClearsTargetDimensionForInvalidKey.get())
             {

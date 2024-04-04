@@ -182,12 +182,13 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     // compile against the JEI API but do not include it at runtime
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+  	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+  	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     // at runtime, use the full JEI jar
-    // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     //Project MMO
-    // compileOnly fg.deobf("curse.maven:project-mmo-353935:${pmmo_version}")
+    compileOnly fg.deobf("curse.maven:project-mmo-353935:${pmmo_version}")
     //runtimeOnly fg.deobf("curse.maven:project-mmo:${pmmo_version}")
 
     // Mekanism
@@ -199,8 +200,8 @@ dependencies {
     // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
     // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
 
-    // compile fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mc_version}:${gamestages_version}")
-    // compile fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mc_version}:${bookshelf_version}")
+    compileOnly fg.deobf("net.darkhax.gamestages:GameStages-Forge-${minecraft_version}:${gamestages_version}")
+    compileOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${minecraft_version}:${bookshelf_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

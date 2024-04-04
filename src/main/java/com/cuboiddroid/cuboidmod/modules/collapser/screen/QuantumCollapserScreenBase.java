@@ -72,7 +72,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
                     tooltip.add(this.getCurrentCollapsingItemDisplayName());
                 }
 
-                StringTextComponent text = new StringTextComponent(this.getItemsConsumed() + " / " + this.getTotalItemsRequired());
+                TextComponent text = new TextComponent(this.getItemsConsumed() + " / " + this.getTotalItemsRequired());
                 tooltip.add(text);
                 this.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);
             } else if (mouseX >= this.leftPos + 145 && mouseX < this.leftPos + 162 && mouseY >= this.topPos + 35 && mouseY < this.topPos + 52) {
@@ -194,7 +194,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
 /*
     private MutableComponent getCurrentCollapsingItemDisplayName() {
         if (this.tile == null)
-            return new StringTextComponent("");
+            return new TextComponent("");
 
         return this.tile.getInputDisplayName();
     }
