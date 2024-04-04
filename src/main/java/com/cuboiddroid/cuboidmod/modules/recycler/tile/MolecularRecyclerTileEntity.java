@@ -662,24 +662,24 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
     @Override
     public void load(CompoundTag tag) {
-        inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
+		super.load(tag);
+		inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        super.saveAdditional(tag);
     }
 
     @Override

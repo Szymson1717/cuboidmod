@@ -49,14 +49,14 @@ public class FiberOpticTreeTileEntity extends BlockEntity implements BlockEntity
 
     @Override
     public void load(CompoundTag tag) {
-        this.mode = tag.getByte("mode");
         super.load(tag);
+        this.mode = tag.getByte("mode");
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-        tag.putByte("mode", (byte)this.mode);
         super.saveAdditional(tag);
+        tag.putByte("mode", (byte)this.mode);
     }
 
     @Override

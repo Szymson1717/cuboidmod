@@ -195,20 +195,20 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         itemHandler.deserializeNBT(tag.getCompound("inv"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
-
         counter = tag.getInt("counter");
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
-
         tag.putInt("counter", counter);
-        super.saveAdditional(tag);
     }
 
     public int getEnergyCapacity() {

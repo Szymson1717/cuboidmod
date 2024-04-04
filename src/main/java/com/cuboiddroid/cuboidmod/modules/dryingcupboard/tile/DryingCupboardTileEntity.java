@@ -293,24 +293,24 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTimes = tag.getIntArray("procTimes");
         recipeTimes = tag.getIntArray("recTimes");
-
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
         tag.putIntArray("procTimes", processingTimes);
         tag.putIntArray("recTimes", recipeTimes);
-
-        super.saveAdditional(tag);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
-import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
@@ -188,18 +187,18 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
-        super.saveAdditional(tag);
     }
 
     private ItemStackHandler createInputHandler() {

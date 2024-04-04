@@ -293,6 +293,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         topLeftItemHandler.deserializeNBT(tag.getCompound("invTL"));
         middleItemHandler.deserializeNBT(tag.getCompound("invMid"));
         bottomRightItemHandler.deserializeNBT(tag.getCompound("invBR"));
@@ -301,11 +302,11 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invTL", topLeftItemHandler.serializeNBT());
         tag.put("invMid", middleItemHandler.serializeNBT());
         tag.put("invBR", bottomRightItemHandler.serializeNBT());
@@ -314,7 +315,6 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        super.saveAdditional(tag);
     }
 
     @Override

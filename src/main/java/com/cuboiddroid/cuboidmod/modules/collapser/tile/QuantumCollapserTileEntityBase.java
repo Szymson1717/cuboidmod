@@ -281,6 +281,8 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
@@ -299,12 +301,12 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
         String currentOutputId = tag.getString("curOutId");
         currentOutput = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(currentOutputId)));
-
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
@@ -318,8 +320,6 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
             tag.putString("curIng", currentIngredient.toJson().toString());
 
         tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
-
-        super.saveAdditional(tag);
     }
 
     @Override

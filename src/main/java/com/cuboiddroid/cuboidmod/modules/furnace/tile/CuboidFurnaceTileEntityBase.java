@@ -636,6 +636,8 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         ContainerHelper.loadAllItems(tag, this.inventory);
         this.furnaceBurnTime = tag.getInt("BurnTime");
         this.cookTime = tag.getInt("CookTime");
@@ -653,8 +655,6 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
          CompoundTag energyTag = tag.getCompound("energy");
          energy.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(energyTag));
          **/
-
-        super.load(tag);
     }
 
     @Override
@@ -675,11 +675,11 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
          */
 
         CompoundTag compoundnbt = new CompoundTag();
+        super.saveAdditional(tag);
+
         this.recipes.forEach((recipeId, craftedAmount) ->
                 compoundnbt.putInt(recipeId.toString(), craftedAmount));
         tag.put("RecipesUsed", compoundnbt);
-
-        super.saveAdditional(tag);
     }
 
     @SuppressWarnings("deprecation")

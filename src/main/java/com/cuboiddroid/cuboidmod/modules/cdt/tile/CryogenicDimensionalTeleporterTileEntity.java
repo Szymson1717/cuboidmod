@@ -188,24 +188,24 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         this.state = CdtStates.values()[tag.getByte("state")];
         this.targetDimension = tag.getString("tgtDim");
         this.keyItem = ItemStack.of(tag.getCompound("keyItem"));
-
-        super.load(tag);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("energy", energyStorage.serializeNBT());
         tag.putByte("state", (byte)this.state.ordinal());
         tag.putString("tgtDim", this.targetDimension);
         CompoundTag keyTag = new CompoundTag();
         this.keyItem.save(keyTag);
         tag.put("keyItem", keyTag);
-
-        super.saveAdditional(tag);
     }
 
     @Override
