@@ -17,10 +17,13 @@ import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.*;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -43,6 +46,7 @@ public class Registration {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = create(ForgeRegistries.BLOCK_ENTITIES);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = create(ForgeRegistries.RECIPE_SERIALIZERS);
     public static final DeferredRegister<Fluid> FLUIDS = create(ForgeRegistries.FLUIDS);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = create(Registry.RECIPE_TYPE_REGISTRY);
 
     @SuppressWarnings("deprecation")
     public static void register() {
@@ -56,6 +60,7 @@ public class Registration {
         BLOCK_ENTITIES.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         FLUIDS.register(modEventBus);
+        RECIPE_TYPES.register(modEventBus);
 
         // class-load the registry object holder classes.
         ModBlocks.register();
@@ -74,6 +79,10 @@ public class Registration {
     }
 
     private static <T extends IForgeRegistryEntry<T>> DeferredRegister<T> create(IForgeRegistry<T> registry) {
+        return DeferredRegister.create(registry, CuboidMod.MOD_ID);
+    }
+
+    private static <T> DeferredRegister<T> create(ResourceKey<? extends Registry<T>> registry) {
         return DeferredRegister.create(registry, CuboidMod.MOD_ID);
     }
 

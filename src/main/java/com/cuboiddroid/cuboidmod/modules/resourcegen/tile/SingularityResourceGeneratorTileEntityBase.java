@@ -168,7 +168,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING.get(), inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

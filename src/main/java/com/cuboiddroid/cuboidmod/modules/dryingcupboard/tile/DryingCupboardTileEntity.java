@@ -244,7 +244,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
         if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
             // look for a specific recipe and use it if found
-            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, inv, this.level).orElse(null);
+            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING.get(), inv, this.level).orElse(null);
 
             // track the recipe being used for this slot to save time next tick
             recipes[slotIndex] = recipe;

@@ -409,7 +409,7 @@ public class DryingCupboardContainer extends AbstractContainerMenu {
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, new SimpleContainer(stack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING.get(), new SimpleContainer(stack), this.level).isPresent();
     }
 
 }

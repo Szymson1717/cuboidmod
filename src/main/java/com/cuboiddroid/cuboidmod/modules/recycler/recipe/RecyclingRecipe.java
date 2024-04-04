@@ -113,7 +113,7 @@ public class RecyclingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.RECYCLING;
+        return ModRecipeTypes.RECYCLING.get();
     }
 
     /**

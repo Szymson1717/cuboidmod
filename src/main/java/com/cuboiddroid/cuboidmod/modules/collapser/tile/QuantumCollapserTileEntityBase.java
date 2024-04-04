@@ -239,7 +239,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
                 : getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING.get(), inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

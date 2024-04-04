@@ -1,5 +1,7 @@
 package com.cuboiddroid.cuboidmod.setup;
 
+import java.util.function.Supplier;
+
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
@@ -8,29 +10,23 @@ import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecipe;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
+
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModRecipeTypes {
-    public static final RecipeType<QuantumCollapsingRecipe> COLLAPSING =
-            RecipeType.register(CuboidMod.MOD_ID + ":collapsing");
+    public static final RegistryObject<RecipeType<QuantumCollapsingRecipe>> COLLAPSING = register("collapsing");
+    public static final RegistryObject<RecipeType<TransmutingRecipe>> TRANSMUTING = register("transmuting");
+    public static final RegistryObject<RecipeType<InscribingRecipe>> INSCRIBING = register("inscribing");
+    public static final RegistryObject<RecipeType<RecyclingRecipe>> RECYCLING = register("recycling");
+    public static final RegistryObject<RecipeType<DryingRecipe>> DRYING = register("drying");
+    public static final RegistryObject<RecipeType<ResourceGeneratingRecipe>> RESOURCE_GENERATING = register("resource_generating");
+    public static final RegistryObject<RecipeType<PowerGeneratingRecipe>> POWER_GENERATING = register("power_generating");
 
-    public static final RecipeType<TransmutingRecipe> TRANSMUTING =
-            RecipeType.register(CuboidMod.MOD_ID + ":transmuting");
-
-    public static final RecipeType<InscribingRecipe> INSCRIBING =
-            RecipeType.register(CuboidMod.MOD_ID + ":inscribing");
-
-    public static final RecipeType<RecyclingRecipe> RECYCLING =
-            RecipeType.register(CuboidMod.MOD_ID + ":recycling");
-
-    public static final RecipeType<DryingRecipe> DRYING =
-            RecipeType.register(CuboidMod.MOD_ID + ":drying");
-
-    public static final RecipeType<ResourceGeneratingRecipe> RESOURCE_GENERATING =
-            RecipeType.register(CuboidMod.MOD_ID + ":resource_generating");
-
-    public static final RecipeType<PowerGeneratingRecipe> POWER_GENERATING =
-            RecipeType.register(CuboidMod.MOD_ID + ":power_generating");
+    private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String name) {
+        return Registration.RECIPE_TYPES.register(name, () -> new RecipeType<T>() {});
+    }
 
     static void register() {}
 }

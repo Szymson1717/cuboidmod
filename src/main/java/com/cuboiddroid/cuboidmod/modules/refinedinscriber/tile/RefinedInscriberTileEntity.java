@@ -218,7 +218,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING.get(), inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

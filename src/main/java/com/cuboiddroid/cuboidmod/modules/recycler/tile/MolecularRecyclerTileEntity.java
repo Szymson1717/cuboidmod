@@ -249,7 +249,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         Container inv = getInputsAsInventory();
 
         // look for a specific recipe and use it if found (i.e. json overrides)
-        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING, inv, this.level).orElse(null);
+        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING.get(), inv, this.level).orElse(null);
 
         // there is a (JSON) recipe override, so use it
         if (recipe != null)

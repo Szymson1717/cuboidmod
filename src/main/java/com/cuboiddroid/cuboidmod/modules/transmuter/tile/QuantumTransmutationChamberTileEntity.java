@@ -215,7 +215,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING.get(), inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

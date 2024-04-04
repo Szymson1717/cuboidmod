@@ -65,13 +65,13 @@ public class CuboidModJeiPlugin {//implements IModPlugin {
     // @Override
     // public void registerRecipes(IRecipeRegistration registration) {
     //     if (Config.enableJeiPlugin.get()) {
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.RECYCLING), Constants.RECYCLING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.TRANSMUTING), Constants.TRANSMUTING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.INSCRIBING), Constants.INSCRIBING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.COLLAPSING), Constants.COLLAPSING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.RESOURCE_GENERATING), Constants.RESOURCE_GENERATING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.POWER_GENERATING), Constants.POWER_GENERATING);
-    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.DRYING), Constants.DRYING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.RECYCLING.get()), Constants.RECYCLING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.TRANSMUTING.get()), Constants.TRANSMUTING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.INSCRIBING.get()), Constants.INSCRIBING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.COLLAPSING.get()), Constants.COLLAPSING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.RESOURCE_GENERATING.get()), Constants.RESOURCE_GENERATING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.POWER_GENERATING.get()), Constants.POWER_GENERATING);
+    //         registration.addRecipes(getRecipesOfType(ModRecipeTypes.DRYING.get()), Constants.DRYING);
     //     }
     // }
 
