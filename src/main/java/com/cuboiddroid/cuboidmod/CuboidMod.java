@@ -49,6 +49,6 @@ public class CuboidMod
     }
 
     public static ResourceLocation getModId(String path) {
-        return new ResourceLocation(MOD_ID + ":" + path);
+        return new ResourceLocation(MOD_ID, path);
     }
 }

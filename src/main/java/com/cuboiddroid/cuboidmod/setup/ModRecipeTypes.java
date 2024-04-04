@@ -1,8 +1,5 @@
 package com.cuboiddroid.cuboidmod.setup;
 
-import java.util.function.Supplier;
-
-import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
