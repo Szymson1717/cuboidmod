@@ -51,8 +51,7 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag compound = new CompoundTag();
-
+        CompoundTag compound = super.getUpdateTag();
         this.saveAdditional(compound);
         return compound;
     }

@@ -85,6 +85,14 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     }
 
     @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
+        this.setChanged();
+        return nbtTag;
+    }
+    
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
         this.load(tag);

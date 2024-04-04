@@ -704,6 +704,14 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
 
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
+        this.setChanged();
+        return nbtTag;
+    }
+
     private CuboidEnergyStorage createEnergy() {
         return new CuboidEnergyStorage(energyCapacity, maxEnergyReceivedPerTick, 0) {
             @Override

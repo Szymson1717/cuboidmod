@@ -347,7 +347,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
+        CompoundTag nbtTagCompound = super.getUpdateTag();
         saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }

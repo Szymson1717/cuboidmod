@@ -334,6 +334,14 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
     }
 
     @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
+        this.setChanged();
+        return nbtTag;
+    }
+
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
         this.load(tag);

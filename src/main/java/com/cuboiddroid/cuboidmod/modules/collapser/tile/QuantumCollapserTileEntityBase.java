@@ -355,7 +355,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
+        CompoundTag nbtTagCompound = super.getUpdateTag();
         saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }

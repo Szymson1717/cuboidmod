@@ -242,7 +242,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
+        CompoundTag nbtTagCompound = super.getUpdateTag();
         saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
