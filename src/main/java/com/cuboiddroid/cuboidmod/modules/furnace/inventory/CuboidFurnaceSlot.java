@@ -10,12 +10,10 @@ public class CuboidFurnaceSlot extends Slot {
 
     private final Player player;
     private int removeCount;
-    private CuboidFurnaceTileEntityBase te;
 
     public CuboidFurnaceSlot(Player player, CuboidFurnaceTileEntityBase te, int slotIndex, int xPosition, int yPosition) {
         super(te, slotIndex, xPosition, yPosition);
         this.player = player;
-        this.te = te;
     }
 
     /**

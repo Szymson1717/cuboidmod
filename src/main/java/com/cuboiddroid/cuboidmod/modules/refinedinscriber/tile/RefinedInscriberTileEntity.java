@@ -14,6 +14,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -218,7 +219,8 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING.get(), inv, this.level).orElse(null);
+            RecipeType<InscribingRecipe> recipeType = ModRecipeTypes.INSCRIBING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

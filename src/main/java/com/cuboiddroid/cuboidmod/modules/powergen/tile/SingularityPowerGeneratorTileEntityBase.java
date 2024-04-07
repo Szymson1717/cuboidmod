@@ -11,6 +11,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
@@ -175,7 +176,8 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.POWER_GENERATING.get(), inv, this.level).orElse(null);
+            RecipeType<PowerGeneratingRecipe> recipeType = ModRecipeTypes.POWER_GENERATING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;

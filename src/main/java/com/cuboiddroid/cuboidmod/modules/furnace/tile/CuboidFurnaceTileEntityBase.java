@@ -6,7 +6,6 @@ import com.cuboiddroid.cuboidmod.modules.common.TileEntityInventory;
 import com.google.common.collect.Lists;
 
 import harmonised.pmmo.api.events.FurnaceBurnEvent;
-import harmonised.pmmo.events.impl.FurnaceHandler;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,6 +39,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -637,7 +637,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                 this.inventory.set(FUEL, new ItemStack(Items.WATER_BUCKET));
             }
             if (ModList.get().isLoaded("pmmo")) {
-                FurnaceHandler.handle(new FurnaceBurnEvent(input, level, worldPosition));
+                MinecraftForge.EVENT_BUS.post(new FurnaceBurnEvent(input, level, worldPosition));
             }
             input.shrink(1);
         }

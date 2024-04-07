@@ -132,7 +132,7 @@ public class InscribingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.INSCRIBING.get();
+        return ModRecipeTypes.INSCRIBING.getRecipeType();
     }
 
 

@@ -123,7 +123,7 @@ public class TransmutingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.TRANSMUTING.get();
+        return ModRecipeTypes.TRANSMUTING.getRecipeType();
     }
 
 

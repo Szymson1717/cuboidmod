@@ -12,17 +12,40 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ModRecipeTypes {
-    public static final RegistryObject<RecipeType<QuantumCollapsingRecipe>> COLLAPSING = register("collapsing");
-    public static final RegistryObject<RecipeType<TransmutingRecipe>> TRANSMUTING = register("transmuting");
-    public static final RegistryObject<RecipeType<InscribingRecipe>> INSCRIBING = register("inscribing");
-    public static final RegistryObject<RecipeType<RecyclingRecipe>> RECYCLING = register("recycling");
-    public static final RegistryObject<RecipeType<DryingRecipe>> DRYING = register("drying");
-    public static final RegistryObject<RecipeType<ResourceGeneratingRecipe>> RESOURCE_GENERATING = register("resource_generating");
-    public static final RegistryObject<RecipeType<PowerGeneratingRecipe>> POWER_GENERATING = register("power_generating");
+public enum ModRecipeTypes {
+    COLLAPSING("collapsing", QuantumCollapsingRecipe.class),
+    TRANSMUTING("transmuting", TransmutingRecipe.class),
+    INSCRIBING("inscribing", InscribingRecipe.class),
+    RECYCLING("recycling", RecyclingRecipe.class),
+    DRYING("drying", DryingRecipe.class),
+    RESOURCE_GENERATING("resource_generating", ResourceGeneratingRecipe.class),
+    POWER_GENERATING("power_generating", PowerGeneratingRecipe.class);
 
-    private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String name) {
-        return Registration.RECIPE_TYPES.register(name, () -> new RecipeType<T>() {});
+    private final String name;
+    private final Class<?> type;
+    private final RegistryObject<RecipeType<Recipe<?>>> registry;
+
+    <T extends Recipe<?>> ModRecipeTypes(String name, Class<T> recipeType) {
+        this.name = name;
+        this.type = recipeType;
+
+        this.registry = Registration.RECIPE_TYPES.register(this.getName(), () -> new RecipeType<Recipe<?>>() {});
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public <T extends RecipeType<Recipe<?>>> RegistryObject<T> getRegistry() {
+        return (RegistryObject<T>) registry;
+    }
+
+    public <T extends Recipe<?>> RecipeType<T> getRecipeType() {
+        return (RecipeType<T>) registry.get();
+    }
+
+    public <T extends Recipe<?>> Class<T> getType() {
+        return (Class<T>) type;
     }
 
     static void register() {}

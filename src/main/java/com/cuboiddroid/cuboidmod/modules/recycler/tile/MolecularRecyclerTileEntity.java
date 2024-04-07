@@ -249,7 +249,8 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         Container inv = getInputsAsInventory();
 
         // look for a specific recipe and use it if found (i.e. json overrides)
-        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING.get(), inv, this.level).orElse(null);
+        RecipeType<RecyclingRecipe> recipeType = ModRecipeTypes.RECYCLING.getRecipeType();
+        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
 
         // there is a (JSON) recipe override, so use it
         if (recipe != null)
@@ -662,8 +663,8 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
     @Override
     public void load(CompoundTag tag) {
-		super.load(tag);
-		inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
+        super.load(tag);
+        inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTime = tag.getInt("procTime");

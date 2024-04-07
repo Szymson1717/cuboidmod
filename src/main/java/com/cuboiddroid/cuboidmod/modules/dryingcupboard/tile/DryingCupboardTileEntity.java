@@ -14,6 +14,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -244,7 +245,8 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
         if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
             // look for a specific recipe and use it if found
-            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING.get(), inv, this.level).orElse(null);
+            RecipeType<DryingRecipe> recipeType = ModRecipeTypes.DRYING.getRecipeType();
+            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
 
             // track the recipe being used for this slot to save time next tick
             recipes[slotIndex] = recipe;

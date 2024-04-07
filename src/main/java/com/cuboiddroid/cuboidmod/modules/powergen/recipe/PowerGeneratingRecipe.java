@@ -84,7 +84,7 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.POWER_GENERATING.get();
+        return ModRecipeTypes.POWER_GENERATING.getRecipeType();
     }
 
     /**
