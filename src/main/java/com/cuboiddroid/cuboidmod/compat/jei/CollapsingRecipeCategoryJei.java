@@ -7,11 +7,15 @@ import com.cuboiddroid.cuboidmod.util.Constants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -79,23 +83,29 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
         return icon;
     }
 
-    @Override
-    public void setIngredients(QuantumCollapsingRecipe recipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(Collections.singletonList(recipe.getIngredient()));
-        ingredients.setOutputs(VanillaTypes.ITEM, Collections.singletonList(recipe.getResultItem()));
-    }
+    // @Override
+    // public void setIngredients(QuantumCollapsingRecipe recipe, IIngredients ingredients) {
+    //     ingredients.setInputIngredients(Collections.singletonList(recipe.getIngredient()));
+    //     ingredients.setOutputs(VanillaTypes.ITEM, Collections.singletonList(recipe.getResultItem()));
+    // }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, QuantumCollapsingRecipe recipe, IIngredients ingredients) {
-        IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
-        itemStacks.init(0, true, 28, 14);
-        itemStacks.init(1, false, 87, 14);
-
-        // Should only be one ingredient...
-        itemStacks.set(0, Arrays.asList(recipe.getIngredient().getItems()));
-        // Output
-        itemStacks.set(1, recipe.getResultItem().copy());
+    public void setRecipe(IRecipeLayoutBuilder builder, QuantumCollapsingRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 28, 14).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 14).addItemStack(recipe.getResultItem().copy());
     }
+
+    // @Override
+    // public void setRecipe(IRecipeLayout recipeLayout, QuantumCollapsingRecipe recipe, IIngredients ingredients) {
+    //     IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
+    //     itemStacks.init(0, true, 28, 14);
+    //     itemStacks.init(1, false, 87, 14);
+
+    //     // Should only be one ingredient...
+    //     itemStacks.set(0, Arrays.asList(recipe.getIngredient().getItems()));
+    //     // Output
+    //     itemStacks.set(1, recipe.getResultItem().copy());
+    // }
 
     @Override
     public void draw(QuantumCollapsingRecipe recipe, PoseStack PoseStack, double mouseX, double mouseY) {

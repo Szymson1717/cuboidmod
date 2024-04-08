@@ -8,16 +8,20 @@ import com.cuboiddroid.cuboidmod.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingRecipe> {
     private static final int GUI_START_X = 24;
@@ -83,32 +88,46 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
         return icon;
     }
 
-    @Override
-    public void setIngredients(RecyclingRecipe recipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(Collections.singletonList(recipe.getIngredient()));
-        ingredients.setOutputs(VanillaTypes.ITEM, new ArrayList<>(recipe.getPossibleResults(new SimpleContainer(6))));
-    }
+    // @Override
+    // public void setIngredients(RecyclingRecipe recipe, IIngredients ingredients) {
+    //     ingredients.setInputIngredients(Collections.singletonList(recipe.getIngredient()));
+    //     ingredients.setOutputs(VanillaTypes.ITEM, new ArrayList<>(recipe.getPossibleResults(new SimpleContainer(6))));
+    // }
 
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, RecyclingRecipe recipe, IIngredients ingredients) {
-        IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
-        itemStacks.init(0, true, 28, 14);
-        itemStacks.init(1, false, 85, 6);
-        itemStacks.init(2, false, 103, 6);
-        itemStacks.init(3, false, 121, 6);
-        itemStacks.init(4, false, 85, 24);
-        itemStacks.init(5, false, 103, 24);
-        itemStacks.init(6, false, 121, 24);
+	@Override
+	public void setRecipe(IRecipeLayoutBuilder builder, RecyclingRecipe recipe, IFocusGroup focuses) {
+		List<ItemStack> outputs = recipe.getPossibleResultsWithChances().stream().map(pair -> pair.getKey()).toList();
+		IntStream.range(0,6-outputs.size()).forEach(value -> outputs.add(ItemStack.EMPTY));
 
-        // Should only be one ingredient...
-//        recipe.getIngredients().forEach(ing -> itemStacks.set(0, Arrays.asList(ing.getMatchingStacks())));
-        itemStacks.set(0, Arrays.asList(recipe.getIngredient().getItems()));
-        // Outputs
-        List<Pair<ItemStack, Float>> results = recipe.getPossibleResultsWithChances();
-        for (int i = 0; i < results.size(); ++i) {
-            itemStacks.set(i + 1, results.get(i).getKey());
-        }
-    }
+        builder.addSlot(RecipeIngredientRole.INPUT, 28, 14).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 85, 6).addItemStack(outputs.get(0));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 103, 6).addItemStack(outputs.get(1));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 6).addItemStack(outputs.get(2));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 85, 24).addItemStack(outputs.get(3));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 103, 24).addItemStack(outputs.get(4));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 121, 24).addItemStack(outputs.get(5));
+	}
+
+//     @Override
+//     public void setRecipe(IRecipeLayout recipeLayout, RecyclingRecipe recipe, IIngredients ingredients) {
+//         IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
+//         itemStacks.init(0, true, 28, 14);
+//         itemStacks.init(1, false, 85, 6);
+//         itemStacks.init(2, false, 103, 6);
+//         itemStacks.init(3, false, 121, 6);
+//         itemStacks.init(4, false, 85, 24);
+//         itemStacks.init(5, false, 103, 24);
+//         itemStacks.init(6, false, 121, 24);
+
+//         // Should only be one ingredient...
+// //        recipe.getIngredients().forEach(ing -> itemStacks.set(0, Arrays.asList(ing.getMatchingStacks())));
+//         itemStacks.set(0, Arrays.asList(recipe.getIngredient().getItems()));
+//         // Outputs
+//         List<Pair<ItemStack, Float>> results = recipe.getPossibleResultsWithChances();
+//         for (int i = 0; i < results.size(); ++i) {
+//             itemStacks.set(i + 1, results.get(i).getKey());
+//         }
+//     }
 
     @Override
     public void draw(RecyclingRecipe recipe, PoseStack PoseStack, double mouseX, double mouseY) {

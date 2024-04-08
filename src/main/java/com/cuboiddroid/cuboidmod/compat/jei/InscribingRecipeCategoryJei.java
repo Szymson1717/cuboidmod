@@ -7,11 +7,14 @@ import com.cuboiddroid.cuboidmod.util.Constants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -81,25 +84,33 @@ public class InscribingRecipeCategoryJei implements IRecipeCategory<InscribingRe
         return icon;
     }
 
-    @Override
-    public void setIngredients(InscribingRecipe recipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(new ArrayList<>(recipe.getIngredients()));
-        ingredients.setOutputs(VanillaTypes.ITEM, Collections.singletonList(recipe.getResultItem().copy()));
-    }
+    // @Override
+    // public void setIngredients(InscribingRecipe recipe, IIngredients ingredients) {
+    //     ingredients.setInputIngredients(new ArrayList<>(recipe.getIngredients()));
+    //     ingredients.setOutputs(VanillaTypes.ITEM, Collections.singletonList(recipe.getResultItem().copy()));
+    // }
 
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, InscribingRecipe recipe, IIngredients ingredients) {
-        IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
-        itemStacks.init(0, true, 59 - GUI_START_X, 26 - GUI_START_Y);
-        itemStacks.init(1, true, 80 - GUI_START_X, 54 - GUI_START_Y);
-        itemStacks.init(2, true, 101 - GUI_START_X, 26 - GUI_START_Y);
-        itemStacks.init(3, false, 137 - GUI_START_X, 54 - GUI_START_Y);
+	@Override
+	public void setRecipe(IRecipeLayoutBuilder builder, InscribingRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 59 - GUI_START_X, 26 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 80 - GUI_START_X, 54 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(1).getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 101 - GUI_START_X, 26 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(2).getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 137 - GUI_START_X, 54 - GUI_START_Y).addItemStack(recipe.getResultItem().copy());
+	}
 
-        AtomicInteger i = new AtomicInteger();
-        recipe.getIngredients().forEach(ing -> itemStacks.set(i.getAndIncrement(), Arrays.asList(ing.getItems())));
+    // @Override
+    // public void setRecipe(IRecipeLayout recipeLayout, InscribingRecipe recipe, IIngredients ingredients) {
+    //     IGuiItemStackGroup itemStacks = recipeLayout.getItemStacks();
+    //     itemStacks.init(0, true, 59 - GUI_START_X, 26 - GUI_START_Y);
+    //     itemStacks.init(1, true, 80 - GUI_START_X, 54 - GUI_START_Y);
+    //     itemStacks.init(2, true, 101 - GUI_START_X, 26 - GUI_START_Y);
+    //     itemStacks.init(3, false, 137 - GUI_START_X, 54 - GUI_START_Y);
 
-        itemStacks.set(3, recipe.getResultItem().copy());
-    }
+    //     AtomicInteger i = new AtomicInteger();
+    //     recipe.getIngredients().forEach(ing -> itemStacks.set(i.getAndIncrement(), Arrays.asList(ing.getItems())));
+
+    //     itemStacks.set(3, recipe.getResultItem().copy());
+    // }
 
     @Override
     public void draw(InscribingRecipe recipe, PoseStack PoseStack, double mouseX, double mouseY) {
