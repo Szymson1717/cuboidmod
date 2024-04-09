@@ -36,7 +36,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,6 +45,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,7 +100,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("cuboidmod.container.molecular_recycler");
+        return Component.translatable("cuboidmod.container.molecular_recycler");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, MolecularRecyclerTileEntity entity) {
@@ -271,7 +271,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         // there is no JSON-based recipe, so we're going to try and "un-craft" the
         // ingredient instead...
 
-        String autoRecipeId = CuboidMod.MOD_ID + ":recycler_auto_" + inputItem.getItem().getRegistryName().toString().replace(':', '_');
+        String autoRecipeId = CuboidMod.MOD_ID + ":recycler_auto_" + ForgeRegistries.ITEMS.getKey(inputItem.getItem()).toString().replace(':', '_');
 
         // check our cache to see if we've already rejected this one...
         if (REJECTED_RECIPES.containsKey(autoRecipeId))
@@ -504,7 +504,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
      */
     private boolean itemIsBlacklisted(ItemStack item) {
         // check the item type
-        if (BlacklistConfig.getInstance().isBlacklistedItem(item.getItem().getRegistryName().toString()))
+        if (BlacklistConfig.getInstance().isBlacklistedItem(ForgeRegistries.ITEMS.getKey(item.getItem()).toString()))
             return true;
 
         // check the item's tags
@@ -515,7 +515,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         }
 
         // any items with containers (e.g. smooshers) should be excluded!
-        if (item.hasContainerItem())
+        if (item.hasCraftingRemainingItem())
             return true;
 
         // no matches - not blacklisted
@@ -529,7 +529,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
      * @return true if it is blacklisted, otherwise false
      */
     private boolean resultItemIsBlacklisted(Item item) {
-        if (BlacklistConfig.getInstance().isBlacklistedResultItem(item.getRegistryName().toString()))
+        if (BlacklistConfig.getInstance().isBlacklistedResultItem(ForgeRegistries.ITEMS.getKey(item).toString()))
             return true;
 
         // check the item's tags
@@ -540,7 +540,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         }
 
         // any items with containers (e.g. smooshers) should be excluded!
-        if (item.getDefaultInstance().hasContainerItem())
+        if (item.getDefaultInstance().hasCraftingRemainingItem())
             return true;
 
         // no matches - not blacklisted

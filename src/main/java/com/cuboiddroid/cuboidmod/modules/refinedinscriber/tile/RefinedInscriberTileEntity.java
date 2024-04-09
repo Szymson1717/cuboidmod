@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -81,7 +80,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("cuboidmod.container.refined_inscriber");
+        return Component.translatable("cuboidmod.container.refined_inscriber");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, RefinedInscriberTileEntity entity) {

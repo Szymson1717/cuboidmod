@@ -321,7 +321,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         else
             tag.putString("curIng", currentIngredient.toJson().toString());
 
-        tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
+        tag.putString("curOutId", ForgeRegistries.ITEMS.getKey(currentOutput.getItem()).toString());
     }
 
     @Override

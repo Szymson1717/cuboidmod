@@ -45,6 +45,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -289,11 +290,11 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                     if (this.isBurning()) {
                         flag1 = true;
 
-                        if (itemstack.hasContainerItem()) this.inventory.set(FUEL, itemstack.getContainerItem());
+                        if (itemstack.hasCraftingRemainingItem()) this.inventory.set(FUEL, itemstack.getCraftingRemainingItem());
                         else if (!itemstack.isEmpty()) {
                             itemstack.shrink(1);
                             if (itemstack.isEmpty()) {
-                                this.inventory.set(FUEL, itemstack.getContainerItem());
+                                this.inventory.set(FUEL, itemstack.getCraftingRemainingItem());
                             }
                         }
                     }
@@ -412,7 +413,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                                     if (this.getItem(OUTPUT).isEmpty()) {
                                         continue;
                                     }
-                                    if (tile.getBlockState().getBlock().getRegistryName().toString().contains("storagedrawers:")) {
+                                    if (ForgeRegistries.BLOCKS.getKey(tile.getBlockState().getBlock()).toString().contains("storagedrawers:")) {
                                         continue;
                                     }
                                     for (int i = 0; i < other.getSlots(); i++) {

@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
@@ -144,7 +144,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
     }
 
     public MutableComponent getDisplayName() {
-        return new TranslatableComponent("container.cuboidmod.cryogenic_dimensional_teleporter");
+        return Component.translatable("container.cuboidmod.cryogenic_dimensional_teleporter");
     }
 
     public static void gameTick(Level level, BlockPos pos, BlockState blockState, CryogenicDimensionalTeleporterTileEntity blockEntity) {

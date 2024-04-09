@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -80,7 +79,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("cuboidmod.container.quantum_transmutation_chamber");
+        return Component.translatable("cuboidmod.container.quantum_transmutation_chamber");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, QuantumTransmutationChamberTileEntity entity) {

@@ -17,7 +17,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
@@ -169,7 +168,7 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<QuantumCollapsingRecipe> {
+    public static class Serializer implements RecipeSerializer<QuantumCollapsingRecipe> {
 
         @Override
         public QuantumCollapsingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {

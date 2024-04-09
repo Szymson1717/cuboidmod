@@ -18,7 +18,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // based on SmithingRecipe
 public class TransmutingRecipe implements Recipe<Container> {
@@ -200,9 +199,7 @@ public class TransmutingRecipe implements Recipe<Container> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<TransmutingRecipe> {
-
+    public static class Serializer implements RecipeSerializer<TransmutingRecipe> {
         /*
           JSON structure:
             {

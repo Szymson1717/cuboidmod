@@ -29,7 +29,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 // import net.minecraftforge.common.ToolType;
@@ -53,7 +52,7 @@ public class FiberOpticTreeBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("block.cuboidmod.fiber_optic_tree.hover_text"));
+        list.add(Component.translatable("block.cuboidmod.fiber_optic_tree.hover_text"));
     }
 
     // @Override

@@ -19,7 +19,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // based on SmithingRecipe
 public class InscribingRecipe implements Recipe<Container> {
@@ -209,8 +208,7 @@ public class InscribingRecipe implements Recipe<Container> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<InscribingRecipe> {
+    public static class Serializer implements RecipeSerializer<InscribingRecipe> {
 
         /* - currently making this match AE2 recipe structure until I figure out
              how to just use them directly

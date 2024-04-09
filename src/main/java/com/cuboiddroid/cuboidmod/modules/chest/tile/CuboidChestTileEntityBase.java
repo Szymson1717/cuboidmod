@@ -22,8 +22,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
@@ -104,12 +102,12 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
         String newName = newNameComponent.getString().trim();
         if (newName.startsWith("[") && newName.endsWith("]"))
             newName = newName.substring(1, newName.length() - 1).trim();
-        super.setCustomName(new TextComponent(newName));
+        super.setCustomName(Component.literal(newName));
     }
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent(CuboidMod.MOD_ID + ".container." + this.chestType.getId() + "_chest");
+        return Component.translatable(CuboidMod.MOD_ID + ".container." + this.chestType.getId() + "_chest");
     }
 
     @Override

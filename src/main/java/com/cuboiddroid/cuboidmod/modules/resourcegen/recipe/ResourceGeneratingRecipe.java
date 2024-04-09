@@ -16,7 +16,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class ResourceGeneratingRecipe implements Recipe<Container> {
     private final ResourceLocation recipeId;
@@ -165,8 +164,7 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<ResourceGeneratingRecipe> {
+    public static class Serializer implements RecipeSerializer<ResourceGeneratingRecipe> {
 
         /*
           JSON structure:

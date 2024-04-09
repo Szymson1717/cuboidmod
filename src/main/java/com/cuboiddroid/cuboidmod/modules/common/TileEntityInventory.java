@@ -18,7 +18,6 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -67,7 +66,7 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
 
     @Override
     public Component getName() {
-        return (this.name != null ? this.name : new TranslatableComponent(IgetName()));
+        return (this.name != null ? this.name : Component.translatable(IgetName()));
     }
 
     @Override

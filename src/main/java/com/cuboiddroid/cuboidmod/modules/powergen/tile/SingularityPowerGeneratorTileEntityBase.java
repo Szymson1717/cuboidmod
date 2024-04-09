@@ -75,7 +75,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
     /**
      * implementing classes should do something like this:
      *
-     * return new TranslatableComponent("cuboidmod.container.[identifier]");
+     * return Component.translatable("cuboidmod.container.[identifier]");
      *
      * @return the display name
      */

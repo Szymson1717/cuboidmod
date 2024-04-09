@@ -27,7 +27,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
@@ -101,7 +100,7 @@ public abstract class SingularityPowerGeneratorBlockBase extends BaseEntityBlock
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(new TranslatableComponent("cuboidmod.hover_text.singularity_power_generator"));
+        list.add(Component.translatable("cuboidmod.hover_text.singularity_power_generator"));
     }
 
     @Override
@@ -153,7 +152,7 @@ public abstract class SingularityPowerGeneratorBlockBase extends BaseEntityBlock
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
+            NetworkHooks.openScreen((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }

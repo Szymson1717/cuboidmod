@@ -6,7 +6,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +34,7 @@ public abstract class QuantumSingularityItemBase extends Item implements IColore
     @Override
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
         if (flag.isAdvanced())
-            tooltip.add(new TextComponent("Quantum Singularity ID: " + quantumSingularity.getId()));
+            tooltip.add(Component.literal("Quantum Singularity ID: " + quantumSingularity.getId()));
     }
 
     @Override

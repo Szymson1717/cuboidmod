@@ -257,7 +257,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
     /**
      * implementing classes should do something like this:
      *
-     * return new TranslatableComponent("cuboidmod.container.[identifier]");
+     * return Component.translatable("cuboidmod.container.[identifier]");
      *
      * @return the display name
      */

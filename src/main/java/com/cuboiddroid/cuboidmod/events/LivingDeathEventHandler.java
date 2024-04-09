@@ -15,7 +15,7 @@ public class LivingDeathEventHandler {
     // Added to generate the dragon egg on every dragon kill, rather than just the first one
     @SubscribeEvent
     public void LivingDeathEvent(LivingDeathEvent event) {
-        if (event.getEntityLiving() == null) return;
+        if (event.getEntity() == null) return;
         MinecraftServer server = event.getEntity().getServer();
         if (server == null) return;
         if (event.getEntity().level.equals(server.getLevel(Level.END))) {

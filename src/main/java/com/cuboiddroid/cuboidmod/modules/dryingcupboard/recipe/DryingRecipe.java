@@ -17,7 +17,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Objects;
 
@@ -164,8 +163,7 @@ public class DryingRecipe implements Recipe<Container> {
 
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<DryingRecipe> {
+    public static class Serializer implements RecipeSerializer<DryingRecipe> {
 
         /*
           JSON structure:
@@ -214,7 +212,7 @@ public class DryingRecipe implements Recipe<Container> {
         public void toNetwork(FriendlyByteBuf buffer, DryingRecipe recipe) {
             buffer.writeVarInt(recipe.workTicks);
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeResourceLocation(Objects.requireNonNull(recipe.resultItem.getItem().getRegistryName()));
+            buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(recipe.resultItem.getItem())));
             buffer.writeVarInt(recipe.resultItem.getCount());
         }
     }
