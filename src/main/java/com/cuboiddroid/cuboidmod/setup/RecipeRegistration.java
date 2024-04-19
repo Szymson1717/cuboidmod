@@ -9,13 +9,9 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecip
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 
-import net.minecraft.core.Registry;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegisterEvent;
 
 @Mod(CuboidMod.MOD_ID)
