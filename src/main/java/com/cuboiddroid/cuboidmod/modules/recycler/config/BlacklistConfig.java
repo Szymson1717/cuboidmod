@@ -153,9 +153,8 @@ public class BlacklistConfig {
         String name = file.getName().replace(".json", "");
 
         try {
-            JsonParser parser = new JsonParser();
             reader = new FileReader(file);
-            jsonArray = parser.parse(reader).getAsJsonArray();
+            jsonArray = JsonParser.parseReader(reader).getAsJsonArray();
             if (VERBOSE_LOGGING) CuboidMod.LOGGER.info("Loading Molecular Recycler Blacklist: " + name);
 
             int length = jsonArray.size();

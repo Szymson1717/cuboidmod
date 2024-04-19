@@ -15,9 +15,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -43,7 +43,7 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
         this.level = playerInventory.player.level;
 
         if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, QuantumTransmutationChamberTileEntity.SLOT_INPUT, 53, 33));
                 addSlot(new SlotItemHandler(h, QuantumTransmutationChamberTileEntity.SLOT_ADDITIONAL, 53, 55));
                 addSlot(new SlotItemHandler(h, QuantumTransmutationChamberTileEntity.SLOT_OUTPUT, 115, 43));
@@ -66,7 +66,7 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
 
             @Override
             public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                tileEntity.getCapability(ForgeCapabilities.ENERGY).ifPresent(h -> {
                     int energyStored = h.getEnergyStored() & 0xffff0000;
                     ((CuboidEnergyStorage) h).setEnergy(energyStored + (value & 0xffff));
                 });
@@ -81,7 +81,7 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
 
             @Override
             public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
+                tileEntity.getCapability(ForgeCapabilities.ENERGY).ifPresent(h -> {
                     int energyStored = h.getEnergyStored() & 0x0000ffff;
                     ((CuboidEnergyStorage) h).setEnergy(energyStored | (value << 16));
                 });
@@ -103,7 +103,7 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
     }
 
     public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+        return tileEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
     public int getEnergyCapacity() {

@@ -42,7 +42,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -355,7 +355,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
             }
             if (this.furnaceSettings.get(dir.get3DDataValue()) == 1 || this.furnaceSettings.get(dir.get3DDataValue()) == 2 || this.furnaceSettings.get(dir.get3DDataValue()) == 3 || this.furnaceSettings.get(dir.get3DDataValue()) == 4) {
                 if (tile != null) {
-                    IItemHandler other = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite()).map(other1 -> other1).orElse(null);
+                    IItemHandler other = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir.getOpposite()).map(other1 -> other1).orElse(null);
 
                     if (other == null) {
                         continue;
@@ -715,7 +715,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     public <T> net.minecraftforge.common.util.LazyOptional<T>
         getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {
 
-        if (!this.remove && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER) {
             if (facing == Direction.DOWN)
                 return invHandlers[0].cast();
             else if (facing == Direction.UP)
@@ -730,7 +730,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                 return invHandlers[5].cast();
         }
         /**
-         if (cap == CapabilityEnergy.ENERGY) {
+         if (cap == ForgeCapabilities.ENERGY) {
          return energy.cast();
          }
          **/

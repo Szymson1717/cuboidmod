@@ -24,9 +24,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -146,7 +146,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
                 BlockEntity te = this.level.getBlockEntity(this.worldPosition.relative(direction));
                 Direction opposite = direction.getOpposite();
                 if (te != null) {
-                    boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, opposite).map(handler -> {
+                    boolean doContinue = te.getCapability(ForgeCapabilities.ENERGY, opposite).map(handler -> {
                                 if (handler.canReceive()) {
                                     int received = handler.receiveEnergy(Math.min(capacity.get(), maxEnergyOutputPerTick), false);
                                     capacity.addAndGet(-received);
@@ -255,10 +255,10 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        if (cap == CapabilityEnergy.ENERGY) {
+        if (cap == ForgeCapabilities.ENERGY) {
             return energy.cast();
         }
         return super.getCapability(cap, side);

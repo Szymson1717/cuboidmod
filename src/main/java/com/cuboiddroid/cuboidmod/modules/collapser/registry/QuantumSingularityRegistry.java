@@ -105,9 +105,8 @@ public final class QuantumSingularityRegistry {
             QuantumSingularity singularity = null;
 
             try {
-                JsonParser parser = new JsonParser();
                 reader = new FileReader(file);
-                json = parser.parse(reader).getAsJsonObject();
+                json = JsonParser.parseReader(reader).getAsJsonObject();
                 String name = file.getName().replace(".json", "");
                 if (VERBOSE_LOGGING) CuboidMod.LOGGER.info("Loading Quantum Singularity: " + name);
                 singularity = QuantumSingularityUtils.loadFromJson(new ResourceLocation(CuboidMod.MOD_ID, name), json);
