@@ -1,12 +1,13 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.recipe;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -18,20 +19,22 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
-
 /*
   Recipes for collapsing items into singularities for the Quantum Singularity Collapser
  */
-public class QuantumCollapsingRecipe implements Recipe<Container> {
+public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation recipeId;
     private Ingredient ingredient;
     private ItemStack result;
     private int inputAmount;
     private int workTicks;
 
-    public QuantumCollapsingRecipe(ResourceLocation recipeId) {
+    public QuantumCollapsingRecipe(ResourceLocation recipeId, int workTicks, int inputAmount, Ingredient ingredient, ItemStack result) {
         this.recipeId = recipeId;
+        this.ingredient = ingredient;
+        this.result = result;
+        this.inputAmount = inputAmount;
+        this.workTicks = workTicks;
         // This output is not required, but it can be used to detect when a recipe has been
         // loaded into the game.
         //CuboidMod.LOGGER.info("---> Loaded " + this.toString());
@@ -99,8 +102,8 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the CollapsingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.COLLAPSING.get();
+    public RecipeSerializer<QuantumCollapsingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -109,7 +112,7 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.COLLAPSING.getRecipeType();
+        return QuantumCollapsingRecipe.Type.INSTANCE;
     }
 
     /**
@@ -120,7 +123,7 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
      * @return true if there is a match, otherwise false
      */
     @Override
-    public boolean matches(Container inv, Level level) {
+    public boolean matches(SimpleContainer inv, Level level) {
         return this.ingredient.test(inv.getItem(QuantumCollapserTileEntityBase.INPUT_SLOT));
     }
 
@@ -131,7 +134,7 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
      * @return
      */
     @Override
-    public ItemStack assemble(Container inventory) {
+    public ItemStack assemble(SimpleContainer inventory) {
         return this.getResultItem();
     }
 
@@ -166,58 +169,63 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
         return true;
     }
 
+    public static class Type implements RecipeType<QuantumCollapsingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "collapsing";
+    }
+
     // ---- Serializer ----
 
     public static class Serializer implements RecipeSerializer<QuantumCollapsingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         @Override
-        public QuantumCollapsingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            QuantumCollapsingRecipe recipe = new QuantumCollapsingRecipe(recipeId);
-            recipe.workTicks = GsonHelper.getAsInt(json, "work_ticks", 200);
-
-            JsonObject inputJson = GsonHelper.getAsJsonObject(json, "input");
+        public QuantumCollapsingRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
+            int workTicks = GsonHelper.getAsInt(serializedRecipe, "work_ticks", 200);
+            int inputAmount = GsonHelper.getAsInt(serializedRecipe, "count", 1024);
+            Ingredient ingredient;
+            
+            JsonObject inputJson = GsonHelper.getAsJsonObject(serializedRecipe, "input");
             if (inputJson.has("item")) {
                 ResourceLocation inputItemId = new ResourceLocation(GsonHelper.getAsString(inputJson, "item"));
 
-                recipe.ingredient = Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(inputItemId), 1));
+                ingredient = Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(inputItemId), 1));
             } else {
                 try {
-                    recipe.ingredient = Ingredient.fromJson(inputJson);
+                    ingredient = Ingredient.fromJson(inputJson);
                 } catch (Exception ex) {
                     CuboidMod.LOGGER.warn("Could not load tag: '" + GsonHelper.getAsString(inputJson, "tag") + "' - recipe: '" + recipeId.getPath() + "'\n\n" + ex);
-                    recipe.ingredient = Ingredient.EMPTY;
+                    ingredient = Ingredient.EMPTY;
                 }
             }
 
-            recipe.inputAmount = GsonHelper.getAsInt(inputJson, "count", 1024);
-
-            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
+            JsonObject resultJson = GsonHelper.getAsJsonObject(serializedRecipe, "result");
             ResourceLocation itemId = new ResourceLocation(GsonHelper.getAsString(resultJson, "item"));
             int resultCount = GsonHelper.getAsInt(resultJson, "count", 1);
 
-            recipe.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultCount);
+            ItemStack result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemId), resultCount);
 
-            return recipe;
-        }
-
-        @Nullable
-        @Override
-        public QuantumCollapsingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            QuantumCollapsingRecipe recipe = new QuantumCollapsingRecipe(recipeId);
-            recipe.workTicks = buffer.readVarInt();
-            recipe.ingredient = Ingredient.fromNetwork(buffer);
-            recipe.result = buffer.readItem();
-            recipe.inputAmount = buffer.readVarInt();
-
-            return recipe;
+            return new QuantumCollapsingRecipe(recipeId, workTicks, inputAmount, ingredient, result);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, QuantumCollapsingRecipe recipe) {
-            buffer.writeVarInt(recipe.workTicks);
-            recipe.ingredient.toNetwork(buffer);
-            buffer.writeItem(recipe.result);
-            buffer.writeVarInt(recipe.inputAmount);
+        public @Nullable QuantumCollapsingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buff) {
+            int workTicks = buff.readVarInt();
+            int inputAmount = buff.readVarInt();
+            Ingredient ingredient = Ingredient.fromNetwork(buff);
+            ItemStack result = buff.readItem();
+
+            return new QuantumCollapsingRecipe(id, workTicks, inputAmount, ingredient, result);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, QuantumCollapsingRecipe recipe) {
+            buf.writeInt(recipe.workTicks);
+            buf.writeInt(recipe.inputAmount);
+            recipe.ingredient.toNetwork(buf);
+            buf.writeItemStack(recipe.result, false);
         }
     }
 }

@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboardContainer;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.world.level.block.state.BlockState;
@@ -243,7 +242,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
         if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
             // look for a specific recipe and use it if found
-            RecipeType<DryingRecipe> recipeType = ModRecipeTypes.DRYING.getRecipeType();
+            RecipeType<DryingRecipe> recipeType = DryingRecipe.Type.INSTANCE;
             DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
 
             // track the recipe being used for this slot to save time next tick

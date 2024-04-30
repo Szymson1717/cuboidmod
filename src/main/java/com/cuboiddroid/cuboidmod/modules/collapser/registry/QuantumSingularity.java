@@ -8,8 +8,8 @@ public class QuantumSingularity {
 
     private final int index;
     private final ResourceLocation id;
-    private final String name;
-    private final int[] colors;
+    protected String name;
+    protected int[] colors;
 
     public QuantumSingularity(ResourceLocation id, String name, int[] colors) {
         this.index = nextIndex++;
@@ -38,5 +38,13 @@ public class QuantumSingularity {
 
     public Component getDisplayName() {
         return Component.translatable(this.name);
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setColors(int[] colors) {
+        this.colors = colors;
     }
 }

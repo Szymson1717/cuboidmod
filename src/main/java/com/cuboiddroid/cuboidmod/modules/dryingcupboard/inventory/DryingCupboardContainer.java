@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -410,7 +409,7 @@ public class DryingCupboardContainer extends AbstractContainerMenu {
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        RecipeType<DryingRecipe> recipeType = ModRecipeTypes.DRYING.getRecipeType();
+        RecipeType<DryingRecipe> recipeType = DryingRecipe.Type.INSTANCE;
         return this.level.getRecipeManager().getRecipeFor(recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 

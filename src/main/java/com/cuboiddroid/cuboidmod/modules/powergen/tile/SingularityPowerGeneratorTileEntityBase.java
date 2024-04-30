@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.powergen.tile;
 
 import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.world.level.block.state.BlockState;
@@ -175,7 +174,7 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<PowerGeneratingRecipe> recipeType = ModRecipeTypes.POWER_GENERATING.getRecipeType();
+            RecipeType<PowerGeneratingRecipe> recipeType = PowerGeneratingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 

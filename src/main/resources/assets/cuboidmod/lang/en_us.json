@@ -207,6 +207,8 @@
   "cuboidmod.container.wikidium_singularity_resource_generator": "Wikidium Singularity Resource Generator",
   "cuboidmod.container.thatldu_singularity_resource_generator": "Thatldu Singularity Resource Generator",
 
+  "cuboidmod.quantum_singularity.missing": "Missing Singularity (Check Configs)",
+
   "cuboidmod.quantum_singularity.notsogudium": "Notsogudium Quantum Singularity",
   "cuboidmod.quantum_singularity.kudbebedda": "Kudbebedda Quantum Singularity",
   "cuboidmod.quantum_singularity.notarfbadium": "Notarfbadium Quantum Singularity",

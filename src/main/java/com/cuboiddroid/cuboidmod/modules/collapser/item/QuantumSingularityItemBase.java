@@ -2,6 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.collapser.item;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
 import com.cuboiddroid.cuboidmod.util.IColored;
+
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

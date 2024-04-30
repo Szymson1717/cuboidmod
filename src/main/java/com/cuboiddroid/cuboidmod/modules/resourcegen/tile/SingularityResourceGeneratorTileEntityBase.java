@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -168,7 +167,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<ResourceGeneratingRecipe> recipeType = ModRecipeTypes.RESOURCE_GENERATING.getRecipeType();
+            RecipeType<ResourceGeneratingRecipe> recipeType = ResourceGeneratingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 

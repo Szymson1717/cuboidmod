@@ -27,7 +27,6 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -46,21 +45,21 @@ import java.util.List;
 public class CuboidModJeiPlugin implements IModPlugin {
     private static final ResourceLocation PLUGIN_UID = CuboidMod.getModId("plugin/main");
 
-    static RecipeType<RecyclingRecipe> RECYCLING = createRecipeType(ModRecipeTypes.RECYCLING);
-    static RecipeType<TransmutingRecipe> TRANSMUTING = createRecipeType(ModRecipeTypes.TRANSMUTING);
-    static RecipeType<InscribingRecipe> INSCRIBING = createRecipeType(ModRecipeTypes.INSCRIBING);
-    static RecipeType<QuantumCollapsingRecipe> COLLAPSING = createRecipeType(ModRecipeTypes.COLLAPSING);
-    static RecipeType<ResourceGeneratingRecipe> RESOURCE_GENERATING = createRecipeType(ModRecipeTypes.RESOURCE_GENERATING);
-    static RecipeType<PowerGeneratingRecipe> POWER_GENERATING = createRecipeType(ModRecipeTypes.POWER_GENERATING);
-    static RecipeType<DryingRecipe> DRYING = createRecipeType(ModRecipeTypes.DRYING);
+    static RecipeType<RecyclingRecipe> RECYCLING = createRecipeType(RecyclingRecipe.Type.ID, RecyclingRecipe.class);
+    static RecipeType<TransmutingRecipe> TRANSMUTING = createRecipeType(TransmutingRecipe.Type.ID, TransmutingRecipe.class);
+    static RecipeType<InscribingRecipe> INSCRIBING = createRecipeType(InscribingRecipe.Type.ID, InscribingRecipe.class);
+    static RecipeType<QuantumCollapsingRecipe> COLLAPSING = createRecipeType(QuantumCollapsingRecipe.Type.ID, QuantumCollapsingRecipe.class);
+    static RecipeType<ResourceGeneratingRecipe> RESOURCE_GENERATING = createRecipeType(ResourceGeneratingRecipe.Type.ID, ResourceGeneratingRecipe.class);
+    static RecipeType<PowerGeneratingRecipe> POWER_GENERATING = createRecipeType(PowerGeneratingRecipe.Type.ID, PowerGeneratingRecipe.class);
+    static RecipeType<DryingRecipe> DRYING = createRecipeType(DryingRecipe.Type.ID, DryingRecipe.class);
 
-    private static <T extends Recipe<?>> RecipeType<T> createRecipeType(ModRecipeTypes recipeType) {
-        return RecipeType.create(CuboidMod.MOD_ID, recipeType.getName(), recipeType.getType());
+    private static <T extends Recipe<?>> RecipeType<T> createRecipeType(String name, Class<T> recipeType) {
+        return RecipeType.create(CuboidMod.MOD_ID, name, recipeType);
     }
 
-    private static <C extends Container, T extends Recipe<C>> List<T> getRecipesOfType(ModRecipeTypes recipeType) {
+    private static <C extends Container, T extends Recipe<C>> List<T> getRecipesOfType(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
         assert Minecraft.getInstance().level != null;
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor((net.minecraft.world.item.crafting.RecipeType<T>) recipeType.getRecipeType());
+        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
     }
 
     @Override
@@ -85,13 +84,13 @@ public class CuboidModJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         if (Config.enableJeiPlugin.get()) {
-            registration.addRecipes(RECYCLING, getRecipesOfType(ModRecipeTypes.RECYCLING));
-            registration.addRecipes(TRANSMUTING, getRecipesOfType(ModRecipeTypes.TRANSMUTING));
-            registration.addRecipes(INSCRIBING, getRecipesOfType(ModRecipeTypes.INSCRIBING));
-            registration.addRecipes(COLLAPSING, getRecipesOfType(ModRecipeTypes.COLLAPSING));
-            registration.addRecipes(RESOURCE_GENERATING, getRecipesOfType(ModRecipeTypes.RESOURCE_GENERATING));
-            registration.addRecipes(POWER_GENERATING, getRecipesOfType(ModRecipeTypes.POWER_GENERATING));
-            registration.addRecipes(DRYING, getRecipesOfType(ModRecipeTypes.DRYING));
+            registration.addRecipes(RECYCLING, getRecipesOfType(RecyclingRecipe.Type.INSTANCE));
+            registration.addRecipes(TRANSMUTING, getRecipesOfType(TransmutingRecipe.Type.INSTANCE));
+            registration.addRecipes(INSCRIBING, getRecipesOfType(InscribingRecipe.Type.INSTANCE));
+            registration.addRecipes(COLLAPSING, getRecipesOfType(QuantumCollapsingRecipe.Type.INSTANCE));
+            registration.addRecipes(RESOURCE_GENERATING, getRecipesOfType(ResourceGeneratingRecipe.Type.INSTANCE));
+            registration.addRecipes(POWER_GENERATING, getRecipesOfType(PowerGeneratingRecipe.Type.INSTANCE));
+            registration.addRecipes(DRYING, getRecipesOfType(DryingRecipe.Type.INSTANCE));
         }
     }
 

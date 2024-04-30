@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -235,12 +234,12 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         }
 
         // make an inventory - from current ingredient if input slot is empty, otherwise from whatever is in input slot
-        Container inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
+        SimpleContainer inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
                 ? new SimpleContainer(this.currentIngredient.getItems()[0].copy())
                 : getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<QuantumCollapsingRecipe> recipeType = ModRecipeTypes.COLLAPSING.getRecipeType();
+            RecipeType<QuantumCollapsingRecipe> recipeType = QuantumCollapsingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 

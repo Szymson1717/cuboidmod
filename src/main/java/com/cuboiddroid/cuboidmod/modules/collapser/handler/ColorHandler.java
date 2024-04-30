@@ -1,13 +1,17 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.handler;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.util.IColored;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public final class ColorHandler {
+
     @SubscribeEvent
     public void onItemColors(RegisterColorHandlersEvent.Item event) {
+        CuboidMod.LOGGER.info("CREATING ITEM COLORS");
+        
         event.register(new IColored.ItemColors(), ModItems.ANDESITE_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.BASALT_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.BLACKSTONE_QUANTUM_SINGULARITY.get());

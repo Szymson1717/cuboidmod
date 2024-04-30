@@ -30,9 +30,12 @@ public final class QuantumSingularityRegistry {
 
     private final Map<ResourceLocation, QuantumSingularity> singularities = new LinkedHashMap<>();
 
-    public void registerSingularity(QuantumSingularity singularity)
+    public void registerSingularity(TempQuantumSingularity tempSingularity)
     {
-        singularities.put(singularity.getId(), singularity);
+        QuantumSingularity singularity = getSingularityById(tempSingularity.id);
+    
+        singularity.setName(tempSingularity.name);
+        singularity.setColors(tempSingularity.colors);
     }
 
     public List<QuantumSingularity> getSingularities() {
@@ -40,21 +43,29 @@ public final class QuantumSingularityRegistry {
     }
 
     public QuantumSingularity getSingularityById(ResourceLocation id) {
-        QuantumSingularity qs = this.singularities.get(id);
-        if (qs != null)
-            return qs;
 
-        // not found - check defaults
-        for (QuantumSingularity q: defaults()) {
-            if (q.getId().toString().equalsIgnoreCase(id.toString())) {
-                // found in defaults, use it, and add to in-memory & warn
-                CuboidMod.LOGGER.warn("JSON config file missing for Quantum Singularity: " + id.getPath());
-                this.singularities.put(q.getId(), q);
-                return q;
-            }
-        }
+        QuantumSingularity qs;
 
-        return null;
+        if (!this.singularities.containsKey(id)) {
+            qs = new QuantumSingularity(id, String.format("cuboidmod.quantum_singularity.missing", id.toString()),
+                new int[] { 0xFF0000, 0xDD0000 });
+            this.singularities.put(id, qs);
+        } else qs = this.singularities.get(id);
+        
+
+        // Optional<QuantumSingularity> q = defaults().stream().filter(singularity -> {
+        //     return singularity.getId().toString().equalsIgnoreCase(id.toString());
+        // }).findFirst();
+
+        // // not found - check defaults
+        // if (q.isPresent()) {
+        //     // found in defaults, use it, and add to in-memory & warn
+        //     CuboidMod.LOGGER.warn("JSON config file missing for Quantum Singularity: " + id.getPath());
+        //     this.singularities.put(q.get().getId(), q.get());
+        //     return q.get();
+        // }
+
+        return qs;
     }
 
     public static QuantumSingularityRegistry getInstance() {
@@ -102,7 +113,7 @@ public final class QuantumSingularityRegistry {
         for (File file : files) {
             JsonObject json;
             FileReader reader = null;
-            QuantumSingularity singularity = null;
+            TempQuantumSingularity singularity = null;
 
             try {
                 reader = new FileReader(file);

@@ -2,8 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.powergen.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -73,8 +71,8 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the ResourceGeneratingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.POWER_GENERATING.get();
+    public RecipeSerializer<PowerGeneratingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -83,7 +81,7 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.POWER_GENERATING.getRecipeType();
+        return PowerGeneratingRecipe.Type.INSTANCE;
     }
 
     /**
@@ -146,9 +144,17 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
         return true;
     }
 
+    public static class Type implements RecipeType<PowerGeneratingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "power_generating";
+    }
+
     // ---- Serializer ----
 
     public static class Serializer implements RecipeSerializer<PowerGeneratingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         /*
           JSON structure:

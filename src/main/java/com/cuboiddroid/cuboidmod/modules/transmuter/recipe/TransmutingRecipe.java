@@ -2,8 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.transmuter.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -112,8 +110,8 @@ public class TransmutingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the TransmutingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.TRANSMUTING.get();
+    public RecipeSerializer<TransmutingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -122,7 +120,7 @@ public class TransmutingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.TRANSMUTING.getRecipeType();
+        return TransmutingRecipe.Type.INSTANCE;
     }
 
 
@@ -197,9 +195,17 @@ public class TransmutingRecipe implements Recipe<Container> {
         return ingredients;
     }
 
+    public static class Type implements RecipeType<TransmutingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "transmuting";
+    }
+
     // ---- Serializer ----
 
     public static class Serializer implements RecipeSerializer<TransmutingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
         /*
           JSON structure:
             {

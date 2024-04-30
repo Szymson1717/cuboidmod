@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.world.level.block.state.BlockState;
@@ -214,7 +213,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<TransmutingRecipe> recipeType = ModRecipeTypes.TRANSMUTING.getRecipeType();
+            RecipeType<TransmutingRecipe> recipeType = TransmutingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
