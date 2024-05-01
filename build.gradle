@@ -230,7 +230,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
     //Project MMO
-    compileOnly fg.deobf("curse.maven:project-mmo-${pmmo_version}")
+    // compileOnly fg.deobf("curse.maven:project-mmo-${pmmo_version}")
     //runtimeOnly fg.deobf("curse.maven:project-mmo:${pmmo_version}")
 
     // Mekanism
