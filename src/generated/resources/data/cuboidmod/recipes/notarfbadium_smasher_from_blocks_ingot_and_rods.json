@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#-#",
-    " | ",
-    " | "
-  ],
+  "category": "misc",
   "key": {
-    "-": {
-      "item": "cuboidmod:notarfbadium_ingot"
-    },
     "#": {
       "item": "cuboidmod:notarfbadium_block"
+    },
+    "-": {
+      "item": "cuboidmod:notarfbadium_ingot"
     },
     "|": {
       "tag": "forge:rods"
     }
   },
+  "pattern": [
+    "#-#",
+    " | ",
+    " | "
+  ],
   "result": {
     "item": "cuboidmod:notarfbadium_smasher"
-  }
+  },
+  "show_notification": true
 }

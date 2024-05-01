@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " # ",
-    "#$#",
-    " # "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:thatldu_ingot"
@@ -13,7 +9,13 @@
       "item": "cuboidmod:wikidium_chest"
     }
   },
+  "pattern": [
+    " # ",
+    "#$#",
+    " # "
+  ],
   "result": {
     "item": "cuboidmod:thatldu_chest"
-  }
+  },
+  "show_notification": true
 }

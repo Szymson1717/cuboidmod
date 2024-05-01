@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
+import com.cuboiddroid.cuboidmod.datagen.client.ModBlockModelProvider;
 import com.cuboiddroid.cuboidmod.datagen.client.ModBlockStateProvider;
 import com.cuboiddroid.cuboidmod.datagen.client.ModItemModelProvider;
 import com.cuboiddroid.cuboidmod.datagen.server.ModBlockTagsProvider;
@@ -35,6 +36,7 @@ public class PackOutputs {
 
         if (event.includeClient()) {
             gen.addProvider(true, new ModBlockStateProvider(output, existingFileHelper));
+            gen.addProvider(true, new ModBlockModelProvider(output, existingFileHelper));
             gen.addProvider(true, new ModItemModelProvider(output, existingFileHelper));
         }
 

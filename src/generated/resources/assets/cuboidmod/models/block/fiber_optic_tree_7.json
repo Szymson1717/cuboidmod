@@ -1,0 +1,6 @@
+{
+  "parent": "cuboidmod:block/templates/fiber_optic_tree",
+  "textures": {
+    "leaves": "cuboidmod:block/model/xmas/leaves_7"
+  }
+}

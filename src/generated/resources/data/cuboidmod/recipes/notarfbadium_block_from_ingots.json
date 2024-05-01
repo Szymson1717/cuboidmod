@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "equipment",
   "key": {
     "#": {
       "item": "cuboidmod:notarfbadium_ingot"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:notarfbadium_block"
-  }
+  },
+  "show_notification": true
 }

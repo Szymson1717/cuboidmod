@@ -1,18 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "cuboidmod:notarfbadium_chunk"
+    },
+    "$": {
+      "item": "cuboidmod:silica_dust"
+    }
+  },
   "pattern": [
     "$$",
     "##"
   ],
-  "key": {
-    "$": {
-      "item": "cuboidmod:silica_dust"
-    },
-    "#": {
-      "item": "cuboidmod:notarfbadium_chunk"
-    }
-  },
   "result": {
     "item": "cuboidmod:notarfbadium_crafting_table"
-  }
+  },
+  "show_notification": true
 }

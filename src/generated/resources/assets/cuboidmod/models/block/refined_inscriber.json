@@ -1,0 +1,6 @@
+{
+  "parent": "cuboidmod:block/templates/refined_inscriber",
+  "textures": {
+    "window": "cuboidmod:block/model/inscriber_window"
+  }
+}

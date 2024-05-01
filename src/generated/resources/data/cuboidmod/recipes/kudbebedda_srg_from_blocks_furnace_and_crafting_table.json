@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "$!$",
-    "###"
-  ],
+  "category": "misc",
   "key": {
+    "!": {
+      "item": "cuboidmod:kudbebedda_crafting_table"
+    },
     "#": {
       "item": "cuboidmod:kudbebedda_block"
     },
     "$": {
       "item": "cuboidmod:kudbebedda_furnace"
-    },
-    "!": {
-      "item": "cuboidmod:kudbebedda_crafting_table"
     }
   },
+  "pattern": [
+    "###",
+    "$!$",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:kudbebedda_singularity_resource_generator"
-  }
+  },
+  "show_notification": true
 }

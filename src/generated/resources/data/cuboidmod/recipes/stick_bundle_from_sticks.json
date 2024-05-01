@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:stick_bundle"
-  }
+  },
+  "show_notification": true
 }

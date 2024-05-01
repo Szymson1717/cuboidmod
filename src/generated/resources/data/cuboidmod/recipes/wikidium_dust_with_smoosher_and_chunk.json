@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:smoosher"
@@ -9,7 +10,7 @@
     }
   ],
   "result": {
-    "item": "cuboidmod:wikidium_dust",
-    "count": 2
+    "count": 2,
+    "item": "cuboidmod:wikidium_dust"
   }
 }

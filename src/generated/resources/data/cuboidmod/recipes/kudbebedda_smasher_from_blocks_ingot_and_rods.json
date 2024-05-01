@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#-#",
-    " | ",
-    " | "
-  ],
+  "category": "misc",
   "key": {
-    "-": {
-      "item": "cuboidmod:kudbebedda_ingot"
-    },
     "#": {
       "item": "cuboidmod:kudbebedda_block"
+    },
+    "-": {
+      "item": "cuboidmod:kudbebedda_ingot"
     },
     "|": {
       "tag": "forge:rods"
     }
   },
+  "pattern": [
+    "#-#",
+    " | ",
+    " | "
+  ],
   "result": {
     "item": "cuboidmod:kudbebedda_smasher"
-  }
+  },
+  "show_notification": true
 }

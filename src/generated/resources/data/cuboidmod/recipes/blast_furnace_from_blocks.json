@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "#$#",
-    "@@@"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "tag": "cuboidmod:ingots"
@@ -16,7 +12,13 @@
       "tag": "cuboidmod:storage_blocks"
     }
   },
+  "pattern": [
+    "###",
+    "#$#",
+    "@@@"
+  ],
   "result": {
     "item": "minecraft:blast_furnace"
-  }
+  },
+  "show_notification": true
 }

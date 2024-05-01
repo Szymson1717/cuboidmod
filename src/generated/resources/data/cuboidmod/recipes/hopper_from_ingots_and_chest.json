@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "# #",
-    "#$#",
-    " # "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "tag": "cuboidmod:ingots"
@@ -13,7 +9,13 @@
       "tag": "cuboidmod:chests"
     }
   },
+  "pattern": [
+    "# #",
+    "#$#",
+    " # "
+  ],
   "result": {
     "item": "minecraft:hopper"
-  }
+  },
+  "show_notification": true
 }

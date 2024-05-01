@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "$!$",
-    "###"
-  ],
+  "category": "misc",
   "key": {
+    "!": {
+      "item": "cuboidmod:wikidium_crafting_table"
+    },
     "#": {
       "item": "cuboidmod:wikidium_block"
     },
     "$": {
       "item": "cuboidmod:wikidium_furnace"
-    },
-    "!": {
-      "item": "cuboidmod:wikidium_crafting_table"
     }
   },
+  "pattern": [
+    "###",
+    "$!$",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:wikidium_singularity_resource_generator"
-  }
+  },
+  "show_notification": true
 }

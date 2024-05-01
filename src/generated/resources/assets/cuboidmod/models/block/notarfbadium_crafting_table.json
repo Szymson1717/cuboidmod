@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "cuboidmod:block/notarfbadium_crafting_table_bottom",
-    "up": "cuboidmod:block/notarfbadium_crafting_table_top",
-    "north": "cuboidmod:block/notarfbadium_crafting_table_front",
-    "south": "cuboidmod:block/notarfbadium_crafting_table_front",
     "east": "cuboidmod:block/notarfbadium_crafting_table_side",
-    "west": "cuboidmod:block/notarfbadium_crafting_table_side",
-    "particle": "cuboidmod:block/notarfbadium_crafting_table_front"
+    "north": "cuboidmod:block/notarfbadium_crafting_table_front",
+    "particle": "cuboidmod:block/notarfbadium_crafting_table_front",
+    "south": "cuboidmod:block/notarfbadium_crafting_table_front",
+    "up": "cuboidmod:block/notarfbadium_crafting_table_top",
+    "west": "cuboidmod:block/notarfbadium_crafting_table_side"
   }
 }

@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:notsogudium_ingot"
     }
   ],
   "result": {
-    "item": "cuboidmod:notsogudium_nugget",
-    "count": 9
+    "count": 9,
+    "item": "cuboidmod:notsogudium_nugget"
   }
 }

@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "cuboidmod:block/kudbebedda_furnace_top",
-    "up": "cuboidmod:block/kudbebedda_furnace_top",
-    "north": "cuboidmod:block/kudbebedda_furnace_front_on",
-    "south": "cuboidmod:block/kudbebedda_furnace_side",
     "east": "cuboidmod:block/kudbebedda_furnace_side",
-    "west": "cuboidmod:block/kudbebedda_furnace_side",
-    "particle": "cuboidmod:block/kudbebedda_furnace_side"
+    "north": "cuboidmod:block/kudbebedda_furnace_front_on",
+    "particle": "cuboidmod:block/kudbebedda_furnace_side",
+    "south": "cuboidmod:block/kudbebedda_furnace_side",
+    "up": "cuboidmod:block/kudbebedda_furnace_top",
+    "west": "cuboidmod:block/kudbebedda_furnace_side"
   }
 }

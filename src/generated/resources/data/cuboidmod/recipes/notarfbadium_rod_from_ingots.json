@@ -1,15 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#",
-    "#"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:notarfbadium_ingot"
     }
   },
+  "pattern": [
+    "#",
+    "#"
+  ],
   "result": {
     "item": "cuboidmod:notarfbadium_rod"
-  }
+  },
+  "show_notification": true
 }

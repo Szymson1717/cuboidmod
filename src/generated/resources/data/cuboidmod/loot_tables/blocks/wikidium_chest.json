@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -14,24 +13,21 @@
             },
             {
               "function": "minecraft:copy_nbt",
-              "source": "block_entity",
               "ops": [
                 {
+                  "op": "replace",
                   "source": "Items",
-                  "target": "BlockEntityTag.Items",
-                  "op": "replace"
+                  "target": "BlockEntityTag.Items"
                 }
-              ]
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "cuboidmod:wikidium_chest"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "cuboidmod:blocks/wikidium_chest"
 }

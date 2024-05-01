@@ -1,9 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "cuboidmod:protein_paste"
   },
-  "result": "cuboidmod:protein_bar",
-  "experience": 0.0,
-  "cookingtime": 200
+  "result": "cuboidmod:protein_bar"
 }

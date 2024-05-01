@@ -20,10 +20,9 @@ public class ModItemModelProvider extends ItemModelProvider {
             "notsogudium", "kudbebedda", "notarfbadium", "wikidium", "thatldu"
     };
 
-    public ModItemModelProvider(PackOutput generator, ExistingFileHelper existingFileHelper) {
-        super(generator, CuboidMod.MOD_ID, existingFileHelper);
+    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, CuboidMod.MOD_ID, existingFileHelper);
     }
-
     @Override
     protected void registerModels() {
         registerBlockItemModels();

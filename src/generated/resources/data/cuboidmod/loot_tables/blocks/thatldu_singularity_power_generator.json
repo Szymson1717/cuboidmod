@@ -1,22 +1,5 @@
 {
   "type": "minecraft:block",
-  "pools": [
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "cuboidmod:thatldu_singularity_power_generator"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
-    }
-  ],
   "functions": [
     {
       "function": "minecraft:copy_name",
@@ -24,14 +7,32 @@
     },
     {
       "function": "minecraft:copy_nbt",
-      "source": "block_entity",
       "ops": [
         {
+          "op": "replace",
           "source": "energy",
-          "target": "BlockEntityTag.energy",
-          "op": "replace"
+          "target": "BlockEntityTag.energy"
         }
-      ]
+      ],
+      "source": "block_entity"
     }
-  ]
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:thatldu_singularity_power_generator"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "cuboidmod:blocks/thatldu_singularity_power_generator"
 }

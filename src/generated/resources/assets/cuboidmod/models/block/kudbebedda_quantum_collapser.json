@@ -1,0 +1,8 @@
+{
+  "parent": "cuboidmod:block/templates/quantum_collapser",
+  "textures": {
+    "frame": "cuboidmod:block/model/kudbebedda_quantum_collapser",
+    "panel": "cuboidmod:block/model/quantum_collapser_panel",
+    "particle": "cuboidmod:block/kudbebedda_break"
+  }
+}

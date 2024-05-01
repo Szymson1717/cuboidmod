@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#-#",
-    " | ",
-    " | "
-  ],
+  "category": "misc",
   "key": {
-    "-": {
-      "item": "cuboidmod:wikidium_ingot"
-    },
     "#": {
       "item": "cuboidmod:wikidium_block"
+    },
+    "-": {
+      "item": "cuboidmod:wikidium_ingot"
     },
     "|": {
       "tag": "forge:rods"
     }
   },
+  "pattern": [
+    "#-#",
+    " | ",
+    " | "
+  ],
   "result": {
     "item": "cuboidmod:wikidium_smasher"
-  }
+  },
+  "show_notification": true
 }

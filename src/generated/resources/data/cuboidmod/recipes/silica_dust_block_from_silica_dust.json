@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "equipment",
   "key": {
     "#": {
       "item": "cuboidmod:silica_dust"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:silica_dust_block"
-  }
+  },
+  "show_notification": true
 }

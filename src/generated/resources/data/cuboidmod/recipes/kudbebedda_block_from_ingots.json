@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "equipment",
   "key": {
     "#": {
       "item": "cuboidmod:kudbebedda_ingot"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:kudbebedda_block"
-  }
+  },
+  "show_notification": true
 }

@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "#$#",
-    "###"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:wikidium_block"
@@ -13,7 +9,13 @@
       "item": "cuboidmod:wikidium_furnace"
     }
   },
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:wikidium_quantum_collapser"
-  }
+  },
+  "show_notification": true
 }

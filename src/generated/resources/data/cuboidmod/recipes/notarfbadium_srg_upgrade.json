@@ -1,25 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " $ ",
-    "#@#",
-    " ! "
-  ],
+  "category": "misc",
   "key": {
+    "!": {
+      "item": "cuboidmod:notarfbadium_crafting_table"
+    },
     "#": {
       "item": "cuboidmod:notarfbadium_block"
     },
     "$": {
       "item": "cuboidmod:notarfbadium_furnace"
     },
-    "!": {
-      "item": "cuboidmod:notarfbadium_crafting_table"
-    },
     "@": {
       "item": "cuboidmod:kudbebedda_singularity_resource_generator"
     }
   },
+  "pattern": [
+    " $ ",
+    "#@#",
+    " ! "
+  ],
   "result": {
     "item": "cuboidmod:notarfbadium_singularity_resource_generator"
-  }
+  },
+  "show_notification": true
 }

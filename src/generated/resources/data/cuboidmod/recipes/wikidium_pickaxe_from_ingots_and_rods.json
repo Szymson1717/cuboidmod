@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    " | ",
-    " | "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:wikidium_ingot"
@@ -13,7 +9,13 @@
       "tag": "forge:rods"
     }
   },
+  "pattern": [
+    "###",
+    " | ",
+    " | "
+  ],
   "result": {
     "item": "cuboidmod:wikidium_pickaxe"
-  }
+  },
+  "show_notification": true
 }

@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "equipment",
   "key": {
     "#": {
       "item": "cuboidmod:carbon_nanotube"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:carbon_nanotube_block"
-  }
+  },
+  "show_notification": true
 }

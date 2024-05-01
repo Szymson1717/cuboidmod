@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " $ ",
-    "#@#",
-    " $ "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:thatldu_block"
@@ -16,7 +12,13 @@
       "item": "cuboidmod:wikidium_singularity_power_generator"
     }
   },
+  "pattern": [
+    " $ ",
+    "#@#",
+    " $ "
+  ],
   "result": {
     "item": "cuboidmod:thatldu_singularity_power_generator"
-  }
+  },
+  "show_notification": true
 }

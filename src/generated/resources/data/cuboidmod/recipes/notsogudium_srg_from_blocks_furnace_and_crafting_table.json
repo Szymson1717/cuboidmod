@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "$!$",
-    "###"
-  ],
+  "category": "misc",
   "key": {
+    "!": {
+      "item": "cuboidmod:notsogudium_crafting_table"
+    },
     "#": {
       "item": "cuboidmod:notsogudium_block"
     },
     "$": {
       "item": "cuboidmod:notsogudium_furnace"
-    },
-    "!": {
-      "item": "cuboidmod:notsogudium_crafting_table"
     }
   },
+  "pattern": [
+    "###",
+    "$!$",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:notsogudium_singularity_resource_generator"
-  }
+  },
+  "show_notification": true
 }

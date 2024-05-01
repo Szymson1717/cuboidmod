@@ -1,7 +1,6 @@
 {
-  "replace": false,
   "values": [
-    "cuboidmod:notsogudium_ore",
-    "cuboidmod:notsogudium_chunk"
+    "cuboidmod:notsogudium_chunk",
+    "cuboidmod:notsogudium_ore"
   ]
 }

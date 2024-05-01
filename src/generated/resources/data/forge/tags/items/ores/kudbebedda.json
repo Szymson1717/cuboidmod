@@ -1,7 +1,6 @@
 {
-  "replace": false,
   "values": [
-    "cuboidmod:kudbebedda_ore",
-    "cuboidmod:kudbebedda_chunk"
+    "cuboidmod:kudbebedda_chunk",
+    "cuboidmod:kudbebedda_ore"
   ]
 }

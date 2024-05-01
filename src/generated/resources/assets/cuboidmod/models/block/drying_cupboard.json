@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "cuboidmod:block/drying_cupboard_top",
-    "up": "cuboidmod:block/drying_cupboard_top",
-    "north": "cuboidmod:block/drying_cupboard_front",
-    "south": "cuboidmod:block/drying_cupboard_back",
     "east": "cuboidmod:block/drying_cupboard_left",
-    "west": "cuboidmod:block/drying_cupboard_right",
-    "particle": "cuboidmod:block/drying_cupboard_left"
+    "north": "cuboidmod:block/drying_cupboard_front",
+    "particle": "cuboidmod:block/drying_cupboard_left",
+    "south": "cuboidmod:block/drying_cupboard_back",
+    "up": "cuboidmod:block/drying_cupboard_top",
+    "west": "cuboidmod:block/drying_cupboard_right"
   }
 }

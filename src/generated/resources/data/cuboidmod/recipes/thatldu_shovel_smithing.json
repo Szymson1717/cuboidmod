@@ -1,12 +1,13 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "cuboidmod:wikidium_shovel"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "cuboidmod:thatldu_ingot"
   },
+  "base": {
+    "item": "cuboidmod:wikidium_shovel"
+  },
   "result": {
     "item": "cuboidmod:thatldu_shovel"
-  }
+  },
+  "template": []
 }

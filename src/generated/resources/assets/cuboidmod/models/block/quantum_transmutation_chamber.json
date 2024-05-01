@@ -1,0 +1,6 @@
+{
+  "parent": "cuboidmod:block/templates/quantum_transmutation_chamber",
+  "textures": {
+    "core": "cuboidmod:block/model/quantum_transmutation_chamber_core"
+  }
+}

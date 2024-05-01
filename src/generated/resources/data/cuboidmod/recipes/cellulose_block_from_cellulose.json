@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
+  "category": "equipment",
   "key": {
     "#": {
       "item": "cuboidmod:cellulose"
     }
   },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:cellulose_block"
-  }
+  },
+  "show_notification": true
 }

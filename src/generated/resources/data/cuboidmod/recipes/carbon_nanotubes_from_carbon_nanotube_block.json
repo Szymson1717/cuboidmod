@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:carbon_nanotube_block"
     }
   ],
   "result": {
-    "item": "cuboidmod:carbon_nanotube",
-    "count": 9
+    "count": 9,
+    "item": "cuboidmod:carbon_nanotube"
   }
 }

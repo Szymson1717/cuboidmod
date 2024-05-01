@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "cuboidmod:ores"
+    },
+    "$": {
+      "tag": "cuboidmod:ingots"
+    }
+  },
   "pattern": [
     "$$",
     "##",
     "##"
   ],
-  "key": {
-    "$": {
-      "tag": "cuboidmod:ingots"
-    },
-    "#": {
-      "tag": "cuboidmod:ores"
-    }
-  },
   "result": {
     "item": "minecraft:smithing_table"
-  }
+  },
+  "show_notification": true
 }

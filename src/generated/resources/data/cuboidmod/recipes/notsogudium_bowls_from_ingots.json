@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "# #",
-    " # "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:notsogudium_ingot"
     }
   },
+  "pattern": [
+    "# #",
+    " # "
+  ],
   "result": {
-    "item": "cuboidmod:notsogudium_bowl",
-    "count": 3
-  }
+    "count": 3,
+    "item": "cuboidmod:notsogudium_bowl"
+  },
+  "show_notification": true
 }

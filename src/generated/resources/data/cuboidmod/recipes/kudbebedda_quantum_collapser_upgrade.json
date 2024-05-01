@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " $ ",
-    "#@#",
-    " # "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:kudbebedda_block"
@@ -16,7 +12,13 @@
       "item": "cuboidmod:notsogudium_quantum_collapser"
     }
   },
+  "pattern": [
+    " $ ",
+    "#@#",
+    " # "
+  ],
   "result": {
     "item": "cuboidmod:kudbebedda_quantum_collapser"
-  }
+  },
+  "show_notification": true
 }
