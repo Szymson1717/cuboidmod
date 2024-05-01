@@ -2,7 +2,7 @@ package com.cuboiddroid.cuboidmod.datagen.server;
 
 import com.cuboiddroid.cuboidmod.datagen.server.recipes.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
@@ -12,12 +12,12 @@ import net.minecraft.world.level.ItemLike;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(DataGenerator generatorIn) {
+    public ModRecipeProvider(PackOutput generatorIn) {
         super(generatorIn);
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         MaterialsDataGenRecipes.build(this, consumer);
 
         FurnaceDataGenRecipes.build(this, consumer);

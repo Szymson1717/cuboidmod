@@ -7,8 +7,8 @@ import com.cuboiddroid.cuboidmod.modules.cdt.block.EnergizedStoneBricksBlock;
 import com.cuboiddroid.cuboidmod.modules.cdt.block.EnergizedThatlduviumBlock;
 import com.cuboiddroid.cuboidmod.modules.food.*;
 
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -20,7 +20,7 @@ public class ModItemModelProvider extends ItemModelProvider {
             "notsogudium", "kudbebedda", "notarfbadium", "wikidium", "thatldu"
     };
 
-    public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+    public ModItemModelProvider(PackOutput generator, ExistingFileHelper existingFileHelper) {
         super(generator, CuboidMod.MOD_ID, existingFileHelper);
     }
 
@@ -102,32 +102,32 @@ public class ModItemModelProvider extends ItemModelProvider {
             this.getBuilder(material + "_chest")
                     .parent(builtinEntity)
                     .transforms()
-                    .transform(TransformType.GUI)
+                    .transform(ItemDisplayContext.GUI)
                     .rotation(30.0F, 45.0F, 0.0F)
                     .translation(0.0F, 0.0F, 0.0F)
                     .scale(0.625F, 0.625F, 0.625F)
                     .end()
-                    .transform(TransformType.GROUND)
+                    .transform(ItemDisplayContext.GROUND)
                     .rotation(0.0F, 0.0F, 0.0F)
                     .translation(0.0F, 3.0F, 0.0F)
                     .scale(0.25F, 0.25F, 0.25F)
                     .end()
-                    .transform(TransformType.HEAD)
+                    .transform(ItemDisplayContext.HEAD)
                     .rotation(0.0F, 180.0F, 0.0F)
                     .translation(0.0F, 0.0F, 0.0F)
                     .scale(1.0F, 1.0F, 1.0F)
                     .end()
-                    .transform(TransformType.FIXED)
+                    .transform(ItemDisplayContext.FIXED)
                     .rotation(0.0F, 180.0F, 0.0F)
                     .translation(0.0F, 0.0F, 0.0F)
                     .scale(0.5F, 0.5F, 0.5F)
                     .end()
-                    .transform(TransformType.THIRD_PERSON_LEFT_HAND)
+                    .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
                     .rotation(75.0F, 315.0F, 0.0F)
                     .translation(0.0F, 2.5F, 0.0F)
                     .scale(0.375F, 0.375F, 0.375F)
                     .end()
-                    .transform(TransformType.THIRD_PERSON_RIGHT_HAND)
+                    .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
                     .rotation(0.0F, 315.0F, 0.0F)
                     .translation(0.0F, 0.0F, 0.0F)
                     .scale(0.4F, 0.4F, 0.4F)

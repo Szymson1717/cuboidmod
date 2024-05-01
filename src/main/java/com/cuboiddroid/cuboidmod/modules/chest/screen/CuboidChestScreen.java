@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.chest.screen;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import com.cuboiddroid.cuboidmod.modules.chest.inventory.CuboidChestContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,26 +29,25 @@ public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContai
         this.textureXSize = container.getChestType().textureXSize;
         this.textureYSize = container.getChestType().textureYSize;
 
-        this.passEvents = false;
+        // this.passEvents = false;
     }
 
     @Override
-    public void render(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(PoseStack);
-        super.render(PoseStack, mouseX, mouseY, partialTicks);
-        this.renderComponentHoverEffect(PoseStack, null, mouseX, mouseY);
-        this.renderTooltip(PoseStack, mouseX, mouseY);
+    public void render(GuiGraphics matrix, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrix);
+        super.render(matrix, mouseX, mouseY, partialTicks);
+        matrix.renderComponentHoverEffect(this.font, null, mouseX, mouseY);
+        this.renderTooltip(matrix, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack PoseStack, int mouseX, int mouseY) {
-        this.font.draw(PoseStack, this.title, 8.0F, 6.0F, 4210752);
-
-        this.font.draw(PoseStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
+    protected void renderLabels(GuiGraphics matrix, int mouseX, int mouseY) {
+        matrix.drawString(this.font, this.title, 8, 6, 4210752);
+        matrix.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752);
     }
 
     @Override
-    protected void renderBg(PoseStack PoseStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics matrix, float partialTicks, int mouseX, int mouseY) {
         // RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -58,6 +57,6 @@ public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContai
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        blit(PoseStack, x, y, 0, 0, this.imageWidth, this.imageHeight, this.textureXSize, this.textureYSize);
+        matrix.blit(this.chestType.guiTexture, x, y, 0, 0, this.imageWidth, this.imageHeight, this.textureXSize, this.textureYSize);
     }
 }

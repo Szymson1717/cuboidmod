@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -173,7 +174,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
             ItemStack outputSlot = this.outputItemHandler.getStackInSlot(slotTicker);
             boolean hasRoomForOutputs = outputSlot.isEmpty() ||
                     (!recipeOutput.isEmpty() &&
-                            recipeOutput.sameItem(outputSlot) &&
+                            recipeOutput.is(outputSlot.getItem()) &&
                             recipeOutput.getCount() + outputSlot.getCount() <= recipeOutput.getMaxStackSize());
 
             if (!hasRoomForOutputs) {
@@ -204,7 +205,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
                 ItemStack recipeOutput = getWorkOutput(recipe);
 
                 ItemStack outputStack = outputItemHandler.getStackInSlot(slotTicker).copy();
-                if (outputStack.sameItem(recipeOutput) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize()) {
+                if (outputStack.is(recipeOutput.getItem()) && outputStack.getCount() + recipeOutput.getCount() <= outputStack.getMaxStackSize()) {
                     outputStack.setCount(outputStack.getCount() + recipeOutput.getCount());
                     outputItemHandler.setStackInSlot(slotTicker, outputStack);
                 } else if (outputStack.isEmpty()) {
@@ -258,7 +259,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
     private ItemStack getWorkOutput(@Nullable DryingRecipe recipe) {
         if (recipe != null) {
-            return recipe.getResultItem();
+            return recipe.getResultItem(RegistryAccess.EMPTY);
         }
 
         return ItemStack.EMPTY;
@@ -379,7 +380,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull

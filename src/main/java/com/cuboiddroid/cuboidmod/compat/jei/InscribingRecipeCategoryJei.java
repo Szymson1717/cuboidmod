@@ -4,6 +4,9 @@ import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecip
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.screen.RefinedInscriberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -42,11 +45,11 @@ public class InscribingRecipeCategoryJei implements IRecipeCategory<InscribingRe
         localizedName = Component.translatable("jei.category.cuboidmod.inscribing");
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font Font, Component text, int x, int y, int width, float scale, int color) {
+    private static void renderScaledTextWithShadow(PoseStack matrix, Font font, Component text, int x, int y, int width, float scale, int color) {
         matrix.pushPose();
         matrix.scale(scale, scale, scale);
-        float xOffset = (width / scale - Font.width(text)) / 2;
-        Font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
+        float xOffset = (width / scale - font.width(text)) / 2;
+        // font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
         matrix.popPose();
     }
 
@@ -81,7 +84,7 @@ public class InscribingRecipeCategoryJei implements IRecipeCategory<InscribingRe
         builder.addSlot(RecipeIngredientRole.INPUT, 59 - GUI_START_X, 26 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
         builder.addSlot(RecipeIngredientRole.INPUT, 80 - GUI_START_X, 54 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(1).getItems()));
         builder.addSlot(RecipeIngredientRole.INPUT, 101 - GUI_START_X, 26 - GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredients().get(2).getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 137 - GUI_START_X, 54 - GUI_START_Y).addItemStack(recipe.getResultItem().copy());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 137 - GUI_START_X, 54 - GUI_START_Y).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override
@@ -99,21 +102,21 @@ public class InscribingRecipeCategoryJei implements IRecipeCategory<InscribingRe
     // }
 
     @Override
-    public void draw(InscribingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(InscribingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
-        arrow.draw(PoseStack, 103 - GUI_START_X, 56 - GUI_START_Y);
+        arrow.draw(matrix, 103 - GUI_START_X, 56 - GUI_START_Y);
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
         String arrowText = "" + workSeconds + "." + workDecimal + " s";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(arrowText), 104 - GUI_START_X, 73 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix.pose(), font, Component.literal(arrowText), 104 - GUI_START_X, 73 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // energy
-        energyBar.draw(PoseStack, 32 - GUI_START_X, 34 - GUI_START_Y);
+        energyBar.draw(matrix, 32 - GUI_START_X, 34 - GUI_START_Y);
 
         String energyText = "" + recipe.getEnergyRequired() + " FE";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix.pose(), font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
     }
 }

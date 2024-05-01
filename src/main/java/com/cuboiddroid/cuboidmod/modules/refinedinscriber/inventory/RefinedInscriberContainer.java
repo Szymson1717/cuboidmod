@@ -1,6 +1,5 @@
 package com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory;
 
-import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -23,6 +22,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import static com.cuboiddroid.cuboidmod.modules.craftingtable.inventory.CuboidCraftingContainer.isWithinUsableDistance;
 
+import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
+
 public class RefinedInscriberContainer extends AbstractContainerMenu {
 
     protected final Level level;
@@ -39,7 +40,7 @@ public class RefinedInscriberContainer extends AbstractContainerMenu {
         this.tileEntity = (RefinedInscriberTileEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
 
         if (tileEntity != null) {
             tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
@@ -135,17 +136,17 @@ public class RefinedInscriberContainer extends AbstractContainerMenu {
                 slot.onQuickCraft(stack, itemstack);
             } else {
                 // moving something in the player inventory
-                if (!this.slots.get(0).hasItem() || this.slots.get(0).getItem().sameItem(stack)) {
+                if (!this.slots.get(0).hasItem() || this.slots.get(0).getItem().is(stack.getItem())) {
                     // first input is empty or already contains this item - try move
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.slots.get(1).hasItem() || this.slots.get(1).getItem().sameItem(stack)) {
+                } else if (!this.slots.get(1).hasItem() || this.slots.get(1).getItem().is(stack.getItem())) {
                     // second input is empty or already contains this item - try move
                     if (!this.moveItemStackTo(stack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.slots.get(2).hasItem() || this.slots.get(2).getItem().sameItem(stack)) {
+                } else if (!this.slots.get(2).hasItem() || this.slots.get(2).getItem().is(stack.getItem())) {
                     // third input is empty or already contains this item - try move
                     if (!this.moveItemStackTo(stack, 2, 3, false)) {
                         return ItemStack.EMPTY;

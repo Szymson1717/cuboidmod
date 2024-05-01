@@ -21,7 +21,7 @@ public class HardfiskurItem extends Item {
 
     public HardfiskurItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(7)
                         .saturationMod(1.6F)

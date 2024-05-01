@@ -19,7 +19,7 @@ public class GruelItem extends Item {
 
     public GruelItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .stacksTo(1)
                 .food(new FoodProperties.Builder()
                         .nutrition(5)

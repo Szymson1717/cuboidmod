@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SilicaDustQuantumSingularityItem extends QuantumSingularityItemBase {
     public SilicaDustQuantumSingularityItem() {
-        super(new Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP),
+        super(new Properties(),
                 QuantumSingularityRegistry.getInstance()
                         .getSingularityById(new ResourceLocation(CuboidMod.MOD_ID, "silica_dust")));
     }

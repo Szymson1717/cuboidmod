@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
@@ -29,7 +30,7 @@ public class ChestDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void chestFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(chestBlock.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, chestBlock.get())
                 .define('#', ingot.get())
                 .pattern("###")
                 .pattern("# #")
@@ -39,7 +40,7 @@ public class ChestDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void chestFromIngotsAndPreviousChest(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<? extends CuboidChestBlockBase> chestBlock, RegistryObject<? extends CuboidChestBlockBase> prevChest, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(chestBlock.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, chestBlock.get())
                 .define('#', ingot.get())
                 .define('$', prevChest.get())
                 .pattern(" # ")

@@ -1,7 +1,7 @@
 package com.cuboiddroid.cuboidmod.setup;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem.Type;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
@@ -71,13 +71,13 @@ public enum ModArmorMaterials implements ArmorMaterial {
     }
 
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slotType) {
-        return HEALTH_PER_SLOT[slotType.getIndex()] * this.durabilityMultiplier;
+    public int getDurabilityForType(Type type) {
+        return HEALTH_PER_SLOT[type.getSlot().getIndex()] * this.durabilityMultiplier;
     }
 
     @Override
-    public int getDefenseForSlot(EquipmentSlot slotType) {
-        return this.slotProtections[slotType.getIndex()];
+    public int getDefenseForType(Type type) {
+        return this.slotProtections[type.getSlot().getIndex()];
     }
 
     @Override

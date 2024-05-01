@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -44,7 +43,7 @@ public class FiberOpticTreeBlock extends BaseEntityBlock {
     private static final int LIGHT_VALUE_WHEN_ON = 8;
 
     public FiberOpticTreeBlock() {
-        super(Properties.of(Material.WOOD)
+        super(Properties.of()
                 .strength(3, 9)
                 // .harvestLevel(1).harvestTool(ToolType.AXE)
                 .sound(SoundType.WOOD));

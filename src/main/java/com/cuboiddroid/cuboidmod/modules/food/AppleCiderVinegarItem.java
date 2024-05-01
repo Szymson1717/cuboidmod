@@ -24,7 +24,7 @@ public class AppleCiderVinegarItem extends Item {
 
     public AppleCiderVinegarItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .stacksTo(1)
                 .food(new FoodProperties.Builder()
                         .nutrition(3)

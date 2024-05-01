@@ -36,7 +36,7 @@ public abstract class SingularityResourceGeneratorContainerBase extends Abstract
         this.tileEntity = (SingularityResourceGeneratorTileEntityBase) level.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
 
         if (tileEntity != null) {
             tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {

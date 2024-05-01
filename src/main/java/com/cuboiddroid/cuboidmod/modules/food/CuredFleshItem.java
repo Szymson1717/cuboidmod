@@ -21,7 +21,7 @@ public class CuredFleshItem extends Item {
 
     public CuredFleshItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(5)
                         .saturationMod(0.3F)

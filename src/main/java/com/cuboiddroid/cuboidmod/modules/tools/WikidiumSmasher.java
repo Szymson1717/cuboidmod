@@ -11,6 +11,6 @@ public class WikidiumSmasher extends SmasherBase {
                 Config.wikidiumSmasherAttackSpeed.get(),
                 new Properties()
                         .defaultDurability(Config.wikidiumSmasherDurability.get())
-                        .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                        );
     }
 }

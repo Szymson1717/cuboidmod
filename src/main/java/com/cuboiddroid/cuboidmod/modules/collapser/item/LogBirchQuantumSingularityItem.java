@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class LogBirchQuantumSingularityItem extends QuantumSingularityItemBase {
     public LogBirchQuantumSingularityItem() {
-        super(new Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP),
+        super(new Properties(),
                 QuantumSingularityRegistry.getInstance()
                         .getSingularityById(new ResourceLocation(CuboidMod.MOD_ID, "birch_log")));
     }

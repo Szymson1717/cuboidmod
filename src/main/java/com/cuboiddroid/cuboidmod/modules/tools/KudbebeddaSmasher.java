@@ -11,6 +11,6 @@ public class KudbebeddaSmasher extends SmasherBase {
                 Config.kudbebeddaSmasherAttackSpeed.get(),
                 new Properties()
                         .defaultDurability(Config.kudbebeddaSmasherDurability.get())
-                        .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                        );
     }
 }

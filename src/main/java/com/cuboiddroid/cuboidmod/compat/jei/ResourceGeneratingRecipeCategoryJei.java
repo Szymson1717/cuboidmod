@@ -5,6 +5,9 @@ import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRe
 import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.SingularityResourceGeneratorScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -68,10 +71,10 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
                         / Config.thatlduSingularityResourceGeneratorTicksPerOperation.get();
     }
 
-    private static void renderScaledText(PoseStack matrix, Font Font, Component text, int x, int y, float scale, int color) {
+    private static void renderScaledText(PoseStack matrix, Font font, Component text, int x, int y, float scale, int color) {
         matrix.pushPose();
         matrix.scale(scale, scale, scale);
-        Font.draw(matrix, text, x / scale, y / scale, color);
+        // font.draw(matrix, text, x / scale, y / scale, color);
         matrix.popPose();
     }
 
@@ -104,7 +107,7 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ResourceGeneratingRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 7, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 14).addItemStack(recipe.getResultItem().copy());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override
@@ -120,35 +123,35 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
     // }
 
     @Override
-    public void draw(ResourceGeneratingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(ResourceGeneratingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
-        arrow.draw(PoseStack, 48 - GUI_START_X, 43 - GUI_START_Y);
+        arrow.draw(matrix, 48 - GUI_START_X, 43 - GUI_START_Y);
 
         float factor = recipe.getOutputMultiplier() / recipe.getWorkTimeMultiplier();
 
-        renderScaledText(PoseStack, font, Component.literal(
+        renderScaledText(matrix.pose(), font, Component.literal(
                 "Notso.: " + String.format("%.2f",
                         notsogudiumItemsPerSecond * factor
                 ) + " items/s"), 74, 2, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, Component.literal(
+        renderScaledText(matrix.pose(), font, Component.literal(
                 "Kudbe.: " + String.format("%.2f",
                         kudbebeddaItemsPerSecond * factor
                 ) + " items/s"), 74, 11, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, Component.literal(
+        renderScaledText(matrix.pose(), font, Component.literal(
                 "Notarf.: " + String.format("%.2f",
                         notarfbadiumItemsPerSecond * factor
                 ) + " items/s"), 74, 20, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, Component.literal(
+        renderScaledText(matrix.pose(), font, Component.literal(
                 "Wikid.: " + String.format("%.2f",
                         wikidiumItemsPerSecond * factor
                 ) + " items/s"), 74, 29, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, Component.literal(
+        renderScaledText(matrix.pose(), font, Component.literal(
                 "Thatl.: " + String.format("%.2f",
                         thatlduItemsPerSecond * factor
                 ) + " items/s"), 74, 38, 0.6F, 0x444444);

@@ -5,8 +5,9 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,6 +17,7 @@ import java.util.function.Consumer;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
@@ -67,27 +69,27 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_SWORD.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SWORD.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SWORD.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_sword_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_PICKAXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_PICKAXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_PICKAXE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_pickaxe_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_AXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_AXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_AXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_AXE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_axe_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_HOE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_HOE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HOE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_hoe_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_SHOVEL.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SHOVEL.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SHOVEL.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_shovel_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_SMASHER.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_SMASHER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SMASHER.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SMASHER.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_smasher_smithing"));
     }
@@ -95,7 +97,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     // ------------------------------------------------------------------------------------
 
     private static void craftCuboidSmasherFromBlocksIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<Item> smasher, RegistryObject<Block> materialBlock, RegistryObject<Item> materialIngot, String materialName) {
-        ShapedRecipeBuilder.shaped(smasher.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, smasher.get())
                 .define('-', materialIngot.get())
                 .define('#', materialBlock.get())
                 .define('|', Tags.Items.RODS)
@@ -108,7 +110,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
 
 
     private static void craftCuboidShovelFromIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<ShovelItem> shovel, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(shovel.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, shovel.get())
                 .define('#', ingot.get())
                 .define('|', Tags.Items.RODS)
                 .pattern("#")
@@ -119,7 +121,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidHoeFromIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<HoeItem> hoe, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(hoe.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, hoe.get())
                 .define('#', ingot.get())
                 .define('|', Tags.Items.RODS)
                 .pattern("##")
@@ -130,7 +132,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidAxeFromIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<AxeItem> axe, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(axe.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, axe.get())
                 .define('#', ingot.get())
                 .define('|', Tags.Items.RODS)
                 .pattern("##")
@@ -141,7 +143,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidPickaxeFromIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<PickaxeItem> pickaxe, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(pickaxe.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, pickaxe.get())
                 .define('#', ingot.get())
                 .define('|', Tags.Items.RODS)
                 .pattern("###")
@@ -152,7 +154,7 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidSwordFromIngotsAndAnyRod(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<SwordItem> sword, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(sword.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, sword.get())
                 .define('#', ingot.get())
                 .define('|', Tags.Items.RODS)
                 .pattern("#")

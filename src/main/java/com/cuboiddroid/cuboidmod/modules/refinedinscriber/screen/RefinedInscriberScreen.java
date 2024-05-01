@@ -3,7 +3,8 @@ package com.cuboiddroid.cuboidmod.modules.refinedinscriber.screen;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -57,31 +58,31 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
     }
 
     @Override
-    public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics matrix, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrix);
         super.render(matrix, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrix, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics matrix, int mouseX, int mouseY) {
         String[] words = this.name.getString().split("\\s+");
         String firstLine = words[0] + ((words.length > 1) ? " " + words[1] : "");
         String secondLine = "";
         for (int i = 2; i < words.length; i++)
             secondLine += words[i] + (i < words.length - 1 ? " " : "");
 
-        this.minecraft.font.draw(matrix, this.playerInv.getDisplayName(), 7, this.imageHeight - 93, 4210752);
+        matrix.drawString(this.font, this.playerInv.getDisplayName(), 7, this.imageHeight - 93, 4210752, false);
 
         Component first = Component.literal(firstLine);
         Component second = Component.literal(secondLine);
 
-        this.minecraft.font.draw(matrix, first, this.imageWidth / 2 - this.minecraft.font.width(firstLine) / 2, 6, 4210752);
-        this.minecraft.font.draw(matrix, second, this.imageWidth / 2 - this.minecraft.font.width(secondLine) / 2, 18, 4210752);
+        matrix.drawString(this.font, first, this.imageWidth / 2 - this.font.width(firstLine) / 2, 6, 4210752, false);
+        matrix.drawString(this.font, second, this.imageWidth / 2 - this.font.width(secondLine) / 2, 18, 4210752, false);
     }
 
     @Override
-    protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics matrix, float partialTicks, int mouseX, int mouseY) {
         // render the main container background
         // RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -89,7 +90,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
         RenderSystem.setShaderTexture(0, GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        this.blit(matrix, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        matrix.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
         // render progress arrow
         int progress = (this.tile.getProcessingTime() * ARROW_WIDTH) / this.tile.getRecipeTime();
@@ -102,7 +103,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
             //   top left Y to copy from,
             //   width to copy,
             //   height to copy
-            this.blit(matrix,
+            matrix.blit(GUI,
                     this.leftPos + ARROW_TOP_LEFT_X,
                     this.topPos + ARROW_TOP_LEFT_Y,
                     HIDDEN_ARROW_TOP_LEFT_X,
@@ -127,7 +128,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
                 //   top left Y to copy from,
                 //   width to copy,
                 //   height to copy
-                this.blit(matrix,
+                matrix.blit(GUI,
                         this.leftPos + BAR_TOP_LEFT_X,
                         this.topPos + BAR_TOP_LEFT_Y + BAR_HEIGHT - powerHeight,
                         HIDDEN_BAR_TOP_LEFT_X,
@@ -139,7 +140,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
+    protected void renderTooltip(GuiGraphics matrix, int mouseX, int mouseY) {
         super.renderTooltip(matrix, mouseX, mouseY);
 
         // tooltip to show energy stored & capacity
@@ -152,7 +153,7 @@ public class RefinedInscriberScreen extends AbstractContainerScreen<RefinedInscr
                 tooltip.add(text);
             }
 
-            this.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);
+            matrix.renderComponentTooltip(this.font, tooltip, mouseX, mouseY);
         }
     }
 

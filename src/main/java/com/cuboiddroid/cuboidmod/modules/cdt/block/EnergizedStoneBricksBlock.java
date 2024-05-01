@@ -3,7 +3,6 @@ package com.cuboiddroid.cuboidmod.modules.cdt.block;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +20,7 @@ public class EnergizedStoneBricksBlock extends Block {
     public static final ResourceLocation ID = CuboidMod.getModId(ID_STRING);
 
     public EnergizedStoneBricksBlock() {
-        super(Properties.of(Material.STONE)
+        super(Properties.of()
                 .strength(3, 9)
                 // .harvestLevel(2).harvestTool(ToolType.PICKAXE)
                 .sound(SoundType.STONE));

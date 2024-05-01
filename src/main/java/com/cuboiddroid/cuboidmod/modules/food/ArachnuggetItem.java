@@ -18,7 +18,7 @@ public class ArachnuggetItem extends Item {
 
     public ArachnuggetItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(3)
                         .saturationMod(0.4F)

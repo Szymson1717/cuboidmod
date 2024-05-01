@@ -11,6 +11,6 @@ public class NotarfbadiumSmasher extends SmasherBase {
                 Config.notarfbadiumSmasherAttackSpeed.get(),
                 new Properties()
                         .defaultDurability(Config.notarfbadiumSmasherDurability.get())
-                        .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                        );
     }
 }

@@ -5,16 +5,16 @@ import com.cuboiddroid.cuboidmod.modules.furnace.block.CuboidFurnaceBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.Registration;
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
@@ -31,44 +31,34 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 public class ModLootTableProvider extends LootTableProvider {
     private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
     private static final LootItemCondition.Builder HAS_NO_SILK_TOUCH = HAS_SILK_TOUCH.invert();
 
-    public ModLootTableProvider(DataGenerator generatorIn) {
-        super(generatorIn);
+    public ModLootTableProvider(PackOutput output, Set<ResourceLocation> locations, List<SubProviderEntry> providers) {
+        super(output, locations, providers);
     }
 
-    @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables() {
-        return ImmutableList.of(
-                Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK)
-        );
-    }
+    // @Override
+    // protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationTracker) {
+    //     map.forEach((p1, p2) -> LootTables.validate(validationTracker, p1, p2));
+    // }
 
-    @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationTracker) {
-        map.forEach((p1, p2) -> LootTables.validate(validationTracker, p1, p2));
-    }
+    public static class ModBlockLootTables extends BlockLootSubProvider {
 
-    public static class ModBlockLootTables extends BlockLoot {
+        public ModBlockLootTables() {
+            super(Set.of(), FeatureFlags.VANILLA_SET);
+        }
 
         @Override
-        protected void addTables() {
+        protected void generate() {
             dropSelf(ModBlocks.NOTSOGUDIUM_QUANTUM_COLLAPSER.get());
             dropSelf(ModBlocks.KUDBEBEDDA_QUANTUM_COLLAPSER.get());
             dropSelf(ModBlocks.NOTARFBADIUM_QUANTUM_COLLAPSER.get());
@@ -223,12 +213,12 @@ public class ModLootTableProvider extends LootTableProvider {
 
         protected static LootTable.Builder createSingleItemTableForChest(ItemLike itemProvider) {
             return LootTable.lootTable()
-                    .withPool(applyExplosionCondition(itemProvider,
-                            LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                                    .add(LootItem.lootTableItem(itemProvider)
-                                        .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
-                                        .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Items", "BlockEntityTag.Items", CopyNbtFunction.MergeStrategy.REPLACE)))
-                    ));
+                    .withPool(new LootPool.Builder()
+                            .setRolls(ConstantValue.exactly(1)).add(
+                                    LootItem.lootTableItem(itemProvider)
+                                            .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+                                            .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Items", "BlockEntityTag.Items", CopyNbtFunction.MergeStrategy.REPLACE)))
+                    );
         }
 
     }

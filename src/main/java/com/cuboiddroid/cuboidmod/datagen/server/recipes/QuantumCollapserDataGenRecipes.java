@@ -6,6 +6,7 @@ import com.cuboiddroid.cuboidmod.modules.furnace.block.CuboidFurnaceBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
@@ -73,7 +74,7 @@ public class QuantumCollapserDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void quantumCollapserFromBlocksAndFurnace(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumCollapserBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .pattern("###")
@@ -84,7 +85,7 @@ public class QuantumCollapserDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void quantumCollapserUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumCollapserBlockBase output, QuantumCollapserBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .define('@', prevTier)

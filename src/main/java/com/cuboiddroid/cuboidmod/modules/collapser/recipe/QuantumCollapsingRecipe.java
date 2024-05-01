@@ -6,13 +6,13 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.google.gson.JsonObject;
-import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -134,8 +134,8 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
      * @return
      */
     @Override
-    public ItemStack assemble(SimpleContainer inventory) {
-        return this.getResultItem();
+    public ItemStack assemble(SimpleContainer inventory, RegistryAccess access) {
+        return this.getResultItem(access);
     }
 
     /**
@@ -155,7 +155,7 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
      * @return
      */
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return result.copy();
     }
 

@@ -36,16 +36,16 @@ public class CuboidChestModels {
         }
     }
 
-    @SubscribeEvent
-    public static void onStitch(TextureStitchEvent.Pre event) {
-        if (!event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
-            return;
-        }
+    // @SubscribeEvent
+    // public static void onStitch(TextureStitchEvent.Post event) {
+    //     if (!event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
+    //         return;
+    //     }
 
-        event.addSprite(NOTSOGUDIUM_CHEST_LOCATION);
-        event.addSprite(KUDBEBEDDA_CHEST_LOCATION);
-        event.addSprite(NOTARFBADIUM_CHEST_LOCATION);
-        event.addSprite(WIKIDIUM_CHEST_LOCATION);
-        event.addSprite(THATLDU_CHEST_LOCATION);
-    }
+    //     event.addSprite(NOTSOGUDIUM_CHEST_LOCATION);
+    //     event.addSprite(KUDBEBEDDA_CHEST_LOCATION);
+    //     event.addSprite(NOTARFBADIUM_CHEST_LOCATION);
+    //     event.addSprite(WIKIDIUM_CHEST_LOCATION);
+    //     event.addSprite(THATLDU_CHEST_LOCATION);
+    // }
 }

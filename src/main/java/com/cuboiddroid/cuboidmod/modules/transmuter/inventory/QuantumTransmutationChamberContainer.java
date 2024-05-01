@@ -39,7 +39,7 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
         this.tileEntity = (QuantumTransmutationChamberTileEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
 
         if (tileEntity != null) {
             tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
@@ -134,12 +134,12 @@ public class QuantumTransmutationChamberContainer extends AbstractContainerMenu 
                 slot.onQuickCraft(stack, itemstack);
             } else {
                 // moving something in the player inventory
-                if (!this.slots.get(0).hasItem() || this.slots.get(0).getItem().sameItem(stack)) {
+                if (!this.slots.get(0).hasItem() || this.slots.get(0).getItem().is(stack.getItem())) {
                     // first input is empty or already contains this item - try move
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.slots.get(1).hasItem() || this.slots.get(1).getItem().sameItem(stack)) {
+                } else if (!this.slots.get(1).hasItem() || this.slots.get(1).getItem().is(stack.getItem())) {
                     // second input is empty or already contains this item - try move
                     if (!this.moveItemStackTo(stack, 1, 2, false)) {
                         return ItemStack.EMPTY;

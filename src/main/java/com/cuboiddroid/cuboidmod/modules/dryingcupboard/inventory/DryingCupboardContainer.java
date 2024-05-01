@@ -42,7 +42,7 @@ public class DryingCupboardContainer extends AbstractContainerMenu {
         this.tileEntity = (DryingCupboardTileEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
 
         if (tileEntity != null) {
             tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {

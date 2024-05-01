@@ -2,7 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.tools;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
@@ -22,7 +21,7 @@ import net.minecraft.world.phys.HitResult;
 public class ToolUtils {
     private static RandomSource random = RandomSource.create();
 
-    public static void tryBreakAdjacent(ItemStack stack, Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
+    public static void tryBreakAdjacent(ItemStack stack, Level world, BlockPos pos, Player player) {
         HitResult trace = calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
         if (trace.getType() == HitResult.Type.BLOCK) {
@@ -44,14 +43,14 @@ public class ToolUtils {
                     if (face == Direction.NORTH || face == Direction.SOUTH) target = pos.offset(a, b, 0);
                     if (face == Direction.EAST || face == Direction.WEST) target = pos.offset(0, a, b);
 
-                    tryBreak(stack, world, target, player, effectiveMaterials);
+                    tryBreak(stack, world, target, player);
                 }
             }
         }
     }
 
-    public static void tryBreak(ItemStack stack, Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
-        if (isBreakableWithSmasher(world, pos, player, effectiveMaterials)) {
+    public static void tryBreak(ItemStack stack, Level world, BlockPos pos, Player player) {
+        if (isBreakableWithSmasher(world, pos, player)) {
             BlockState state = world.getBlockState(pos);
 
             if (!state.hasBlockEntity()) {
@@ -62,14 +61,13 @@ public class ToolUtils {
         }
     }
 
-    public static Boolean isBreakableWithSmasher(Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
+    public static Boolean isBreakableWithSmasher(Level world, BlockPos pos, Player player) {
         BlockState state = world.getBlockState(pos);
         boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
-        boolean isEffective = effectiveMaterials.contains(state.getMaterial());
 
         boolean witherImmune = state.is(BlockTags.WITHER_IMMUNE);
 
-        return (isEffective && !witherImmune && isWithinHarvestLevel);
+        return (!witherImmune && isWithinHarvestLevel);
     }
 
     public static HitResult calcRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
@@ -82,7 +80,7 @@ public class ToolUtils {
         float f5 = Mth.sin(-f * ((float) Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue() + 1;
+        double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.BLOCK_REACH.get()).getValue() + 1;
 
         Vec3 vec3d1 = vec3d.add((double) f6 * d0, (double) f5 * d0, (double) f7 * d0);
         return worldIn.clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.OUTLINE, fluidMode, player));

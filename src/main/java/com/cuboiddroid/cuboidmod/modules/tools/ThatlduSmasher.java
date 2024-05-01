@@ -11,6 +11,6 @@ public class ThatlduSmasher extends SmasherBase {
                 Config.thatlduSmasherAttackSpeed.get(),
                 new Properties()
                         .defaultDurability(Config.thatlduSmasherDurability.get())
-                        .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                        );
     }
 }

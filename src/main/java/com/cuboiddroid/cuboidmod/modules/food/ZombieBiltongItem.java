@@ -21,7 +21,7 @@ public class ZombieBiltongItem extends Item {
 
     public ZombieBiltongItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(12)
                         .saturationMod(2.0F)

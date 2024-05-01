@@ -19,6 +19,8 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.registries.RegistryObject;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,14 +29,6 @@ import org.apache.logging.log4j.Logger;
 public class CuboidMod
 {
     public static final String MOD_ID = "cuboidmod";
-
-    public static final CreativeModeTab CUBOIDMOD_ITEM_GROUP = (new CreativeModeTab("cuboidmod") {
-        @Override
-        @OnlyIn(Dist.CLIENT)
-        public ItemStack makeIcon() {
-            return new ItemStack(ModBlocks.THATLDU_BLOCK.get());
-        }
-    });
 
     public static final Logger LOGGER = LogManager.getLogger();
 

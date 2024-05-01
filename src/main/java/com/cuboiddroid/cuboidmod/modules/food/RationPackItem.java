@@ -18,7 +18,7 @@ public class RationPackItem extends Item {
 
     public RationPackItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .stacksTo(8)
                 .food(new FoodProperties.Builder()
                         .nutrition(3)

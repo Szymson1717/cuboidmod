@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class NotsogudiumQuantumSingularityItem extends QuantumSingularityItemBase {
     public NotsogudiumQuantumSingularityItem() {
-        super(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP),
+        super(new Item.Properties(),
                 QuantumSingularityRegistry.getInstance()
                         .getSingularityById(new ResourceLocation(CuboidMod.MOD_ID, "notsogudium")));
     }

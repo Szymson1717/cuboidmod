@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -168,7 +169,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
             hasRoomForOutputs = outputSlot.isEmpty() ||
                     recipeOutputs.stream().anyMatch((recipeOutput) ->
                             !recipeOutput.isEmpty() &&
-                                    recipeOutput.sameItem(outputSlot) &&
+                                    recipeOutput.is(outputSlot.getItem()) &&
                                     recipeOutput.getCount() + outputSlot.getCount() <= recipeOutput.getMaxStackSize());
 
             outputSlotIndex++;
@@ -215,7 +216,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         int firstEmptyIndex = -1;
         for (int outputSlotIndex = 0; outputSlotIndex < OUTPUT_SLOTS; outputSlotIndex++) {
             ItemStack outputStack = outputItemHandler.getStackInSlot(outputSlotIndex).copy();
-            if (outputStack.sameItem(stack) && outputStack.getCount() + stack.getCount() <= outputStack.getMaxStackSize()) {
+            if (outputStack.is(stack.getItem()) && outputStack.getCount() + stack.getCount() <= outputStack.getMaxStackSize()) {
                 outputStack.grow(stack.getCount());
                 outputItemHandler.setStackInSlot(outputSlotIndex, outputStack);
                 return;
@@ -394,11 +395,11 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
                 potentialRecipes = allRecipes.stream().filter(rec ->
                         rec != null &&
                                 rec.getType() == RecipeType.CRAFTING &&
-                                !rec.getResultItem().isEmpty() &&
-                                rec.getResultItem().getCount() <= inputItem.getCount() &&
+                                !rec.getResultItem(RegistryAccess.EMPTY).isEmpty() &&
+                                rec.getResultItem(RegistryAccess.EMPTY).getCount() <= inputItem.getCount() &&
                                 !recipeIsBlacklisted(rec) &&
-                                inputItem.getItem() == rec.getResultItem().getItem() &&
-                                ItemStack.isSameIgnoreDurability(inputItem, rec.getResultItem()))
+                                inputItem.getItem() == rec.getResultItem(RegistryAccess.EMPTY).getItem() &&
+                                ItemStack.isSameItem(inputItem, rec.getResultItem(RegistryAccess.EMPTY)))
                         .collect(Collectors.toList());
             }
         }
@@ -732,7 +733,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull

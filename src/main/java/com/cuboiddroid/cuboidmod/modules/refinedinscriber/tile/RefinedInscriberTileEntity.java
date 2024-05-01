@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -148,7 +149,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
             // work out how many output items we'd have if we add them together...
             int newTotal = currentOutput.getCount() + recipeOutput.getCount();
 
-            if (!currentOutput.sameItem(recipeOutput) || newTotal > recipeOutput.getMaxStackSize()) {
+            if (!currentOutput.is(recipeOutput.getItem()) || newTotal > recipeOutput.getMaxStackSize()) {
                 // the recipe output is different to what's already in the output stack, or
                 // the amount of items produced by the recipe plus the current number of items in
                 // the output slot would exceed the maximum stack size for the item - stop working!
@@ -232,7 +233,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
     private ItemStack getWorkOutput(@Nullable InscribingRecipe recipe) {
         if (recipe != null) {
-            return recipe.assemble(getInputsAsInventory());
+            return recipe.assemble(getInputsAsInventory(), RegistryAccess.EMPTY);
         }
 
         return ItemStack.EMPTY;
@@ -369,7 +370,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull
@@ -392,7 +393,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull
@@ -415,7 +416,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull

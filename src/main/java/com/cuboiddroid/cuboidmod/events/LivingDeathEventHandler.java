@@ -18,12 +18,12 @@ public class LivingDeathEventHandler {
         if (event.getEntity() == null) return;
         MinecraftServer server = event.getEntity().getServer();
         if (server == null) return;
-        if (event.getEntity().level.equals(server.getLevel(Level.END))) {
+        if (event.getEntity().level().equals(server.getLevel(Level.END))) {
             if (event.getEntity() instanceof EnderDragon) {
                 EnderDragon d = (EnderDragon) event.getEntity();
                 if (d.getDragonFight() != null && d.getDragonFight().hasPreviouslyKilledDragon()) {
-                    Level world = event.getEntity().level;
-                    BlockPos pos = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, EndPodiumFeature.END_PODIUM_LOCATION);
+                    Level world = event.getEntity().level();
+                    BlockPos pos = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, EndPodiumFeature.getLocation(BlockPos.ZERO));
                     while (world.getBlockState(pos).getBlock() != Blocks.AIR) pos.above();
                     world.setBlockAndUpdate(pos, Blocks.DRAGON_EGG.defaultBlockState());
                 }

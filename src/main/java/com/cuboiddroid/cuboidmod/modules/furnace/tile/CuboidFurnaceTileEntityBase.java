@@ -5,7 +5,7 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.common.TileEntityInventory;
 import com.google.common.collect.Lists;
 
-import harmonised.pmmo.api.events.FurnaceBurnEvent;
+// import harmonised.pmmo.api.events.FurnaceBurnEvent;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -607,11 +608,11 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     protected boolean canSmelt(@Nullable Recipe<?> recipe) {
         if (!this.inventory.get(INPUT).isEmpty() && recipe != null) {
-            ItemStack recipeOutput = recipe.getResultItem();
+            ItemStack recipeOutput = recipe.getResultItem(RegistryAccess.EMPTY);
             if (!recipeOutput.isEmpty()) {
                 ItemStack output = this.inventory.get(OUTPUT);
                 if (output.isEmpty()) return true;
-                else if (!output.sameItem(recipeOutput)) return false;
+                else if (!output.is(recipeOutput.getItem())) return false;
                 else return output.getCount() + recipeOutput.getCount() <= output.getMaxStackSize();
             }
         }
@@ -622,7 +623,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
         timer = 0;
         if (recipe != null && this.canSmelt(recipe)) {
             ItemStack input = this.inventory.get(INPUT);
-            ItemStack recipeOutput = recipe.getResultItem();
+            ItemStack recipeOutput = recipe.getResultItem(RegistryAccess.EMPTY);
             ItemStack output = this.inventory.get(OUTPUT);
             if (output.isEmpty()) {
                 this.inventory.set(OUTPUT, recipeOutput.copy());
@@ -637,9 +638,9 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
             if (input.getItem() == Blocks.WET_SPONGE.asItem() && !this.inventory.get(FUEL).isEmpty() && this.inventory.get(FUEL).getItem() == Items.BUCKET) {
                 this.inventory.set(FUEL, new ItemStack(Items.WATER_BUCKET));
             }
-            if (ModList.get().isLoaded("pmmo")) {
-                MinecraftForge.EVENT_BUS.post(new FurnaceBurnEvent(input, level, worldPosition));
-            }
+            // if (ModList.get().isLoaded("pmmo")) {
+            //     MinecraftForge.EVENT_BUS.post(new FurnaceBurnEvent(input, level, worldPosition));
+            // }
             input.shrink(1);
         }
     }
@@ -811,7 +812,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
     */
 
     public void unlockRecipes(Player player) {
-        List<Recipe<?>> list = this.grantStoredRecipeExperience(player.level, player.position());
+        List<Recipe<?>> list = this.grantStoredRecipeExperience(player.level(), player.position());
         player.awardRecipes(list);
         this.recipes.clear();
     }
