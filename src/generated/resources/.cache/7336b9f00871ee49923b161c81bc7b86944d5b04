@@ -1,4 +1,4 @@
-// 1.20.1	2024-05-01T14:56:54.4566799	Item Models: cuboidmod
+// 1.20.1	2024-05-02T01:49:21.7178654	Item Models: cuboidmod
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/acacia_log_quantum_singularity.json
 7edc20fa0e9de9ac482329d87eb9dc039b821b42 assets/cuboidmod/models/item/aggregate.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/aluminium_quantum_singularity.json
@@ -185,6 +185,7 @@ cdf021849a15f322f5eb5cb8bcc878083590c888 assets/cuboidmod/models/item/thatldu_si
 d6251ec731109ad0fadc1027ef25d3efe66cbc15 assets/cuboidmod/models/item/thatldu_singularity_resource_generator.json
 904b6b18392b5561e39e08856f907c8f5f37388f assets/cuboidmod/models/item/thatldu_smasher.json
 88637081f7814751ea68b51cda6c67df765c0a08 assets/cuboidmod/models/item/thatldu_sword.json
+5ddbb27c550858c81805fe3fced467c48229d702 assets/cuboidmod/models/item/thatldu_upgrade_smithing_template.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/tin_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/uraninite_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/uranium_quantum_singularity.json

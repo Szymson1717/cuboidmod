@@ -8,7 +8,6 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -53,19 +52,19 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_HELMET.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_HELMET.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HELMET.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_helmet_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_CHESTPLATE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_CHESTPLATE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_CHESTPLATE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_chestplate_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_LEGGINGS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_LEGGINGS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_LEGGINGS.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_leggings_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_BOOTS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_BOOTS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_BOOTS.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_boots_smithing"));
     }

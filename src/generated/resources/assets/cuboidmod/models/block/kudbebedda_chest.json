@@ -2,6 +2,6 @@
   "parent": "cuboidmod:block/templates/chest",
   "textures": {
     "break": "cuboidmod:block/kudbebedda_break",
-    "chest": "cuboidmod:block/model/kudbebedda_chest"
+    "chest": "cuboidmod:entity/chest/kudbebedda"
   }
 }

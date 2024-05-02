@@ -1,6 +1,5 @@
 package com.cuboiddroid.cuboidmod.setup;
 
-import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.cdt.block.*;
 import com.cuboiddroid.cuboidmod.modules.chest.block.*;
 import com.cuboiddroid.cuboidmod.modules.chest.render.CuboidChestItemStackRenderer;

@@ -13,7 +13,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;

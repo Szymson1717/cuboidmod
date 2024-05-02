@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
@@ -69,27 +68,27 @@ public class ToolsDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SWORD.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_SWORD.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SWORD.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_sword_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_PICKAXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_PICKAXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_PICKAXE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_pickaxe_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_AXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_AXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_AXE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_AXE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_axe_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_HOE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_HOE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HOE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_hoe_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SHOVEL.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_SHOVEL.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SHOVEL.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_shovel_smithing"));
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.AIR), Ingredient.of(ModItems.WIKIDIUM_SMASHER.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SMASHER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_SMASHER.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_SMASHER.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_smasher_smithing"));
     }

@@ -176,6 +176,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "cellulose");
         builder(itemGenerated, "salt");
 
+        builder(itemGenerated, "thatldu_upgrade_smithing_template");
+
         builder(itemGenerated, "zinc_dust");
         builder(itemGenerated, "cobalt_dust");
 

@@ -10,8 +10,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SwordItem;
 
 public class ModItems {
@@ -464,6 +466,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> THATLDU_SMASHER = Registration.ITEMS.register(
             "thatldu_smasher", () -> new ThatlduSmasher());
+
+    public static final RegistryObject<Item> THATLDU_UPGRADE_SMITHING_TEMPLATE = Registration.ITEMS.register(
+            "thatldu_upgrade_smithing_template", CustomSmithingTemplateItem::createThatlduUpgradeTemplate);
 
     // Smoosher
     public static final RegistryObject<Item> SMOOSHER = Registration.ITEMS.register(

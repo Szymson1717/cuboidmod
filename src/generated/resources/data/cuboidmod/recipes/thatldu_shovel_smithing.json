@@ -9,5 +9,7 @@
   "result": {
     "item": "cuboidmod:thatldu_shovel"
   },
-  "template": []
+  "template": {
+    "item": "cuboidmod:thatldu_upgrade_smithing_template"
+  }
 }

@@ -2,6 +2,6 @@
   "parent": "cuboidmod:block/templates/chest",
   "textures": {
     "break": "cuboidmod:block/notsogudium_break",
-    "chest": "cuboidmod:block/model/notsogudium_chest"
+    "chest": "cuboidmod:entity/chest/notsogudium"
   }
 }

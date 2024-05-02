@@ -21,6 +21,31 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
         buildOrganicallyEnrichedSandRecipe(provider, consumer);
         buildBucketRecipe(provider, consumer);
         buildTorchAndLanternRecipes(provider, consumer);
+
+        buildThatldSmithingTemplateRecipes(provider, consumer);
+    }
+
+    private static void buildThatldSmithingTemplateRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get())
+                .define('#', ModItems.WIKIDIUM_INGOT.get())
+                .define('@', ModBlocks.WIKIDIUM_BLOCK.get())
+                .pattern("#@#")
+                .pattern("#@#")
+                .pattern("###")
+                .group("thatldu_smithing_template_upgrade")
+                .unlockedBy("has_item", provider.hasItem(ModItems.WIKIDIUM_INGOT.get()))
+                .save(consumer, modId("smithing_template_from_wikidium_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get(), 2)
+                .define('#', ModItems.WIKIDIUM_INGOT.get())
+                .define('@', ModBlocks.WIKIDIUM_BLOCK.get())
+                .define('$', ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get())
+                .pattern("#@#")
+                .pattern("#$#")
+                .pattern("###")
+                .group("thatldu_smithing_template_upgrade")
+                .unlockedBy("has_item", provider.hasItem(ModItems.WIKIDIUM_INGOT.get()))
+                .save(consumer, modId("smithing_template_from_thatld_update_smithing_template"));
     }
 
     private static void buildBucketRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {

@@ -81,7 +81,7 @@ public class ModBlockModelProvider extends BlockModelProvider {
                 .texture("particle", "block/" + material + "_break");
 
             withExistingParent(material + "_chest", modLoc("block/templates/chest"))
-                .texture("chest", "block/model/" + material + "_chest")
+                .texture("chest", "entity/chest/" + material)
                 .texture("break", "block/" + material + "_break");
         }
     }
