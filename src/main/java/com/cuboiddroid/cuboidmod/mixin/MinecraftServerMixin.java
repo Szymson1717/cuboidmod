@@ -34,10 +34,8 @@ public abstract class MinecraftServerMixin {
     )
     private void spawnCuboidHome(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bonusChest, boolean flag) {
         setInitialSpawn(serverLevel, serverLevelData, bonusChest, flag);
-        if (!Config.forcedCuboidFlat.get()) return;
-        
-        ServerChunkCache serverChunkCache = serverLevel.getChunkSource();
 
+        ServerChunkCache serverChunkCache = serverLevel.getChunkSource();
         ResourceKey<Structure> cuboidHouse = ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(CuboidMod.MOD_ID, "cuboidhouse"));
         BlockPos spawnPoint = new BlockPos(serverLevelData.getXSpawn(), serverLevelData.getYSpawn(), serverLevelData.getZSpawn());
 
@@ -57,7 +55,7 @@ public abstract class MinecraftServerMixin {
 
             // Generate structure
             StructureStart structureStart = structure.generate(serverLevel.registryAccess(), chunkgenerator, chunkgenerator.getBiomeSource(),
-                    serverChunkCache.randomState(), serverLevel.getStructureManager(), serverLevel.getSeed(), new ChunkPos(spawnPoint.offset(-boundingbox.getXSpan() / 2, -1, -boundingbox.getZSpan() / 2)),
+                    serverChunkCache.randomState(), serverLevel.getStructureManager(), serverLevel.getSeed(), new ChunkPos(spawnPoint.offset(boundingbox.getXSpan() / 2, -1, boundingbox.getZSpan() / 2)),
                     0, serverLevel, (predicate) -> true
             );
 
