@@ -225,17 +225,17 @@ public class InscribingRecipe implements Recipe<Container> {
               "type": "cuboidmod:inscribing",
               "mode": "press",
               "result": {
-                "item": "appliedenergistics2:engineering_processor"
+                "item": "ae2:engineering_processor"
               },
               "ingredients": {
                 "top": {
-                  "item": "appliedenergistics2:printed_engineering_processor"
+                  "item": "ae2:printed_engineering_processor"
                 },
                 "middle": {
                   "tag": "forge:dusts/redstone"
                 },
                 "bottom": {
-                  "item": "appliedenergistics2:printed_silicon"
+                  "item": "ae2:printed_silicon"
                 }
               }
             }
@@ -246,11 +246,11 @@ public class InscribingRecipe implements Recipe<Container> {
               "type": "cuboidmod:inscribing",
               "mode": "inscribe",
               "result": {
-                "item": "appliedenergistics2:calculation_processor_press"
+                "item": "ae2:calculation_processor_press"
               },
               "ingredients": {
                 "top": {
-                  "item": "appliedenergistics2:calculation_processor_press"
+                  "item": "ae2:calculation_processor_press"
                 },
                 "middle": {
                   "tag": "forge:storage_blocks/iron"

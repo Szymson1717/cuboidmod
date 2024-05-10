@@ -1,0 +1,14 @@
+{
+    "structures": [
+        {
+            "structure": "cuboidmod:cuboidhouse",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 952372570,
+        "spacing": 10,
+        "separation": 5
+    }
+}

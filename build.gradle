@@ -14,9 +14,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
     id 'maven-publish'
 }
-apply plugin: 'org.spongepowered.mixin'
+// apply plugin: 'org.spongepowered.mixin'
 
 // apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
@@ -214,6 +215,9 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // Apply Mixin AP
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
@@ -234,17 +238,23 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:project-mmo:${pmmo_version}")
 
     // Mekanism
-    compileOnly "mekanism:Mekanism:${mekanism_version}:api"
+    // compileOnly "mekanism:Mekanism:${mekanism_version}:api"
 
     // If you want to test/use Mekanism & its modules during `runClient` invocation, use the following
-    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
-    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
-    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
-    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
+    // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")// core
+    // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")// Mekanism: Additions
+    // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")// Mekanism: Generators
+    // runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:tools")// Mekanism: Tools
 
     implementation fg.deobf("net.darkhax.gamestages:GameStages-Forge-${minecraft_version}:${gamestages_version}")
     implementation fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${minecraft_version}:${bookshelf_version}")
     // compileOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Common-${minecraft_version}:${bookshelf_version}")
+}
+
+mixin {
+    // MixinGradle Settings
+    add sourceSets.main, 'cuboidmod.refmap.json'
+    config 'cuboidmod.mixins.json'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

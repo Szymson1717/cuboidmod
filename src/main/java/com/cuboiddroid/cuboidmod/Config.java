@@ -151,6 +151,7 @@ public class Config {
     // --- MISC CATEGORY ---
     public static final String CATEGORY_MISC = "misc";
     public static ForgeConfigSpec.BooleanValue verboseLogging;
+    public static ForgeConfigSpec.BooleanValue forcedCuboidFlat;
 
     static {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
@@ -209,6 +210,9 @@ public class Config {
         verboseLogging = COMMON_BUILDER
                 .comment(" Logs additional information when loading Quantum Singularity and Molecular Recycler Blacklist config files.")
                 .define("misc.verbose_logging", false);
+        forcedCuboidFlat = COMMON_BUILDER
+                .comment(" Forces the classic CuboidOutpost flat lands.")
+                .define("misc.forced_cuboid_flat", false);
         COMMON_BUILDER.pop();
 
         COMMON_CONFIG = COMMON_BUILDER.build();

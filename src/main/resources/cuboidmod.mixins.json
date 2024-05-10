@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "package": "com.cuboiddroid.cuboidmod.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "refmap": "cuboidmod.refmap.json",
+    "mixins": [
+        "ServerPacksSourceMixin",
+        "MinecraftServerMixin"
+    ],
+    "client": [
+        "ClientPackSelectorMixin"
+    ],
+    "minVersion": "0.8",
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
