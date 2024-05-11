@@ -212,6 +212,16 @@ public class Config {
                 .define("misc.verbose_logging", false);
         forcedCuboidFlat = COMMON_BUILDER
                 .comment(" Forces the classic CuboidOutpost flat lands.")
+                .comment(" NOTE: Some mods are required for this feature to work:")
+                .comment(" - Applied Energistics 2 (ae2)")
+                .comment(" - Framed Compacting Drawers (framedcompactdrawers)")
+                .comment(" - Gauges and Switches (rsgauges)")
+                .comment(" - Glassential Renewed (glassential)")
+                .comment(" - Mekanism (mekanism)")
+                .comment(" - Mekanism: Generators (mekanismgenerators)")
+                .comment(" - MrCrayfish's Furniture Mod (cfm)")
+                .comment(" - Simply Light (simplylight)")
+                .comment(" - Thermal Expansion (thermal)")
                 .define("misc.forced_cuboid_flat", false);
         COMMON_BUILDER.pop();
 
