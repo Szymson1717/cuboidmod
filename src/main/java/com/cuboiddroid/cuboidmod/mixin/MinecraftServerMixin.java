@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 
 import net.minecraft.core.BlockPos;
@@ -35,6 +34,8 @@ public abstract class MinecraftServerMixin {
     private void spawnCuboidHome(ServerLevel serverLevel, ServerLevelData serverLevelData, boolean bonusChest, boolean flag) {
         setInitialSpawn(serverLevel, serverLevelData, bonusChest, flag);
 
+        long FORCED_SEED = 7776500924864903832L;
+
         ServerChunkCache serverChunkCache = serverLevel.getChunkSource();
         ResourceKey<Structure> cuboidHouse = ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(CuboidMod.MOD_ID, "cuboidhouse"));
         BlockPos spawnPoint = new BlockPos(serverLevelData.getXSpawn(), serverLevelData.getYSpawn(), serverLevelData.getZSpawn());
@@ -45,7 +46,7 @@ public abstract class MinecraftServerMixin {
             Structure structure = structureReference.value();
             ChunkGenerator chunkgenerator = serverChunkCache.getGenerator();
             StructureStart structureStartChecker = structure.generate(serverLevel.registryAccess(), chunkgenerator, chunkgenerator.getBiomeSource(),
-                    serverChunkCache.randomState(), serverLevel.getStructureManager(), serverLevel.getSeed(), new ChunkPos(spawnPoint),
+                    serverChunkCache.randomState(), serverLevel.getStructureManager(), FORCED_SEED, new ChunkPos(spawnPoint),
                     0, serverLevel, (predicate) -> true
             );
 
@@ -55,7 +56,7 @@ public abstract class MinecraftServerMixin {
 
             // Generate structure
             StructureStart structureStart = structure.generate(serverLevel.registryAccess(), chunkgenerator, chunkgenerator.getBiomeSource(),
-                    serverChunkCache.randomState(), serverLevel.getStructureManager(), serverLevel.getSeed(), new ChunkPos(spawnPoint.offset(boundingbox.getXSpan() / 2, -1, boundingbox.getZSpan() / 2)),
+                    serverChunkCache.randomState(), serverLevel.getStructureManager(), FORCED_SEED, new ChunkPos(spawnPoint.offset(boundingbox.getXSpan() / 2, -1, boundingbox.getZSpan() / 2)),
                     0, serverLevel, (predicate) -> true
             );
 

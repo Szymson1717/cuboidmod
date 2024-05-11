@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.util.RepositorySourceUtils;
 
 @Mixin(CreateWorldScreen.class)
@@ -16,8 +15,7 @@ public abstract class ClientPackSelectorMixin {
 
     @ModifyArg(method = "openFresh", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/repository/PackRepository;<init>([Lnet/minecraft/server/packs/repository/RepositorySource;)V"))
     private static RepositorySource[] globalpacks_addServerPackFinder(RepositorySource[] arg) {
-        if (!Config.forcedCuboidFlat.get()) return arg;
-        return ArrayUtils.add(arg, RepositorySourceUtils.getCuboidFlat());
+        return ArrayUtils.add(arg, RepositorySourceUtils.getCuboidDatapacks());
     }
 
 }

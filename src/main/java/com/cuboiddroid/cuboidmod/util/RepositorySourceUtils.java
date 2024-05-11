@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import com.cuboiddroid.cuboidmod.Config;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -19,13 +21,18 @@ import net.minecraft.server.packs.repository.RepositorySource;
 
 public class RepositorySourceUtils {
 
-    public static RepositorySource getCuboidFlat() {
+    public static RepositorySource getCuboidDatapacks() {
         
         List<Path> packLocations = new ArrayList<>();
         try {
-            Path flatStarterWorld = Path
-                    .of(RepositorySourceUtils.class.getClassLoader().getResource("cuboid_flat/").toURI());
-            packLocations.add(flatStarterWorld);
+            if (Config.forcedCuboidFlat.get()) {
+                Path flatWorld = Path.of(RepositorySourceUtils.class.getClassLoader().getResource("datapacks/cuboid_flat/").toURI());
+                packLocations.add(flatWorld);
+            }
+            if (Config.spawnCuboidHouse.get()) {
+                Path starterHouse = Path.of(RepositorySourceUtils.class.getClassLoader().getResource("datapacks/cuboid_house/").toURI());
+                packLocations.add(starterHouse);
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
