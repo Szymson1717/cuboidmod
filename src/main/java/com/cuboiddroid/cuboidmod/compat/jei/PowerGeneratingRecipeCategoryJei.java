@@ -62,19 +62,21 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
                 Config.thatlduSingularityPowerGeneratorBaseEnergyGenerated.get();
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font font, Component text, int x, int y, int width, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
+    private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
         float xOffset = (width / scale - font.width(text)) / 2;
-        // font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
-        matrix.popPose();
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
-    private static void renderScaledText(PoseStack matrix, Font font, Component text, int x, int y, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        // font.draw(matrix, text, x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledText(GuiGraphics guiGraphics, Font font, Component text, int x, int y, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -126,12 +128,12 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
 
         float multiplier = recipe.getPowerMultiplier();
         String energyText = "" + multiplier + "x";
-        renderScaledTextWithShadow(matrix.pose(), font, Component.literal(energyText), 33 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(energyText), 33 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
 
-        renderScaledText(matrix.pose(), font, Component.literal("Notso.: " + String.format("%.02f", notsogudiumEnergyPerTick * multiplier) + " FE/t"), 74, 2, 0.6F, 0x444444);
-        renderScaledText(matrix.pose(), font, Component.literal("Kudbe.: " + String.format("%.02f", kudbebeddaEnergyPerTick * multiplier) + " FE/t"), 74, 11, 0.6F, 0x444444);
-        renderScaledText(matrix.pose(), font, Component.literal("Notarf.: " + String.format("%.02f", notarfbadiumEnergyPerTick * multiplier) + " FE/t"), 74, 20, 0.6F, 0x444444);
-        renderScaledText(matrix.pose(), font, Component.literal("Wikid.: " + String.format("%.02f", wikidiumEnergyPerTick * multiplier) + " FE/t"), 74, 29, 0.6F, 0x444444);
-        renderScaledText(matrix.pose(), font, Component.literal("Thatl.: " + String.format("%.02f", thatlduEnergyPerTick * multiplier) + " FE/t"), 74, 38, 0.6F, 0x444444);
+        renderScaledText(matrix, font, Component.literal("Notso.: " + String.format("%.02f", notsogudiumEnergyPerTick * multiplier) + " FE/t"), 74, 2, 0.6F, 0x444444);
+        renderScaledText(matrix, font, Component.literal("Kudbe.: " + String.format("%.02f", kudbebeddaEnergyPerTick * multiplier) + " FE/t"), 74, 11, 0.6F, 0x444444);
+        renderScaledText(matrix, font, Component.literal("Notarf.: " + String.format("%.02f", notarfbadiumEnergyPerTick * multiplier) + " FE/t"), 74, 20, 0.6F, 0x444444);
+        renderScaledText(matrix, font, Component.literal("Wikid.: " + String.format("%.02f", wikidiumEnergyPerTick * multiplier) + " FE/t"), 74, 29, 0.6F, 0x444444);
+        renderScaledText(matrix, font, Component.literal("Thatl.: " + String.format("%.02f", thatlduEnergyPerTick * multiplier) + " FE/t"), 74, 38, 0.6F, 0x444444);
     }
 }

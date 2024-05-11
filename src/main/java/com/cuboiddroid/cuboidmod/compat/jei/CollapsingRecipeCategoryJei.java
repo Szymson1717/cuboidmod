@@ -45,12 +45,13 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
         localizedName = Component.translatable("jei.category.cuboidmod.collapsing");
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font font, Component text, int x, int y, int width, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
+    private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
         float xOffset = (width / scale - font.width(text)) / 2;
-        // font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
-        matrix.popPose();
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -98,21 +99,21 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
     // }
 
     @Override
-    public void draw(QuantumCollapsingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
+    public void draw(QuantumCollapsingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
-        arrow.draw(matrix, 78 - GUI_START_X, 43 - GUI_START_Y);
+        arrow.draw(guiGraphics, 78 - GUI_START_X, 43 - GUI_START_Y);
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
         String arrowText = "" + workSeconds + "." + workDecimal + " s";
-        renderScaledTextWithShadow(matrix.pose(), font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(guiGraphics, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // required amounts
-        itemBar.draw(matrix, 32 - GUI_START_X, 34 - GUI_START_Y);
+        itemBar.draw(guiGraphics, 32 - GUI_START_X, 34 - GUI_START_Y);
 
         String itemBarText = "" + recipe.getRequiredInputAmount();
-        renderScaledTextWithShadow(matrix.pose(), font, Component.literal(itemBarText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(guiGraphics, font, Component.literal(itemBarText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
     }
 }

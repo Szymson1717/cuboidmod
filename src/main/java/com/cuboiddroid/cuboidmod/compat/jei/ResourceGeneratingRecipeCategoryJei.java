@@ -71,11 +71,12 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
                         / Config.thatlduSingularityResourceGeneratorTicksPerOperation.get();
     }
 
-    private static void renderScaledText(PoseStack matrix, Font font, Component text, int x, int y, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        // font.draw(matrix, text, x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledText(GuiGraphics guiGraphics, Font font, Component text, int x, int y, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -131,27 +132,27 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
 
         float factor = recipe.getOutputMultiplier() / recipe.getWorkTimeMultiplier();
 
-        renderScaledText(matrix.pose(), font, Component.literal(
+        renderScaledText(matrix, font, Component.literal(
                 "Notso.: " + String.format("%.2f",
                         notsogudiumItemsPerSecond * factor
                 ) + " items/s"), 74, 2, 0.6F, 0x444444);
 
-        renderScaledText(matrix.pose(), font, Component.literal(
+        renderScaledText(matrix, font, Component.literal(
                 "Kudbe.: " + String.format("%.2f",
                         kudbebeddaItemsPerSecond * factor
                 ) + " items/s"), 74, 11, 0.6F, 0x444444);
 
-        renderScaledText(matrix.pose(), font, Component.literal(
+        renderScaledText(matrix, font, Component.literal(
                 "Notarf.: " + String.format("%.2f",
                         notarfbadiumItemsPerSecond * factor
                 ) + " items/s"), 74, 20, 0.6F, 0x444444);
 
-        renderScaledText(matrix.pose(), font, Component.literal(
+        renderScaledText(matrix, font, Component.literal(
                 "Wikid.: " + String.format("%.2f",
                         wikidiumItemsPerSecond * factor
                 ) + " items/s"), 74, 29, 0.6F, 0x444444);
 
-        renderScaledText(matrix.pose(), font, Component.literal(
+        renderScaledText(matrix, font, Component.literal(
                 "Thatl.: " + String.format("%.2f",
                         thatlduItemsPerSecond * factor
                 ) + " items/s"), 74, 38, 0.6F, 0x444444);
