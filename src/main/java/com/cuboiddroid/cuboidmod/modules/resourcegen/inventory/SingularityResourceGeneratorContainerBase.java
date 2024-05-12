@@ -2,14 +2,14 @@ package com.cuboiddroid.cuboidmod.modules.resourcegen.inventory;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -19,19 +19,19 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class SingularityResourceGeneratorContainerBase extends Container {
+public abstract class SingularityResourceGeneratorContainerBase extends AbstractContainerMenu {
 
     protected SingularityResourceGeneratorTileEntityBase tileEntity;
-    protected PlayerEntity playerEntity;
+    protected Player playerEntity;
     protected IItemHandler playerInventory;
-    protected final World level;
+    protected final Level level;
 
-    public SingularityResourceGeneratorContainerBase(ContainerType<?> containerType,
+    public SingularityResourceGeneratorContainerBase(MenuType<?> containerType,
                                                      int windowId,
-                                                     World level,
+                                                     Level level,
                                                      BlockPos pos,
-                                                     PlayerInventory playerInventory,
-                                                     PlayerEntity player) {
+                                                     Inventory playerInventory,
+                                                     Player player) {
         super(containerType, windowId);
         this.tileEntity = (SingularityResourceGeneratorTileEntityBase) level.getBlockEntity(pos);
         this.playerEntity = player;
@@ -64,7 +64,7 @@ public abstract class SingularityResourceGeneratorContainerBase extends Containe
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         int playerInventoryStartSlot = SingularityResourceGeneratorTileEntityBase.TOTAL_SLOTS;
         int playerInventoryEndSlot = playerInventoryStartSlot + 27;
         int playerHotbarStartSlot = playerInventoryEndSlot;

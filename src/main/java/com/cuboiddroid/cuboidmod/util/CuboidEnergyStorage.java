@@ -1,10 +1,10 @@
 package com.cuboiddroid.cuboidmod.util;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.energy.EnergyStorage;
 
-public class CuboidEnergyStorage extends EnergyStorage implements INBTSerializable<CompoundNBT> {
+public class CuboidEnergyStorage extends EnergyStorage { //implements INBTSerializable<Tag> {
 
     public CuboidEnergyStorage(int capacity, int maxTransfer) {
         super(capacity, maxTransfer);
@@ -41,20 +41,22 @@ public class CuboidEnergyStorage extends EnergyStorage implements INBTSerializab
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = new CompoundNBT();
-        tag.putInt("energy", getEnergyStored());
-        tag.putInt("capacity", this.capacity);
-        tag.putInt("maxExt", this.maxExtract);
-        tag.putInt("maxRec", this.maxReceive);
-        return tag;
+    public Tag serializeNBT() {
+       CompoundTag nbt = new CompoundTag();
+        nbt.putInt("energy", getEnergyStored());
+        nbt.putInt("capacity", this.capacity);
+        nbt.putInt("maxExt", this.maxExtract);
+        nbt.putInt("maxRec", this.maxReceive);
+        return nbt;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(Tag tag) {
+        CompoundTag nbt = (CompoundTag) tag;
         setEnergy(nbt.getInt("energy"));
         this.capacity = nbt.getInt("capacity");
         this.maxExtract = nbt.getInt("maxExt");
         this.maxReceive = nbt.getInt("maxRec");
+        // super.deserializeNBT(nbt);
     }
 }

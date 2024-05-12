@@ -2,34 +2,34 @@ package com.cuboiddroid.cuboidmod.modules.craftingtable.block;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.craftingtable.inventory.CuboidCraftingContainer;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 public class CuboidCraftingTableBase extends CraftingTableBlock {
 
-    private ITextComponent NAME;
+    private Component NAME;
 
     public CuboidCraftingTableBase(String cuboidMaterialName) {
-        super(AbstractBlock.Properties.copy(net.minecraft.block.Blocks.CRAFTING_TABLE));
-        this.NAME = new TranslationTextComponent(CuboidMod.MOD_ID + ".container." + cuboidMaterialName + "_crafting_table");
+        super(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
+        this.NAME = new TranslatableComponent(CuboidMod.MOD_ID + ".container." + cuboidMaterialName + "_crafting_table");
     }
 
     @Override
-    public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
-        return new SimpleNamedContainerProvider(
+    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+        return new SimpleMenuProvider(
                 (id, inventory, entity) ->
                         new CuboidCraftingContainer(
                                 id,
                                 inventory,
-                                IWorldPosCallable.create(worldIn, pos),
+                                ContainerLevelAccess.create(worldIn, pos),
                                 this
                         ),
                 NAME);

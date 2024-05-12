@@ -2,13 +2,13 @@ package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
 /**
  * Made from bowl of broth and protein paste
@@ -21,7 +21,7 @@ public class GruelItem extends Item {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
                 .stacksTo(1)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(5)
                         .saturationMod(0.7F)
                         .build()));
@@ -36,9 +36,9 @@ public class GruelItem extends Item {
      * @return the empty notsogudium bowl
      */
     @Override
-    public ItemStack finishUsingItem(ItemStack itemStack, World level, LivingEntity entity) {
+    public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity entity) {
         ItemStack itemstack = super.finishUsingItem(itemStack, level, entity);
-        return entity instanceof PlayerEntity && ((PlayerEntity) entity).abilities.instabuild ? itemstack : new ItemStack(ModItems.NOTSOGUDIUM_BOWL.get());
+        return entity instanceof Player && ((Player) entity).getAbilities().instabuild ? itemstack : new ItemStack(ModItems.NOTSOGUDIUM_BOWL.get());
     }
 
 }

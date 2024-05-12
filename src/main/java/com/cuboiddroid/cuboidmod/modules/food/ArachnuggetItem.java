@@ -1,11 +1,11 @@
 package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Made by smelting a spider eye
@@ -19,12 +19,12 @@ public class ArachnuggetItem extends Item {
     public ArachnuggetItem() {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(3)
                         .saturationMod(0.4F)
                         .meat()
-                        .effect(() -> new EffectInstance(Effects.POISON, 2 * 20, 0), 0.1F)
-                        .effect(() -> new EffectInstance(Effects.SATURATION, 5 * 20, 0), 0.025F)
+                        .effect(() -> new MobEffectInstance(MobEffects.POISON, 2 * 20, 0), 0.1F)
+                        .effect(() -> new MobEffectInstance(MobEffects.SATURATION, 5 * 20, 0), 0.025F)
                         .build()));
     }
 }

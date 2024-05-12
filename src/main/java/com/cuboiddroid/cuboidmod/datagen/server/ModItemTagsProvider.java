@@ -3,9 +3,9 @@ package com.cuboiddroid.cuboidmod.datagen.server;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -302,6 +302,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.FURNACES).addTag(ModTags.Items.FURNACES_EUMUS);
     }
 
+    @SuppressWarnings("unchecked")
     private void addSingularityTags()
     {
         tag(ModTags.Items.QUANTUM_SINGULARITIES_ANDESITE).add(ModItems.ANDESITE_QUANTUM_SINGULARITY.get());

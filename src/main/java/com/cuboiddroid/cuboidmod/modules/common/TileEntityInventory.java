@@ -1,55 +1,60 @@
 package com.cuboiddroid.cuboidmod.modules.common;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.INameable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
-public abstract class TileEntityInventory extends TileEntity implements ITileInventory, ISidedInventory, INamedContainerProvider, INameable {
+public abstract class TileEntityInventory extends BlockEntity implements ITileInventory, WorldlyContainer, MenuProvider, Nameable {
 
     public NonNullList<ItemStack> inventory;
-    protected ITextComponent name;
+    protected Component name;
 
-    public TileEntityInventory(TileEntityType<?> tileEntityTypeIn, int sizeInventory) {
-        super(tileEntityTypeIn);
+    public TileEntityInventory(BlockEntityType<?> tileEntityTypeIn, int sizeInventory) {
+        this(tileEntityTypeIn, null, null, sizeInventory);
+    }
+
+    public TileEntityInventory(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state, int sizeInventory) {
+        super(tileEntityTypeIn, pos, state);
         inventory = NonNullList.withSize(sizeInventory, ItemStack.EMPTY);
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket(){
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket(){
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt){
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT compound = new CompoundNBT();
+    public CompoundTag getUpdateTag() {
+        CompoundTag compound = new CompoundTag();
 
         this.save(compound);
         return compound;
@@ -60,13 +65,13 @@ public abstract class TileEntityInventory extends TileEntity implements ITileInv
         return this.IisItemValidForSlot(index, stack);
     }
 
-    public void setCustomName(ITextComponent name) {
+    public void setCustomName(Component name) {
         this.name = name;
     }
 
     @Override
-    public ITextComponent getName() {
-        return (this.name != null ? this.name : new TranslationTextComponent(IgetName()));
+    public Component getName() {
+        return (this.name != null ? this.name : new TranslatableComponent(IgetName()));
     }
 
     @Override
@@ -103,12 +108,12 @@ public abstract class TileEntityInventory extends TileEntity implements ITileInv
 
     @Override
     public ItemStack removeItem(int index, int count) {
-        return ItemStackHelper.removeItem(this.inventory, index, count);
+        return ContainerHelper.removeItem(this.inventory, index, count);
     }
 
     @Override
     public ItemStack removeItemNoUpdate(int index) {
-        return ItemStackHelper.takeItem(this.inventory, index);
+        return ContainerHelper.takeItem(this.inventory, index);
     }
 
 
@@ -133,27 +138,27 @@ public abstract class TileEntityInventory extends TileEntity implements ITileInv
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT compound) {
-        super.load(state, compound);
+    public void load(CompoundTag compound) {
+        super.load(compound);
         this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.inventory);
+        ContainerHelper.loadAllItems(compound, this.inventory);
         if (compound.contains("CustomName", 8)) {
-            this.name = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
         }
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         super.save(compound);
-        ItemStackHelper.saveAllItems(compound, this.inventory);
+        ContainerHelper.saveAllItems(compound, this.inventory);
         if (this.name != null) {
-            compound.putString("CustomName", ITextComponent.Serializer.toJson(this.name));
+            compound.putString("CustomName", Component.Serializer.toJson(this.name));
         }
         return compound;
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         if (this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
         } else {
@@ -162,10 +167,10 @@ public abstract class TileEntityInventory extends TileEntity implements ITileInv
     }
 
     @Override
-    public void startOpen(PlayerEntity player) { }
+    public void startOpen(Player player) { }
 
     @Override
-    public void stopOpen(PlayerEntity player) { }
+    public void stopOpen(Player player) { }
 
     @Override
     public void setRemoved() {
@@ -179,18 +184,18 @@ public abstract class TileEntityInventory extends TileEntity implements ITileInv
 
     @Nullable
     @Override
-    public ITextComponent getCustomName() {
+    public Component getCustomName() {
         return this.name;
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return this.getName();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int i, Inventory playerInventory, Player playerEntity) {
         return IcreateMenu(i, playerInventory, playerEntity);
     }
 }

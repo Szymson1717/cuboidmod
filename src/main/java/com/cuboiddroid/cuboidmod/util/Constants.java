@@ -1,7 +1,7 @@
 package com.cuboiddroid.cuboidmod.util;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class Constants {
     // recipes

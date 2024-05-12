@@ -1,17 +1,18 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.inventory;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.CuboidFurnaceTileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fmllegacy.hooks.BasicEventHooks;
 
 public class CuboidFurnaceSlot extends Slot {
 
-    private final PlayerEntity player;
+    private final Player player;
     private int removeCount;
     private CuboidFurnaceTileEntityBase te;
 
-    public CuboidFurnaceSlot(PlayerEntity player, CuboidFurnaceTileEntityBase te, int slotIndex, int xPosition, int yPosition) {
+    public CuboidFurnaceSlot(Player player, CuboidFurnaceTileEntityBase te, int slotIndex, int xPosition, int yPosition) {
         super(te, slotIndex, xPosition, yPosition);
         this.player = player;
         this.te = te;
@@ -35,10 +36,10 @@ public class CuboidFurnaceSlot extends Slot {
         return super.remove(amount);
     }
 
-    public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+    public void onTake(Player thePlayer, ItemStack stack) {
         this.onCrafting(stack);
         super.onTake(thePlayer, stack);
-        return stack;
+        // return stack;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class CuboidFurnaceSlot extends Slot {
         }
 
         this.removeCount = 0;
-        net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
+        BasicEventHooks.firePlayerSmeltedEvent(this.player, stack);
     }
 
 }

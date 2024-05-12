@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:kudbebedda_chunk"
+            "items": [
+              "cuboidmod:kudbebedda_chunk"
+            ]
           }
         ]
       }

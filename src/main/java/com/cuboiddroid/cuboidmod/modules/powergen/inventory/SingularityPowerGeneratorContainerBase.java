@@ -3,15 +3,15 @@ package com.cuboiddroid.cuboidmod.modules.powergen.inventory;
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IntReferenceHolder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -23,18 +23,18 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class SingularityPowerGeneratorContainerBase extends Container {
+public abstract class SingularityPowerGeneratorContainerBase extends AbstractContainerMenu {
     protected SingularityPowerGeneratorTileEntityBase tileEntity;
-    protected PlayerEntity playerEntity;
+    protected Player playerEntity;
     protected IItemHandler playerInventory;
-    protected final World level;
+    protected final Level level;
 
-    public SingularityPowerGeneratorContainerBase(ContainerType<?> containerType,
+    public SingularityPowerGeneratorContainerBase(MenuType<?> containerType,
                                                   int windowId,
-                                                  World world,
+                                                  Level world,
                                                   BlockPos pos,
-                                                  PlayerInventory playerInventory,
-                                                  PlayerEntity player) {
+                                                  Inventory playerInventory,
+                                                  Player player) {
         super(containerType, windowId);
         this.tileEntity = (SingularityPowerGeneratorTileEntityBase) world.getBlockEntity(pos);
         this.playerEntity = player;
@@ -65,7 +65,7 @@ public abstract class SingularityPowerGeneratorContainerBase extends Container {
     private void trackPower() {
         // Unfortunately on a dedicated server ints are actually truncated to short so we need
         // to split our integer here (split our 32 bit integer into two 16 bit integers)
-        this.addDataSlot(new IntReferenceHolder() {
+        this.addDataSlot(new DataSlot() {
             @Override
             public int get() {
                 return getEnergy() & 0xffff;
@@ -80,7 +80,7 @@ public abstract class SingularityPowerGeneratorContainerBase extends Container {
             }
         });
 
-        this.addDataSlot(new IntReferenceHolder() {
+        this.addDataSlot(new DataSlot() {
             @Override
             public int get() {
                 return (getEnergy() >> 16) & 0xffff;
@@ -112,7 +112,7 @@ public abstract class SingularityPowerGeneratorContainerBase extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {

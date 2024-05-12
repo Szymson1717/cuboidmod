@@ -2,27 +2,23 @@ package com.cuboiddroid.cuboidmod.modules.furnace.inventory;
 
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import static com.cuboiddroid.cuboidmod.modules.craftingtable.inventory.CuboidCraftingContainer.isWithinUsableDistance;
 
 public class EumusFurnaceContainer extends CuboidFurnaceContainerBase {
 
-    public EumusFurnaceContainer(int windowId, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    public EumusFurnaceContainer(int windowId, Level level, BlockPos pos, Inventory playerInventory, Player player) {
         super(ModContainers.EUMUS_FURNACE.get(), windowId, level, pos, playerInventory, player);
     }
 
-    public EumusFurnaceContainer(int windowId, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray fields) {
-        super(ModContainers.EUMUS_FURNACE.get(), windowId, level, pos, playerInventory, player, fields);
-    }
-
     @Override
-    public boolean stillValid(PlayerEntity player) {
-        return isWithinUsableDistance(IWorldPosCallable.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.EUMUS_FURNACE.get());
+    public boolean stillValid(Player player) {
+        return isWithinUsableDistance(ContainerLevelAccess.create(te.getLevel(), te.getBlockPos()), playerEntity, ModBlocks.EUMUS_FURNACE.get());
     }
 }

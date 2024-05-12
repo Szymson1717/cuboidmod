@@ -1,11 +1,11 @@
 package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Made by combining an apple and rotten flesh in a QTC
@@ -19,11 +19,11 @@ public class RottenAppleItem extends Item {
     public RottenAppleItem() {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(4)
                         .saturationMod(0.3F)
-                        .effect(() -> new EffectInstance(Effects.CONFUSION, 10 * 20, 0), 0.5F)
-                        .effect(() -> new EffectInstance(Effects.POISON, 5 * 20, 0), 0.15F)
+                        .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 10 * 20, 0), 0.5F)
+                        .effect(() -> new MobEffectInstance(MobEffects.POISON, 5 * 20, 0), 0.15F)
                         .build()));
     }
 }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:apple_cider_vinegar"
+            "items": [
+              "cuboidmod:apple_cider_vinegar"
+            ]
           }
         ]
       }

@@ -1,28 +1,29 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
+import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -32,7 +33,8 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class SingularityResourceGeneratorTileEntityBase extends TileEntity implements ITickableTileEntity {
+@SuppressWarnings("rawtypes")
+public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEntity implements BlockEntityTicker  {
 
     private ItemStackHandler inputItemHandler = createInputHandler();
     private ItemStackHandler outputItemHandler = createOutputHandler();
@@ -58,12 +60,12 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
 
     private ResourceGeneratingRecipe cachedRecipe = null;
 
-    public SingularityResourceGeneratorTileEntityBase(
-            TileEntityType<?> tileEntityType,
-            int ticksPerOperation,
-            int itemsPerOperation,
-            int maxItems) {
-        super(tileEntityType);
+    public SingularityResourceGeneratorTileEntityBase(BlockEntityType<?> tileEntityType, int ticksPerOperation, int itemsPerOperation, int maxItems) {
+        this(tileEntityType, null, null, ticksPerOperation, itemsPerOperation, maxItems);
+    }
+
+    public SingularityResourceGeneratorTileEntityBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state, int ticksPerOperation, int itemsPerOperation, int maxItems) {
+        super(tileEntityType, pos, state);
 
         this.itemsAvailable = 0;
         this.processingTime = 0;
@@ -80,8 +82,12 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         combinedHandler.invalidate();
     }
 
+    public static <T extends SingularityResourceGeneratorTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
+
     @Override
-    public void tick() {
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
         if (level.isClientSide)
             return;
 
@@ -147,10 +153,8 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         if (blockState.getValue(BlockStateProperties.LIT) != processingTime > 0) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0), Block.UPDATE_ALL);
         }
     }
 
@@ -161,7 +165,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
             return null;
 
         // make an inventory
-        IInventory inv = getInputsAsInventory();
+        Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
@@ -170,8 +174,8 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         return cachedRecipe;
     }
 
-    private Inventory getInputsAsInventory() {
-        return new Inventory(this.inputItemHandler.getStackInSlot(0).copy());
+    private SimpleContainer getInputsAsInventory() {
+        return new SimpleContainer(this.inputItemHandler.getStackInSlot(0).copy());
     }
 
     private ItemStack getWorkOutput(@Nullable ResourceGeneratingRecipe recipe) {
@@ -183,15 +187,15 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
@@ -252,11 +256,11 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
     /**
      * implementing classes should do something like this:
      *
-     * return new TranslationTextComponent("cuboidmod.container.[identifier]");
+     * return new TranslatableComponent("cuboidmod.container.[identifier]");
      *
      * @return the display name
      */
-    public abstract ITextComponent getDisplayName();
+    public abstract Component getDisplayName();
 
     @Nonnull
     @Override
@@ -273,25 +277,25 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends TileEnt
         return super.getCapability(cap, side);
     }
 
-    public abstract Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity);
+    public abstract AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity);
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
 
-    public IInventory getContentDrops() {
+    public Container getContentDrops() {
         return getInputsAsInventory();
     }
 }

@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:kebab_raw"
+            "items": [
+              "cuboidmod:kebab_raw"
+            ]
           }
         ]
       }

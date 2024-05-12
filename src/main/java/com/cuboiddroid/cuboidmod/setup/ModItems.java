@@ -4,9 +4,17 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.item.*;
 import com.cuboiddroid.cuboidmod.modules.food.*;
 import com.cuboiddroid.cuboidmod.modules.tools.*;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraftforge.fmllegacy.RegistryObject;
+
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 
 public class ModItems {
     // Notsogudium
@@ -82,7 +90,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_HELMET = Registration.ITEMS.register(
             "notsogudium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlotType.HEAD,
+                    EquipmentSlot.HEAD,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -91,7 +99,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_CHESTPLATE = Registration.ITEMS.register(
             "notsogudium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlotType.CHEST,
+                    EquipmentSlot.CHEST,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -100,7 +108,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_LEGGINGS = Registration.ITEMS.register(
             "notsogudium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlotType.LEGS,
+                    EquipmentSlot.LEGS,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -109,7 +117,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_BOOTS = Registration.ITEMS.register(
             "notsogudium_boots", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlotType.FEET,
+                    EquipmentSlot.FEET,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -191,7 +199,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_HELMET = Registration.ITEMS.register(
             "kudbebedda_helmet", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlotType.HEAD,
+                    EquipmentSlot.HEAD,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -200,7 +208,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_CHESTPLATE = Registration.ITEMS.register(
             "kudbebedda_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlotType.CHEST,
+                    EquipmentSlot.CHEST,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -209,7 +217,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_LEGGINGS = Registration.ITEMS.register(
             "kudbebedda_leggings", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlotType.LEGS,
+                    EquipmentSlot.LEGS,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -218,7 +226,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_BOOTS = Registration.ITEMS.register(
             "kudbebedda_boots", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlotType.FEET,
+                    EquipmentSlot.FEET,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -300,7 +308,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_HELMET = Registration.ITEMS.register(
             "notarfbadium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlotType.HEAD,
+                    EquipmentSlot.HEAD,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -309,7 +317,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_CHESTPLATE = Registration.ITEMS.register(
             "notarfbadium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlotType.CHEST,
+                    EquipmentSlot.CHEST,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -318,7 +326,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_LEGGINGS = Registration.ITEMS.register(
             "notarfbadium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlotType.LEGS,
+                    EquipmentSlot.LEGS,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -327,7 +335,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_BOOTS = Registration.ITEMS.register(
             "notarfbadium_boots", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlotType.FEET,
+                    EquipmentSlot.FEET,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -409,7 +417,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> WIKIDIUM_HELMET = Registration.ITEMS.register(
             "wikidium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlotType.HEAD,
+                    EquipmentSlot.HEAD,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -418,7 +426,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> WIKIDIUM_CHESTPLATE = Registration.ITEMS.register(
             "wikidium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlotType.CHEST,
+                    EquipmentSlot.CHEST,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -427,7 +435,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> WIKIDIUM_LEGGINGS = Registration.ITEMS.register(
             "wikidium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlotType.LEGS,
+                    EquipmentSlot.LEGS,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -436,7 +444,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> WIKIDIUM_BOOTS = Registration.ITEMS.register(
             "wikidium_boots", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlotType.FEET,
+                    EquipmentSlot.FEET,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -518,7 +526,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> THATLDU_HELMET = Registration.ITEMS.register(
             "thatldu_helmet", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlotType.HEAD,
+                    EquipmentSlot.HEAD,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -527,7 +535,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> THATLDU_CHESTPLATE = Registration.ITEMS.register(
             "thatldu_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlotType.CHEST,
+                    EquipmentSlot.CHEST,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -536,7 +544,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> THATLDU_LEGGINGS = Registration.ITEMS.register(
             "thatldu_leggings", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlotType.LEGS,
+                    EquipmentSlot.LEGS,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -545,7 +553,7 @@ public class ModItems {
     public static final RegistryObject<ArmorItem> THATLDU_BOOTS = Registration.ITEMS.register(
             "thatldu_boots", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlotType.FEET,
+                    EquipmentSlot.FEET,
                     new Item.Properties()
                             .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
             )
@@ -584,7 +592,7 @@ public class ModItems {
     // Protein Paste
     public static final RegistryObject<Item> PROTEIN_PASTE = Registration.ITEMS.register(
             "protein_paste", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-                    .food(new Food.Builder().nutrition(2).saturationMod(0.5F).meat().build())));
+                    .food(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).meat().build())));
 
     // Protein Fiber
     public static final RegistryObject<Item> PROTEIN_FIBER = Registration.ITEMS.register(

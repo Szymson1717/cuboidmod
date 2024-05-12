@@ -1,27 +1,32 @@
 package com.cuboiddroid.cuboidmod.modules.tools;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 import java.util.Random;
 import java.util.Set;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+
 public class ToolUtils {
     private static Random random = new Random();
 
-    public static void tryBreakAdjacent(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
-        RayTraceResult trace = calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
+    public static void tryBreakAdjacent(ItemStack stack, Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
+        HitResult trace = calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
-        if (trace.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
+        if (trace.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult blockTrace = (BlockHitResult) trace;
             Direction face = blockTrace.getDirection();
 
             for (int a = -1; a <= 1; a++) {
@@ -45,11 +50,11 @@ public class ToolUtils {
         }
     }
 
-    public static void tryBreak(ItemStack stack, World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
+    public static void tryBreak(ItemStack stack, Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
         if (isBreakableWithSmasher(world, pos, player, effectiveMaterials)) {
             BlockState state = world.getBlockState(pos);
 
-            if (!state.hasTileEntity()) {
+            if (!state.hasBlockEntity()) {
                 stack.hurt(1, random, null);
                 world.destroyBlock(pos, false);
                 Block.dropResources(state, world, pos, null, player, player.getMainHandItem());
@@ -57,7 +62,7 @@ public class ToolUtils {
         }
     }
 
-    public static Boolean isBreakableWithSmasher(World world, BlockPos pos, PlayerEntity player, Set<Material> effectiveMaterials) {
+    public static Boolean isBreakableWithSmasher(Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
         BlockState state = world.getBlockState(pos);
         boolean isWithinHarvestLevel = player.getMainHandItem().isCorrectToolForDrops(state);
         boolean isEffective = effectiveMaterials.contains(state.getMaterial());
@@ -67,19 +72,19 @@ public class ToolUtils {
         return (isEffective && !witherImmune && isWithinHarvestLevel);
     }
 
-    public static RayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
-        float f = player.xRot;
-        float f1 = player.yRot;
-        Vector3d vec3d = player.getEyePosition(1.0F);
-        float f2 = MathHelper.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f3 = MathHelper.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-        float f4 = -MathHelper.cos(-f * ((float) Math.PI / 180F));
-        float f5 = MathHelper.sin(-f * ((float) Math.PI / 180F));
+    public static HitResult calcRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
+        float f = player.getRotationVector().x;
+        float f1 = player.getRotationVector().x;
+        Vec3 vec3d = player.getEyePosition(1.0F);
+        float f2 = Mth.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
+        float f3 = Mth.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
+        float f4 = -Mth.cos(-f * ((float) Math.PI / 180F));
+        float f5 = Mth.sin(-f * ((float) Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue() + 1;
 
-        Vector3d vec3d1 = vec3d.add((double) f6 * d0, (double) f5 * d0, (double) f7 * d0);
-        return worldIn.clip(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+        Vec3 vec3d1 = vec3d.add((double) f6 * d0, (double) f5 * d0, (double) f7 * d0);
+        return worldIn.clip(new ClipContext(vec3d, vec3d1, ClipContext.Block.OUTLINE, fluidMode, player));
     }
 }

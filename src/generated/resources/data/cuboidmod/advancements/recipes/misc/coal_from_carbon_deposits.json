@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:carbon_deposit"
+            "items": [
+              "cuboidmod:carbon_deposit"
+            ]
           }
         ]
       }

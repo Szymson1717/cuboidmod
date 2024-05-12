@@ -4,16 +4,16 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.modules.furnace.block.CuboidFurnaceBlockBase;
 import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
 public class SingularityPowerGeneratorDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         spgFromBlocksFurnacesAndRedstoneBlock(provider, consumer,
                 ModBlocks.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(),
                 ModBlocks.NOTSOGUDIUM_BLOCK.get(),
@@ -74,7 +74,7 @@ public class SingularityPowerGeneratorDataGenRecipes extends DataGenRecipesBase 
                 "thatldu");
     }
 
-    private static void spgFromBlocksFurnacesAndRedstoneBlock(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
+    private static void spgFromBlocksFurnacesAndRedstoneBlock(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)
@@ -86,7 +86,7 @@ public class SingularityPowerGeneratorDataGenRecipes extends DataGenRecipesBase 
                 .save(consumer, modId(materialName + "_spg_from_blocks_furnace_and_redstone_block"));
     }
 
-    private static void spgUpgrade(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, SingularityPowerGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
+    private static void spgUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, SingularityPowerGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)

@@ -4,15 +4,15 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.modules.furnace.block.CuboidFurnaceBlockBase;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.block.SingularityResourceGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
 
 public class SingularityResourceGeneratorDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         srgFromBlocksFurnacesAndCraftingTable(provider, consumer,
                 ModBlocks.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(),
                 ModBlocks.NOTSOGUDIUM_BLOCK.get(),
@@ -82,7 +82,7 @@ public class SingularityResourceGeneratorDataGenRecipes extends DataGenRecipesBa
                 "thatldu");
     }
 
-    private static void srgFromBlocksFurnacesAndCraftingTable(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
+    private static void srgFromBlocksFurnacesAndCraftingTable(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)
@@ -94,7 +94,7 @@ public class SingularityResourceGeneratorDataGenRecipes extends DataGenRecipesBa
                 .save(consumer, modId(materialName + "_srg_from_blocks_furnace_and_crafting_table"));
     }
 
-    private static void srgUpgrade(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, SingularityResourceGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
+    private static void srgUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, SingularityResourceGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('#', block)
                 .define('$', furnace)

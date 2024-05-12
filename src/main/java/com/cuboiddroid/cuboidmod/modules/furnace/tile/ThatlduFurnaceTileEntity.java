@@ -1,16 +1,23 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.ThatlduFurnaceContainer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ThatlduFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
     public ThatlduFurnaceTileEntity() {
-        super(ModTileEntities.THATLDU_FURNACE.get());
+        this(BlockPos.ZERO, ModBlocks.THATLDU_FURNACE.get().defaultBlockState());
+    }
+
+    public ThatlduFurnaceTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.THATLDU_FURNACE.get(), pos, state);
     }
 
     @Override
@@ -24,7 +31,7 @@ public class ThatlduFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
     }
 
     @Override
-    public Container IcreateMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new ThatlduFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity, this.fields);
+    public AbstractContainerMenu IcreateMenu(int i, Inventory playerInventory, Player playerEntity) {
+        return new ThatlduFurnaceContainer(i, level, worldPosition, playerInventory, playerEntity);
     }
 }

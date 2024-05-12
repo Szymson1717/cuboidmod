@@ -2,7 +2,7 @@ package com.cuboiddroid.cuboidmod.modules.collapser.item;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularityRegistry;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class CobaltQuantumSingularityItem extends QuantumSingularityItemBase {
     public CobaltQuantumSingularityItem() {

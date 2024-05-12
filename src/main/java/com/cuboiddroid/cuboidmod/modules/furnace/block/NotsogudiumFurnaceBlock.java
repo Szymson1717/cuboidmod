@@ -1,9 +1,14 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.block;
 
 import com.cuboiddroid.cuboidmod.modules.furnace.tile.NotsogudiumFurnaceTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.IBlockReader;
+import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
+
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -13,14 +18,20 @@ public class NotsogudiumFurnaceBlock extends CuboidFurnaceBlockBase {
         super(properties);
     }
 
+    // @Override
+    // public int getHarvestLevel(BlockState state) {
+    //     return 1;
+    // }
+
     @Override
-    public int getHarvestLevel(BlockState state) {
-        return 1;
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new NotsogudiumFurnaceTileEntity(pos, state);
     }
 
-    @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new NotsogudiumFurnaceTileEntity();
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, ModTileEntities.NOTSOGUDIUM_FURNACE.get(), NotsogudiumFurnaceTileEntity::gameTick);
     }
 }

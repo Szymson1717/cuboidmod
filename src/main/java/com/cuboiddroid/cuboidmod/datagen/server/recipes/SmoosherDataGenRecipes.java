@@ -4,16 +4,16 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.item.Item;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.world.item.Item;
 
 import java.util.function.Consumer;
 
 public class SmoosherDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(ModItems.SMOOSHER.get())
                 .define('#', ModTags.Items.STORAGE_BLOCKS)
                 .define('-', ModTags.Items.INGOTS)
@@ -45,11 +45,11 @@ public class SmoosherDataGenRecipes extends DataGenRecipesBase {
         addSmoosherRecipe(provider, consumer, ModItems.THATLDU_DUST.get(), ModItems.THATLDU_INGOT.get().asItem(), "thatldu_dust_with_smoosher_and_ingot", 1);
     }
 
-    private static void addSmoosherRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, Item outputItem, Item inputItem, String recipeId) {
+    private static void addSmoosherRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, Item outputItem, Item inputItem, String recipeId) {
         addSmoosherRecipe(provider, consumer, outputItem, inputItem, recipeId, 2);
     }
 
-    private static void addSmoosherRecipe(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, Item outputItem, Item inputItem, String recipeId, int amount) {
+    private static void addSmoosherRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, Item outputItem, Item inputItem, String recipeId, int amount) {
         ShapelessRecipeBuilder.shapeless(outputItem, amount)
                 .requires(ModItems.SMOOSHER.get())
                 .requires(inputItem)

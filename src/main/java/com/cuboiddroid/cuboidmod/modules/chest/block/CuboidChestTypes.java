@@ -3,15 +3,15 @@ package com.cuboiddroid.cuboidmod.modules.chest.block;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.chest.tile.*;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
 
-public enum CuboidChestTypes implements IStringSerializable {
+public enum CuboidChestTypes implements StringRepresentable {
 
     NOTSOGUDIUM(18, 9, 184, 150, new ResourceLocation(CuboidMod.MOD_ID, "textures/gui/notsogudium_container.png"), 256, 256),
     KUDBEBEDDA(27, 9, 184, 168, new ResourceLocation(CuboidMod.MOD_ID, "textures/gui/kudbebedda_container.png"), 256, 256),

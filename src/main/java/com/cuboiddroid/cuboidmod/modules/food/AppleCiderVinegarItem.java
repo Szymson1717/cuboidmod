@@ -1,16 +1,16 @@
 package com.cuboiddroid.cuboidmod.modules.food;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,15 +27,15 @@ public class AppleCiderVinegarItem extends Item {
         super(new Properties()
                 .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
                 .stacksTo(1)
-                .food(new Food.Builder()
+                .food(new FoodProperties.Builder()
                         .nutrition(3)
                         .saturationMod(0.2F)
-                        .effect(() -> new EffectInstance(Effects.CONFUSION, 10 * 20, 0), 0.25F)
+                        .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 10 * 20, 0), 0.25F)
                         .build()));
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable World level, List<ITextComponent> list, ITooltipFlag flag) {
-        list.add(new TranslationTextComponent("item.cuboidmod.apple_cider_vinegar.hover_text"));
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+        list.add(new TranslatableComponent("item.cuboidmod.apple_cider_vinegar.hover_text"));
     }
 }

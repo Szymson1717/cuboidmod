@@ -6,15 +6,15 @@ import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGenerato
 import com.cuboiddroid.cuboidmod.modules.transmuter.block.QuantumTransmutationChamberBlock;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Items;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
 public class QuantumTransmutationChamberDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         qtcFromHopperCollapserSingularitiesPowerGenAndRedstone(provider, consumer,
                 ModBlocks.QUANTUM_TRANSMUTATION_CHAMBER.get(),
                 ModBlocks.WIKIDIUM_QUANTUM_COLLAPSER.get(),
@@ -28,7 +28,7 @@ public class QuantumTransmutationChamberDataGenRecipes extends DataGenRecipesBas
                 "thatldu");
     }
 
-    private static void qtcFromHopperCollapserSingularitiesPowerGenAndRedstone(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer, QuantumTransmutationChamberBlock output, QuantumCollapserBlockBase collapser, SingularityPowerGeneratorBlockBase spg, String materialName) {
+    private static void qtcFromHopperCollapserSingularitiesPowerGenAndRedstone(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumTransmutationChamberBlock output, QuantumCollapserBlockBase collapser, SingularityPowerGeneratorBlockBase spg, String materialName) {
         ShapedRecipeBuilder.shaped(output)
                 .define('@', collapser)
                 .define('R', Items.REDSTONE)

@@ -2,13 +2,13 @@ package com.cuboiddroid.cuboidmod.modules.collapser.registry;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 
 public class QuantumSingularityUtils {
     public static QuantumSingularity loadFromJson(ResourceLocation id, JsonObject json) {
-        String name = JSONUtils.getAsString(json, "name");
-        JsonArray colors = JSONUtils.getAsJsonArray(json, "colors");
+        String name = GsonHelper.getAsString(json, "name");
+        JsonArray colors = GsonHelper.getAsJsonArray(json, "colors");
 
         int overlayColor = Integer.parseInt(colors.get(0).getAsString(), 16);
         int underlayColor = Integer.parseInt(colors.get(1).getAsString(), 16);

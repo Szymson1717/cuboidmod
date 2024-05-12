@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:wikidium_chunk"
+            "items": [
+              "cuboidmod:wikidium_chunk"
+            ]
           }
         ]
       }

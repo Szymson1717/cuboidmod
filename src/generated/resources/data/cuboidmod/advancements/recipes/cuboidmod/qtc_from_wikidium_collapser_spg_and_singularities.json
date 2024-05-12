@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:wikidium_singularity_power_generator"
+            "items": [
+              "cuboidmod:wikidium_singularity_power_generator"
+            ]
           }
         ]
       }

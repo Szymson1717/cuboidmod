@@ -2,8 +2,8 @@ package com.cuboiddroid.cuboidmod.modules.collapser.item;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularityRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 
 public class NotsogudiumQuantumSingularityItem extends QuantumSingularityItemBase {
     public NotsogudiumQuantumSingularityItem() {

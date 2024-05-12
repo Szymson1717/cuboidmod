@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:carbon_nanotube"
+            "items": [
+              "cuboidmod:carbon_nanotube"
+            ]
           }
         ]
       }

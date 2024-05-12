@@ -1,17 +1,17 @@
 package com.cuboiddroid.cuboidmod.setup;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-public enum ModArmorMaterials implements IArmorMaterial {
+public enum ModArmorMaterials implements ArmorMaterial {
     NOTSOGUDIUM (CuboidMod.MOD_ID +":notsogudium_armor",
             5, new int[] { 1, 2, 3, 1 },
             8, SoundEvents.ARMOR_EQUIP_GENERIC,
@@ -71,12 +71,12 @@ public enum ModArmorMaterials implements IArmorMaterial {
     }
 
     @Override
-    public int getDurabilityForSlot(EquipmentSlotType slotType) {
+    public int getDurabilityForSlot(EquipmentSlot slotType) {
         return HEALTH_PER_SLOT[slotType.getIndex()] * this.durabilityMultiplier;
     }
 
     @Override
-    public int getDefenseForSlot(EquipmentSlotType slotType) {
+    public int getDefenseForSlot(EquipmentSlot slotType) {
         return this.slotProtections[slotType.getIndex()];
     }
 

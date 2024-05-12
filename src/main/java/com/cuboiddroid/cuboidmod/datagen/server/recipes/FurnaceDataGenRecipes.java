@@ -4,18 +4,18 @@ import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
 public class FurnaceDataGenRecipes extends DataGenRecipesBase {
 
-    public static void build(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         // vanilla furnace from chunks and silica dust
         buildFurnaceRecipes(provider, consumer);
 
@@ -43,7 +43,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
         cuboidFurnaceFromEarlierAndIngots(provider, consumer, ModBlocks.THATLDU_FURNACE.get(), ModBlocks.NOTARFBADIUM_FURNACE.get(), ModItems.THATLDU_INGOT.get(), "thatldu", "notarfbadium");
     }
 
-    private static void buildFurnaceRecipes(ModRecipeProvider provider, Consumer<IFinishedRecipe> consumer) {
+    private static void buildFurnaceRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(Blocks.FURNACE)
                 .define('#', ModTags.Items.ORES)
                 .define('$', ModTags.Items.DUSTS_SILICA)
@@ -67,7 +67,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
 
     private static void cuboidFurnaceFromPreviousAndIngots(
             ModRecipeProvider provider,
-            Consumer<IFinishedRecipe> consumer,
+            Consumer<FinishedRecipe> consumer,
             Block furnaceBlock,
             Block prevFurnace,
             Item ingot,
@@ -84,7 +84,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
 
     private static void cuboidFurnaceFromEarlierAndIngots(
             ModRecipeProvider provider,
-            Consumer<IFinishedRecipe> consumer,
+            Consumer<FinishedRecipe> consumer,
             Block furnaceBlock,
             Block prevFurnace,
             Item ingot,

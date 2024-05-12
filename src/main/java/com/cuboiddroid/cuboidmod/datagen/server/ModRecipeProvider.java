@@ -1,13 +1,13 @@
 package com.cuboiddroid.cuboidmod.datagen.server;
 
 import com.cuboiddroid.cuboidmod.datagen.server.recipes.*;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.function.Consumer;
 
@@ -17,7 +17,7 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         MaterialsDataGenRecipes.build(this, consumer);
 
         FurnaceDataGenRecipes.build(this, consumer);
@@ -38,11 +38,11 @@ public class ModRecipeProvider extends RecipeProvider {
         FoodItemDataGenRecipes.build(this, consumer);
     }
 
-    public InventoryChangeTrigger.Instance hasItem(ITag<Item> itemITag) {
+    public InventoryChangeTrigger.TriggerInstance hasItem(Tag<Item> itemITag) {
         return RecipeProvider.has(itemITag);
     }
 
-    public InventoryChangeTrigger.Instance hasItem(IItemProvider itemProvider) {
+    public InventoryChangeTrigger.TriggerInstance hasItem(ItemLike itemProvider) {
         return RecipeProvider.has(itemProvider);
     }
 }

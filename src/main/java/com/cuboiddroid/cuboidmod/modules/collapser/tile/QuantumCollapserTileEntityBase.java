@@ -2,29 +2,29 @@ package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityTicker ;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -36,7 +36,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Date;
 
-public abstract class QuantumCollapserTileEntityBase extends TileEntity implements ITickableTileEntity {
+@SuppressWarnings("rawtypes")
+public abstract class QuantumCollapserTileEntityBase extends BlockEntity implements BlockEntityTicker  {
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
     private static final int INPUT_SLOTS = 1;
@@ -62,16 +63,24 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
 
     private QuantumCollapsingRecipe cachedRecipe = null;
 
-    public QuantumCollapserTileEntityBase(TileEntityType<?> tileEntityType, float speedFactor) {
-        super(tileEntityType);
+    public QuantumCollapserTileEntityBase(BlockEntityType<?> tileEntityType, float speedFactor) {
+        this(tileEntityType, null, null, speedFactor);
+    }
+
+    public QuantumCollapserTileEntityBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state, float speedFactor) {
+        super(tileEntityType, pos, state);
         this.speedFactor = speedFactor;
     }
 
-    public abstract ITextComponent getDisplayName();
+    public abstract Component getDisplayName();
+
+    public static <T extends QuantumCollapserTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
+        entity.tick(level, worldPosition, blockState, entity);
+    }
 
     @Override
-    public void tick() {
-        if (this.level == null || this.level.isClientSide)
+    public void tick(Level level, BlockPos worldPosition, BlockState blockState, BlockEntity entity) {
+        if (level == null || level.isClientSide)
             return;
 
         boolean didWorkThisTick = false;
@@ -136,10 +145,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
             }
         }
 
-        BlockState blockState = this.level.getBlockState(this.worldPosition);
         if (blockState.getValue(BlockStateProperties.LIT) != (processingTime > 0 || didWorkThisTick)) {
-            this.level.setBlock(this.worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.LIT, processingTime > 0), Block.UPDATE_ALL);
         }
     }
 
@@ -227,8 +234,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         }
 
         // make an inventory - from current ingredient if input slot is empty, otherwise from whatever is in input slot
-        IInventory inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
-                ? new Inventory(this.currentIngredient.getItems()[0].copy())
+        Container inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
+                ? new SimpleContainer(this.currentIngredient.getItems()[0].copy())
                 : getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
@@ -238,8 +245,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         return cachedRecipe;
     }
 
-    private Inventory getInputsAsInventory() {
-        return new Inventory(this.inputItemHandler.getStackInSlot(0).copy());
+    private SimpleContainer getInputsAsInventory() {
+        return new SimpleContainer(this.inputItemHandler.getStackInSlot(0).copy());
     }
 
     private ItemStack getWorkOutput(@Nullable QuantumCollapsingRecipe recipe) {
@@ -273,7 +280,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
@@ -285,7 +292,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
             String curIngId = tag.getString("curIng");
             currentIngredient = curIngId.isEmpty()
                     ? Ingredient.EMPTY
-                    : Ingredient.fromJson(JSONUtils.parse(curIngId));
+                    : Ingredient.fromJson(GsonHelper.parse(curIngId));
         } catch(Exception ex) {
             currentIngredient = Ingredient.EMPTY;
         }
@@ -293,11 +300,11 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         String currentOutputId = tag.getString("curOutId");
         currentOutput = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(currentOutputId)));
 
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public CompoundTag save(CompoundTag tag) {
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
@@ -332,17 +339,17 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
      * @return the packet
      */
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbtTag = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag nbtTag = new CompoundTag();
         this.save(nbtTag);
         this.setChanged();
-        return new SUpdateTileEntityPacket(getBlockPos(), -1, nbtTag);
+        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT tag = pkt.getTag();
-        this.load(level.getBlockState(worldPosition), tag);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        CompoundTag tag = pkt.getTag();
+        this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
     }
@@ -350,8 +357,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
     /* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client
      */
     @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbtTagCompound = new CompoundNBT();
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbtTagCompound = new CompoundTag();
         save(nbtTagCompound);
         return nbtTagCompound;
     }
@@ -359,8 +366,8 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
     /* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client
      */
     @Override
-    public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound) {
-        this.load(blockState, parentNBTTagCompound);
+    public void handleUpdateTag(CompoundTag nbt) {
+        this.load(nbt);
     }
 
     private ItemStackHandler createInputHandler() {
@@ -410,7 +417,7 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
         };
     }
 
-    public abstract Container createContainer(int i, World level, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity);
+    public abstract AbstractContainerMenu createContainer(int i, Level level, BlockPos pos, Inventory playerInventory, Player playerEntity);
 
     public int getProcessingTime() {
         return this.processingTime;
@@ -457,4 +464,6 @@ public abstract class QuantumCollapserTileEntityBase extends TileEntity implemen
     public ItemStack getSingularityOutputForDisplay() {
         return this.currentOutput.copy();
     }
+
+    
 }

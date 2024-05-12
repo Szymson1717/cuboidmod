@@ -1,5 +1,5 @@
 {
-    "parent": "block/block",
+    "parent": "minecraft:block/block",
     "textures": {
         "texture": "cuboidmod:model/kudbebedda_chest",
         "particle": "cuboidmod:block/kudbebedda_break"

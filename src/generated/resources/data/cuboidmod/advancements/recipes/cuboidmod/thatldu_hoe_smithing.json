@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "cuboidmod:thatldu_ingot"
+            "items": [
+              "cuboidmod:thatldu_ingot"
+            ]
           }
         ]
       }
