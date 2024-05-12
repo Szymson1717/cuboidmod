@@ -6,14 +6,14 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 
 public class QuantumSingularityUtils {
-    public static QuantumSingularity loadFromJson(ResourceLocation id, JsonObject json) {
+    public static TempQuantumSingularity loadFromJson(ResourceLocation id, JsonObject json) {
         String name = GsonHelper.getAsString(json, "name");
         JsonArray colors = GsonHelper.getAsJsonArray(json, "colors");
 
         int overlayColor = Integer.parseInt(colors.get(0).getAsString(), 16);
         int underlayColor = Integer.parseInt(colors.get(1).getAsString(), 16);
 
-        return new QuantumSingularity(id, name, new int[] { overlayColor, underlayColor });
+        return new TempQuantumSingularity(id, name, new int[] { overlayColor, underlayColor });
     }
 
     public static JsonObject writeToJson(QuantumSingularity singularity) {

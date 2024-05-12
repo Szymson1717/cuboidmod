@@ -18,6 +18,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -29,7 +30,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -93,14 +93,14 @@ public abstract class CuboidFurnaceBlockBase extends BaseEntityBlock {
     private void interactWith(Level level, BlockPos pos, Player player) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof MenuProvider) {
-            NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
+            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tileEntity, tileEntity.getBlockPos());
             player.awardStat(Stats.INTERACT_WITH_FURNACE);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
         if (state.getValue(BlockStateProperties.LIT)) {
             if (!(level.getBlockEntity(pos) instanceof CuboidFurnaceTileEntityBase))
             {

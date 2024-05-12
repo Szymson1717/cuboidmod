@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.block;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
-import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -17,8 +16,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.Mirror;
@@ -156,7 +153,7 @@ public abstract class QuantumCollapserBlockBase extends BaseEntityBlock {
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
+            NetworkHooks.openScreen((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }

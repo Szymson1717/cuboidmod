@@ -2,8 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
@@ -17,7 +15,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Objects;
 
@@ -89,8 +86,8 @@ public class DryingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the DryingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.DRYING.get();
+    public RecipeSerializer<DryingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -99,7 +96,7 @@ public class DryingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.DRYING.getRecipeType();
+        return DryingRecipe.Type.INSTANCE;
     }
 
     /**
@@ -162,10 +159,17 @@ public class DryingRecipe implements Recipe<Container> {
         return true;
     }
 
+    public static class Type implements RecipeType<DryingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "drying";
+    }
+
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<DryingRecipe> {
+    public static class Serializer implements RecipeSerializer<DryingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         /*
           JSON structure:
@@ -214,7 +218,7 @@ public class DryingRecipe implements Recipe<Container> {
         public void toNetwork(FriendlyByteBuf buffer, DryingRecipe recipe) {
             buffer.writeVarInt(recipe.workTicks);
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeResourceLocation(Objects.requireNonNull(recipe.resultItem.getItem().getRegistryName()));
+            buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(recipe.resultItem.getItem())));
             buffer.writeVarInt(recipe.resultItem.getCount());
         }
     }

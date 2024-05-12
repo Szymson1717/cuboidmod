@@ -25,7 +25,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
@@ -51,7 +50,7 @@ public class DryingCupboardBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(new TranslatableComponent("cuboidmod.hover_text.drying_cupboard"));
+        list.add(Component.translatable("cuboidmod.hover_text.drying_cupboard"));
     }
 
     @Nullable
@@ -106,7 +105,7 @@ public class DryingCupboardBlock extends BaseEntityBlock {
                 }
             };
 
-            NetworkHooks.openGui((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
+            NetworkHooks.openScreen((ServerPlayer) player, containerProvider, tileEntity.getBlockPos());
         } else {
             throw new IllegalStateException("Our named container provider is missing!");
         }

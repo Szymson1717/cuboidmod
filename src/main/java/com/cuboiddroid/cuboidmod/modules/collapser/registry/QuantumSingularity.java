@@ -2,15 +2,14 @@ package com.cuboiddroid.cuboidmod.modules.collapser.registry;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class QuantumSingularity {
     private static int nextIndex = 0;
 
     private final int index;
     private final ResourceLocation id;
-    private final String name;
-    private final int[] colors;
+    protected String name;
+    protected int[] colors;
 
     public QuantumSingularity(ResourceLocation id, String name, int[] colors) {
         this.index = nextIndex++;
@@ -38,6 +37,14 @@ public class QuantumSingularity {
     public int getIndex() { return this.index; }
 
     public Component getDisplayName() {
-        return new TranslatableComponent(this.name);
+        return Component.translatable(this.name);
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setColors(int[] colors) {
+        this.colors = colors;
     }
 }

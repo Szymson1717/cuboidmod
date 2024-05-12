@@ -24,7 +24,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.concurrent.Callable;
@@ -397,10 +397,10 @@ public class ModBlocks {
   private static Supplier<BlockItem> item(final RegistryObject<? extends Block> block, final Supplier<Callable<BlockEntityWithoutLevelRenderer>> renderMethod) {
     return () -> new BlockItem(block.get(), new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)) {
         @Override
-        public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-            consumer.accept(new IItemRenderProperties() {
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            consumer.accept(new IClientItemExtensions() {
                 @Override
-                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     try {
                         return renderMethod.get().call();
                     } catch (Exception e) {

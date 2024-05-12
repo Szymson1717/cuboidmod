@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
@@ -235,12 +234,12 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         }
 
         // make an inventory - from current ingredient if input slot is empty, otherwise from whatever is in input slot
-        Container inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
+        SimpleContainer inv = this.inputItemHandler.getStackInSlot(0).isEmpty()
                 ? new SimpleContainer(this.currentIngredient.getItems()[0].copy())
                 : getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<QuantumCollapsingRecipe> recipeType = ModRecipeTypes.COLLAPSING.getRecipeType();
+            RecipeType<QuantumCollapsingRecipe> recipeType = QuantumCollapsingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
@@ -262,7 +261,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             // if side is null, then it's not via automation, so provide access to everything
             if (side == null)
                 return combinedHandler.cast();
@@ -321,7 +320,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         else
             tag.putString("curIng", currentIngredient.toJson().toString());
 
-        tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
+        tag.putString("curOutId", ForgeRegistries.ITEMS.getKey(currentOutput.getItem()).toString());
     }
 
     @Override

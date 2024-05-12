@@ -26,7 +26,7 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutati
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
+import com.cuboiddroid.cuboidmod.setup.ModContainers;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -45,21 +45,21 @@ import java.util.List;
 public class CuboidModJeiPlugin implements IModPlugin {
     private static final ResourceLocation PLUGIN_UID = CuboidMod.getModId("plugin/main");
 
-    RecipeType<RecyclingRecipe> RECYCLING = createRecipeType(ModRecipeTypes.RECYCLING);
-    RecipeType<TransmutingRecipe> TRANSMUTING = createRecipeType(ModRecipeTypes.TRANSMUTING);
-    RecipeType<InscribingRecipe> INSCRIBING = createRecipeType(ModRecipeTypes.INSCRIBING);
-    RecipeType<QuantumCollapsingRecipe> COLLAPSING = createRecipeType(ModRecipeTypes.COLLAPSING);
-    RecipeType<ResourceGeneratingRecipe> RESOURCE_GENERATING = createRecipeType(ModRecipeTypes.RESOURCE_GENERATING);
-    RecipeType<PowerGeneratingRecipe> POWER_GENERATING = createRecipeType(ModRecipeTypes.POWER_GENERATING);
-    RecipeType<DryingRecipe> DRYING = createRecipeType(ModRecipeTypes.DRYING);
+    static RecipeType<RecyclingRecipe> RECYCLING = createRecipeType(RecyclingRecipe.Type.ID, RecyclingRecipe.class);
+    static RecipeType<TransmutingRecipe> TRANSMUTING = createRecipeType(TransmutingRecipe.Type.ID, TransmutingRecipe.class);
+    static RecipeType<InscribingRecipe> INSCRIBING = createRecipeType(InscribingRecipe.Type.ID, InscribingRecipe.class);
+    static RecipeType<QuantumCollapsingRecipe> COLLAPSING = createRecipeType(QuantumCollapsingRecipe.Type.ID, QuantumCollapsingRecipe.class);
+    static RecipeType<ResourceGeneratingRecipe> RESOURCE_GENERATING = createRecipeType(ResourceGeneratingRecipe.Type.ID, ResourceGeneratingRecipe.class);
+    static RecipeType<PowerGeneratingRecipe> POWER_GENERATING = createRecipeType(PowerGeneratingRecipe.Type.ID, PowerGeneratingRecipe.class);
+    static RecipeType<DryingRecipe> DRYING = createRecipeType(DryingRecipe.Type.ID, DryingRecipe.class);
 
-    private static <T extends Recipe<?>> RecipeType<T> createRecipeType(ModRecipeTypes recipeType) {
-        return RecipeType.create(CuboidMod.MOD_ID, recipeType.getName(), recipeType.getType());
+    private static <T extends Recipe<?>> RecipeType<T> createRecipeType(String name, Class<T> recipeType) {
+        return RecipeType.create(CuboidMod.MOD_ID, name, recipeType);
     }
 
-    private static <C extends Container, T extends Recipe<C>> List<T> getRecipesOfType(ModRecipeTypes recipeType) {
+    private static <C extends Container, T extends Recipe<C>> List<T> getRecipesOfType(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
         assert Minecraft.getInstance().level != null;
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor((net.minecraft.world.item.crafting.RecipeType<T>) recipeType.getRecipeType());
+        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
     }
 
     @Override
@@ -84,13 +84,13 @@ public class CuboidModJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         if (Config.enableJeiPlugin.get()) {
-            registration.addRecipes(RECYCLING, getRecipesOfType(ModRecipeTypes.RECYCLING));
-            registration.addRecipes(TRANSMUTING, getRecipesOfType(ModRecipeTypes.TRANSMUTING));
-            registration.addRecipes(INSCRIBING, getRecipesOfType(ModRecipeTypes.INSCRIBING));
-            registration.addRecipes(COLLAPSING, getRecipesOfType(ModRecipeTypes.COLLAPSING));
-            registration.addRecipes(RESOURCE_GENERATING, getRecipesOfType(ModRecipeTypes.RESOURCE_GENERATING));
-            registration.addRecipes(POWER_GENERATING, getRecipesOfType(ModRecipeTypes.POWER_GENERATING));
-            registration.addRecipes(DRYING, getRecipesOfType(ModRecipeTypes.DRYING));
+            registration.addRecipes(RECYCLING, getRecipesOfType(RecyclingRecipe.Type.INSTANCE));
+            registration.addRecipes(TRANSMUTING, getRecipesOfType(TransmutingRecipe.Type.INSTANCE));
+            registration.addRecipes(INSCRIBING, getRecipesOfType(InscribingRecipe.Type.INSTANCE));
+            registration.addRecipes(COLLAPSING, getRecipesOfType(QuantumCollapsingRecipe.Type.INSTANCE));
+            registration.addRecipes(RESOURCE_GENERATING, getRecipesOfType(ResourceGeneratingRecipe.Type.INSTANCE));
+            registration.addRecipes(POWER_GENERATING, getRecipesOfType(PowerGeneratingRecipe.Type.INSTANCE));
+            registration.addRecipes(DRYING, getRecipesOfType(DryingRecipe.Type.INSTANCE));
         }
     }
 
@@ -131,40 +131,40 @@ public class CuboidModJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         if (Config.enableJeiPlugin.get()) {
-            registration.addRecipeTransferHandler(MolecularRecyclerContainer.class, RECYCLING, 0, 7, 7, 36);
-            registration.addRecipeTransferHandler(QuantumTransmutationChamberContainer.class, TRANSMUTING, 0, 3, 3, 36);
-            registration.addRecipeTransferHandler(RefinedInscriberContainer.class, INSCRIBING, 0, 4, 4, 36);
-            registration.addRecipeTransferHandler(DryingCupboardContainer.class, DRYING, 0, 8, 16, 36);
+            registration.addRecipeTransferHandler(MolecularRecyclerContainer.class, ModContainers.MOLECULAR_RECYCLER.get(), RECYCLING, 0, 7, 7, 36);
+            registration.addRecipeTransferHandler(QuantumTransmutationChamberContainer.class, ModContainers.QUANTUM_TRANSMUTATION_CHAMBER.get(), TRANSMUTING, 0, 3, 3, 36);
+            registration.addRecipeTransferHandler(RefinedInscriberContainer.class, ModContainers.REFINED_INSCRIBER.get(), INSCRIBING, 0, 4, 4, 36);
+            registration.addRecipeTransferHandler(DryingCupboardContainer.class, ModContainers.DRYING_CUPBOARD.get(), DRYING, 0, 8, 16, 36);
 
-            registration.addRecipeTransferHandler(NotsogudiumQuantumCollapserContainer.class, COLLAPSING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(KudbebeddaQuantumCollapserContainer.class, COLLAPSING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(NotarfbadiumQuantumCollapserContainer.class, COLLAPSING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(WikidiumQuantumCollapserContainer.class, COLLAPSING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(ThatlduQuantumCollapserContainer.class, COLLAPSING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(NotsogudiumQuantumCollapserContainer.class, ModContainers.NOTSOGUDIUM_QUANTUM_COLLAPSER.get(), COLLAPSING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(KudbebeddaQuantumCollapserContainer.class, ModContainers.KUDBEBEDDA_QUANTUM_COLLAPSER.get(), COLLAPSING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(NotarfbadiumQuantumCollapserContainer.class, ModContainers.NOTARFBADIUM_QUANTUM_COLLAPSER.get(), COLLAPSING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(WikidiumQuantumCollapserContainer.class, ModContainers.WIKIDIUM_QUANTUM_COLLAPSER.get(), COLLAPSING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(ThatlduQuantumCollapserContainer.class, ModContainers.THATLDU_QUANTUM_COLLAPSER.get(), COLLAPSING, 0, 2, 2, 36);
 
-            registration.addRecipeTransferHandler(NotsogudiumSingularityResourceGeneratorContainer.class, RESOURCE_GENERATING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(KudbebeddaSingularityResourceGeneratorContainer.class, RESOURCE_GENERATING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(NotarfbadiumSingularityResourceGeneratorContainer.class, RESOURCE_GENERATING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(WikidiumSingularityResourceGeneratorContainer.class, RESOURCE_GENERATING, 0, 2, 2, 36);
-            registration.addRecipeTransferHandler(ThatlduSingularityResourceGeneratorContainer.class, RESOURCE_GENERATING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(NotsogudiumSingularityResourceGeneratorContainer.class, ModContainers.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), RESOURCE_GENERATING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(KudbebeddaSingularityResourceGeneratorContainer.class, ModContainers.KUDBEBEDDA_SINGULARITY_RESOURCE_GENERATOR.get(), RESOURCE_GENERATING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(NotarfbadiumSingularityResourceGeneratorContainer.class, ModContainers.NOTARFBADIUM_SINGULARITY_RESOURCE_GENERATOR.get(), RESOURCE_GENERATING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(WikidiumSingularityResourceGeneratorContainer.class, ModContainers.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(), RESOURCE_GENERATING, 0, 2, 2, 36);
+            registration.addRecipeTransferHandler(ThatlduSingularityResourceGeneratorContainer.class, ModContainers.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get(), RESOURCE_GENERATING, 0, 2, 2, 36);
 
-            registration.addRecipeTransferHandler(NotsogudiumSingularityPowerGeneratorContainer.class, POWER_GENERATING, 0, 1, 1, 36);
-            registration.addRecipeTransferHandler(KudbebeddaSingularityPowerGeneratorContainer.class, POWER_GENERATING, 0, 1, 1, 36);
-            registration.addRecipeTransferHandler(NotarfbadiumSingularityPowerGeneratorContainer.class, POWER_GENERATING, 0, 1, 1, 36);
-            registration.addRecipeTransferHandler(WikidiumSingularityPowerGeneratorContainer.class, POWER_GENERATING, 0, 1, 1, 36);
-            registration.addRecipeTransferHandler(ThatlduSingularityPowerGeneratorContainer.class, POWER_GENERATING, 0, 1, 1, 36);
+            registration.addRecipeTransferHandler(NotsogudiumSingularityPowerGeneratorContainer.class, ModContainers.NOTSOGUDIUM_SINGULARITY_POWER_GENERATOR.get(), POWER_GENERATING, 0, 1, 1, 36);
+            registration.addRecipeTransferHandler(KudbebeddaSingularityPowerGeneratorContainer.class, ModContainers.KUDBEBEDDA_SINGULARITY_POWER_GENERATOR.get(), POWER_GENERATING, 0, 1, 1, 36);
+            registration.addRecipeTransferHandler(NotarfbadiumSingularityPowerGeneratorContainer.class, ModContainers.NOTARFBADIUM_SINGULARITY_POWER_GENERATOR.get(), POWER_GENERATING, 0, 1, 1, 36);
+            registration.addRecipeTransferHandler(WikidiumSingularityPowerGeneratorContainer.class, ModContainers.WIKIDIUM_SINGULARITY_POWER_GENERATOR.get(), POWER_GENERATING, 0, 1, 1, 36);
+            registration.addRecipeTransferHandler(ThatlduSingularityPowerGeneratorContainer.class, ModContainers.THATLDU_SINGULARITY_POWER_GENERATOR.get(), POWER_GENERATING, 0, 1, 1, 36);
 
-            registration.addRecipeTransferHandler(NotsogudiumFurnaceContainer.class, RecipeTypes.SMELTING, 0, 1, 3, 36);
-            registration.addRecipeTransferHandler(KudbebeddaFurnaceContainer.class, RecipeTypes.SMELTING, 0, 1, 3, 36);
-            registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, RecipeTypes.SMELTING, 0, 1, 3, 36);
-            registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, RecipeTypes.SMELTING, 0, 1, 3, 36);
-            registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(NotsogudiumFurnaceContainer.class, ModContainers.NOTSOGUDIUM_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(KudbebeddaFurnaceContainer.class, ModContainers.KUDBEBEDDA_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, ModContainers.NOTARFBADIUM_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, ModContainers.WIKIDIUM_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, ModContainers.THATLDU_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
 
-            registration.addRecipeTransferHandler(NotsogudiumFurnaceContainer.class, RecipeTypes.FUELING, 1, 1, 3, 36);
-            registration.addRecipeTransferHandler(KudbebeddaFurnaceContainer.class, RecipeTypes.FUELING, 1, 1, 3, 36);
-            registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, RecipeTypes.FUELING, 1, 1, 3, 36);
-            registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, RecipeTypes.FUELING, 1, 1, 3, 36);
-            registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(NotsogudiumFurnaceContainer.class, ModContainers.NOTSOGUDIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(KudbebeddaFurnaceContainer.class, ModContainers.KUDBEBEDDA_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, ModContainers.NOTARFBADIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, ModContainers.WIKIDIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, ModContainers.THATLDU_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
         }
     }
 

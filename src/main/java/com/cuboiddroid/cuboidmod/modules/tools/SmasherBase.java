@@ -12,7 +12,6 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,6 +62,6 @@ public abstract class SmasherBase extends PickaxeItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add((new TranslatableComponent("hover_text.cuboidmod.smasher").withStyle(ChatFormatting.GREEN)));
+        tooltip.add((Component.translatable("hover_text.cuboidmod.smasher").withStyle(ChatFormatting.GREEN)));
     }
 }

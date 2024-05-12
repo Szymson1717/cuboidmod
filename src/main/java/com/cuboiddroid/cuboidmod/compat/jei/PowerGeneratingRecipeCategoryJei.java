@@ -4,28 +4,22 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.powergen.screen.SingularityPowerGeneratorScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.util.Constants;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGeneratingRecipe> {
     private static final int GUI_START_X = 10;
@@ -45,10 +39,10 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
 
     public PowerGeneratingRecipeCategoryJei(IGuiHelper guiHelper) {
         background = guiHelper.createDrawable(SingularityPowerGeneratorScreenBase.GUI, GUI_START_X, GUI_START_Y, GUI_WIDTH, GUI_HEIGHT);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(ModBlocks.THATLDU_SINGULARITY_POWER_GENERATOR.get()));
+        icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.THATLDU_SINGULARITY_POWER_GENERATOR.get()));
         energyBar = guiHelper.drawableBuilder(SingularityPowerGeneratorScreenBase.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = new TranslatableComponent("jei.category.cuboidmod.power_generating");
+        localizedName = Component.translatable("jei.category.cuboidmod.power_generating");
 
         notsogudiumEnergyPerTick =
                 Config.notsogudiumSingularityPowerGeneratorBaseEnergyGenerated.get();
@@ -82,13 +76,8 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
     }
 
     @Override
-    public ResourceLocation getUid() {
-        return Constants.POWER_GENERATING;
-    }
-
-    @Override
-    public Class<? extends PowerGeneratingRecipe> getRecipeClass() {
-        return PowerGeneratingRecipe.class;
+    public RecipeType<PowerGeneratingRecipe> getRecipeType() {
+        return CuboidModJeiPlugin.POWER_GENERATING;
     }
 
     @Override
@@ -111,10 +100,10 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
     //     ingredients.setInputIngredients(Collections.singletonList(recipe.getSingularity()));
     // }
 
-	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, PowerGeneratingRecipe recipe, IFocusGroup focuses) {
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, PowerGeneratingRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 50, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
-	}
+    }
 
     // @Override
     // public void setRecipe(IRecipeLayout recipeLayout, PowerGeneratingRecipe recipe, IIngredients ingredients) {
@@ -127,7 +116,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
     // }
 
     @Override
-    public void draw(PowerGeneratingRecipe recipe, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(PowerGeneratingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // energy
@@ -135,12 +124,12 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
 
         float multiplier = recipe.getPowerMultiplier();
         String energyText = "" + multiplier + "x";
-        renderScaledTextWithShadow(PoseStack, font, new TextComponent(energyText), 33 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(PoseStack, font, Component.literal(energyText), 33 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
 
-        renderScaledText(PoseStack, font, new TextComponent("Notso.: " + String.format("%.02f", notsogudiumEnergyPerTick * multiplier) + " FE/t"), 74, 2, 0.6F, 0x444444);
-        renderScaledText(PoseStack, font, new TextComponent("Kudbe.: " + String.format("%.02f", kudbebeddaEnergyPerTick * multiplier) + " FE/t"), 74, 11, 0.6F, 0x444444);
-        renderScaledText(PoseStack, font, new TextComponent("Notarf.: " + String.format("%.02f", notarfbadiumEnergyPerTick * multiplier) + " FE/t"), 74, 20, 0.6F, 0x444444);
-        renderScaledText(PoseStack, font, new TextComponent("Wikid.: " + String.format("%.02f", wikidiumEnergyPerTick * multiplier) + " FE/t"), 74, 29, 0.6F, 0x444444);
-        renderScaledText(PoseStack, font, new TextComponent("Thatl.: " + String.format("%.02f", thatlduEnergyPerTick * multiplier) + " FE/t"), 74, 38, 0.6F, 0x444444);
+        renderScaledText(PoseStack, font, Component.literal("Notso.: " + String.format("%.02f", notsogudiumEnergyPerTick * multiplier) + " FE/t"), 74, 2, 0.6F, 0x444444);
+        renderScaledText(PoseStack, font, Component.literal("Kudbe.: " + String.format("%.02f", kudbebeddaEnergyPerTick * multiplier) + " FE/t"), 74, 11, 0.6F, 0x444444);
+        renderScaledText(PoseStack, font, Component.literal("Notarf.: " + String.format("%.02f", notarfbadiumEnergyPerTick * multiplier) + " FE/t"), 74, 20, 0.6F, 0x444444);
+        renderScaledText(PoseStack, font, Component.literal("Wikid.: " + String.format("%.02f", wikidiumEnergyPerTick * multiplier) + " FE/t"), 74, 29, 0.6F, 0x444444);
+        renderScaledText(PoseStack, font, Component.literal("Thatl.: " + String.format("%.02f", thatlduEnergyPerTick * multiplier) + " FE/t"), 74, 38, 0.6F, 0x444444);
     }
 }

@@ -10,7 +10,6 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 public class CuboidCraftingTableBase extends CraftingTableBlock {
@@ -19,7 +18,7 @@ public class CuboidCraftingTableBase extends CraftingTableBlock {
 
     public CuboidCraftingTableBase(String cuboidMaterialName) {
         super(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE));
-        this.NAME = new TranslatableComponent(CuboidMod.MOD_ID + ".container." + cuboidMaterialName + "_crafting_table");
+        this.NAME = Component.translatable(CuboidMod.MOD_ID + ".container." + cuboidMaterialName + "_crafting_table");
     }
 
     @Override

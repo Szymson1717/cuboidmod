@@ -7,7 +7,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -29,6 +28,6 @@ public class RationPackItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("item.cuboidmod.ration_pack.hover_text"));
+        list.add(Component.translatable("item.cuboidmod.ration_pack.hover_text"));
     }
 }

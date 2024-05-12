@@ -10,17 +10,17 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
-import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class ToolUtils {
-    private static Random random = new Random();
+    private static RandomSource random = RandomSource.create();
 
     public static void tryBreakAdjacent(ItemStack stack, Level world, BlockPos pos, Player player, Set<Material> effectiveMaterials) {
         HitResult trace = calcRayTrace(world, player, ClipContext.Fluid.ANY);

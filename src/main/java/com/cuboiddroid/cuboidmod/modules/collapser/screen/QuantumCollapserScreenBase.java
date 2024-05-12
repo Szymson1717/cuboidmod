@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -72,7 +71,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
                     tooltip.add(this.getCurrentCollapsingItemDisplayName());
                 }
 
-                TextComponent text = new TextComponent(this.getItemsConsumed() + " / " + this.getTotalItemsRequired());
+                Component text = Component.literal(this.getItemsConsumed() + " / " + this.getTotalItemsRequired());
                 tooltip.add(text);
                 this.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);
             } else if (mouseX >= this.leftPos + 145 && mouseX < this.leftPos + 162 && mouseY >= this.topPos + 35 && mouseY < this.topPos + 52) {
@@ -97,8 +96,8 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
 
         this.minecraft.font.draw(matrix, this.playerInv.getDisplayName(), 7, this.imageHeight - 93, 4210752);
 
-        Component first = new TextComponent(firstLine);
-        Component second = new TextComponent(secondLine);
+        Component first = Component.literal(firstLine);
+        Component second = Component.literal(secondLine);
 
         this.minecraft.font.draw(matrix, first, this.imageWidth / 2 - this.minecraft.font.width(firstLine) / 2, 6, 4210752);
         this.minecraft.font.draw(matrix, second, this.imageWidth / 2 - this.minecraft.font.width(secondLine) / 2, 18, 4210752);
@@ -180,9 +179,9 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
         if (mouseX >= this.leftPos + BAR_TOP_LEFT_X && mouseX <= this.leftPos + BAR_TOP_LEFT_X + BAR_WIDTH && mouseY >= this.topPos + BAR_TOP_LEFT_Y && mouseY <= this.topPos + BAR_TOP_LEFT_Y + BAR_HEIGHT) {
             List<Component> tooltip = new ArrayList<>();
             if (this.tile.getAmountConsumed() <= 0) {
-                tooltip.add(new TextComponent("Empty"));
+                tooltip.add(Component.literal("Empty"));
             } else {
-                TextComponent text = new TextComponent(this.tile.getAmountConsumed() + " / " + this.tile.getAmountRequired());
+                Component text = Component.literal(this.tile.getAmountConsumed() + " / " + this.tile.getAmountRequired());
                 tooltip.add(text);
                 tooltip.add(this.tile.getCollapsingItemStackForDisplay().getHoverName());
             }
@@ -194,7 +193,7 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
 /*
     private MutableComponent getCurrentCollapsingItemDisplayName() {
         if (this.tile == null)
-            return new TextComponent("");
+            return Component.literal("");
 
         return this.tile.getInputDisplayName();
     }

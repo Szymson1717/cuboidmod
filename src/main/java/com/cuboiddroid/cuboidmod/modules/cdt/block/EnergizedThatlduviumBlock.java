@@ -8,7 +8,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nullable;
@@ -30,6 +29,6 @@ public class EnergizedThatlduviumBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("block.cuboidmod.energized_thatlduvium.hover_text"));
+        list.add(Component.translatable("block.cuboidmod.energized_thatlduvium.hover_text"));
     }
 }

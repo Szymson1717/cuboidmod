@@ -8,7 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,12 +26,12 @@ public class Smoosher extends Item {
     }
 
     @Override
-    public boolean hasContainerItem(ItemStack stack) {
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
         return true;
     }
 
     @Override
-    public ItemStack getContainerItem(ItemStack itemStack) {
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         ItemStack stack = itemStack.copy();
         stack.setDamageValue(stack.getDamageValue() + 1);
 
@@ -62,6 +61,6 @@ public class Smoosher extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(new TranslatableComponent("hover_text." + CuboidMod.MOD_ID + ".smoosher").withStyle(ChatFormatting.GREEN));
+        tooltip.add(Component.translatable("hover_text." + CuboidMod.MOD_ID + ".smoosher").withStyle(ChatFormatting.GREEN));
     }
 }

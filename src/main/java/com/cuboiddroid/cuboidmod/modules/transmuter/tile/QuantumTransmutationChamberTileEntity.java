@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,13 +25,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
@@ -80,7 +77,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     }
 
     public Component getDisplayName() {
-        return new TranslatableComponent("cuboidmod.container.quantum_transmutation_chamber");
+        return Component.translatable("cuboidmod.container.quantum_transmutation_chamber");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, QuantumTransmutationChamberTileEntity entity) {
@@ -216,7 +213,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<TransmutingRecipe> recipeType = ModRecipeTypes.TRANSMUTING.getRecipeType();
+            RecipeType<TransmutingRecipe> recipeType = TransmutingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
@@ -244,7 +241,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             // if side is null, then it's not via automation, so provide access to everything
             if (side == null)
                 return combinedHandler.cast();
@@ -263,7 +260,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
             }
         }
 
-        if (cap == CapabilityEnergy.ENERGY) {
+        if (cap == ForgeCapabilities.ENERGY) {
             return energy.cast();
         }
 

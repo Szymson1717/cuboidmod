@@ -9,7 +9,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -36,6 +35,6 @@ public class AppleCiderVinegarItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("item.cuboidmod.apple_cider_vinegar.hover_text"));
+        list.add(Component.translatable("item.cuboidmod.apple_cider_vinegar.hover_text"));
     }
 }

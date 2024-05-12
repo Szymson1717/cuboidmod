@@ -4,29 +4,22 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.SingularityResourceGeneratorScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.util.Constants;
 import com.mojang.blaze3d.vertex.PoseStack;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<ResourceGeneratingRecipe> {
     private static final int GUI_START_X = 24;
@@ -47,12 +40,12 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
 
     public ResourceGeneratingRecipeCategoryJei(IGuiHelper guiHelper) {
         background = guiHelper.createDrawable(SingularityResourceGeneratorScreenBase.GUI, GUI_START_X, GUI_START_Y, GUI_WIDTH, GUI_HEIGHT);
-        icon = guiHelper.createDrawableIngredient(new ItemStack(ModBlocks.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get()));
+        icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.THATLDU_SINGULARITY_RESOURCE_GENERATOR.get()));
         arrow = guiHelper.drawableBuilder(SingularityResourceGeneratorScreenBase.GUI, 184, 0, 24, 17)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
         itemBar = guiHelper.drawableBuilder(SingularityResourceGeneratorScreenBase.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = new TranslatableComponent("jei.category.cuboidmod.resource_generating");
+        localizedName = Component.translatable("jei.category.cuboidmod.resource_generating");
 
         notsogudiumItemsPerSecond =
                 20.0F * Config.notsogudiumSingularityResourceGeneratorItemsPerOperation.get()
@@ -83,13 +76,8 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
     }
 
     @Override
-    public ResourceLocation getUid() {
-        return Constants.RESOURCE_GENERATING;
-    }
-
-    @Override
-    public Class<? extends ResourceGeneratingRecipe> getRecipeClass() {
-        return ResourceGeneratingRecipe.class;
+    public RecipeType<ResourceGeneratingRecipe> getRecipeType() {
+        return CuboidModJeiPlugin.RESOURCE_GENERATING;
     }
 
     @Override
@@ -113,11 +101,11 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
     //     ingredients.setOutputs(VanillaTypes.ITEM, Collections.singletonList(recipe.getResultItem()));
     // }
 
-	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, ResourceGeneratingRecipe recipe, IFocusGroup focuses) {
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, ResourceGeneratingRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 7, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 14).addItemStack(recipe.getResultItem().copy());
-	}
+    }
 
     // @Override
     // public void setRecipe(IRecipeLayout recipeLayout, ResourceGeneratingRecipe recipe, IIngredients ingredients) {
@@ -132,7 +120,7 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
     // }
 
     @Override
-    public void draw(ResourceGeneratingRecipe recipe, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(ResourceGeneratingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
@@ -140,27 +128,27 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
 
         float factor = recipe.getOutputMultiplier() / recipe.getWorkTimeMultiplier();
 
-        renderScaledText(PoseStack, font, new TextComponent(
+        renderScaledText(PoseStack, font, Component.literal(
                 "Notso.: " + String.format("%.2f",
                         notsogudiumItemsPerSecond * factor
                 ) + " items/s"), 74, 2, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, new TextComponent(
+        renderScaledText(PoseStack, font, Component.literal(
                 "Kudbe.: " + String.format("%.2f",
                         kudbebeddaItemsPerSecond * factor
                 ) + " items/s"), 74, 11, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, new TextComponent(
+        renderScaledText(PoseStack, font, Component.literal(
                 "Notarf.: " + String.format("%.2f",
                         notarfbadiumItemsPerSecond * factor
                 ) + " items/s"), 74, 20, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, new TextComponent(
+        renderScaledText(PoseStack, font, Component.literal(
                 "Wikid.: " + String.format("%.2f",
                         wikidiumItemsPerSecond * factor
                 ) + " items/s"), 74, 29, 0.6F, 0x444444);
 
-        renderScaledText(PoseStack, font, new TextComponent(
+        renderScaledText(PoseStack, font, Component.literal(
                 "Thatl.: " + String.format("%.2f",
                         thatlduItemsPerSecond * factor
                 ) + " items/s"), 74, 38, 0.6F, 0x444444);

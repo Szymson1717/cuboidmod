@@ -12,7 +12,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -49,7 +48,7 @@ public class CuboidFurnaceScreenBase<T extends CuboidFurnaceContainerBase> exten
         if (this.menu.showInventoryButtons() && this.menu.getRedstoneMode() == 4) {
             int comSub = this.menu.getComSub();
             int i = comSub > 9 ? 28 : 31;
-            this.minecraft.font.draw(matrix, new TextComponent("" + comSub), i - 42, 90, 4210752);
+            this.minecraft.font.draw(matrix, Component.literal("" + comSub), i - 42, 90, 4210752);
         }
     }
 

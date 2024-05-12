@@ -1,7 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
@@ -168,7 +167,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            RecipeType<ResourceGeneratingRecipe> recipeType = ModRecipeTypes.RESOURCE_GENERATING.getRecipeType();
+            RecipeType<ResourceGeneratingRecipe> recipeType = ResourceGeneratingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
@@ -257,7 +256,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
     /**
      * implementing classes should do something like this:
      *
-     * return new TranslatableComponent("cuboidmod.container.[identifier]");
+     * return Component.translatable("cuboidmod.container.[identifier]");
      *
      * @return the display name
      */
@@ -266,7 +265,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             // if side is null, then it's not via automation, so provide access to everything
             if (side == null)
                 return combinedHandler.cast();

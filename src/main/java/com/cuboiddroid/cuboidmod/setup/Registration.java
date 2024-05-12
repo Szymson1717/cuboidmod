@@ -23,36 +23,28 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-// import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class Registration {
     public static final DeferredRegister<Block> BLOCKS = create(ForgeRegistries.BLOCKS);
     public static final DeferredRegister<Item> ITEMS = create(ForgeRegistries.ITEMS);
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = create(ForgeRegistries.CONTAINERS);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = create(ForgeRegistries.BLOCK_ENTITIES);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = create(ForgeRegistries.MENU_TYPES);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = create(ForgeRegistries.BLOCK_ENTITY_TYPES);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = create(ForgeRegistries.RECIPE_SERIALIZERS);
     public static final DeferredRegister<Fluid> FLUIDS = create(ForgeRegistries.FLUIDS);
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = create(Registry.RECIPE_TYPE_REGISTRY);
 
-    @SuppressWarnings("deprecation")
     public static void register() {
-        QuantumSingularityRegistry.getInstance().loadSingularities();
-        BlacklistConfig.getInstance().loadConfig();
-
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(modEventBus);
         CONTAINERS.register(modEventBus);
@@ -60,14 +52,12 @@ public class Registration {
         BLOCK_ENTITIES.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         FLUIDS.register(modEventBus);
-        RECIPE_TYPES.register(modEventBus);
 
         // class-load the registry object holder classes.
         ModBlocks.register();
         ModContainers.register();
         // ModItemTiers.register();
         ModItems.register();
-        ModRecipeTypes.register();
         ModRecipeSerializers.register();
         ModTileEntities.register();
         ModDimensions.register();
@@ -78,7 +68,12 @@ public class Registration {
         });
     }
 
-    private static <T extends IForgeRegistryEntry<T>> DeferredRegister<T> create(IForgeRegistry<T> registry) {
+    public static void registerConfigs() {
+        QuantumSingularityRegistry.getInstance().loadSingularities();
+        BlacklistConfig.getInstance().loadConfig();
+    }
+
+    private static <T> DeferredRegister<T> create(IForgeRegistry<T> registry) {
         return DeferredRegister.create(registry, CuboidMod.MOD_ID);
     }
 

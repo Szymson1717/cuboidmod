@@ -3,8 +3,6 @@ package com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe;
 import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +17,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 // based on SmithingRecipe
 public class InscribingRecipe implements Recipe<Container> {
@@ -122,8 +119,8 @@ public class InscribingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the InscribingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.INSCRIBING.get();
+    public RecipeSerializer<InscribingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -132,7 +129,7 @@ public class InscribingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.INSCRIBING.getRecipeType();
+        return InscribingRecipe.Type.INSTANCE;
     }
 
 
@@ -207,10 +204,17 @@ public class InscribingRecipe implements Recipe<Container> {
         return ingredients;
     }
 
+    public static class Type implements RecipeType<InscribingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "inscribing";
+    }
+
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<InscribingRecipe> {
+    public static class Serializer implements RecipeSerializer<InscribingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         /* - currently making this match AE2 recipe structure until I figure out
              how to just use them directly

@@ -2,8 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.resourcegen.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +14,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class ResourceGeneratingRecipe implements Recipe<Container> {
     private final ResourceLocation recipeId;
@@ -76,8 +73,8 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the ResourceGeneratingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.RESOURCE_GENERATING.get();
+    public RecipeSerializer<ResourceGeneratingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -86,7 +83,7 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.RESOURCE_GENERATING.getRecipeType();
+        return ResourceGeneratingRecipe.Type.INSTANCE;
     }
 
     /**
@@ -163,10 +160,18 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
         return this.outputMultiplier;
     }
 
+    public static class Type implements RecipeType<ResourceGeneratingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "resource_generating";
+    }
+
+
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<ResourceGeneratingRecipe> {
+    public static class Serializer implements RecipeSerializer<ResourceGeneratingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         /*
           JSON structure:

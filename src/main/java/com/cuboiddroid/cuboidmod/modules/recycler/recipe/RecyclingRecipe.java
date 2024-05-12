@@ -2,8 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.recycler.recipe;
 
 import com.cuboiddroid.cuboidmod.modules.recycler.tile.MolecularRecyclerTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeSerializers;
-import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.util.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,7 +18,6 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -103,8 +100,8 @@ public class RecyclingRecipe implements Recipe<Container> {
      *
      * @return the IRecipeSerializer for the RecyclingRecipe
      */
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.RECYCLING.get();
+    public RecipeSerializer<RecyclingRecipe> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
     /**
@@ -113,7 +110,7 @@ public class RecyclingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.RECYCLING.getRecipeType();
+        return RecyclingRecipe.Type.INSTANCE;
     }
 
     /**
@@ -203,10 +200,17 @@ public class RecyclingRecipe implements Recipe<Container> {
         return true;
     }
 
+    public static class Type implements RecipeType<RecyclingRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "recycling";
+    }
+
     // ---- Serializer ----
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>
-            implements RecipeSerializer<RecyclingRecipe> {
+    public static class Serializer implements RecipeSerializer<RecyclingRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+        public static final String ID = Type.ID;
 
         /*
           JSON structure:
@@ -273,7 +277,7 @@ public class RecyclingRecipe implements Recipe<Container> {
             recipe.ingredient.toNetwork(buffer);
             buffer.writeByte(recipe.results.size());
             recipe.results.forEach((stack, chance) -> {
-                buffer.writeResourceLocation(Objects.requireNonNull(stack.getItem().getRegistryName()));
+                buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())));
                 buffer.writeVarInt(stack.getCount());
                 buffer.writeFloat(chance);
             });

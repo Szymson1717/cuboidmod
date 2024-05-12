@@ -29,7 +29,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -105,7 +104,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(new TranslatableComponent("item.cuboidmod.cryogenic_dimensional_teleporter.hover_text"));
+        list.add(Component.translatable("item.cuboidmod.cryogenic_dimensional_teleporter.hover_text"));
     }
 
     @Nullable
