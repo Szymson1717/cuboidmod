@@ -11,6 +11,6 @@ public class NotsogudiumSmasher extends SmasherBase {
                 Config.notsogudiumSmasherAttackSpeed.get(),
                 new Properties()
                         .defaultDurability(Config.notsogudiumSmasherDurability.get())
-                        .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                        );
     }
 }

@@ -4,6 +4,9 @@ import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -45,19 +48,21 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
         localizedName = Component.translatable("jei.category.cuboidmod.drying");
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font Font, Component text, int x, int y, int width, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        float xOffset = (width / scale - Font.width(text)) / 2;
-        Font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        float xOffset = (width / scale - font.width(text)) / 2;
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
-    private static void renderScaledText(PoseStack matrix, Font Font, Component text, int x, int y, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        Font.draw(matrix, text, x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledText(GuiGraphics guiGraphics, Font font, Component text, int x, int y, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -89,7 +94,7 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DryingRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 25-GUI_START_X, 19-GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 25-GUI_START_X, 54-GUI_START_Y).addItemStack(recipe.getResultItem().copy());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 25-GUI_START_X, 54-GUI_START_Y).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override
@@ -105,18 +110,18 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
     // }
 
     @Override
-    public void draw(DryingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(DryingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // energy
-        energyBar.draw(PoseStack, 12 - GUI_START_X, 19 - GUI_START_Y);
+        energyBar.draw(matrix, 12 - GUI_START_X, 19 - GUI_START_Y);
 
         // drying time bar
-        dryingBar.draw(PoseStack, 31 - GUI_START_X, 39 - GUI_START_Y);
+        dryingBar.draw(matrix, 31 - GUI_START_X, 39 - GUI_START_Y);
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
         String dryingTimeText = "" + workSeconds + "." + workDecimal + " s";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(dryingTimeText), 40 - GUI_START_X, 42 - GUI_START_Y, 24, 0.8f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(dryingTimeText), 40 - GUI_START_X, 42 - GUI_START_Y, 24, 0.8f, 0xFFFFFF);
     }
 }

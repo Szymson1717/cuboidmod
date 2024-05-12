@@ -14,7 +14,7 @@ public class ProteinBarItem extends Item {
 
     public ProteinBarItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(5)
                         .saturationMod(0.6F)

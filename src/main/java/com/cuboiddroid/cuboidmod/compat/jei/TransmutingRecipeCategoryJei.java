@@ -4,6 +4,9 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -42,12 +45,13 @@ public class TransmutingRecipeCategoryJei implements IRecipeCategory<Transmuting
         localizedName = Component.translatable("jei.category.cuboidmod.transmuting");
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font Font, Component text, int x, int y, int width, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        float xOffset = (width / scale - Font.width(text)) / 2;
-        Font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        float xOffset = (width / scale - font.width(text)) / 2;
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -80,7 +84,7 @@ public class TransmutingRecipeCategoryJei implements IRecipeCategory<Transmuting
     public void setRecipe(IRecipeLayoutBuilder builder, TransmutingRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 28, 4).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
         builder.addSlot(RecipeIngredientRole.INPUT, 28, 26).addItemStacks(Arrays.asList(recipe.getIngredients().get(1).getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 90, 14).addItemStack(recipe.getResultItem().copy());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 90, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override
@@ -97,21 +101,21 @@ public class TransmutingRecipeCategoryJei implements IRecipeCategory<Transmuting
     // }
 
     @Override
-    public void draw(TransmutingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(TransmutingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
-        arrow.draw(PoseStack, 78 - GUI_START_X, 43 - GUI_START_Y);
+        arrow.draw(matrix, 78 - GUI_START_X, 43 - GUI_START_Y);
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
         String arrowText = "" + workSeconds + "." + workDecimal + " s";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // energy
-        energyBar.draw(PoseStack, 32 - GUI_START_X, 34 - GUI_START_Y);
+        energyBar.draw(matrix, 32 - GUI_START_X, 34 - GUI_START_Y);
 
         String energyText = "" + recipe.getEnergyRequired() + " FE";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
     }
 }

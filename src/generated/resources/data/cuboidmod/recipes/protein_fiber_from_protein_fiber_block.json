@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:protein_fiber_block"
     }
   ],
   "result": {
-    "item": "cuboidmod:protein_fiber",
-    "count": 9
+    "count": 9,
+    "item": "cuboidmod:protein_fiber"
   }
 }

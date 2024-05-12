@@ -1,0 +1,7 @@
+{
+  "parent": "cuboidmod:block/templates/singularity_resource_generator",
+  "textures": {
+    "core": "cuboidmod:block/model/singularity_resource_generator_pillar_lit",
+    "frame": "cuboidmod:block/model/notarfbadium_singularity_resource_generator_casing"
+  }
+}

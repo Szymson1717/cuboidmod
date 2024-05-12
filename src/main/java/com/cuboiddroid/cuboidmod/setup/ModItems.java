@@ -1,10 +1,8 @@
 package com.cuboiddroid.cuboidmod.setup;
 
-import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.item.*;
 import com.cuboiddroid.cuboidmod.modules.food.*;
 import com.cuboiddroid.cuboidmod.modules.tools.*;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.registries.RegistryObject;
 
 import net.minecraft.world.food.FoodProperties;
@@ -12,30 +10,31 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SwordItem;
 
 public class ModItems {
     // Notsogudium
-
     public static final RegistryObject<Item> NOTSOGUDIUM_INGOT = Registration.ITEMS.register(
-            "notsogudium_ingot", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_NUGGET = Registration.ITEMS.register(
-            "notsogudium_nugget", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_nugget", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_PIECE = Registration.ITEMS.register(
-            "notsogudium_piece", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_piece", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_CHUNK = Registration.ITEMS.register(
-            "notsogudium_chunk", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_chunk", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_DUST = Registration.ITEMS.register(
-            "notsogudium_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_ROD = Registration.ITEMS.register(
-            "notsogudium_rod", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_rod", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<SwordItem> NOTSOGUDIUM_SWORD = Registration.ITEMS.register(
             "notsogudium_sword", () -> new SwordItem(
@@ -43,9 +42,7 @@ public class ModItems {
                     3,
                     -2.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<PickaxeItem> NOTSOGUDIUM_PICKAXE = Registration.ITEMS.register(
             "notsogudium_pickaxe", () -> new PickaxeItem(
@@ -53,9 +50,7 @@ public class ModItems {
                     1,
                     -2.8F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<AxeItem> NOTSOGUDIUM_AXE = Registration.ITEMS.register(
             "notsogudium_axe", () -> new AxeItem(
@@ -63,9 +58,7 @@ public class ModItems {
                     5.0F,
                     -3.2F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ShovelItem> NOTSOGUDIUM_SHOVEL = Registration.ITEMS.register(
             "notsogudium_shovel", () -> new ShovelItem(
@@ -73,9 +66,7 @@ public class ModItems {
                     0.5F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<HoeItem> NOTSOGUDIUM_HOE = Registration.ITEMS.register(
             "notsogudium_hoe", () -> new HoeItem(
@@ -83,68 +74,57 @@ public class ModItems {
                     0,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_HELMET = Registration.ITEMS.register(
             "notsogudium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlot.HEAD,
+                    ArmorItem.Type.HELMET,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_CHESTPLATE = Registration.ITEMS.register(
             "notsogudium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlot.CHEST,
+                    ArmorItem.Type.CHESTPLATE,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_LEGGINGS = Registration.ITEMS.register(
             "notsogudium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlot.LEGS,
+                    ArmorItem.Type.LEGGINGS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTSOGUDIUM_BOOTS = Registration.ITEMS.register(
             "notsogudium_boots", () -> new ArmorItem(
                     ModArmorMaterials.NOTSOGUDIUM,
-                    EquipmentSlot.FEET,
+                    ArmorItem.Type.BOOTS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<Item> NOTSOGUDIUM_SMASHER = Registration.ITEMS.register(
             "notsogudium_smasher", () -> new NotsogudiumSmasher());
 
     // Kudbebedda
-
     public static final RegistryObject<Item> KUDBEBEDDA_INGOT = Registration.ITEMS.register(
-            "kudbebedda_ingot", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> KUDBEBEDDA_NUGGET = Registration.ITEMS.register(
-            "kudbebedda_nugget", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_nugget", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> KUDBEBEDDA_PIECE = Registration.ITEMS.register(
-            "kudbebedda_piece", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_piece", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> KUDBEBEDDA_CHUNK = Registration.ITEMS.register(
-            "kudbebedda_chunk", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_chunk", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> KUDBEBEDDA_DUST = Registration.ITEMS.register(
-            "kudbebedda_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> KUDBEBEDDA_ROD = Registration.ITEMS.register(
-            "kudbebedda_rod", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "kudbebedda_rod", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<SwordItem> KUDBEBEDDA_SWORD = Registration.ITEMS.register(
             "kudbebedda_sword", () -> new SwordItem(
@@ -152,9 +132,7 @@ public class ModItems {
                     3,
                     -2.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<PickaxeItem> KUDBEBEDDA_PICKAXE = Registration.ITEMS.register(
             "kudbebedda_pickaxe", () -> new PickaxeItem(
@@ -162,9 +140,7 @@ public class ModItems {
                     1,
                     -2.8F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<AxeItem> KUDBEBEDDA_AXE = Registration.ITEMS.register(
             "kudbebedda_axe", () -> new AxeItem(
@@ -172,9 +148,7 @@ public class ModItems {
                     5.0F,
                     -3.1F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ShovelItem> KUDBEBEDDA_SHOVEL = Registration.ITEMS.register(
             "kudbebedda_shovel", () -> new ShovelItem(
@@ -182,9 +156,7 @@ public class ModItems {
                     1.0F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<HoeItem> KUDBEBEDDA_HOE = Registration.ITEMS.register(
             "kudbebedda_hoe", () -> new HoeItem(
@@ -192,68 +164,57 @@ public class ModItems {
                     -1,
                     -2.5F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_HELMET = Registration.ITEMS.register(
             "kudbebedda_helmet", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlot.HEAD,
+                    ArmorItem.Type.HELMET,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_CHESTPLATE = Registration.ITEMS.register(
             "kudbebedda_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlot.CHEST,
+                    ArmorItem.Type.CHESTPLATE,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_LEGGINGS = Registration.ITEMS.register(
             "kudbebedda_leggings", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlot.LEGS,
+                    ArmorItem.Type.LEGGINGS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> KUDBEBEDDA_BOOTS = Registration.ITEMS.register(
             "kudbebedda_boots", () -> new ArmorItem(
                     ModArmorMaterials.KUDBEBEDDA,
-                    EquipmentSlot.FEET,
+                    ArmorItem.Type.BOOTS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<Item> KUDBEBEDDA_SMASHER = Registration.ITEMS.register(
             "kudbebedda_smasher", () -> new KudbebeddaSmasher());
 
     // Notarfbadium
-
     public static final RegistryObject<Item> NOTARFBADIUM_INGOT = Registration.ITEMS.register(
-            "notarfbadium_ingot", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTARFBADIUM_NUGGET = Registration.ITEMS.register(
-            "notarfbadium_nugget", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_nugget", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTARFBADIUM_PIECE = Registration.ITEMS.register(
-            "notarfbadium_piece", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_piece", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTARFBADIUM_CHUNK = Registration.ITEMS.register(
-            "notarfbadium_chunk", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_chunk", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTARFBADIUM_DUST = Registration.ITEMS.register(
-            "notarfbadium_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> NOTARFBADIUM_ROD = Registration.ITEMS.register(
-            "notarfbadium_rod", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notarfbadium_rod", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<SwordItem> NOTARFBADIUM_SWORD = Registration.ITEMS.register(
             "notarfbadium_sword", () -> new SwordItem(
@@ -261,9 +222,7 @@ public class ModItems {
                     3,
                     -2.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<PickaxeItem> NOTARFBADIUM_PICKAXE = Registration.ITEMS.register(
             "notarfbadium_pickaxe", () -> new PickaxeItem(
@@ -271,9 +230,7 @@ public class ModItems {
                     1,
                     -2.8F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<AxeItem> NOTARFBADIUM_AXE = Registration.ITEMS.register(
             "notarfbadium_axe", () -> new AxeItem(
@@ -281,9 +238,7 @@ public class ModItems {
                     5.0F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ShovelItem> NOTARFBADIUM_SHOVEL = Registration.ITEMS.register(
             "notarfbadium_shovel", () -> new ShovelItem(
@@ -291,9 +246,7 @@ public class ModItems {
                     1.0F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<HoeItem> NOTARFBADIUM_HOE = Registration.ITEMS.register(
             "notarfbadium_hoe", () -> new HoeItem(
@@ -301,68 +254,57 @@ public class ModItems {
                     -2,
                     -2.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_HELMET = Registration.ITEMS.register(
             "notarfbadium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlot.HEAD,
+                    ArmorItem.Type.HELMET,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_CHESTPLATE = Registration.ITEMS.register(
             "notarfbadium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlot.CHEST,
+                    ArmorItem.Type.CHESTPLATE,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_LEGGINGS = Registration.ITEMS.register(
             "notarfbadium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlot.LEGS,
+                    ArmorItem.Type.LEGGINGS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> NOTARFBADIUM_BOOTS = Registration.ITEMS.register(
             "notarfbadium_boots", () -> new ArmorItem(
                     ModArmorMaterials.NOTARFBADIUM,
-                    EquipmentSlot.FEET,
+                    ArmorItem.Type.BOOTS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<Item> NOTARFBADIUM_SMASHER = Registration.ITEMS.register(
             "notarfbadium_smasher", () -> new NotarfbadiumSmasher());
 
     // Wikidium
-
     public static final RegistryObject<Item> WIKIDIUM_INGOT = Registration.ITEMS.register(
-            "wikidium_ingot", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WIKIDIUM_NUGGET = Registration.ITEMS.register(
-            "wikidium_nugget", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_nugget", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WIKIDIUM_PIECE = Registration.ITEMS.register(
-            "wikidium_piece", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_piece", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WIKIDIUM_CHUNK = Registration.ITEMS.register(
-            "wikidium_chunk", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_chunk", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WIKIDIUM_DUST = Registration.ITEMS.register(
-            "wikidium_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> WIKIDIUM_ROD = Registration.ITEMS.register(
-            "wikidium_rod", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "wikidium_rod", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<SwordItem> WIKIDIUM_SWORD = Registration.ITEMS.register(
             "wikidium_sword", () -> new SwordItem(
@@ -370,9 +312,7 @@ public class ModItems {
                     3,
                     -2.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<PickaxeItem> WIKIDIUM_PICKAXE = Registration.ITEMS.register(
             "wikidium_pickaxe", () -> new PickaxeItem(
@@ -380,9 +320,7 @@ public class ModItems {
                     1,
                     -2.8F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<AxeItem> WIKIDIUM_AXE = Registration.ITEMS.register(
             "wikidium_axe", () -> new AxeItem(
@@ -390,9 +328,7 @@ public class ModItems {
                     5.0F,
                     -2.9F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ShovelItem> WIKIDIUM_SHOVEL = Registration.ITEMS.register(
             "wikidium_shovel", () -> new ShovelItem(
@@ -400,9 +336,7 @@ public class ModItems {
                     1.0F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<HoeItem> WIKIDIUM_HOE = Registration.ITEMS.register(
             "wikidium_hoe", () -> new HoeItem(
@@ -410,68 +344,57 @@ public class ModItems {
                     -3,
                     -1.5F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> WIKIDIUM_HELMET = Registration.ITEMS.register(
             "wikidium_helmet", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlot.HEAD,
+                    ArmorItem.Type.HELMET,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> WIKIDIUM_CHESTPLATE = Registration.ITEMS.register(
             "wikidium_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlot.CHEST,
+                    ArmorItem.Type.CHESTPLATE,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> WIKIDIUM_LEGGINGS = Registration.ITEMS.register(
             "wikidium_leggings", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlot.LEGS,
+                    ArmorItem.Type.LEGGINGS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> WIKIDIUM_BOOTS = Registration.ITEMS.register(
             "wikidium_boots", () -> new ArmorItem(
                     ModArmorMaterials.WIKIDIUM,
-                    EquipmentSlot.FEET,
+                    ArmorItem.Type.BOOTS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<Item> WIKIDIUM_SMASHER = Registration.ITEMS.register(
             "wikidium_smasher", () -> new WikidiumSmasher());
 
     // Thatldu
-
     public static final RegistryObject<Item> THATLDU_INGOT = Registration.ITEMS.register(
-            "thatldu_ingot", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_ingot", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> THATLDU_NUGGET = Registration.ITEMS.register(
-            "thatldu_nugget", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_nugget", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> THATLDU_PIECE = Registration.ITEMS.register(
-            "thatldu_piece", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_piece", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> THATLDU_CHUNK = Registration.ITEMS.register(
-            "thatldu_chunk", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_chunk", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> THATLDU_DUST = Registration.ITEMS.register(
-            "thatldu_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> THATLDU_ROD = Registration.ITEMS.register(
-            "thatldu_rod", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "thatldu_rod", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<SwordItem> THATLDU_SWORD = Registration.ITEMS.register(
             "thatldu_sword", () -> new SwordItem(
@@ -479,9 +402,7 @@ public class ModItems {
                     3,
                     -2.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<PickaxeItem> THATLDU_PICKAXE = Registration.ITEMS.register(
             "thatldu_pickaxe", () -> new PickaxeItem(
@@ -489,9 +410,7 @@ public class ModItems {
                     1,
                     -2.6F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<AxeItem> THATLDU_AXE = Registration.ITEMS.register(
             "thatldu_axe", () -> new AxeItem(
@@ -499,9 +418,7 @@ public class ModItems {
                     5.5F,
                     -2.8F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ShovelItem> THATLDU_SHOVEL = Registration.ITEMS.register(
             "thatldu_shovel", () -> new ShovelItem(
@@ -509,9 +426,7 @@ public class ModItems {
                     1.0F,
                     -3.0F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<HoeItem> THATLDU_HOE = Registration.ITEMS.register(
             "thatldu_hoe", () -> new HoeItem(
@@ -519,49 +434,41 @@ public class ModItems {
                     -3,
                     -1.4F,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> THATLDU_HELMET = Registration.ITEMS.register(
             "thatldu_helmet", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlot.HEAD,
+                    ArmorItem.Type.HELMET,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> THATLDU_CHESTPLATE = Registration.ITEMS.register(
             "thatldu_chestplate", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlot.CHEST,
+                    ArmorItem.Type.CHESTPLATE,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> THATLDU_LEGGINGS = Registration.ITEMS.register(
             "thatldu_leggings", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlot.LEGS,
+                    ArmorItem.Type.LEGGINGS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<ArmorItem> THATLDU_BOOTS = Registration.ITEMS.register(
             "thatldu_boots", () -> new ArmorItem(
                     ModArmorMaterials.THATLDU,
-                    EquipmentSlot.FEET,
+                    ArmorItem.Type.BOOTS,
                     new Item.Properties()
-                            .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
-            )
-    );
+            ));
 
     public static final RegistryObject<Item> THATLDU_SMASHER = Registration.ITEMS.register(
             "thatldu_smasher", () -> new ThatlduSmasher());
 
+    public static final RegistryObject<Item> THATLDU_UPGRADE_SMITHING_TEMPLATE = Registration.ITEMS.register(
+            "thatldu_upgrade_smithing_template", CustomSmithingTemplateItem::createThatlduUpgradeTemplate);
 
     // Smoosher
     public static final RegistryObject<Item> SMOOSHER = Registration.ITEMS.register(
@@ -569,42 +476,42 @@ public class ModItems {
 
     // Silica Dust
     public static final RegistryObject<Item> SILICA_DUST = Registration.ITEMS.register(
-            "silica_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "silica_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> ZINC_DUST = Registration.ITEMS.register(
-            "zinc_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "zinc_dust", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> COBALT_DUST = Registration.ITEMS.register(
-            "cobalt_dust", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "cobalt_dust", () -> new Item(new Item.Properties()));
 
     // Carbon Deposit
     public static final RegistryObject<Item> CARBON_DEPOSIT = Registration.ITEMS.register(
-            "carbon_deposit", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "carbon_deposit", () -> new Item(new Item.Properties()));
 
     // Carbon Nanotube
     public static final RegistryObject<Item> CARBON_NANOTUBE = Registration.ITEMS.register(
-            "carbon_nanotube", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "carbon_nanotube", () -> new Item(new Item.Properties()));
 
     // Stick Bundle
     public static final RegistryObject<Item> STICK_BUNDLE = Registration.ITEMS.register(
-            "stick_bundle", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "stick_bundle", () -> new Item(new Item.Properties()));
 
     // Protein Paste
     public static final RegistryObject<Item> PROTEIN_PASTE = Registration.ITEMS.register(
-            "protein_paste", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+            "protein_paste", () -> new Item(new Item.Properties()
                     .food(new FoodProperties.Builder().nutrition(2).saturationMod(0.5F).meat().build())));
 
     // Protein Fiber
     public static final RegistryObject<Item> PROTEIN_FIBER = Registration.ITEMS.register(
-            "protein_fiber", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "protein_fiber", () -> new Item(new Item.Properties()));
 
     // Cellulose
     public static final RegistryObject<Item> CELLULOSE = Registration.ITEMS.register(
-            "cellulose", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "cellulose", () -> new Item(new Item.Properties()));
 
     // FOOD ITEMS
     public static final RegistryObject<Item> NOTSOGUDIUM_BOWL = Registration.ITEMS.register(
-            "notsogudium_bowl", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
+            "notsogudium_bowl", () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<ArachnuggetItem> ARACHNUGGET = Registration.ITEMS.register(
             ArachnuggetItem.ID_STRING, ArachnuggetItem::new);
@@ -649,8 +556,7 @@ public class ModItems {
             HardfiskurItem.ID_STRING, HardfiskurItem::new);
 
     public static final RegistryObject<Item> SALT = Registration.ITEMS.register(
-            "salt", () -> new Item(new Item.Properties().tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)));
-
+            "salt", () -> new Item(new Item.Properties()));
 
     // Quantum Singularities
     public static final RegistryObject<Item> NOTSOGUDIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
@@ -667,7 +573,6 @@ public class ModItems {
 
     public static final RegistryObject<Item> THATLDU_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "thatldu_quantum_singularity", ThatlduQuantumSingularityItem::new);
-
 
     public static final RegistryObject<Item> ANDESITE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "andesite_quantum_singularity", AndesiteQuantumSingularityItem::new);
@@ -807,6 +712,8 @@ public class ModItems {
     public static final RegistryObject<Item> PLATINUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "platinum_quantum_singularity", PlatinumQuantumSingularityItem::new);
 
-    // this register() is only used to load the class so that the deferred register stuff works
-    static void register() {}
+    // this register() is only used to load the class so that the deferred register
+    // stuff works
+    static void register() {
+    }
 }

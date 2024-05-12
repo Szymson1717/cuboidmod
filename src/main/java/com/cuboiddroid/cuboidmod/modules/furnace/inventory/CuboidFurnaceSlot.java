@@ -55,8 +55,8 @@ public class CuboidFurnaceSlot extends Slot {
      * the itemStack passed in is the output - ie, iron ingots, and pickaxes, not ore and wood.
      */
     protected void onCrafting(ItemStack stack) {
-        stack.onCraftedBy(this.player.level, this.player, this.removeCount);
-        if (!this.player.level.isClientSide && this.container instanceof CuboidFurnaceTileEntityBase) {
+        stack.onCraftedBy(this.player.level(), this.player, this.removeCount);
+        if (!this.player.level().isClientSide && this.container instanceof CuboidFurnaceTileEntityBase) {
             ((CuboidFurnaceTileEntityBase)this.container).unlockRecipes(this.player);
         }
 

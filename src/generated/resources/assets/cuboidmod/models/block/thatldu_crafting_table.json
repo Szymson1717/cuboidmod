@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "cuboidmod:block/thatldu_crafting_table_bottom",
-    "up": "cuboidmod:block/thatldu_crafting_table_top",
-    "north": "cuboidmod:block/thatldu_crafting_table_front",
-    "south": "cuboidmod:block/thatldu_crafting_table_front",
     "east": "cuboidmod:block/thatldu_crafting_table_side",
-    "west": "cuboidmod:block/thatldu_crafting_table_side",
-    "particle": "cuboidmod:block/thatldu_crafting_table_front"
+    "north": "cuboidmod:block/thatldu_crafting_table_front",
+    "particle": "cuboidmod:block/thatldu_crafting_table_front",
+    "south": "cuboidmod:block/thatldu_crafting_table_front",
+    "up": "cuboidmod:block/thatldu_crafting_table_top",
+    "west": "cuboidmod:block/thatldu_crafting_table_side"
   }
 }

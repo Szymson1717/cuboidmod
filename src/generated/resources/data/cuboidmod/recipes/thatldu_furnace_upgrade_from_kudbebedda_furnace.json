@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "#$#",
-    "###"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:thatldu_ingot"
@@ -13,7 +9,13 @@
       "item": "cuboidmod:kudbebedda_furnace"
     }
   },
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
   "result": {
     "item": "cuboidmod:thatldu_furnace"
-  }
+  },
+  "show_notification": true
 }

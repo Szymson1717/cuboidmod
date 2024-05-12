@@ -1,0 +1,6 @@
+{
+  "parent": "cuboidmod:block/templates/cryogenic_dimensional_teleporter",
+  "textures": {
+    "pillar": "cuboidmod:block/model/cryogenic_dimensional_teleporter_pillar"
+  }
+}

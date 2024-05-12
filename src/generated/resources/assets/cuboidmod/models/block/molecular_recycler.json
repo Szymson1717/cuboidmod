@@ -1,0 +1,6 @@
+{
+  "parent": "cuboidmod:block/templates/molecular_recycler",
+  "textures": {
+    "core": "cuboidmod:block/model/molecular_recycler_core"
+  }
+}

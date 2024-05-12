@@ -1,30 +1,30 @@
 {
   "type": "cuboidmod:recycling",
   "ingredient": {
-    "item": "appliedenergistics2:terminal"
+    "item": "ae2:terminal"
   },
   "results": [
     {
-      "item": "appliedenergistics2:logic_processor",
+      "item": "ae2:logic_processor",
       "count": 1
     },
     {
-      "item": "appliedenergistics2:logic_processor",
+      "item": "ae2:logic_processor",
       "count": 1,
       "chance": 0.35
     },
     {
-      "item": "appliedenergistics2:formation_core",
+      "item": "ae2:formation_core",
       "count": 1,
       "chance": 0.5
     },
     {
-      "item": "appliedenergistics2:annihilation_core",
+      "item": "ae2:annihilation_core",
       "count": 1,
       "chance": 0.5
     },
     {
-      "item": "appliedenergistics2:quartz_glass",
+      "item": "ae2:quartz_glass",
       "count": 2,
       "chance": 0.4
     },

@@ -1,22 +1,5 @@
 {
   "type": "minecraft:block",
-  "pools": [
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "cuboidmod:quantum_transmutation_chamber"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
-    }
-  ],
   "functions": [
     {
       "function": "minecraft:copy_name",
@@ -24,29 +7,47 @@
     },
     {
       "function": "minecraft:copy_nbt",
-      "source": "block_entity",
       "ops": [
         {
+          "op": "replace",
           "source": "invIn",
-          "target": "BlockEntityTag.invIn",
-          "op": "replace"
+          "target": "BlockEntityTag.invIn"
         },
         {
+          "op": "replace",
           "source": "invAdd",
-          "target": "BlockEntityTag.invAdd",
-          "op": "replace"
+          "target": "BlockEntityTag.invAdd"
         },
         {
+          "op": "replace",
           "source": "invOut",
-          "target": "BlockEntityTag.invOut",
-          "op": "replace"
+          "target": "BlockEntityTag.invOut"
         },
         {
+          "op": "replace",
           "source": "energy",
-          "target": "BlockEntityTag.energy",
-          "op": "replace"
+          "target": "BlockEntityTag.energy"
         }
-      ]
+      ],
+      "source": "block_entity"
     }
-  ]
+  ],
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cuboidmod:quantum_transmutation_chamber"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "cuboidmod:blocks/quantum_transmutation_chamber"
 }

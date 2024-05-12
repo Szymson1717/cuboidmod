@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "thatldu_smithing_template_upgrade",
+  "key": {
+    "#": {
+      "item": "cuboidmod:wikidium_ingot"
+    },
+    "$": {
+      "item": "cuboidmod:thatldu_upgrade_smithing_template"
+    },
+    "@": {
+      "item": "cuboidmod:wikidium_block"
+    }
+  },
+  "pattern": [
+    "#@#",
+    "#$#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "cuboidmod:thatldu_upgrade_smithing_template"
+  },
+  "show_notification": true
+}

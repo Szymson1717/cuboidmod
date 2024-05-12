@@ -1,0 +1,7 @@
+{
+  "parent": "cuboidmod:block/templates/singularity_power_generator",
+  "textures": {
+    "core": "cuboidmod:block/model/singularity_power_gen_core",
+    "frame": "cuboidmod:block/model/kudbebedda_singularity_power_gen_frame"
+  }
+}

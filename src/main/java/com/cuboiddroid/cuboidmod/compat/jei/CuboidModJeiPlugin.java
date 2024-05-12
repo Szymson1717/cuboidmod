@@ -125,6 +125,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
             registration.addRecipeClickArea(NotarfbadiumFurnaceScreen.class, 78, 32, 28, 23, RecipeTypes.SMELTING, RecipeTypes.FUELING);
             registration.addRecipeClickArea(WikidiumFurnaceScreen.class, 78, 32, 28, 23, RecipeTypes.SMELTING, RecipeTypes.FUELING);
             registration.addRecipeClickArea(ThatlduFurnaceScreen.class, 78, 32, 28, 23, RecipeTypes.SMELTING, RecipeTypes.FUELING);
+            registration.addRecipeClickArea(EumusFurnaceScreen.class, 78, 32, 28, 23, RecipeTypes.SMELTING, RecipeTypes.FUELING);
         }
     }
 
@@ -159,12 +160,14 @@ public class CuboidModJeiPlugin implements IModPlugin {
             registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, ModContainers.NOTARFBADIUM_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
             registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, ModContainers.WIKIDIUM_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
             registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, ModContainers.THATLDU_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
+            registration.addRecipeTransferHandler(EumusFurnaceContainer.class, ModContainers.EUMUS_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
 
             registration.addRecipeTransferHandler(NotsogudiumFurnaceContainer.class, ModContainers.NOTSOGUDIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
             registration.addRecipeTransferHandler(KudbebeddaFurnaceContainer.class, ModContainers.KUDBEBEDDA_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
             registration.addRecipeTransferHandler(NotarfbadiumFurnaceContainer.class, ModContainers.NOTARFBADIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
             registration.addRecipeTransferHandler(WikidiumFurnaceContainer.class, ModContainers.WIKIDIUM_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
             registration.addRecipeTransferHandler(ThatlduFurnaceContainer.class, ModContainers.THATLDU_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
+            registration.addRecipeTransferHandler(EumusFurnaceContainer.class, ModContainers.EUMUS_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
         }
     }
 
@@ -199,6 +202,7 @@ public class CuboidModJeiPlugin implements IModPlugin {
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.NOTARFBADIUM_FURNACE.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.WIKIDIUM_FURNACE.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.THATLDU_FURNACE.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
+            registration.addRecipeCatalyst(new ItemStack(ModBlocks.EUMUS_FURNACE.get()), RecipeTypes.SMELTING, RecipeTypes.FUELING);
 
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.NOTSOGUDIUM_CRAFTING_TABLE.get()), RecipeTypes.CRAFTING);
             registration.addRecipeCatalyst(new ItemStack(ModBlocks.KUDBEBEDDA_CRAFTING_TABLE.get()), RecipeTypes.CRAFTING);

@@ -115,7 +115,7 @@ public abstract class TileEntityInventory extends BlockEntity implements ITileIn
     @Override
     public void setItem(int index, ItemStack stack) {
         ItemStack itemstack = this.inventory.get(index);
-        boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
+        boolean flag = !stack.isEmpty() && stack.is(itemstack.getItem()) && ItemStack.matches(stack, itemstack);
         this.inventory.set(index, stack);
         if (stack.getCount() > this.getMaxStackSize()) {
             stack.setCount(this.getMaxStackSize());

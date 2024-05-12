@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:kudbebedda_ingot"
     }
   ],
   "result": {
-    "item": "cuboidmod:kudbebedda_nugget",
-    "count": 9
+    "count": 9,
+    "item": "cuboidmod:kudbebedda_nugget"
   }
 }

@@ -7,6 +7,7 @@ import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -44,7 +45,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildFurnaceRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(Blocks.FURNACE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.FURNACE)
                 .define('#', ModTags.Items.ORES)
                 .define('$', ModTags.Items.DUSTS_SILICA)
                 .pattern("###")
@@ -53,7 +54,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
                 .unlockedBy("has_item", provider.hasItem(ModTags.Items.ORES))
                 .save(consumer, modId("furnace_from_chunks"));
 
-        ShapedRecipeBuilder.shaped(Blocks.BLAST_FURNACE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Blocks.BLAST_FURNACE)
                 .define('#', ModTags.Items.INGOTS)
                 .define('$', Items.FURNACE)
                 .define('@', ModTags.Items.STORAGE_BLOCKS)
@@ -72,7 +73,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
             Block prevFurnace,
             Item ingot,
             String materialName) {
-        ShapedRecipeBuilder.shaped(furnaceBlock)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, furnaceBlock)
                 .define('#', ingot)
                 .define('$', prevFurnace)
                 .pattern(" # ")
@@ -90,7 +91,7 @@ public class FurnaceDataGenRecipes extends DataGenRecipesBase {
             Item ingot,
             String materialName,
             String prevName) {
-        ShapedRecipeBuilder.shaped(furnaceBlock)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, furnaceBlock)
                 .define('#', ingot)
                 .define('$', prevFurnace)
                 .pattern("###")

@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "# #",
-    "# #"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:wikidium_ingot"
     }
   },
+  "pattern": [
+    "###",
+    "# #",
+    "# #"
+  ],
   "result": {
     "item": "cuboidmod:wikidium_leggings"
-  }
+  },
+  "show_notification": true
 }

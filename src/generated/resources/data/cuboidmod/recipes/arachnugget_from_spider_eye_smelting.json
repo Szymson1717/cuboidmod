@@ -1,9 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.0,
   "ingredient": {
     "item": "minecraft:spider_eye"
   },
-  "result": "cuboidmod:arachnugget",
-  "experience": 0.0,
-  "cookingtime": 200
+  "result": "cuboidmod:arachnugget"
 }

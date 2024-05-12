@@ -18,7 +18,7 @@ public class RottenAppleItem extends Item {
 
     public RottenAppleItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .food(new FoodProperties.Builder()
                         .nutrition(4)
                         .saturationMod(0.3F)

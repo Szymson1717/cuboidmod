@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "cuboidmod:wikidium_pickaxe"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "cuboidmod:thatldu_ingot"
   },
+  "base": {
+    "item": "cuboidmod:wikidium_pickaxe"
+  },
   "result": {
     "item": "cuboidmod:thatldu_pickaxe"
+  },
+  "template": {
+    "item": "cuboidmod:thatldu_upgrade_smithing_template"
   }
 }

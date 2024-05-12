@@ -1,0 +1,7 @@
+{
+  "parent": "cuboidmod:block/templates/chest",
+  "textures": {
+    "break": "cuboidmod:block/thatldu_break",
+    "chest": "cuboidmod:entity/chest/thatldu"
+  }
+}

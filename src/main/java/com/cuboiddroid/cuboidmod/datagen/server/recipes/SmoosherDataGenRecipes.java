@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
 public class SmoosherDataGenRecipes extends DataGenRecipesBase {
 
     public static void build(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(ModItems.SMOOSHER.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SMOOSHER.get())
                 .define('#', ModTags.Items.STORAGE_BLOCKS)
                 .define('-', ModTags.Items.INGOTS)
                 .define('/', ModTags.Items.RODS)
@@ -50,7 +51,7 @@ public class SmoosherDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void addSmoosherRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, Item outputItem, Item inputItem, String recipeId, int amount) {
-        ShapelessRecipeBuilder.shapeless(outputItem, amount)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, outputItem, amount)
                 .requires(ModItems.SMOOSHER.get())
                 .requires(inputItem)
                 .unlockedBy("has_item", provider.hasItem(ModItems.SMOOSHER.get()))

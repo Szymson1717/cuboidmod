@@ -1,21 +1,25 @@
 package com.cuboiddroid.cuboidmod.datagen.server;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockTagsProvider extends BlockTagsProvider {
-    public ModBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, CuboidMod.MOD_ID, existingFileHelper);
+    public ModBlockTagsProvider(PackOutput generatorIn, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(generatorIn, lookupProvider, CuboidMod.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(Provider provider) {
         // notsogudium
         tag(ModTags.Blocks.ORES_NOTSOGUDIUM).add(ModBlocks.NOTSOGUDIUM_ORE.get());
         tag(Tags.Blocks.ORES).addTag(ModTags.Blocks.ORES_NOTSOGUDIUM);

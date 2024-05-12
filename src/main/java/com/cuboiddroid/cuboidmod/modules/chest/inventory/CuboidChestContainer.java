@@ -4,6 +4,7 @@ import com.cuboiddroid.cuboidmod.setup.ModContainers;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,7 +21,7 @@ public class CuboidChestContainer extends AbstractContainerMenu {
     private final CuboidChestTypes chestType;
 
     // Notsogudium
-    public static CuboidChestContainer createNotsogudiumContainer(int windowId, Inventory playerInventory) {
+    public static CuboidChestContainer createNotsogudiumContainer(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
         return new CuboidChestContainer(ModContainers.NOTSOGUDIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTSOGUDIUM.size), CuboidChestTypes.NOTSOGUDIUM);
     }
 
@@ -29,7 +30,7 @@ public class CuboidChestContainer extends AbstractContainerMenu {
     }
 
     // Kudbebedda
-    public static CuboidChestContainer createKudbebeddaContainer(int windowId, Inventory playerInventory) {
+    public static CuboidChestContainer createKudbebeddaContainer(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
         return new CuboidChestContainer(ModContainers.KUDBEBEDDA_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.KUDBEBEDDA.size), CuboidChestTypes.KUDBEBEDDA);
     }
 
@@ -38,7 +39,7 @@ public class CuboidChestContainer extends AbstractContainerMenu {
     }
 
     // Notarfbadium
-    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, Inventory playerInventory) {
+    public static CuboidChestContainer createNotarfbadiumContainer(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
         return new CuboidChestContainer(ModContainers.NOTARFBADIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.NOTARFBADIUM.size), CuboidChestTypes.NOTARFBADIUM);
     }
 
@@ -47,7 +48,7 @@ public class CuboidChestContainer extends AbstractContainerMenu {
     }
 
     // Wikidium
-    public static CuboidChestContainer createWikidiumContainer(int windowId, Inventory playerInventory) {
+    public static CuboidChestContainer createWikidiumContainer(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
         return new CuboidChestContainer(ModContainers.WIKIDIUM_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.WIKIDIUM.size), CuboidChestTypes.WIKIDIUM);
     }
 
@@ -56,7 +57,7 @@ public class CuboidChestContainer extends AbstractContainerMenu {
     }
 
     // Thatldu
-    public static CuboidChestContainer createThatlduContainer(int windowId, Inventory playerInventory) {
+    public static CuboidChestContainer createThatlduContainer(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
         return new CuboidChestContainer(ModContainers.THATLDU_CHEST.get(), windowId, playerInventory, new SimpleContainer(CuboidChestTypes.THATLDU.size), CuboidChestTypes.THATLDU);
     }
 

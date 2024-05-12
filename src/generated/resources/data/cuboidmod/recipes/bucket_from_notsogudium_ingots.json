@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "# #",
-    "# #",
-    " # "
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:notsogudium_ingot"
     }
   },
+  "pattern": [
+    "# #",
+    "# #",
+    " # "
+  ],
   "result": {
     "item": "minecraft:bucket"
-  }
+  },
+  "show_notification": true
 }

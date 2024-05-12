@@ -151,6 +151,8 @@ public class Config {
     // --- MISC CATEGORY ---
     public static final String CATEGORY_MISC = "misc";
     public static ForgeConfigSpec.BooleanValue verboseLogging;
+    public static ForgeConfigSpec.BooleanValue forcedCuboidFlat;
+    public static ForgeConfigSpec.BooleanValue spawnCuboidHouse;
 
     static {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
@@ -209,6 +211,22 @@ public class Config {
         verboseLogging = COMMON_BUILDER
                 .comment(" Logs additional information when loading Quantum Singularity and Molecular Recycler Blacklist config files.")
                 .define("misc.verbose_logging", false);
+        forcedCuboidFlat = COMMON_BUILDER
+                .comment(" Forces the classic CuboidOutpost flat lands.")
+                .define("misc.forced_cuboid_flat", false);
+        spawnCuboidHouse = COMMON_BUILDER
+                .comment(" Spawns the classic CuboidOutpost structure.")
+                .comment(" NOTE: Some mods are required for this feature to work:")
+                .comment(" - Applied Energistics 2 (ae2)")
+                .comment(" - Framed Compacting Drawers (framedcompactdrawers)")
+                .comment(" - Gauges and Switches (rsgauges)")
+                .comment(" - Glassential Renewed (glassential)")
+                .comment(" - Mekanism (mekanism)")
+                .comment(" - Mekanism: Generators (mekanismgenerators)")
+                .comment(" - MrCrayfish's Furniture Mod (cfm)")
+                .comment(" - Simply Light (simplylight)")
+                .comment(" - Thermal Expansion (thermal)")
+                .define("misc.spawn_cuboid_house", false);
         COMMON_BUILDER.pop();
 
         COMMON_CONFIG = COMMON_BUILDER.build();
@@ -700,6 +718,6 @@ public class Config {
     @SubscribeEvent
     public static void onWorldLoad(final LevelEvent.Load event) {
         Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("cuboidmod-client.toml"));
-        Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("cuboidmod.toml"));
+        Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("cuboidmod-common.toml"));
     }
 }

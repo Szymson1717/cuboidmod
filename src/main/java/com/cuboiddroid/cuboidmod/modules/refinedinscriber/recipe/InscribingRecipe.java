@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -154,7 +155,7 @@ public class InscribingRecipe implements Recipe<Container> {
      * @return the result
      */
     @Override
-    public ItemStack assemble(Container inventory) {
+    public ItemStack assemble(Container inventory, RegistryAccess access) {
         ItemStack itemstack = this.result.copy();
         CompoundTag compoundnbt = inventory.getItem(0).getTag();
         if (compoundnbt != null) {
@@ -181,7 +182,7 @@ public class InscribingRecipe implements Recipe<Container> {
      *
      * @return the recipe output
      */
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return this.result;
     }
 
@@ -224,17 +225,17 @@ public class InscribingRecipe implements Recipe<Container> {
               "type": "cuboidmod:inscribing",
               "mode": "press",
               "result": {
-                "item": "appliedenergistics2:engineering_processor"
+                "item": "ae2:engineering_processor"
               },
               "ingredients": {
                 "top": {
-                  "item": "appliedenergistics2:printed_engineering_processor"
+                  "item": "ae2:printed_engineering_processor"
                 },
                 "middle": {
                   "tag": "forge:dusts/redstone"
                 },
                 "bottom": {
-                  "item": "appliedenergistics2:printed_silicon"
+                  "item": "ae2:printed_silicon"
                 }
               }
             }
@@ -245,11 +246,11 @@ public class InscribingRecipe implements Recipe<Container> {
               "type": "cuboidmod:inscribing",
               "mode": "inscribe",
               "result": {
-                "item": "appliedenergistics2:calculation_processor_press"
+                "item": "ae2:calculation_processor_press"
               },
               "ingredients": {
                 "top": {
-                  "item": "appliedenergistics2:calculation_processor_press"
+                  "item": "ae2:calculation_processor_press"
                 },
                 "middle": {
                   "tag": "forge:storage_blocks/iron"

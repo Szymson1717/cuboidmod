@@ -4,7 +4,6 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.modules.cdt.tile.CryogenicDimensionalTeleporterTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -80,7 +79,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public CryogenicDimensionalTeleporterBlock() {
-        super(BlockBehaviour.Properties.of(Material.METAL)
+        super(BlockBehaviour.Properties.of()
                 .strength(45, 1000)
                 // .harvestLevel(3).harvestTool(ToolType.PICKAXE)
                 .requiresCorrectToolForDrops()
@@ -190,14 +189,14 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                     double xPos = newPos.getX() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
                                     double zPos = newPos.getZ() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
 
-                                    newPos = new BlockPos(xPos, yPos, zPos);
+                                    newPos = new BlockPos((int) xPos, yPos, (int) zPos);
 
                                     // if the end, then should "shift" to central island area instead of
                                     // current coords - use an exclusion zone around center of
                                     // main island so player gets placed on outer edges
                                     if (cdt.isTargetTheEnd()) {
                                         radialDivisor = 64; // use a smaller target area to look for a safe spot
-                                        if (newPos.distSqr(new Vec3i(0.0, 100, 0.0)) > 96.0) {
+                                        if (newPos.distSqr(new Vec3i(0, 100, 0)) > 96.0) {
                                             // further away than 96 blocks - adjust to be 80 blocks away!
                                             if (xPos == 0.0) {
                                                 zPos = 80;
@@ -207,7 +206,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                                 xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
                                                 zPos = g * xPos;
                                             }
-                                        } else if (newPos.distSqr(new Vec3i(0.0, 100, 0.0)) < 64.0) {
+                                        } else if (newPos.distSqr(new Vec3i(0, 100, 0)) < 64.0) {
                                             // closer than 64 blocks - adjust to be 64 blocks away from 0,0
                                             if (xPos == 0.0) {
                                                 zPos = 80;
@@ -219,7 +218,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                             }
                                         }
 
-                                        newPos = new BlockPos(xPos, yPos, zPos);
+                                        newPos = new BlockPos((int) xPos, yPos, (int) zPos);
                                     } else if (cdt.isTargetTheOverworld() && Config.cryoDimTeleporterOverworldUsesPlayerSpawn.get()) {
                                         // target is the overworld - instead of player's current position,
                                         // we're going to take them back to their spawn point
@@ -240,10 +239,10 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                     BlockPos targetPos = newPos;
 
                                     while (attempts < 1024) {
-                                        while (yPos > 40 && (!destWorld.getBlockState(newPos).getMaterial().isSolid() ||
-                                                (destWorld.getBlockState(newPos).getMaterial().isSolid() &&
-                                                    (destWorld.getBlockState(newPos.above()).getMaterial().isSolid() ||
-                                                    destWorld.getBlockState(newPos.above().above()).getMaterial().isSolid()))))
+                                        while (yPos > 40 && (!destWorld.getBlockState(newPos).isSolid() ||
+                                                (destWorld.getBlockState(newPos).isSolid() &&
+                                                    (destWorld.getBlockState(newPos.above()).isSolid() ||
+                                                    destWorld.getBlockState(newPos.above().above()).isSolid()))))
                                         {
                                             newPos = newPos.below();
                                             yPos = newPos.getY();
@@ -267,7 +266,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                          // Start at the "top" of the world
                                         yPos = dim.logicalHeight() - 8;
 
-                                        newPos = new BlockPos(xPos, yPos, zPos);
+                                        newPos = new BlockPos((int) xPos, yPos, (int) zPos);
                                         attempts++;
                                     }
 

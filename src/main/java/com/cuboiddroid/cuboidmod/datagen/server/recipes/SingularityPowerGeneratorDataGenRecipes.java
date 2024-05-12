@@ -6,6 +6,7 @@ import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGenerato
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 
@@ -75,7 +76,7 @@ public class SingularityPowerGeneratorDataGenRecipes extends DataGenRecipesBase 
     }
 
     private static void spgFromBlocksFurnacesAndRedstoneBlock(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .define('R', Items.REDSTONE_BLOCK)
@@ -87,7 +88,7 @@ public class SingularityPowerGeneratorDataGenRecipes extends DataGenRecipesBase 
     }
 
     private static void spgUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityPowerGeneratorBlockBase output, SingularityPowerGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .define('@', prevTier)

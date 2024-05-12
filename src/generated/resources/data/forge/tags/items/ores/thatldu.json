@@ -1,7 +1,6 @@
 {
-  "replace": false,
   "values": [
-    "cuboidmod:thatldu_ore",
-    "cuboidmod:thatldu_chunk"
+    "cuboidmod:thatldu_chunk",
+    "cuboidmod:thatldu_ore"
   ]
 }

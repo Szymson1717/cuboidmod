@@ -1,25 +1,25 @@
 {
   "type": "cuboidmod:recycling",
   "ingredient": {
-    "item": "appliedenergistics2:drive"
+    "item": "ae2:drive"
   },
   "results": [
     {
-      "item": "appliedenergistics2:engineering_processor",
+      "item": "ae2:engineering_processor",
       "count": 1
     },
     {
-      "item": "appliedenergistics2:engineering_processor",
+      "item": "ae2:engineering_processor",
       "count": 1,
       "chance": 0.35
     },
     {
-      "item": "appliedenergistics2:fluix_glass_cable",
+      "item": "ae2:fluix_glass_cable",
       "count": 1,
       "chance": 0.5
     },
     {
-      "item": "appliedenergistics2:fluix_glass_cable",
+      "item": "ae2:fluix_glass_cable",
       "count": 1,
       "chance": 0.2
     }

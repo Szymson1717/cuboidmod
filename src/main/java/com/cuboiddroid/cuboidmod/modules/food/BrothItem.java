@@ -19,7 +19,7 @@ public class BrothItem extends Item {
 
     public BrothItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .stacksTo(1)
                 .food(new FoodProperties.Builder()
                         .nutrition(3)

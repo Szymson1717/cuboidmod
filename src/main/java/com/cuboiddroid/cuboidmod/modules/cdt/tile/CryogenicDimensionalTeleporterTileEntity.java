@@ -8,6 +8,7 @@ import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -116,7 +117,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
             return null;
 
         // try get the actual Dimension identified as the target
-        for (ResourceLocation resLoc : level.getServer().registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).keySet())
+        for (ResourceLocation resLoc : level.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet())
         {
             if (resLoc.toString().equalsIgnoreCase(targetDimension)) {
                 // this is unfortunately, but due to FTB Quests not working as I expected it to,
@@ -130,7 +131,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
                 //     GameStageHelper.addStage(serverPlayer, "nether_access");
 
                 // found it! return the target dimension type
-                return level.getServer().registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).get(resLoc);
+                return level.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).get(resLoc);
             }
         }
 

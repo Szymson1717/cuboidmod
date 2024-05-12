@@ -3,6 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.chest.render;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestBlockBase;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
 import com.cuboiddroid.cuboidmod.modules.chest.tile.CuboidChestTileEntityBase;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.world.level.block.Block;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.DoubleBlockCombiner;
 import net.minecraft.core.Direction;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.world.level.Level;
 
 public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntity> implements BlockEntityRenderer<T> {
@@ -58,7 +59,7 @@ public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntit
     }
 
     @Override
-    public void render(T tileEntityIn, float partialTicks, PoseStack PoseStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(T tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         CuboidChestTileEntityBase tileEntity = (CuboidChestTileEntityBase) tileEntityIn;
 
         Level level = tileEntity.getLevel();
@@ -76,11 +77,11 @@ public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntit
         if (block instanceof CuboidChestBlockBase cuboidChestBlock) {
             // CuboidChestBlockBase cuboidChestBlock = (CuboidChestBlockBase) block;
 
-            PoseStackIn.pushPose();
+            poseStack.pushPose();
             float f = blockstate.getValue(CuboidChestBlockBase.FACING).toYRot();
-            PoseStackIn.translate(0.5D, 0.5D, 0.5D);
-            PoseStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
-            PoseStackIn.translate(-0.5D, -0.5D, -0.5D);
+            poseStack.translate(0.5D, 0.5D, 0.5D);
+            poseStack.mulPose(Axis.YP.rotationDegrees(-f));
+            poseStack.translate(-0.5D, -0.5D, -0.5D);
 
             DoubleBlockCombiner.NeighborCombineResult<? extends CuboidChestTileEntityBase> iCallbackWrapper;
             if (flag) {
@@ -98,17 +99,17 @@ public class CuboidChestTileEntityRenderer<T extends BlockEntity & LidBlockEntit
             Material material = new Material(Sheets.CHEST_SHEET, CuboidChestModels.chooseChestTexture(chestType));
             VertexConsumer ivertexbuilder = material.buffer(bufferIn, RenderType::entityCutout);
 
-            this.handleModelRender(PoseStackIn, ivertexbuilder, f1, i, combinedOverlayIn);
+            this.handleModelRender(poseStack, ivertexbuilder, f1, i, combinedOverlayIn);
 
-            PoseStackIn.popPose();
+            poseStack.popPose();
         }
     }
 
-    private void handleModelRender(PoseStack PoseStackIn, VertexConsumer iVertexBuilder, float f1, int vi1, int vi2) {
+    private void handleModelRender(PoseStack poseStack, VertexConsumer iVertexBuilder, float f1, int vi1, int vi2) {
         this.chestLid.xRot = -(f1 * ((float) Math.PI / 2F));
         this.chestLock.xRot = this.chestLid.xRot;
-        this.chestLid.render(PoseStackIn, iVertexBuilder, vi1, vi2);
-        this.chestLock.render(PoseStackIn, iVertexBuilder, vi1, vi2);
-        this.chestBottom.render(PoseStackIn, iVertexBuilder, vi1, vi2);
+        this.chestLid.render(poseStack, iVertexBuilder, vi1, vi2);
+        this.chestLock.render(poseStack, iVertexBuilder, vi1, vi2);
+        this.chestBottom.render(poseStack, iVertexBuilder, vi1, vi2);
     }
 }

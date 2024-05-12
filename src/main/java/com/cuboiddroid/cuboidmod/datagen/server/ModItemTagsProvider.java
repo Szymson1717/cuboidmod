@@ -1,21 +1,25 @@
 package com.cuboiddroid.cuboidmod.datagen.server;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
-    public ModItemTagsProvider(DataGenerator generatorIn, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, blockTagsProvider, CuboidMod.MOD_ID, existingFileHelper);
+
+    public ModItemTagsProvider(PackOutput generatorIn, CompletableFuture<Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTagsProvider, ExistingFileHelper existingFileHelper) {
+        super(generatorIn, lookupProvider, blockTagsProvider, CuboidMod.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(Provider provider) {
         addOreTags();
         addStorageBlockTags();
         addIngotItemTags();

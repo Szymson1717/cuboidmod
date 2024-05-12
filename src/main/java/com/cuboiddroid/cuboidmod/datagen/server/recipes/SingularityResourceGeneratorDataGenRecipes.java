@@ -6,6 +6,7 @@ import com.cuboiddroid.cuboidmod.modules.resourcegen.block.SingularityResourceGe
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 
 import java.util.function.Consumer;
@@ -83,7 +84,7 @@ public class SingularityResourceGeneratorDataGenRecipes extends DataGenRecipesBa
     }
 
     private static void srgFromBlocksFurnacesAndCraftingTable(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .define('!', craftingTable)
@@ -95,7 +96,7 @@ public class SingularityResourceGeneratorDataGenRecipes extends DataGenRecipesBa
     }
 
     private static void srgUpgrade(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, SingularityResourceGeneratorBlockBase output, SingularityResourceGeneratorBlockBase prevTier, Block block, CuboidFurnaceBlockBase furnace, Block craftingTable, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('#', block)
                 .define('$', furnace)
                 .define('!', craftingTable)

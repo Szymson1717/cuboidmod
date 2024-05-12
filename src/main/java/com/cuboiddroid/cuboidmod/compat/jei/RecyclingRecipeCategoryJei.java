@@ -5,6 +5,8 @@ import com.cuboiddroid.cuboidmod.modules.recycler.screen.MolecularRecyclerScreen
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.gui.GuiGraphics;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -45,12 +47,13 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
         localizedName = Component.translatable("jei.category.cuboidmod.recycling");
     }
 
-    private static void renderScaledTextWithShadow(PoseStack matrix, Font Font, Component text, int x, int y, int width, float scale, int color) {
-        matrix.pushPose();
-        matrix.scale(scale, scale, scale);
-        float xOffset = (width / scale - Font.width(text)) / 2;
-        Font.drawShadow(matrix, text, xOffset + x / scale, y / scale, color);
-        matrix.popPose();
+    private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
+        PoseStack poseStack = guiGraphics.pose();
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        float xOffset = (width / scale - font.width(text)) / 2;
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        poseStack.popPose();
     }
 
     @Override
@@ -115,22 +118,22 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
 //     }
 
     @Override
-    public void draw(RecyclingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack PoseStack, double mouseX, double mouseY) {
+    public void draw(RecyclingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics matrix, double mouseX, double mouseY) {
         Font font = Minecraft.getInstance().font;
 
         // arrow
-        arrow.draw(PoseStack, 78 - GUI_START_X, 43 - GUI_START_Y);
+        arrow.draw(matrix, 78 - GUI_START_X, 43 - GUI_START_Y);
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
         String arrowText = "" + workSeconds + "." + workDecimal + " s";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // energy
-        energyBar.draw(PoseStack, 32 - GUI_START_X, 34 - GUI_START_Y);
+        energyBar.draw(matrix, 32 - GUI_START_X, 34 - GUI_START_Y);
 
         String energyText = "" + recipe.getEnergyRequired() + " FE";
-        renderScaledTextWithShadow(PoseStack, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
+        renderScaledTextWithShadow(matrix, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
 
         // % chances on outputs
         List<Pair<ItemStack, Float>> results = recipe.getPossibleResultsWithChances();
@@ -139,7 +142,7 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
             if (chance < 1) {
                 int asPercent = (int) (100 * chance);
                 String text = asPercent < 1 ? "<1%" : asPercent + "%";
-                renderScaledTextWithShadow(PoseStack, font, Component.literal(text), 85 + 18 * (i % 3), i < 3 ? 0 : 44, 18, 0.6f, 0xFFFFFF);
+                renderScaledTextWithShadow(matrix, font, Component.literal(text), 85 + 18 * (i % 3), i < 3 ? 0 : 44, 18, 0.6f, 0xFFFFFF);
             }
         }
     }

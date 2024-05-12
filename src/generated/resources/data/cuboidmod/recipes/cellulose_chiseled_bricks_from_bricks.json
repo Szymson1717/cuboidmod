@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "##",
-    "##"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "cuboidmod:cellulose_bricks"
     }
   },
+  "pattern": [
+    "##",
+    "##"
+  ],
   "result": {
-    "item": "cuboidmod:cellulose_chiseled_bricks",
-    "count": 4
-  }
+    "count": 4,
+    "item": "cuboidmod:cellulose_chiseled_bricks"
+  },
+  "show_notification": true
 }

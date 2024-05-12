@@ -2,11 +2,11 @@
   "parent": "minecraft:block/cube",
   "textures": {
     "down": "cuboidmod:block/wikidium_furnace_top",
-    "up": "cuboidmod:block/wikidium_furnace_top",
-    "north": "cuboidmod:block/wikidium_furnace_front",
-    "south": "cuboidmod:block/wikidium_furnace_side",
     "east": "cuboidmod:block/wikidium_furnace_side",
-    "west": "cuboidmod:block/wikidium_furnace_side",
-    "particle": "cuboidmod:block/wikidium_furnace_side"
+    "north": "cuboidmod:block/wikidium_furnace_front",
+    "particle": "cuboidmod:block/wikidium_furnace_side",
+    "south": "cuboidmod:block/wikidium_furnace_side",
+    "up": "cuboidmod:block/wikidium_furnace_top",
+    "west": "cuboidmod:block/wikidium_furnace_side"
   }
 }

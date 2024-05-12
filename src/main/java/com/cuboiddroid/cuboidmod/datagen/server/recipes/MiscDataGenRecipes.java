@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
@@ -20,6 +21,31 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
         buildOrganicallyEnrichedSandRecipe(provider, consumer);
         buildBucketRecipe(provider, consumer);
         buildTorchAndLanternRecipes(provider, consumer);
+
+        buildThatldSmithingTemplateRecipes(provider, consumer);
+    }
+
+    private static void buildThatldSmithingTemplateRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get())
+                .define('#', ModItems.WIKIDIUM_INGOT.get())
+                .define('@', ModBlocks.WIKIDIUM_BLOCK.get())
+                .pattern("#@#")
+                .pattern("#@#")
+                .pattern("###")
+                .group("thatldu_smithing_template_upgrade")
+                .unlockedBy("has_item", provider.hasItem(ModItems.WIKIDIUM_INGOT.get()))
+                .save(consumer, modId("smithing_template_from_wikidium_block"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get(), 2)
+                .define('#', ModItems.WIKIDIUM_INGOT.get())
+                .define('@', ModBlocks.WIKIDIUM_BLOCK.get())
+                .define('$', ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get())
+                .pattern("#@#")
+                .pattern("#$#")
+                .pattern("###")
+                .group("thatldu_smithing_template_upgrade")
+                .unlockedBy("has_item", provider.hasItem(ModItems.WIKIDIUM_INGOT.get()))
+                .save(consumer, modId("smithing_template_from_thatld_update_smithing_template"));
     }
 
     private static void buildBucketRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
@@ -36,7 +62,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
 
         for (int index = 0; index < ingots.length; index++) {
             // note - we use 5 ingots so if a bucket is recycled, you don't get back iron!
-            ShapedRecipeBuilder.shaped(Items.BUCKET)
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.BUCKET)
                     .define('#', ingots[index])
                     .pattern("# #")
                     .pattern("# #")
@@ -47,7 +73,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildStringRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(Items.STRING, 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STRING, 4)
                 .define('#', ModTags.Items.CARBON_NANOTUBE)
                 .define('/', ModTags.Items.PROTEIN_FIBER)
                 .pattern("#/")
@@ -57,7 +83,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildHopperRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(Items.HOPPER)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.HOPPER)
                 .define('#', ModTags.Items.INGOTS)
                 .define('$', ModTags.Items.CHESTS)
                 .pattern("# #")
@@ -68,7 +94,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildTorchAndLanternRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(Items.TORCH, 8)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 8)
                 .define('#', Items.COAL)
                 .define('|', ModTags.Items.RODS)
                 .pattern("#")
@@ -76,7 +102,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
                 .unlockedBy("has_item", provider.hasItem(ModTags.Items.INGOTS))
                 .save(consumer, modId("torches_from_coal_and_rod"));
 
-        ShapedRecipeBuilder.shaped(Items.TORCH, 8)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.TORCH, 8)
                 .define('#', Items.CHARCOAL)
                 .define('|', ModTags.Items.RODS)
                 .pattern("#")
@@ -84,7 +110,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
                 .unlockedBy("has_item", provider.hasItem(ModTags.Items.INGOTS))
                 .save(consumer, modId("torches_from_charcoal_and_rod"));
 
-        ShapedRecipeBuilder.shaped(Items.LANTERN, 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.LANTERN, 1)
                 .define('-', ModTags.Items.NUGGETS)
                 .define('|', Items.TORCH)
                 .pattern("---")
@@ -95,7 +121,7 @@ public class MiscDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildOrganicallyEnrichedSandRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(ModBlocks.ORGANICALLY_ENRICHED_SAND.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.ORGANICALLY_ENRICHED_SAND.get())
                 .requires(Items.SAND)
                 .requires(Items.BONE_MEAL)
                 .requires(ModItems.CELLULOSE.get(), 2)

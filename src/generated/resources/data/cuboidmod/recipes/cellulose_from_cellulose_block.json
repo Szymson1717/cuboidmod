@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "cuboidmod:cellulose_block"
     }
   ],
   "result": {
-    "item": "cuboidmod:cellulose",
-    "count": 9
+    "count": 9,
+    "item": "cuboidmod:cellulose"
   }
 }

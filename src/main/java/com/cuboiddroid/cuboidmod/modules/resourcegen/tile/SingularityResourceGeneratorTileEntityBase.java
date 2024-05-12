@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -120,7 +121,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
                     generatedItem.setCount(Math.min(this.itemsAvailable, generatedItem.getMaxStackSize()));
                     this.itemsAvailable -= generatedItem.getCount();
                     this.combinedItemHandler.setStackInSlot(OUTPUT, generatedItem);
-                } else if (!outputStack.sameItem(generatedItem)) {
+                } else if (!outputStack.is(generatedItem.getItem())) {
                     // the output stack contains a different item - do nothing!
                     // the available items will increase, but the output slot will need
                     // to be emptied before getting our hands on some of it
@@ -180,7 +181,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
     private ItemStack getWorkOutput(@Nullable ResourceGeneratingRecipe recipe) {
         if (recipe != null) {
-            return recipe.getResultItem().copy();
+            return recipe.getResultItem(RegistryAccess.EMPTY).copy();
         }
 
         return ItemStack.EMPTY;

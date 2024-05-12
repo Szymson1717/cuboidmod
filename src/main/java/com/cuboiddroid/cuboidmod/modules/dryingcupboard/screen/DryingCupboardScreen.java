@@ -3,7 +3,7 @@ package com.cuboiddroid.cuboidmod.modules.dryingcupboard.screen;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboardContainer;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -56,24 +56,24 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
     }
 
     @Override
-    public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics matrix, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrix);
         super.render(matrix, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrix, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
-        this.minecraft.font.draw(matrix, this.playerInv.getDisplayName(), 7, this.imageHeight - 93, 4210752);
+    protected void renderLabels(GuiGraphics matrix, int mouseX, int mouseY) {
+        matrix.drawString(this.font, this.playerInv.getDisplayName(), 7, this.imageHeight - 93, 4210752, false);
 
         String name = this.name.getString();
         Component nameText = Component.literal(name);
 
-        this.minecraft.font.draw(matrix, nameText, this.imageWidth / 2 - this.minecraft.font.width(name) / 2, 6, 4210752);
+        matrix.drawString(this.font, nameText, this.imageWidth / 2 - this.minecraft.font.width(name) / 2, 6, 4210752, false);
     }
 
     @Override
-    protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics matrix, float partialTicks, int mouseX, int mouseY) {
         // render the main container background
         // RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -81,7 +81,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
         RenderSystem.setShaderTexture(0, GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        this.blit(matrix, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        matrix.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
         // render progress mini bars
         for (int slotIndex = 0; slotIndex < DryingCupboardTileEntity.INPUT_SLOTS; slotIndex++) {
@@ -96,7 +96,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
                 //   top left Y to copy from,
                 //   width to copy,
                 //   height to copy
-                this.blit(matrix,
+                matrix.blit(GUI,
                         this.leftPos + MINI_BAR_TOP_LEFT_X + 18 * slotIndex,
                         this.topPos + MINI_BAR_TOP_LEFT_Y,
                         HIDDEN_MINI_BAR_TOP_LEFT_X,
@@ -122,7 +122,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
                 //   top left Y to copy from,
                 //   width to copy,
                 //   height to copy
-                this.blit(matrix,
+                matrix.blit(GUI,
                         this.leftPos + BAR_TOP_LEFT_X,
                         this.topPos + BAR_TOP_LEFT_Y + BAR_HEIGHT - powerHeight,
                         HIDDEN_BAR_TOP_LEFT_X,
@@ -134,7 +134,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
     }
 
     @Override
-    protected void renderTooltip(PoseStack matrix, int mouseX, int mouseY) {
+    protected void renderTooltip(GuiGraphics matrix, int mouseX, int mouseY) {
         super.renderTooltip(matrix, mouseX, mouseY);
 
         // tooltip to show energy stored & capacity
@@ -147,7 +147,7 @@ public class DryingCupboardScreen extends AbstractContainerScreen<DryingCupboard
                 tooltip.add(text);
             }
 
-            this.renderComponentTooltip(matrix, tooltip, mouseX, mouseY);
+            matrix.renderComponentTooltip(this.font, tooltip, mouseX, mouseY);
         }
     }
 

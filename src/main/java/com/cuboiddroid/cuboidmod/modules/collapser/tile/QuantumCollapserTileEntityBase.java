@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
@@ -92,7 +93,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
                 this.currentIngredient = recipe.getIngredient();
                 this.amountRequired = recipe.getRequiredInputAmount();
                 this.recipeTime = (int) (recipe.getWorkTicks() / this.speedFactor);
-                this.currentOutput = recipe.getResultItem();
+                this.currentOutput = recipe.getResultItem(RegistryAccess.EMPTY);
                 setChanged();
             } else if (!currentIngredient.test(this.inputItemHandler.getStackInSlot(0))) {
                 // can't change recipe mid-load, but if already filled up, let it run
@@ -158,7 +159,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         while (!hasRoomForOutputs && outputSlotIndex < OUTPUT_SLOTS) {
             ItemStack outputSlot = this.outputItemHandler.getStackInSlot(outputSlotIndex);
             hasRoomForOutputs = outputSlot.isEmpty() || (!currentOutput.isEmpty() &&
-                    currentOutput.sameItem(outputSlot) &&
+                    currentOutput.is(outputSlot.getItem()) &&
                     currentOutput.getCount() + outputSlot.getCount() <= currentOutput.getMaxStackSize());
 
             outputSlotIndex++;
@@ -205,7 +206,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         int firstEmptyIndex = -1;
         for (int outputSlotIndex = 0; outputSlotIndex < OUTPUT_SLOTS; outputSlotIndex++) {
             ItemStack outputStack = outputItemHandler.getStackInSlot(outputSlotIndex).copy();
-            if (outputStack.sameItem(stack) && outputStack.getCount() + stack.getCount() <= outputStack.getMaxStackSize()) {
+            if (outputStack.is(stack.getItem()) && outputStack.getCount() + stack.getCount() <= outputStack.getMaxStackSize()) {
                 outputStack.grow(stack.getCount());
                 outputItemHandler.setStackInSlot(outputSlotIndex, outputStack);
                 return;
@@ -252,7 +253,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
     private ItemStack getWorkOutput(@Nullable QuantumCollapsingRecipe recipe) {
         if (recipe != null) {
-            return recipe.getResultItem().copy();
+            return recipe.getResultItem(RegistryAccess.EMPTY).copy();
         }
 
         return ItemStack.EMPTY;
@@ -380,7 +381,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).sameItem(stack);
+                return this.getStackInSlot(slot).isEmpty() || this.getStackInSlot(slot).is(stack.getItem());
             }
 
             @Nonnull

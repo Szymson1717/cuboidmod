@@ -7,6 +7,7 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.block.QuantumTransmutationCh
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 
@@ -29,7 +30,7 @@ public class QuantumTransmutationChamberDataGenRecipes extends DataGenRecipesBas
     }
 
     private static void qtcFromHopperCollapserSingularitiesPowerGenAndRedstone(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, QuantumTransmutationChamberBlock output, QuantumCollapserBlockBase collapser, SingularityPowerGeneratorBlockBase spg, String materialName) {
-        ShapedRecipeBuilder.shaped(output)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output)
                 .define('@', collapser)
                 .define('R', Items.REDSTONE)
                 .define('Q', ModTags.Items.QUANTUM_SINGULARITIES)

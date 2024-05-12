@@ -6,6 +6,7 @@ import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -26,7 +27,7 @@ public class CraftingTableDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<Block> craftingTable, RegistryObject<Item> chunk, String materialName) {
-        ShapedRecipeBuilder.shaped(craftingTable.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, craftingTable.get())
                 .define('$', ModItems.SILICA_DUST.get())
                 .define('#', chunk.get())
                 .pattern("$$")
@@ -36,7 +37,7 @@ public class CraftingTableDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void smithingTableFromSilicaAndChunks(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(Items.SMITHING_TABLE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.SMITHING_TABLE)
                 .define('$', ModTags.Items.INGOTS)
                 .define('#', ModTags.Items.ORES)
                 .pattern("$$")

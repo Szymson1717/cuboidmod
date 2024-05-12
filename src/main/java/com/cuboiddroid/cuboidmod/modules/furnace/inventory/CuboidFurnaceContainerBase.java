@@ -34,7 +34,7 @@ public abstract class CuboidFurnaceContainerBase extends AbstractContainerMenu {
         this.recipeType = te.recipeType;
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        this.level = playerInventory.player.level;
+        this.level = playerInventory.player.level();
         this.fields = te.fields;
         this.addDataSlots(this.fields);
 

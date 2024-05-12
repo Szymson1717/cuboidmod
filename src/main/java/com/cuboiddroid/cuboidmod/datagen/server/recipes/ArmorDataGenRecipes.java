@@ -3,8 +3,9 @@ package com.cuboiddroid.cuboidmod.datagen.server.recipes;
 import com.cuboiddroid.cuboidmod.datagen.server.ModRecipeProvider;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -51,19 +52,19 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildThatlduRecipes(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_HELMET.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_HELMET.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_HELMET.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_helmet_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_CHESTPLATE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_CHESTPLATE.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_CHESTPLATE.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_chestplate_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_LEGGINGS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_LEGGINGS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_LEGGINGS.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_leggings_smithing"));
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(ModItems.WIKIDIUM_BOOTS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), ModItems.THATLDU_BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ModItems.THATLDU_UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(ModItems.WIKIDIUM_BOOTS.get()), Ingredient.of(ModItems.THATLDU_INGOT.get()), RecipeCategory.MISC, ModItems.THATLDU_BOOTS.get())
                 .unlocks("has_item", provider.hasItem(ModItems.THATLDU_INGOT.get()))
                 .save(consumer, modId("thatldu_boots_smithing"));
     }
@@ -71,7 +72,7 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     // -------------------------------------------------------------------
 
     private static void craftCuboidHelmetFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<ArmorItem> output, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(output.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output.get())
                 .define('#', ingot.get())
                 .pattern("###")
                 .pattern("# #")
@@ -80,7 +81,7 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidChestplateFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<ArmorItem> output, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(output.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output.get())
                 .define('#', ingot.get())
                 .pattern("# #")
                 .pattern("###")
@@ -90,7 +91,7 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidLeggingsFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<ArmorItem> output, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(output.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output.get())
                 .define('#', ingot.get())
                 .pattern("###")
                 .pattern("# #")
@@ -100,7 +101,7 @@ public class ArmorDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void craftCuboidBootsFromIngots(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, RegistryObject<ArmorItem> output, RegistryObject<Item> ingot, String materialName) {
-        ShapedRecipeBuilder.shaped(output.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, output.get())
                 .define('#', ingot.get())
                 .pattern("# #")
                 .pattern("# #")

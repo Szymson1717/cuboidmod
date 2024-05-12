@@ -163,19 +163,19 @@ public class ModContainers {
 
     // chests
     public static final RegistryObject<MenuType<CuboidChestContainer>> NOTSOGUDIUM_CHEST =
-            Registration.CONTAINERS.register("notsogudium_chest", () -> new MenuType<>(CuboidChestContainer::createNotsogudiumContainer));
+            Registration.CONTAINERS.register("notsogudium_chest", () -> IForgeMenuType.create(CuboidChestContainer::createNotsogudiumContainer));
 
     public static final RegistryObject<MenuType<CuboidChestContainer>> KUDBEBEDDA_CHEST =
-            Registration.CONTAINERS.register("kudbebedda_chest", () -> new MenuType<>(CuboidChestContainer::createKudbebeddaContainer));
+            Registration.CONTAINERS.register("kudbebedda_chest", () -> IForgeMenuType.create(CuboidChestContainer::createKudbebeddaContainer));
 
     public static final RegistryObject<MenuType<CuboidChestContainer>> NOTARFBADIUM_CHEST =
-            Registration.CONTAINERS.register("notarfbadium_chest", () -> new MenuType<>(CuboidChestContainer::createNotarfbadiumContainer));
+            Registration.CONTAINERS.register("notarfbadium_chest", () -> IForgeMenuType.create(CuboidChestContainer::createNotarfbadiumContainer));
 
     public static final RegistryObject<MenuType<CuboidChestContainer>> WIKIDIUM_CHEST =
-            Registration.CONTAINERS.register("wikidium_chest", () -> new MenuType<>(CuboidChestContainer::createWikidiumContainer));
+            Registration.CONTAINERS.register("wikidium_chest", () -> IForgeMenuType.create(CuboidChestContainer::createWikidiumContainer));
 
     public static final RegistryObject<MenuType<CuboidChestContainer>> THATLDU_CHEST =
-            Registration.CONTAINERS.register("thatldu_chest", () -> new MenuType<>(CuboidChestContainer::createThatlduContainer));
+            Registration.CONTAINERS.register("thatldu_chest", () -> IForgeMenuType.create(CuboidChestContainer::createThatlduContainer));
 
     // furnaces
     public static final RegistryObject<MenuType<NotsogudiumFurnaceContainer>> NOTSOGUDIUM_FURNACE =

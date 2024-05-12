@@ -5,6 +5,7 @@ import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
@@ -28,7 +29,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildCuringRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer, String recipeName, Item uncuredItem, Item curedItem) {
-        ShapelessRecipeBuilder.shapeless(curedItem, 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, curedItem, 1)
                 .requires(uncuredItem)
                 .requires(ModItems.APPLE_CIDER_VINEGAR.get())
                 .requires(ModTags.Items.DUSTS_SALT)
@@ -37,7 +38,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildRawKebabRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(ModItems.KEBAB_RAW.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.KEBAB_RAW.get(), 1)
                 .requires(ModTags.Items.RODS)
                 .requires(Items.ROTTEN_FLESH)
                 .requires(ModItems.PROTEIN_PASTE.get())
@@ -47,7 +48,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildNotsogudiumBowlRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(ModItems.NOTSOGUDIUM_BOWL.get(), 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.NOTSOGUDIUM_BOWL.get(), 3)
                 .pattern("# #")
                 .pattern(" # ")
                 .define('#', ModItems.NOTSOGUDIUM_INGOT.get())
@@ -56,7 +57,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildBrothRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(ModItems.BROTH.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BROTH.get(), 1)
                 .requires(Ingredient.of(ModItems.NOTSOGUDIUM_BOWL.get()), 1)
                 .requires(Ingredient.of(Items.BONE_MEAL), 1)
                 .requires(Ingredient.of(Items.WATER_BUCKET), 1)
@@ -74,7 +75,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
     }
 
     private static void buildGruelRecipe(ModRecipeProvider provider, Consumer<FinishedRecipe> consumer) {
-        ShapelessRecipeBuilder.shapeless(ModItems.GRUEL.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.GRUEL.get(), 1)
                 .requires(Ingredient.of(ModItems.BROTH.get()))
                 .requires(Ingredient.of(ModItems.PROTEIN_PASTE.get()))
                 .unlockedBy("has_item", provider.hasItem(ModItems.BROTH.get()))
@@ -88,7 +89,7 @@ public class FoodItemDataGenRecipes extends DataGenRecipesBase {
             Item ingredient,
             Item output) {
         SimpleCookingRecipeBuilder
-                .smelting(Ingredient.of(ingredient), output, 0.0F, 200)
+                .smelting(Ingredient.of(ingredient), RecipeCategory.MISC, output, 0.0F, 200)
                 .unlockedBy("has_item", provider.hasItem(ingredient))
                 .save(consumer, modId(name + "_smelting"));
     }

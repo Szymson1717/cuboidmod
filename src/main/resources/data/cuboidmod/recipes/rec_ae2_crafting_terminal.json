@@ -1,15 +1,15 @@
 {
   "type": "cuboidmod:recycling",
   "ingredient": {
-    "item": "appliedenergistics2:crafting_terminal"
+    "item": "ae2:crafting_terminal"
   },
   "results": [
     {
-      "item": "appliedenergistics2:calculation_processor",
+      "item": "ae2:calculation_processor",
       "count": 1
     },
     {
-      "item": "appliedenergistics2:terminal",
+      "item": "ae2:terminal",
       "count": 1
     }
   ],

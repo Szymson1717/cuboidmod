@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "cuboidmod:cellulose_block"
   },
-  "result": "cuboidmod:cellulose_bricks",
-  "count": 1
+  "result": "cuboidmod:cellulose_bricks"
 }

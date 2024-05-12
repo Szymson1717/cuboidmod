@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "cuboidmod:wikidium_hoe"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "cuboidmod:thatldu_ingot"
   },
+  "base": {
+    "item": "cuboidmod:wikidium_hoe"
+  },
   "result": {
     "item": "cuboidmod:thatldu_hoe"
+  },
+  "template": {
+    "item": "cuboidmod:thatldu_upgrade_smithing_template"
   }
 }

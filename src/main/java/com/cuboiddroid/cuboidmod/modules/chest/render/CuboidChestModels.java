@@ -2,20 +2,17 @@ package com.cuboiddroid.cuboidmod.modules.chest.render;
 
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.chest.block.CuboidChestTypes;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = CuboidMod.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CuboidChestModels {
-    public static final ResourceLocation NOTSOGUDIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "model/notsogudium_chest");
-    public static final ResourceLocation KUDBEBEDDA_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "model/kudbebedda_chest");
-    public static final ResourceLocation NOTARFBADIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "model/notarfbadium_chest");
-    public static final ResourceLocation WIKIDIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "model/wikidium_chest");
-    public static final ResourceLocation THATLDU_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "model/thatldu_chest");
+    public static final ResourceLocation NOTSOGUDIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "entity/chest/notsogudium");
+    public static final ResourceLocation KUDBEBEDDA_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "entity/chest/kudbebedda");
+    public static final ResourceLocation NOTARFBADIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "entity/chest/notarfbadium");
+    public static final ResourceLocation WIKIDIUM_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "entity/chest/wikidium");
+    public static final ResourceLocation THATLDU_CHEST_LOCATION = new ResourceLocation(CuboidMod.MOD_ID, "entity/chest/thatldu");
 
     public static final ResourceLocation VANILLA_CHEST_LOCATION = new ResourceLocation("entity/chest/normal");
 
@@ -36,16 +33,16 @@ public class CuboidChestModels {
         }
     }
 
-    @SubscribeEvent
-    public static void onStitch(TextureStitchEvent.Pre event) {
-        if (!event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
-            return;
-        }
+    // @SubscribeEvent
+    // public static void onStitch(TextureStitchEvent.Post event) {
+    //     if (!event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
+    //         return;
+    //     }
 
-        event.addSprite(NOTSOGUDIUM_CHEST_LOCATION);
-        event.addSprite(KUDBEBEDDA_CHEST_LOCATION);
-        event.addSprite(NOTARFBADIUM_CHEST_LOCATION);
-        event.addSprite(WIKIDIUM_CHEST_LOCATION);
-        event.addSprite(THATLDU_CHEST_LOCATION);
-    }
+    //     event.addSprite(NOTSOGUDIUM_CHEST_LOCATION);
+    //     event.addSprite(KUDBEBEDDA_CHEST_LOCATION);
+    //     event.addSprite(NOTARFBADIUM_CHEST_LOCATION);
+    //     event.addSprite(WIKIDIUM_CHEST_LOCATION);
+    //     event.addSprite(THATLDU_CHEST_LOCATION);
+    // }
 }

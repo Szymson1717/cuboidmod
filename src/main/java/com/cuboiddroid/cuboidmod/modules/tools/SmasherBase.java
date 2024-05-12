@@ -2,7 +2,6 @@ package com.cuboiddroid.cuboidmod.modules.tools;
 
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,9 +24,9 @@ import net.minecraft.world.item.crafting.RecipeType;
   Based on the hammers from easy_steel by kwpugh
  */
 public abstract class SmasherBase extends PickaxeItem {
-    public static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(
-            Material.STONE, Material.METAL, Material.GLASS, Material.ICE,
-            Material.ICE_SOLID, Material.HEAVY_METAL);
+    // public static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(
+    //         Material.STONE, Material.METAL, Material.GLASS, Material.ICE,
+    //         Material.ICE_SOLID, Material.HEAVY_METAL);
 
     public SmasherBase(Tier tier, int attackDamage, double attackSpeed, Properties properties) {
         super(
@@ -40,9 +39,9 @@ public abstract class SmasherBase extends PickaxeItem {
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if (entity instanceof Player) {
-            if (ToolUtils.isBreakableWithSmasher(world, pos, (Player) entity, EFFECTIVE_MATERIALS))
+            if (ToolUtils.isBreakableWithSmasher(world, pos, (Player) entity))
             {
-                ToolUtils.tryBreakAdjacent(stack, world, pos, (Player) entity, EFFECTIVE_MATERIALS);
+                ToolUtils.tryBreakAdjacent(stack, world, pos, (Player) entity);
             }
         }
         return super.mineBlock(stack, world, state, pos, entity);

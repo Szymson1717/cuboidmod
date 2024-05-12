@@ -22,7 +22,7 @@ public class Smoosher extends Item {
         super(new Properties()
                 .durability(Config.smoosherDurability.get())
                 .setNoRepair()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP));
+                );
     }
 
     @Override
@@ -49,11 +49,11 @@ public class Smoosher extends Item {
 
     @Override
     public boolean isValidRepairItem(ItemStack itemToRepair, ItemStack repairItem) {
-        return repairItem.sameItem(ModBlocks.NOTSOGUDIUM_BLOCK.get().asItem().getDefaultInstance())
-                || repairItem.sameItem(ModBlocks.KUDBEBEDDA_BLOCK.get().asItem().getDefaultInstance())
-                || repairItem.sameItem(ModBlocks.NOTARFBADIUM_BLOCK.get().asItem().getDefaultInstance())
-                || repairItem.sameItem(ModBlocks.WIKIDIUM_BLOCK.get().asItem().getDefaultInstance())
-                || repairItem.sameItem(ModBlocks.THATLDU_BLOCK.get().asItem().getDefaultInstance());
+        return repairItem.is(ModBlocks.NOTSOGUDIUM_BLOCK.get().asItem())
+                || repairItem.is(ModBlocks.KUDBEBEDDA_BLOCK.get().asItem())
+                || repairItem.is(ModBlocks.NOTARFBADIUM_BLOCK.get().asItem())
+                || repairItem.is(ModBlocks.WIKIDIUM_BLOCK.get().asItem())
+                || repairItem.is(ModBlocks.THATLDU_BLOCK.get().asItem());
     }
 
     @OnlyIn(Dist.CLIENT)

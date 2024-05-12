@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "cuboidmod:wikidium_helmet"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "cuboidmod:thatldu_ingot"
   },
+  "base": {
+    "item": "cuboidmod:wikidium_helmet"
+  },
   "result": {
     "item": "cuboidmod:thatldu_helmet"
+  },
+  "template": {
+    "item": "cuboidmod:thatldu_upgrade_smithing_template"
   }
 }

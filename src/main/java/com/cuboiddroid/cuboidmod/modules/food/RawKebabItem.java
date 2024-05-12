@@ -23,7 +23,7 @@ public class RawKebabItem extends Item {
 
     public RawKebabItem() {
         super(new Properties()
-                .tab(CuboidMod.CUBOIDMOD_ITEM_GROUP)
+                
                 .stacksTo(1)
                 .food(new FoodProperties.Builder()
                         .nutrition(8)

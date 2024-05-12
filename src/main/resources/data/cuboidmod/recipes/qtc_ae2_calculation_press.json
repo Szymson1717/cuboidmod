@@ -1,13 +1,13 @@
 {
   "type": "cuboidmod:transmuting",
   "base": {
-    "item": "appliedenergistics2:calculation_processor"
+    "item": "ae2:calculation_processor"
   },
   "addition": {
-    "item": "appliedenergistics2:quartz_block"
+    "item": "ae2:quartz_block"
   },
   "result": {
-    "item": "appliedenergistics2:calculation_processor_press",
+    "item": "ae2:calculation_processor_press",
     "count": 1
   },
   "work_ticks": 300,
