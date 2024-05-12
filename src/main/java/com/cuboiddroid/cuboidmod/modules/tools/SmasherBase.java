@@ -1,6 +1,5 @@
 package com.cuboiddroid.cuboidmod.modules.tools;
 
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +16,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Set;
 import net.minecraft.world.item.crafting.RecipeType;
 
 /*
