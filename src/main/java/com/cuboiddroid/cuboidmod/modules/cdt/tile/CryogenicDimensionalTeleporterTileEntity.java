@@ -7,7 +7,6 @@ import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
 import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
