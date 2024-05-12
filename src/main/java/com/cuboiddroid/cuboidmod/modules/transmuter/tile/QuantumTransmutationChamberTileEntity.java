@@ -15,6 +15,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -215,7 +216,8 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.TRANSMUTING, inv, this.level).orElse(null);
+            RecipeType<TransmutingRecipe> recipeType = ModRecipeTypes.TRANSMUTING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;
@@ -270,6 +272,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         additionalItemHandler.deserializeNBT(tag.getCompound("invAdd"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
@@ -277,11 +280,11 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invAdd", additionalItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
@@ -289,7 +292,6 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
     }
 
     @Override
@@ -304,10 +306,15 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
         this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return nbtTag;
     }
 
     @Override

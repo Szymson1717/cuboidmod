@@ -1,6 +1,5 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
-import com.cuboiddroid.cuboidmod.modules.powergen.block.SingularityPowerGeneratorBlockBase;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModRecipeTypes;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
@@ -11,6 +10,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -168,7 +168,8 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RESOURCE_GENERATING, inv, this.level).orElse(null);
+            RecipeType<ResourceGeneratingRecipe> recipeType = ModRecipeTypes.RESOURCE_GENERATING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;
@@ -188,18 +189,18 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
-        return super.save(tag);
     }
 
     private ItemStackHandler createInputHandler() {
@@ -214,14 +215,14 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 // can only insert singularities in the input slot
-                if (!ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem()))
+                if (!stack.is(ModTags.Items.QUANTUM_SINGULARITIES))
                     return stack;
 
                 return super.insertItem(slot, stack, simulate);
@@ -241,7 +242,7 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return !ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return !stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull
@@ -281,10 +282,15 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
         this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return nbtTag;
     }
 
     @Override

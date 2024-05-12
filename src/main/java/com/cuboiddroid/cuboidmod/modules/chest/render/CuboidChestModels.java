@@ -38,7 +38,7 @@ public class CuboidChestModels {
 
     @SubscribeEvent
     public static void onStitch(TextureStitchEvent.Pre event) {
-        if (!event.getMap().location().equals(Sheets.CHEST_SHEET)) {
+        if (!event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
             return;
         }
 

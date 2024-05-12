@@ -4,7 +4,8 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.common.TileEntityInventory;
 import com.google.common.collect.Lists;
-// import harmonised.pmmo.events.FurnaceHandler;
+
+import harmonised.pmmo.api.events.FurnaceBurnEvent;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,6 +39,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -81,12 +83,17 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
+        this.setChanged();
+        return nbtTag;
+    }
+    
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
@@ -630,8 +637,7 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
                 this.inventory.set(FUEL, new ItemStack(Items.WATER_BUCKET));
             }
             if (ModList.get().isLoaded("pmmo")) {
-                // FurnaceHandler.handleSmelted(input, output, level, worldPosition, 0);
-                // FurnaceHandler.handleSmelted(input, output, level, worldPosition, 1);
+                MinecraftForge.EVENT_BUS.post(new FurnaceBurnEvent(input, level, worldPosition));
             }
             input.shrink(1);
         }
@@ -639,6 +645,8 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         ContainerHelper.loadAllItems(tag, this.inventory);
         this.furnaceBurnTime = tag.getInt("BurnTime");
         this.cookTime = tag.getInt("CookTime");
@@ -656,12 +664,10 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
          CompoundTag energyTag = tag.getCompound("energy");
          energy.ifPresent(h -> ((INBTSerializable<CompoundTag>) h).deserializeNBT(energyTag));
          **/
-
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         ContainerHelper.saveAllItems(tag, this.inventory);
         tag.putInt("BurnTime", this.furnaceBurnTime);
         tag.putInt("CookTime", this.cookTime);
@@ -678,11 +684,11 @@ public abstract class CuboidFurnaceTileEntityBase extends TileEntityInventory im
          */
 
         CompoundTag compoundnbt = new CompoundTag();
+        super.saveAdditional(tag);
+
         this.recipes.forEach((recipeId, craftedAmount) ->
                 compoundnbt.putInt(recipeId.toString(), craftedAmount));
         tag.put("RecipesUsed", compoundnbt);
-
-        return super.save(tag);
     }
 
     @SuppressWarnings("deprecation")

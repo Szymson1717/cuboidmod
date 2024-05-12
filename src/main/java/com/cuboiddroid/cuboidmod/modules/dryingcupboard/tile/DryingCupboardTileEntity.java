@@ -14,6 +14,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -244,7 +245,8 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
         if (recipes[slotIndex] == null || !recipes[slotIndex].matches(inv, this.level)) {
             // look for a specific recipe and use it if found
-            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, inv, this.level).orElse(null);
+            RecipeType<DryingRecipe> recipeType = ModRecipeTypes.DRYING.getRecipeType();
+            DryingRecipe recipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
 
             // track the recipe being used for this slot to save time next tick
             recipes[slotIndex] = recipe;
@@ -293,24 +295,24 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTimes = tag.getIntArray("procTimes");
         recipeTimes = tag.getIntArray("recTimes");
-
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
         tag.putIntArray("procTimes", processingTimes);
         tag.putIntArray("recTimes", recipeTimes);
-
-        return super.save(tag);
     }
 
     @Override
@@ -332,10 +334,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
      */
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -350,8 +349,8 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
+        CompoundTag nbtTagCompound = super.getUpdateTag();
+        saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
 

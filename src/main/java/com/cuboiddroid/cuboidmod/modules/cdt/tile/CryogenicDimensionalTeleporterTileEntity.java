@@ -4,7 +4,7 @@ import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
-// import net.darkhax.gamestages.GameStageHelper;
+import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -74,18 +74,18 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_end";
-            // GameStageHelper.addStage(serverPlayer, "end_access");
+            GameStageHelper.addStage(serverPlayer, "end_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_STONE_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:overworld";
         } else if (stack.getItem() == ModBlocks.ENERGIZED_THATLDUVIUM.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "cuboidmod:cuboid_overworld";
-            // GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
+            GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_NETHER_BRICKS.get().asItem()) {
             keyItem = stack.copy();
             targetDimension = "minecraft:the_nether";
-            // GameStageHelper.addStage(serverPlayer, "nether_access");
+            GameStageHelper.addStage(serverPlayer, "nether_access");
         } else {
             if (Config.cryoDimTeleporterClearsTargetDimensionForInvalidKey.get())
             {
@@ -188,24 +188,24 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         this.state = CdtStates.values()[tag.getByte("state")];
         this.targetDimension = tag.getString("tgtDim");
         this.keyItem = ItemStack.of(tag.getCompound("keyItem"));
-
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("energy", energyStorage.serializeNBT());
         tag.putByte("state", (byte)this.state.ordinal());
         tag.putString("tgtDim", this.targetDimension);
         CompoundTag keyTag = new CompoundTag();
         this.keyItem.save(keyTag);
         tag.put("keyItem", keyTag);
-
-        return super.save(tag);
     }
 
     @Override
@@ -224,10 +224,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
      */
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -245,8 +242,8 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
+        CompoundTag nbtTagCompound = super.getUpdateTag();
+        saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
 

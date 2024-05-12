@@ -99,7 +99,7 @@ public class DryingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.DRYING;
+        return ModRecipeTypes.DRYING.getRecipeType();
     }
 
     /**

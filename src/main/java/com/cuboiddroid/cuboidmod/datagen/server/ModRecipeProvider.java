@@ -6,7 +6,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.Item;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.function.Consumer;
@@ -38,7 +38,7 @@ public class ModRecipeProvider extends RecipeProvider {
         FoodItemDataGenRecipes.build(this, consumer);
     }
 
-    public InventoryChangeTrigger.TriggerInstance hasItem(Tag<Item> itemITag) {
+    public InventoryChangeTrigger.TriggerInstance hasItem(TagKey<Item> itemITag) {
         return RecipeProvider.has(itemITag);
     }
 

@@ -110,7 +110,7 @@ public class QuantumCollapsingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.COLLAPSING;
+        return ModRecipeTypes.COLLAPSING.getRecipeType();
     }
 
     /**

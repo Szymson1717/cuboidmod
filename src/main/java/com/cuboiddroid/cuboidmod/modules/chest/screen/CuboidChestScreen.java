@@ -33,22 +33,22 @@ public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContai
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderComponentHoverEffect(matrixStack, null, mouseX, mouseY);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(PoseStack);
+        super.render(PoseStack, mouseX, mouseY, partialTicks);
+        this.renderComponentHoverEffect(PoseStack, null, mouseX, mouseY);
+        this.renderTooltip(PoseStack, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        this.font.draw(matrixStack, this.title, 8.0F, 6.0F, 4210752);
+    protected void renderLabels(PoseStack PoseStack, int mouseX, int mouseY) {
+        this.font.draw(PoseStack, this.title, 8.0F, 6.0F, 4210752);
 
-        this.font.draw(matrixStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
+        this.font.draw(PoseStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(PoseStack PoseStack, float partialTicks, int mouseX, int mouseY) {
         // RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -58,6 +58,6 @@ public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContai
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        blit(matrixStack, x, y, 0, 0, this.imageWidth, this.imageHeight, this.textureXSize, this.textureYSize);
+        blit(PoseStack, x, y, 0, 0, this.imageWidth, this.imageHeight, this.textureXSize, this.textureYSize);
     }
 }

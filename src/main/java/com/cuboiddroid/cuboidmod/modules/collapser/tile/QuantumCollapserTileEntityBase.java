@@ -10,6 +10,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -239,7 +240,8 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
                 : getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.COLLAPSING, inv, this.level).orElse(null);
+            RecipeType<QuantumCollapsingRecipe> recipeType = ModRecipeTypes.COLLAPSING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;
@@ -281,6 +283,8 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         processingTime = tag.getInt("procTime");
@@ -299,12 +303,12 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
 
         String currentOutputId = tag.getString("curOutId");
         currentOutput = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(currentOutputId)));
-
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.putInt("procTime", processingTime);
@@ -318,8 +322,6 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
             tag.putString("curIng", currentIngredient.toJson().toString());
 
         tag.putString("curOutId", currentOutput.getItem().getRegistryName().toString());
-
-        return super.save(tag);
     }
 
     @Override
@@ -340,10 +342,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
      */
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -358,8 +357,8 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
      */
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag nbtTagCompound = new CompoundTag();
-        save(nbtTagCompound);
+        CompoundTag nbtTagCompound = super.getUpdateTag();
+        saveAdditional(nbtTagCompound);
         return nbtTagCompound;
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -218,7 +219,8 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.INSCRIBING, inv, this.level).orElse(null);
+            RecipeType<InscribingRecipe> recipeType = ModRecipeTypes.INSCRIBING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;
@@ -293,6 +295,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         topLeftItemHandler.deserializeNBT(tag.getCompound("invTL"));
         middleItemHandler.deserializeNBT(tag.getCompound("invMid"));
         bottomRightItemHandler.deserializeNBT(tag.getCompound("invBR"));
@@ -301,11 +304,11 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invTL", topLeftItemHandler.serializeNBT());
         tag.put("invMid", middleItemHandler.serializeNBT());
         tag.put("invBR", bottomRightItemHandler.serializeNBT());
@@ -314,7 +317,6 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
     }
 
     @Override
@@ -330,10 +332,15 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
         this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return nbtTag;
     }
 
     @Override

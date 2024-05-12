@@ -86,7 +86,7 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
      * @return The IRecipeType for this recipe
      */
     public RecipeType<?> getType() {
-        return ModRecipeTypes.RESOURCE_GENERATING;
+        return ModRecipeTypes.RESOURCE_GENERATING.getRecipeType();
     }
 
     /**

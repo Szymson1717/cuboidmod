@@ -11,6 +11,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
@@ -175,7 +176,8 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
         Container inv = getInputsAsInventory();
 
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
-            cachedRecipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.POWER_GENERATING, inv, this.level).orElse(null);
+            RecipeType<PowerGeneratingRecipe> recipeType = ModRecipeTypes.POWER_GENERATING.getRecipeType();
+            cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
         }
 
         return cachedRecipe;
@@ -195,20 +197,20 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
+
         itemHandler.deserializeNBT(tag.getCompound("inv"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
-
         counter = tag.getInt("counter");
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
-
         tag.putInt("counter", counter);
-        return super.save(tag);
     }
 
     public int getEnergyCapacity() {
@@ -227,13 +229,13 @@ public abstract class SingularityPowerGeneratorTileEntityBase extends BlockEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem());
+                return stack.is(ModTags.Items.QUANTUM_SINGULARITIES);
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (!ModTags.Items.QUANTUM_SINGULARITIES.contains(stack.getItem())) {
+                if (!stack.is(ModTags.Items.QUANTUM_SINGULARITIES)) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

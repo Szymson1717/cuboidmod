@@ -26,6 +26,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 import net.minecraft.world.level.block.Block;
@@ -248,7 +249,8 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         Container inv = getInputsAsInventory();
 
         // look for a specific recipe and use it if found (i.e. json overrides)
-        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.RECYCLING, inv, this.level).orElse(null);
+        RecipeType<RecyclingRecipe> recipeType = ModRecipeTypes.RECYCLING.getRecipeType();
+        RecyclingRecipe recipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
 
         // there is a (JSON) recipe override, so use it
         if (recipe != null)
@@ -506,9 +508,9 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
             return true;
 
         // check the item's tags
-        for (ResourceLocation tag : item.getItem().getTags())
+        for (TagKey<Item> tag : item.getTags().toList())
         {
-            if (BlacklistConfig.getInstance().isBlacklistedTag(tag.toString()))
+            if (BlacklistConfig.getInstance().isBlacklistedTag(tag.location().toString()))
                 return true;
         }
 
@@ -531,9 +533,9 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
             return true;
 
         // check the item's tags
-        for (ResourceLocation tag : item.getTags())
+        for (TagKey<Item> tag : item.getDefaultInstance().getTags().toList())
         {
-            if (BlacklistConfig.getInstance().isBlacklistedResultTag(tag.toString()))
+            if (BlacklistConfig.getInstance().isBlacklistedResultTag(tag.location().toString()))
                 return true;
         }
 
@@ -661,24 +663,24 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
     @Override
     public void load(CompoundTag tag) {
+        super.load(tag);
         inputItemHandler.deserializeNBT(tag.getCompound("invIn"));
         outputItemHandler.deserializeNBT(tag.getCompound("invOut"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
         processingTime = tag.getInt("procTime");
         recipeTime = tag.getInt("recTime");
         energyConsumed = tag.getInt("feConsumed");
-        super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.put("invIn", inputItemHandler.serializeNBT());
         tag.put("invOut", outputItemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
         tag.putInt("procTime", processingTime);
         tag.putInt("recTime", recipeTime);
         tag.putInt("feConsumed", energyConsumed);
-        return super.save(tag);
     }
 
     @Override
@@ -692,10 +694,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        CompoundTag nbtTag = new CompoundTag();
-        this.save(nbtTag);
-        this.setChanged();
-        return new ClientboundBlockEntityDataPacket(getBlockPos(), -1, nbtTag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -704,6 +703,14 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
         this.load(tag);
         this.setChanged();
         level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition).getBlock().defaultBlockState(), level.getBlockState(worldPosition), 2);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() { 
+        CompoundTag nbtTag = super.getUpdateTag();
+        this.saveAdditional(nbtTag);
+        this.setChanged();
+        return nbtTag;
     }
 
     private CuboidEnergyStorage createEnergy() {

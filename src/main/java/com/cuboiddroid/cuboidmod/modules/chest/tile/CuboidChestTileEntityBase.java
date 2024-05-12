@@ -28,7 +28,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.function.Supplier;
 
@@ -125,14 +124,12 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
     }
 
     @Override
-    public CompoundTag save(CompoundTag tags) {
-        super.save(tags);
+    public void saveAdditional(CompoundTag tags) {
+        super.saveAdditional(tags);
 
         if (!this.trySaveLootTable(tags)) {
             ContainerHelper.saveAllItems(tags, this.chestContents);
         }
-
-        return tags;
     }
 
     public static <T extends CuboidChestTileEntityBase> void gameTick(Level level, BlockPos worldPosition, BlockState blockState, T entity) {
@@ -322,7 +319,7 @@ public class CuboidChestTileEntityBase extends RandomizableContainerBlockEntity 
     private void deserializeChestContentsNBT(CompoundTag nbt)
     {
         this.chestContents = NonNullList.withSize(chestType.size, ItemStack.EMPTY);
-        ListTag tagList = nbt.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag tagList = nbt.getList("Items", 10);
         for (int i = 0; i < tagList.size(); i++)
         {
             CompoundTag itemTags = tagList.getCompound(i);

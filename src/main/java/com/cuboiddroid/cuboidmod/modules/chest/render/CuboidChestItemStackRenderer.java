@@ -24,7 +24,7 @@ public class CuboidChestItemStackRenderer<T extends CuboidChestTileEntityBase> e
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemTransforms.TransformType context, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(this.te.get(), matrixStack, buffer, combinedLight, combinedOverlay);
+    public void renderByItem(ItemStack stack, ItemTransforms.TransformType context, PoseStack PoseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(this.te.get(), PoseStack, buffer, combinedLight, combinedOverlay);
     }
 }

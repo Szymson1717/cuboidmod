@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory;
 
+import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
@@ -11,6 +12,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.core.BlockPos;
@@ -409,7 +411,8 @@ public class DryingCupboardContainer extends AbstractContainerMenu {
     }
 
     protected boolean hasRecipe(ItemStack stack) {
-        return this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.DRYING, new SimpleContainer(stack), this.level).isPresent();
+        RecipeType<DryingRecipe> recipeType = ModRecipeTypes.DRYING.getRecipeType();
+        return this.level.getRecipeManager().getRecipeFor(recipeType, new SimpleContainer(stack), this.level).isPresent();
     }
 
 }

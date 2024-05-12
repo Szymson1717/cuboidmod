@@ -4,17 +4,11 @@
     "type": "minecraft:noise",
     "seed": 0,
     "settings": {
-      "name": "cuboidmod:cuboid_overworld",
-      "bedrock_roof_position": -10,
-      "bedrock_floor_position": 0,
       "sea_level": 63,
-      "min_surface_level": 0,
       "disable_mob_generation": false,
-      "noise_caves_enabled": true,
-      "noodle_caves_enabled": true,
       "aquifers_enabled": true,
-      "deepslate_enabled": true,
       "ore_veins_enabled": true,
+      "legacy_random_source": false,
       "default_block": {
         "Name": "minecraft:stone"
       },
@@ -27,13 +21,8 @@
       "noise": {
         "min_y": -64,
         "height": 320,
-        "density_factor": 1,
-        "density_offset": -0.46875,
         "size_horizontal": 1,
         "size_vertical": 2,
-        "simplex_surface_noise": true,
-        "random_density_offset": true,
-        "amplified": false,
         "sampling": {
           "xz_scale": 1,
           "y_scale": 1,
@@ -49,87 +38,43 @@
           "target": -10,
           "size": 3,
           "offset": 0
+        },
+        "terrain_shaper": {
+          "offset": 0,
+          "factor": 0,
+          "jaggedness": 0
         }
       },
-      "structures": {
-        "stronghold": {
-          "distance": 0,
-          "spread": 0,
-          "count": 2
+      "noise_router": {
+        "barrier": 0,
+        "fluid_level_floodedness": 0,
+        "fluid_level_spread": 0,
+        "lava": 0,
+        "temperature": 0,
+        "vegetation": 0,
+        "continents": 0,
+        "erosion": 0,
+        "depth": 0,
+        "ridges": 0,
+        "initial_density_without_jaggedness": 0,
+        "final_density": {
+          "type": "minecraft:interpolated",
+          "argument": "minecraft:overworld/base_3d_noise"
         },
-        "structures": {
-          "minecraft:pillager_outpost": {
-            "spacing": 30,
-            "separation": 25,
-            "salt": 0
-          },
-          "minecraft:mineshaft": {
-            "spacing": 20,
-            "separation": 15,
-            "salt": 0
-          },
-          "minecraft:mansion": {
-            "spacing": 150,
-            "separation": 120,
-            "salt": 0
-          },
-          "minecraft:jungle_pyramid": {
-            "spacing": 30,
-            "separation": 20,
-            "salt": 0
-          },
-          "minecraft:desert_pyramid": {
-            "spacing": 30,
-            "separation": 20,
-            "salt": 0
-          },
-          "minecraft:igloo": {
-            "spacing": 30,
-            "separation": 20,
-            "salt": 0
-          },
-          "minecraft:ruined_portal": {
-            "spacing": 60,
-            "separation": 40,
-            "salt": 0
-          },
-          "minecraft:shipwreck": {
-            "spacing": 80,
-            "separation": 60,
-            "salt": 0
-          },
-          "minecraft:swamp_hut": {
-            "spacing": 50,
-            "separation": 45,
-            "salt": 0
-          },
-          "minecraft:monument": {
-            "spacing": 70,
-            "separation": 60,
-            "salt": 0
-          },
-          "minecraft:ocean_ruin": {
-            "spacing": 60,
-            "separation": 50,
-            "salt": 0
-          },
-          "minecraft:buried_treasure": {
-            "spacing": 150,
-            "separation": 120,
-            "salt": 0
-          },
-          "minecraft:village": {
-            "spacing": 8,
-            "separation": 4,
-            "salt": 0
-          }
+        "vein_toggle": 0,
+        "vein_ridged": 0,
+        "vein_gap": 0
+      },
+      "surface_rule": {
+        "type": "minecraft:block",
+        "result_state": {
+          "Name": "minecraft:stone"
         }
       }
     },
     "biome_source": {
-      "type": "minecraft:vanilla_layered",
-      "seed": 0,
-      "large_biomes": false
+      "type": "minecraft:multi_noise",
+      "preset": "minecraft:overworld"
     }
   }
 }

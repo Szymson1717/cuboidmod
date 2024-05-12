@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -197,7 +198,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                     // main island so player gets placed on outer edges
                                     if (cdt.isTargetTheEnd()) {
                                         radialDivisor = 64; // use a smaller target area to look for a safe spot
-                                        if (newPos.distSqr(0.0, 100, 0.0, true) > 96.0) {
+                                        if (newPos.distSqr(new Vec3i(0.0, 100, 0.0)) > 96.0) {
                                             // further away than 96 blocks - adjust to be 80 blocks away!
                                             if (xPos == 0.0) {
                                                 zPos = 80;
@@ -207,7 +208,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
                                                 xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
                                                 zPos = g * xPos;
                                             }
-                                        } else if (newPos.distSqr(0.0, 100, 0.0, true) < 64.0) {
+                                        } else if (newPos.distSqr(new Vec3i(0.0, 100, 0.0)) < 64.0) {
                                             // closer than 64 blocks - adjust to be 64 blocks away from 0,0
                                             if (xPos == 0.0) {
                                                 zPos = 80;
