@@ -184,10 +184,10 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
         @Override
         public QuantumCollapsingRecipe fromJson(ResourceLocation recipeId, JsonObject serializedRecipe) {
             int workTicks = GsonHelper.getAsInt(serializedRecipe, "work_ticks", 200);
-            int inputAmount = GsonHelper.getAsInt(serializedRecipe, "count", 1024);
             Ingredient ingredient;
             
             JsonObject inputJson = GsonHelper.getAsJsonObject(serializedRecipe, "input");
+            int inputAmount = GsonHelper.getAsInt(inputJson, "count", 1024);;
             if (inputJson.has("item")) {
                 ResourceLocation inputItemId = new ResourceLocation(GsonHelper.getAsString(inputJson, "item"));
 
