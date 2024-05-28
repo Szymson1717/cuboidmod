@@ -70,7 +70,7 @@ public class ToolUtils {
 
     public static HitResult calcRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
         float f = player.getRotationVector().x;
-        float f1 = player.getRotationVector().x;
+        float f1 = player.getRotationVector().y;
         Vec3 vec3d = player.getEyePosition(1.0F);
         float f2 = Mth.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
         float f3 = Mth.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
