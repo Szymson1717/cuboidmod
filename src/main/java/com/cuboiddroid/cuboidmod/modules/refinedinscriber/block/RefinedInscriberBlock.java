@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.refinedinscriber.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile.RefinedInscriberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
@@ -71,7 +72,7 @@ public class RefinedInscriberBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.refined_inscriber"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.refined_inscriber"));
     }
 
     @Nullable

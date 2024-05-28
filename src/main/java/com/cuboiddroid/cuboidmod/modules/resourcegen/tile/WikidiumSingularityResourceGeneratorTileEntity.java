@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.WikidiumSingularityResourceGeneratorContainer;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
@@ -28,7 +29,7 @@ public class WikidiumSingularityResourceGeneratorTileEntity extends SingularityR
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.wikidium_singularity_resource_generator");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.wikidium_singularity_resource_generator");
     }
 
     @Override

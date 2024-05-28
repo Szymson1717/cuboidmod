@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.NotarfbadiumSingularityResourceGeneratorContainer;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
@@ -27,7 +28,7 @@ public class NotarfbadiumSingularityResourceGeneratorTileEntity extends Singular
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.notarfbadium_singularity_resource_generator");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.notarfbadium_singularity_resource_generator");
     }
 
     @Override

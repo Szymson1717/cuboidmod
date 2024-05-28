@@ -15,6 +15,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+
+import com.cuboiddroid.cuboidmod.CuboidMod;
+
 import java.util.List;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -59,6 +62,6 @@ public abstract class SmasherBase extends PickaxeItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add((Component.translatable("hover_text.cuboidmod.smasher").withStyle(ChatFormatting.GREEN)));
+        tooltip.add((Component.translatable("hover_text." + CuboidMod.MOD_ID + ".smasher").withStyle(ChatFormatting.GREEN)));
     }
 }

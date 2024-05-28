@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.transmuter.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.transmuter.tile.QuantumTransmutationChamberTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
@@ -82,7 +83,7 @@ public class QuantumTransmutationChamberBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.quantum_transmutation_chamber"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.quantum_transmutation_chamber"));
     }
 
     @Nullable

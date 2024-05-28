@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.transmuter.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.transmuter.inventory.QuantumTransmutationChamberContainer;
 import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -78,7 +79,7 @@ public class QuantumTransmutationChamberTileEntity extends BlockEntity implement
     }
 
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.quantum_transmutation_chamber");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.quantum_transmutation_chamber");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, QuantumTransmutationChamberTileEntity entity) {

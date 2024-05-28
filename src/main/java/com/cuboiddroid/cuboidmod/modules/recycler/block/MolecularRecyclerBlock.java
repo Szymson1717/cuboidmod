@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.recycler.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.recycler.tile.MolecularRecyclerTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
@@ -67,7 +68,7 @@ public class MolecularRecyclerBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.molecular_recycler"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.molecular_recycler"));
     }
 
     @Nullable

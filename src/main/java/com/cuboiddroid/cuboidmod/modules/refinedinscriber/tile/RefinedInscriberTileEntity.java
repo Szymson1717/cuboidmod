@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.refinedinscriber.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.inventory.RefinedInscriberContainer;
 import com.cuboiddroid.cuboidmod.modules.refinedinscriber.recipe.InscribingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -79,7 +80,7 @@ public class RefinedInscriberTileEntity extends BlockEntity implements BlockEnti
     }
 
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.refined_inscriber");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.refined_inscriber");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, RefinedInscriberTileEntity entity) {

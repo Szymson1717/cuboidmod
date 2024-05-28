@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.cdt.block;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.cdt.tile.CryogenicDimensionalTeleporterTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
@@ -103,7 +104,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("item.cuboidmod.cryogenic_dimensional_teleporter.hover_text"));
+        list.add(Component.translatable("item." + CuboidMod.MOD_ID + ".cryogenic_dimensional_teleporter.hover_text"));
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.compat.jei;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.recipe.QuantumCollapsingRecipe;
 import com.cuboiddroid.cuboidmod.modules.collapser.screen.QuantumCollapserScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -42,7 +43,7 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
         itemBar = guiHelper.drawableBuilder(QuantumCollapserScreenBase.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = Component.translatable("jei.category.cuboidmod.collapsing");
+        localizedName = Component.translatable("jei.category." + CuboidMod.MOD_ID + ".collapsing");
     }
 
     private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
@@ -107,7 +108,7 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
-        String arrowText = "" + workSeconds + "." + workDecimal + " s";
+        String arrowText = workSeconds + "." + workDecimal + " s";
         renderScaledTextWithShadow(guiGraphics, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // required amounts

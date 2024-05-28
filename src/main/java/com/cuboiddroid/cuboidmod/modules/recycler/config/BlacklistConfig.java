@@ -48,7 +48,7 @@ public class BlacklistConfig {
     public void loadConfig()
     {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        File dir = FMLPaths.CONFIGDIR.get().resolve("cuboidmod/recycler/").toFile();
+        File dir = FMLPaths.CONFIGDIR.get().resolve(CuboidMod.MOD_ID + "/recycler/").toFile();
 
         CuboidMod.LOGGER.info("Loading Molecular Recycler blacklists");
 
@@ -178,7 +178,7 @@ public class BlacklistConfig {
     {
         ArrayList<String> result = new ArrayList<>();
 
-        result.add("cuboidmod:cured_flesh_from_acv_and_rotten_flesh");
+        result.add(CuboidMod.MOD_ID + ":cured_flesh_from_acv_and_rotten_flesh");
 
         return result;
     }
@@ -187,8 +187,8 @@ public class BlacklistConfig {
     {
         ArrayList<String> result = new ArrayList<>();
 
-        result.add("cuboidmod:cured_beef");
-        result.add("cuboidmod:cured_flesh");
+        result.add(CuboidMod.MOD_ID + ":cured_beef");
+        result.add(CuboidMod.MOD_ID + ":cured_flesh");
         result.add("exnihilosequentia:hammer_stone");
 
         return result;

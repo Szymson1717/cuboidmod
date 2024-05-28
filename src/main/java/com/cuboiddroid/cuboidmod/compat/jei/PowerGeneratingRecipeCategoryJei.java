@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.compat.jei;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.powergen.screen.SingularityPowerGeneratorScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -44,7 +45,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
         icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.THATLDU_SINGULARITY_POWER_GENERATOR.get()));
         energyBar = guiHelper.drawableBuilder(SingularityPowerGeneratorScreenBase.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = Component.translatable("jei.category.cuboidmod.power_generating");
+        localizedName = Component.translatable("jei.category." + CuboidMod.MOD_ID + ".power_generating");
 
         notsogudiumEnergyPerTick =
                 Config.notsogudiumSingularityPowerGeneratorBaseEnergyGenerated.get();
@@ -127,7 +128,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
         energyBar.draw(matrix, 33 - GUI_START_X, 34 - GUI_START_Y);
 
         float multiplier = recipe.getPowerMultiplier();
-        String energyText = "" + multiplier + "x";
+        String energyText = multiplier + "x";
         renderScaledTextWithShadow(matrix, font, Component.literal(energyText), 33 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
 
         renderScaledText(matrix, font, Component.literal("Notso.: " + String.format("%.02f", notsogudiumEnergyPerTick * multiplier) + " FE/t"), 74, 2, 0.6F, 0x444444);

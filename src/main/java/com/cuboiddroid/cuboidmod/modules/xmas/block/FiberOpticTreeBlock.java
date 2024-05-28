@@ -51,7 +51,7 @@ public class FiberOpticTreeBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable("block.cuboidmod.fiber_optic_tree.hover_text"));
+        list.add(Component.translatable("block." + CuboidMod.MOD_ID + ".fiber_optic_tree.hover_text"));
     }
 
     // @Override

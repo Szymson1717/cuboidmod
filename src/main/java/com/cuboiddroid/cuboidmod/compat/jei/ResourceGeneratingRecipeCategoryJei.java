@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.compat.jei;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.screen.SingularityResourceGeneratorScreenBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -48,7 +49,7 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
         itemBar = guiHelper.drawableBuilder(SingularityResourceGeneratorScreenBase.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = Component.translatable("jei.category.cuboidmod.resource_generating");
+        localizedName = Component.translatable("jei.category." + CuboidMod.MOD_ID + ".resource_generating");
 
         notsogudiumItemsPerSecond =
                 20.0F * Config.notsogudiumSingularityResourceGeneratorItemsPerOperation.get()

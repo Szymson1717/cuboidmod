@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.dryingcupboard.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile.DryingCupboardTileEntity;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 
@@ -50,7 +51,7 @@ public class DryingCupboardBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.drying_cupboard"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.drying_cupboard"));
     }
 
     @Nullable

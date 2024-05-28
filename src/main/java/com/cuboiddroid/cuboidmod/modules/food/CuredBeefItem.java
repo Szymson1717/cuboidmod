@@ -31,6 +31,6 @@ public class CuredBeefItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable("item.cuboidmod.cured_beef.hover_text"));
+        list.add(Component.translatable("item." + CuboidMod.MOD_ID + ".cured_beef.hover_text"));
     }
 }
