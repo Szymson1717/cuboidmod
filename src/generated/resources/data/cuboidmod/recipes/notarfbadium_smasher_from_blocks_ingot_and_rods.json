@@ -9,7 +9,7 @@
       "item": "cuboidmod:notarfbadium_ingot"
     },
     "|": {
-      "tag": "forge:rods"
+      "tag": "c:rods"
     }
   },
   "pattern": [

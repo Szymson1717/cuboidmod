@@ -6,7 +6,7 @@
       "tag": "cuboidmod:ores"
     },
     "$": {
-      "tag": "forge:dusts/silica"
+      "tag": "c:dusts/silica"
     }
   },
   "pattern": [

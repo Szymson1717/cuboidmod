@@ -1,10 +1,10 @@
 {
   "values": [
     "#cuboidmod:ores",
-    "#forge:ores/notsogudium",
-    "#forge:ores/kudbebedda",
-    "#forge:ores/notarfbadium",
-    "#forge:ores/wikidium",
-    "#forge:ores/thatldu"
+    "#c:ores/notsogudium",
+    "#c:ores/kudbebedda",
+    "#c:ores/notarfbadium",
+    "#c:ores/wikidium",
+    "#c:ores/thatldu"
   ]
 }

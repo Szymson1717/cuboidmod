@@ -1,7 +1,7 @@
 {
   "type": "cuboidmod:collapsing",
   "input": {
-    "tag": "forge:ingots/nickel",
+    "tag": "c:ingots/nickel",
     "count": 160
   },
   "result": {

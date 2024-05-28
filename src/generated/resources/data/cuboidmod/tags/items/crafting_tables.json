@@ -1,9 +1,9 @@
 {
   "values": [
-    "#forge:crafting_tables/notsogudium",
-    "#forge:crafting_tables/kudbebedda",
-    "#forge:crafting_tables/notarfbadium",
-    "#forge:crafting_tables/wikidium",
-    "#forge:crafting_tables/thatldu"
+    "#c:crafting_tables/notsogudium",
+    "#c:crafting_tables/kudbebedda",
+    "#c:crafting_tables/notarfbadium",
+    "#c:crafting_tables/wikidium",
+    "#c:crafting_tables/thatldu"
   ]
 }

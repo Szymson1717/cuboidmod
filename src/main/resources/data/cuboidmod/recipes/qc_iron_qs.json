@@ -1,7 +1,7 @@
 {
   "type": "cuboidmod:collapsing",
   "input": {
-    "tag": "forge:ingots/iron",
+    "tag": "c:ingots/iron",
     "count": 160
   },
   "result": {

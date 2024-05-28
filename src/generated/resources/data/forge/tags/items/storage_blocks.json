@@ -1,9 +1,9 @@
 {
   "values": [
-    "#forge:storage_blocks/notsogudium",
-    "#forge:storage_blocks/kudbebedda",
-    "#forge:storage_blocks/notarfbadium",
-    "#forge:storage_blocks/wikidium",
-    "#forge:storage_blocks/thatldu"
+    "#c:storage_blocks/notsogudium",
+    "#c:storage_blocks/kudbebedda",
+    "#c:storage_blocks/notarfbadium",
+    "#c:storage_blocks/wikidium",
+    "#c:storage_blocks/thatldu"
   ]
 }
