@@ -232,7 +232,7 @@ public class InscribingRecipe implements Recipe<Container> {
                   "item": "ae2:printed_engineering_processor"
                 },
                 "middle": {
-                  "tag": "c:dusts/redstone"
+                  "tag": "forge:dusts/redstone"
                 },
                 "bottom": {
                   "item": "ae2:printed_silicon"
@@ -253,7 +253,7 @@ public class InscribingRecipe implements Recipe<Container> {
                   "item": "ae2:calculation_processor_press"
                 },
                 "middle": {
-                  "tag": "c:storage_blocks/iron"
+                  "tag": "forge:storage_blocks/iron"
                 }
               }
             }

@@ -5,6 +5,6 @@
     "#cuboidmod:pieces/notarfbadium",
     "#cuboidmod:pieces/wikidium",
     "#cuboidmod:pieces/thatldu",
-    "#c:pieces/carbon_deposit"
+    "#forge:pieces/carbon_deposit"
   ]
 }

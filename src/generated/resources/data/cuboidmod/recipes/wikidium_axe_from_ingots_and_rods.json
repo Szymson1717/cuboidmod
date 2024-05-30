@@ -6,7 +6,7 @@
       "item": "cuboidmod:wikidium_ingot"
     },
     "|": {
-      "tag": "c:rods"
+      "tag": "forge:rods"
     }
   },
   "pattern": [

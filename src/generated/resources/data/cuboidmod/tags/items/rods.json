@@ -1,9 +1,9 @@
 {
   "values": [
-    "#c:rods/notsogudium",
-    "#c:rods/kudbebedda",
-    "#c:rods/notarfbadium",
-    "#c:rods/wikidium",
-    "#c:rods/thatldu"
+    "#forge:rods/notsogudium",
+    "#forge:rods/kudbebedda",
+    "#forge:rods/notarfbadium",
+    "#forge:rods/wikidium",
+    "#forge:rods/thatldu"
   ]
 }

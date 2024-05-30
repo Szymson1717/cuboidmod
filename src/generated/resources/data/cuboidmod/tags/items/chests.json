@@ -1,9 +1,9 @@
 {
   "values": [
-    "#c:chests/notsogudium",
-    "#c:chests/kudbebedda",
-    "#c:chests/notarfbadium",
-    "#c:chests/wikidium",
-    "#c:chests/thatldu"
+    "#forge:chests/notsogudium",
+    "#forge:chests/kudbebedda",
+    "#forge:chests/notarfbadium",
+    "#forge:chests/wikidium",
+    "#forge:chests/thatldu"
   ]
 }

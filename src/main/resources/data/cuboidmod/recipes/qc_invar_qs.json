@@ -1,7 +1,7 @@
 {
   "type": "cuboidmod:collapsing",
   "input": {
-    "tag": "c:ingots/invar",
+    "tag": "forge:ingots/invar",
     "count": 160
   },
   "result": {

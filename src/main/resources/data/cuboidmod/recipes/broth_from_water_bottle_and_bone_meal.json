@@ -8,7 +8,7 @@
       "item": "minecraft:bone_meal"
     },
     {
-      "type": "c:nbt",
+      "type": "forge:nbt",
       "item": "minecraft:potion",
       "nbt": "{Potion:'minecraft:water'}"
     }

@@ -198,8 +198,8 @@ public class BlacklistConfig {
     {
         ArrayList<String> result = new ArrayList<>();
 
-        result.add("c:ingots");
-        result.add("c:dyes");
+        result.add("forge:ingots");
+        result.add("forge:dyes");
 
         return result;
     }
@@ -226,12 +226,12 @@ public class BlacklistConfig {
     {
         ArrayList<String> result = new ArrayList<>();
 
-        result.add("c:rods/wooden");
-        result.add("c:ingots/iron");
-        result.add("c:storage_blocks/iron");
-        result.add("c:dusts/iron");
-        result.add("c:nuggets/iron");
-        result.add("c:ores/iron");
+        result.add("forge:rods/wooden");
+        result.add("forge:ingots/iron");
+        result.add("forge:storage_blocks/iron");
+        result.add("forge:dusts/iron");
+        result.add("forge:nuggets/iron");
+        result.add("forge:ores/iron");
 
         return result;
     }

@@ -1,15 +1,15 @@
 {
   "values": [
-    "#c:dusts/notsogudium",
-    "#c:dusts/kudbebedda",
-    "#c:dusts/notarfbadium",
-    "#c:dusts/wikidium",
-    "#c:dusts/thatldu",
-    "#c:dusts/silica",
-    "#c:dusts/zinc",
-    "#c:dusts/cobalt",
+    "#forge:dusts/notsogudium",
+    "#forge:dusts/kudbebedda",
+    "#forge:dusts/notarfbadium",
+    "#forge:dusts/wikidium",
+    "#forge:dusts/thatldu",
+    "#forge:dusts/silica",
+    "#forge:dusts/zinc",
+    "#forge:dusts/cobalt",
     "#cuboidmod:cellulose",
-    "#c:dusts/salt",
-    "#c:dusts/silica"
+    "#forge:dusts/salt",
+    "#forge:dusts/silica"
   ]
 }

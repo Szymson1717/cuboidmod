@@ -2,15 +2,15 @@
   "values": [
     "cuboidmod:fiber_optic_tree",
     "cuboidmod:drying_cupboard",
-    "#c:chests/notsogudium",
-    "#c:chests/kudbebedda",
-    "#c:chests/notarfbadium",
-    "#c:chests/wikidium",
-    "#c:chests/thatldu",
-    "#c:crafting_tables/notsogudium",
-    "#c:crafting_tables/kudbebedda",
-    "#c:crafting_tables/notarfbadium",
-    "#c:crafting_tables/wikidium",
-    "#c:crafting_tables/thatldu"
+    "#forge:chests/notsogudium",
+    "#forge:chests/kudbebedda",
+    "#forge:chests/notarfbadium",
+    "#forge:chests/wikidium",
+    "#forge:chests/thatldu",
+    "#forge:crafting_tables/notsogudium",
+    "#forge:crafting_tables/kudbebedda",
+    "#forge:crafting_tables/notarfbadium",
+    "#forge:crafting_tables/wikidium",
+    "#forge:crafting_tables/thatldu"
   ]
 }
