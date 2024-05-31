@@ -479,9 +479,6 @@ public class ModItems {
     public static final RegistryObject<Item> ZINC_DUST = Registration.ITEMS.register(
             "zinc_dust", () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> COBALT_DUST = Registration.ITEMS.register(
-            "cobalt_dust", () -> new Item(new Item.Properties()));
-
     // Carbon Deposit
     public static final RegistryObject<Item> CARBON_DEPOSIT = Registration.ITEMS.register(
             "carbon_deposit", () -> new Item(new Item.Properties()));
@@ -685,9 +682,6 @@ public class ModItems {
 
     public static final RegistryObject<Item> OSMIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "osmium_quantum_singularity", OsmiumQuantumSingularityItem::new);
-
-    public static final RegistryObject<Item> COBALT_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "cobalt_quantum_singularity", CobaltQuantumSingularityItem::new);
 
     public static final RegistryObject<Item> DIAMOND_QUANTUM_SINGULARITY = Registration.ITEMS.register(
             "diamond_quantum_singularity", DiamondQuantumSingularityItem::new);

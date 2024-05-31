@@ -28,7 +28,7 @@ public class WikidiumSingularityPowerGeneratorTileEntity extends SingularityPowe
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("cuboidmod.container.wikidium_singularity_power_generator");
     }
 
     @Override

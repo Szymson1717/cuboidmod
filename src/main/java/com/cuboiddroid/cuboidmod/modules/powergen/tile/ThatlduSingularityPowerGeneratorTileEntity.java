@@ -28,7 +28,7 @@ public class ThatlduSingularityPowerGeneratorTileEntity extends SingularityPower
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("cuboidmod.container.thatldu_singularity_power_generator");
     }
 
     @Override

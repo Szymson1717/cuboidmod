@@ -28,7 +28,7 @@ public class NotsogudiumSingularityPowerGeneratorTileEntity extends SingularityP
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("cuboidmod.container.notsogudium_singularity_power_generator");
     }
 
     @Override

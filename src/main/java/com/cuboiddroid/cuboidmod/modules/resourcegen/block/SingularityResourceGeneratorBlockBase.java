@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -102,7 +103,7 @@ public abstract class SingularityResourceGeneratorBlockBase extends BaseEntityBl
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.singularity_resource_generator"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.singularity_resource_generator"));
     }
 
     @Override

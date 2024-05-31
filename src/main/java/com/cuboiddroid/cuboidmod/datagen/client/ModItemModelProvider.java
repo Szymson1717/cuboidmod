@@ -78,7 +78,6 @@ public class ModItemModelProvider extends ItemModelProvider {
                 "uranium",
                 "uraninite",
                 "osmium",
-                "cobalt",
 
                 "diamond",
                 "emerald",
@@ -179,7 +178,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         builder(itemGenerated, "thatldu_upgrade_smithing_template");
 
         builder(itemGenerated, "zinc_dust");
-        builder(itemGenerated, "cobalt_dust");
 
         builder(itemGenerated, ArachnuggetItem.ID_STRING);
         builder(itemGenerated, BrothItem.ID_STRING);

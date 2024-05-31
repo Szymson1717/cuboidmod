@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.collapser.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.inventory.NotarfbadiumQuantumCollapserContainer;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ public class NotarfbadiumQuantumCollapserTileEntity extends QuantumCollapserTile
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.notarfbadium_quantum_collapser");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.notarfbadium_quantum_collapser");
     }
 
     @Override

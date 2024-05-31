@@ -28,7 +28,7 @@ public class KudbebeddaSingularityPowerGeneratorTileEntity extends SingularityPo
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("cuboidmod.container.kudbebedda_singularity_power_generator");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.cdt.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import com.cuboiddroid.cuboidmod.util.CuboidEnergyStorage;
@@ -80,7 +81,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
             targetDimension = "minecraft:overworld";
         } else if (stack.getItem() == ModBlocks.ENERGIZED_THATLDUVIUM.get().asItem()) {
             keyItem = stack.copy();
-            targetDimension = "cuboidmod:cuboid_overworld";
+            targetDimension = CuboidMod.MOD_ID + ":cuboid_overworld";
             GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
         } else if (stack.getItem() == ModBlocks.ENERGIZED_NETHER_BRICKS.get().asItem()) {
             keyItem = stack.copy();
@@ -144,7 +145,7 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
     }
 
     public MutableComponent getDisplayName() {
-        return Component.translatable("container.cuboidmod.cryogenic_dimensional_teleporter");
+        return Component.translatable("container." + CuboidMod.MOD_ID + ".cryogenic_dimensional_teleporter");
     }
 
     public static void gameTick(Level level, BlockPos pos, BlockState blockState, CryogenicDimensionalTeleporterTileEntity blockEntity) {
@@ -290,6 +291,6 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
     }
 
     public boolean isTargetCuboidOverworld() {
-        return targetDimension.equalsIgnoreCase("cuboidmod:cuboid_overworld");
+        return targetDimension.equalsIgnoreCase(CuboidMod.MOD_ID + ":cuboid_overworld");
     }
 }

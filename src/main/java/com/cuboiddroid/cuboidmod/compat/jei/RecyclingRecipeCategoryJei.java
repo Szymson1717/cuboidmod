@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.compat.jei;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.recycler.recipe.RecyclingRecipe;
 import com.cuboiddroid.cuboidmod.modules.recycler.screen.MolecularRecyclerScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -44,7 +45,7 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
         energyBar = guiHelper.drawableBuilder(MolecularRecyclerScreen.GUI, 176, 0, 8, 36)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
-        localizedName = Component.translatable("jei.category.cuboidmod.recycling");
+        localizedName = Component.translatable("jei.category." + CuboidMod.MOD_ID + ".recycling");
     }
 
     private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
@@ -126,13 +127,13 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
-        String arrowText = "" + workSeconds + "." + workDecimal + " s";
+        String arrowText = workSeconds + "." + workDecimal + " s";
         renderScaledTextWithShadow(matrix, font, Component.literal(arrowText), 78 - GUI_START_X, 61 - GUI_START_Y, 24, 0.6f, 0xFFFFFF);
 
         // energy
         energyBar.draw(matrix, 32 - GUI_START_X, 34 - GUI_START_Y);
 
-        String energyText = "" + recipe.getEnergyRequired() + " FE";
+        String energyText = recipe.getEnergyRequired() + " FE";
         renderScaledTextWithShadow(matrix, font, Component.literal(energyText), 32 - GUI_START_X, 71 - GUI_START_Y, 8, 0.6f, 0xFFFFFF);
 
         // % chances on outputs

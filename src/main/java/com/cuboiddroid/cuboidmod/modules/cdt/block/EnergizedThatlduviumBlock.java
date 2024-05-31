@@ -28,6 +28,6 @@ public class EnergizedThatlduviumBlock extends Block {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flag) {
-        list.add(Component.translatable("block.cuboidmod.energized_thatlduvium.hover_text"));
+        list.add(Component.translatable("block." + CuboidMod.MOD_ID + ".energized_thatlduvium.hover_text"));
     }
 }

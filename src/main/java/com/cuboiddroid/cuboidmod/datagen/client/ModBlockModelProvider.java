@@ -65,10 +65,10 @@ public class ModBlockModelProvider extends BlockModelProvider {
                 .texture("core", "block/model/singularity_resource_generator_pillar_lit");
             
             withExistingParent(material + "_singularity_power_generator", modLoc("block/templates/singularity_power_generator"))
-                .texture("frame", "cuboidmod:block/model/" + material + "_singularity_power_gen_frame")
+                .texture("frame", "block/model/" + material + "_singularity_power_gen_frame")
                 .texture("core", "block/model/singularity_power_gen_core");
             withExistingParent(material + "_singularity_power_generator_lit", modLoc("block/templates/singularity_power_generator"))
-                .texture("frame", "cuboidmod:block/model/" + material + "_singularity_power_gen_frame")
+                .texture("frame", "block/model/" + material + "_singularity_power_gen_frame")
                 .texture("core", "block/model/singularity_power_gen_core_lit");
 
             withExistingParent(material + "_quantum_collapser", modLoc("block/templates/quantum_collapser"))

@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.dryingcupboard.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.inventory.DryingCupboardContainer;
 import com.cuboiddroid.cuboidmod.modules.dryingcupboard.recipe.DryingRecipe;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
@@ -78,7 +79,7 @@ public class DryingCupboardTileEntity extends BlockEntity implements BlockEntity
     }
 
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.drying_cupboard");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.drying_cupboard");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, DryingCupboardTileEntity entity) {

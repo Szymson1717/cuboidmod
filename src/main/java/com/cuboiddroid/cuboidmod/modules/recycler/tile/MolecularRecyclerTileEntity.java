@@ -99,7 +99,7 @@ public class MolecularRecyclerTileEntity extends BlockEntity implements BlockEnt
     }
 
     public Component getDisplayName() {
-        return Component.translatable("cuboidmod.container.molecular_recycler");
+        return Component.translatable(CuboidMod.MOD_ID + ".container.molecular_recycler");
     }
 
     public static void gameTick(Level level, BlockPos worldPosition, BlockState blockState, MolecularRecyclerTileEntity entity) {

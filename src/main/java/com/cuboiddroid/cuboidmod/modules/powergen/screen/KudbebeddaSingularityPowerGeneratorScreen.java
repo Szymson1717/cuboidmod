@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.powergen.screen;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.powergen.inventory.KudbebeddaSingularityPowerGeneratorContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.chat.Component;
@@ -15,6 +16,6 @@ public class KudbebeddaSingularityPowerGeneratorScreen
                 inv,
                 name != null
                         ? name
-                        : Component.translatable("cuboidmod.container.kudbebedda_singularity_power_generator"));
+                        : Component.translatable(CuboidMod.MOD_ID + ".container.kudbebedda_singularity_power_generator"));
     }
 }

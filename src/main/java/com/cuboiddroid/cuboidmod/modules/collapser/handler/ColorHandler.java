@@ -47,7 +47,6 @@ public final class ColorHandler {
         event.register(new IColored.ItemColors(), ModItems.WIKIDIUM_QUANTUM_SINGULARITY.get());
 
         event.register(new IColored.ItemColors(), ModItems.ALUMINIUM_QUANTUM_SINGULARITY.get());
-        event.register(new IColored.ItemColors(), ModItems.COBALT_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.COPPER_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.GOLD_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.IRON_QUANTUM_SINGULARITY.get());

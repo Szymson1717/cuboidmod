@@ -1,5 +1,6 @@
 package com.cuboiddroid.cuboidmod.modules.powergen.block;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGeneratorTileEntityBase;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -100,7 +101,7 @@ public abstract class SingularityPowerGeneratorBlockBase extends BaseEntityBlock
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
-        list.add(Component.translatable("cuboidmod.hover_text.singularity_power_generator"));
+        list.add(Component.translatable(CuboidMod.MOD_ID + ".hover_text.singularity_power_generator"));
     }
 
     @Override

@@ -26,8 +26,8 @@ public class CuboidMod
 
         Registration.register();
 
-        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("cuboidmod-client.toml"));
-        Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("cuboidmod-common.toml"));
+        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(CuboidMod.MOD_ID + "-client.toml"));
+        Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(CuboidMod.MOD_ID + "-common.toml"));
 
         Registration.registerConfigs();
 

@@ -4,7 +4,7 @@
     "item": "cuboidmod:gold_quantum_singularity"
   },
   "result": {
-    "item": "exnihilosequentia:chunk_gold"
+    "item": "minecraft:raw_gold"
   },
   "work_time_multiplier": 4.0,
   "output_multiplier": 0.25

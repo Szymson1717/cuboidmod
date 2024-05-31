@@ -45,7 +45,7 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
                 .buildAnimated(200, IDrawableAnimated.StartDirection.BOTTOM, false);
         dryingBar = guiHelper.drawableBuilder(GUI, 184, 0, 6, 13)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.TOP, false);
-        localizedName = Component.translatable("jei.category.cuboidmod.drying");
+        localizedName = Component.translatable("jei.category." + CuboidMod.MOD_ID + ".drying");
     }
 
     private static void renderScaledTextWithShadow(GuiGraphics guiGraphics, Font font, Component text, int x, int y, int width, float scale, int color) {
@@ -121,7 +121,7 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
 
         int workSeconds = recipe.getWorkTicks() / 20;
         int workDecimal = (recipe.getWorkTicks() % 20) / 2;
-        String dryingTimeText = "" + workSeconds + "." + workDecimal + " s";
+        String dryingTimeText = workSeconds + "." + workDecimal + " s";
         renderScaledTextWithShadow(matrix, font, Component.literal(dryingTimeText), 40 - GUI_START_X, 42 - GUI_START_Y, 24, 0.8f, 0xFFFFFF);
     }
 }

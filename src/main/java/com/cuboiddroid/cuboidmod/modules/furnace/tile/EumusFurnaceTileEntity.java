@@ -1,6 +1,7 @@
 package com.cuboiddroid.cuboidmod.modules.furnace.tile;
 
 import com.cuboiddroid.cuboidmod.Config;
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.furnace.inventory.EumusFurnaceContainer;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
@@ -27,7 +28,7 @@ public class EumusFurnaceTileEntity extends CuboidFurnaceTileEntityBase {
 
     @Override
     public String IgetName() {
-        return "cuboidmod.container.eumus_furnace";
+        return CuboidMod.MOD_ID + ".container.eumus_furnace";
     }
 
     @Override
