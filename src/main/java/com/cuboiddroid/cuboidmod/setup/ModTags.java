@@ -179,7 +179,6 @@ public class ModTags {
 
         // additional dusts
         public static final TagKey<Item> DUSTS_ZINC = forge("dusts/zinc");
-        public static final TagKey<Item> DUSTS_COBALT = forge("dusts/cobalt");
 
         // salt
         public static final TagKey<Item> DUSTS_SALT = forge("dusts/salt");
@@ -270,7 +269,6 @@ public class ModTags {
         public static final TagKey<Item> QUANTUM_SINGULARITIES_URANIUM = mod("quantum_singularities/uranium");
         public static final TagKey<Item> QUANTUM_SINGULARITIES_URANINITE = mod("quantum_singularities/uraninite");
         public static final TagKey<Item> QUANTUM_SINGULARITIES_OSMIUM = mod("quantum_singularities/osmium");
-        public static final TagKey<Item> QUANTUM_SINGULARITIES_COBALT = mod("quantum_singularities/cobalt");
 
         public static final TagKey<Item> QUANTUM_SINGULARITIES_DIAMOND = mod("quantum_singularities/diamond");
         public static final TagKey<Item> QUANTUM_SINGULARITIES_EMERALD = mod("quantum_singularities/emerald");

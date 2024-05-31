@@ -102,7 +102,6 @@
   "block.cuboidmod.silica_dust_block": "Block of Silica Dust",
   "item.cuboidmod.salt": "Salt",
   "item.cuboidmod.zinc_dust": "Zinc Dust",
-  "item.cuboidmod.cobalt_dust": "Cobalt Dust",
   "item.cuboidmod.carbon_deposit": "Carbon Deposit",
   "item.cuboidmod.carbon_nanotube": "Carbon Nanotubes",
   "block.cuboidmod.carbon_nanotube_block": "Block of Carbon Nanotubes",
@@ -260,7 +259,6 @@
   "cuboidmod.quantum_singularity.uranium": "Uranium Quantum Singularity",
   "cuboidmod.quantum_singularity.uraninite": "Uraninite Quantum Singularity",
   "cuboidmod.quantum_singularity.osmium": "Osmium Quantum Singularity",
-  "cuboidmod.quantum_singularity.cobalt": "Cobalt Quantum Singularity",
 
   "cuboidmod.quantum_singularity.diamond": "Diamond Quantum Singularity",
   "cuboidmod.quantum_singularity.emerald": "Emerald Quantum Singularity",

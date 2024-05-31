@@ -143,7 +143,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.DUSTS_THATLDU).add(ModItems.THATLDU_DUST.get());
         tag(ModTags.Items.DUSTS_SILICA).add(ModItems.SILICA_DUST.get());
         tag(ModTags.Items.DUSTS_ZINC).add(ModItems.ZINC_DUST.get());
-        tag(ModTags.Items.DUSTS_COBALT).add(ModItems.COBALT_DUST.get());
         tag(ModTags.Items.DUSTS_SALT).add(ModItems.SALT.get());
         tag(ModTags.Items.CELLULOSE).add(ModItems.CELLULOSE.get());
 
@@ -154,7 +153,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_THATLDU);
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_SILICA);
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_ZINC);
-        tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_COBALT);
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.CELLULOSE);
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_SALT);
         tag(ModTags.Items.DUSTS).addTag(ModTags.Items.DUSTS_SILICA);
@@ -354,7 +352,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.QUANTUM_SINGULARITIES_URANIUM).add(ModItems.URANIUM_QUANTUM_SINGULARITY.get());
         tag(ModTags.Items.QUANTUM_SINGULARITIES_URANINITE).add(ModItems.URANINITE_QUANTUM_SINGULARITY.get());
         tag(ModTags.Items.QUANTUM_SINGULARITIES_OSMIUM).add(ModItems.OSMIUM_QUANTUM_SINGULARITY.get());
-        tag(ModTags.Items.QUANTUM_SINGULARITIES_COBALT).add(ModItems.COBALT_QUANTUM_SINGULARITY.get());
 
         tag(ModTags.Items.QUANTUM_SINGULARITIES_DIAMOND).add(ModItems.DIAMOND_QUANTUM_SINGULARITY.get());
         tag(ModTags.Items.QUANTUM_SINGULARITIES_EMERALD).add(ModItems.EMERALD_QUANTUM_SINGULARITY.get());
@@ -411,7 +408,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                         ModTags.Items.QUANTUM_SINGULARITIES_URANIUM,
                         ModTags.Items.QUANTUM_SINGULARITIES_URANINITE,
                         ModTags.Items.QUANTUM_SINGULARITIES_OSMIUM,
-                        ModTags.Items.QUANTUM_SINGULARITIES_COBALT,
 
                         ModTags.Items.QUANTUM_SINGULARITIES_DIAMOND,
                         ModTags.Items.QUANTUM_SINGULARITIES_EMERALD,

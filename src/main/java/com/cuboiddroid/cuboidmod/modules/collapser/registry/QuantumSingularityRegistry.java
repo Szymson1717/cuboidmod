@@ -353,11 +353,6 @@ public final class QuantumSingularityRegistry {
                         new int[] { 0xCAE4E0, 0x9FB1C2 }),
 
                 new QuantumSingularity(
-                        new ResourceLocation(CuboidMod.MOD_ID, "cobalt"),
-                        CuboidMod.MOD_ID + ".quantum_singularity.cobalt",
-                        new int[] { 0x59A6EF, 0x0753B8 }),
-
-                new QuantumSingularity(
                         new ResourceLocation(CuboidMod.MOD_ID, "diamond"),
                         CuboidMod.MOD_ID + ".quantum_singularity.diamond",
                         new int[] { 0xb9f4fa, 0x39a7bd }),
