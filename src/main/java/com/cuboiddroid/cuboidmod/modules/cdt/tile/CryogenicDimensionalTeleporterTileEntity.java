@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -110,33 +110,14 @@ public class CryogenicDimensionalTeleporterTileEntity extends BlockEntity implem
         return false;
     }
 
-    @SuppressWarnings("resource")
-    public DimensionType GetTargetDimensionIfCharged(ServerPlayer serverPlayer, Level level) {
+    public Level GetTargetDimensionIfCharged(ServerPlayer serverPlayer, Level level) {
         // if state != Ready or no target dimension, return null
         if (targetDimension == "" || state != CdtStates.READY)
             return null;
 
-        // try get the actual Dimension identified as the target
-        for (ResourceLocation resLoc : level.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet())
-        {
-            if (resLoc.toString().equalsIgnoreCase(targetDimension)) {
-                // this is unfortunately, but due to FTB Quests not working as I expected it to,
-                // this is to allow anyone on a server to get to target dimensions using a
-                // charged CDT
-                // if (isTargetCuboidOverworld())
-                //     GameStageHelper.addStage(serverPlayer, "cuboid_overworld_access");
-                // else if (isTargetTheEnd())
-                //     GameStageHelper.addStage(serverPlayer, "end_access");
-                // else if (isTargetTheNether())
-                //     GameStageHelper.addStage(serverPlayer, "nether_access");
-
-                // found it! return the target dimension type
-                return level.getServer().registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).get(resLoc);
-            }
-        }
-
-        // could not find the target dimension type
-        return null;
+        ResourceLocation resLoc = new ResourceLocation(targetDimension);
+        ResourceKey<Level> resKey = ResourceKey.create(Registries.DIMENSION, resLoc);
+        return level.getServer().getLevel(resKey);
     }
 
     public void onTeleport() {

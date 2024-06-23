@@ -141,8 +141,7 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
         }
 
         BlockEntity te = level.getBlockEntity(pos);
-        if (te instanceof CryogenicDimensionalTeleporterTileEntity) {
-            CryogenicDimensionalTeleporterTileEntity cdt = (CryogenicDimensionalTeleporterTileEntity) te;
+        if (te instanceof CryogenicDimensionalTeleporterTileEntity cdt) {
 
             ItemStack item = player.getItemInHand(hand);
 
@@ -160,138 +159,133 @@ public class CryogenicDimensionalTeleporterBlock extends BaseEntityBlock {
 
                 // teleport the player to the dimension...
                 if (player instanceof ServerPlayer) {
-                    DimensionType dim = cdt.GetTargetDimensionIfCharged((ServerPlayer) player, level);
-                    if (dim == null) {
+                    Level targetLevel = cdt.GetTargetDimensionIfCharged((ServerPlayer) player, level);
+                    if (targetLevel == null) {
                         // play a sound? show failure message in chat?
                         return InteractionResult.SUCCESS;
                     }
 
                     // teleport the player to the dimension...
                     ServerPlayer serverPlayer = (ServerPlayer) player;
-                    for (ServerLevel world : serverPlayer.getServer().getAllLevels())
-                    {
-                        if (world.dimensionType() == dim)
-                        {
-                            cdt.onTeleport();
-                            serverPlayer.changeDimension(world, new ITeleporter() {
-                                @Override
-                                public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-                                    int radialDivisor = 32;
+                    ServerLevel world = serverPlayer.getServer().getLevel(targetLevel.dimension());
+                    DimensionType dim = targetLevel.dimensionType();
 
-                                    entity = repositionEntity.apply(false);
+                    cdt.onTeleport();
+                    serverPlayer.changeDimension(world, new ITeleporter() {
+                        @Override
+                        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                            int radialDivisor = 32;
 
-                                    BlockPos newPos = pos;
-                                    int attempts = 0;
+                            entity = repositionEntity.apply(false);
 
-                                    // Start at the "top" of the world
-                                    int yPos = dim.logicalHeight() - 8;
+                            BlockPos newPos = pos;
+                            int attempts = 0;
 
-                                    // Adjust X and Z coordinates based on dimension coordinate scales (e.g. Nether)
-                                    double xPos = newPos.getX() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
-                                    double zPos = newPos.getZ() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
+                            // Start at the "top" of the world
+                            int yPos = dim.logicalHeight() - 8;
 
-                                    newPos = new BlockPos((int) xPos, yPos, (int) zPos);
+                            // Adjust X and Z coordinates based on dimension coordinate scales (e.g. Nether)
+                            double xPos = newPos.getX() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
+                            double zPos = newPos.getZ() * DimensionType.getTeleportationScale(currentWorld.dimensionType(), dim);
 
-                                    // if the end, then should "shift" to central island area instead of
-                                    // current coords - use an exclusion zone around center of
-                                    // main island so player gets placed on outer edges
-                                    if (cdt.isTargetTheEnd()) {
-                                        radialDivisor = 64; // use a smaller target area to look for a safe spot
-                                        if (newPos.distSqr(new Vec3i(0, 100, 0)) > 96.0) {
-                                            // further away than 96 blocks - adjust to be 80 blocks away!
-                                            if (xPos == 0.0) {
-                                                zPos = 80;
-                                            } else {
-                                                double g = zPos / xPos;
+                            newPos = new BlockPos((int) xPos, yPos, (int) zPos);
 
-                                                xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
-                                                zPos = g * xPos;
-                                            }
-                                        } else if (newPos.distSqr(new Vec3i(0, 100, 0)) < 64.0) {
-                                            // closer than 64 blocks - adjust to be 64 blocks away from 0,0
-                                            if (xPos == 0.0) {
-                                                zPos = 80;
-                                            } else {
-                                                double g = zPos / xPos;
+                            // if the end, then should "shift" to central island area instead of
+                            // current coords - use an exclusion zone around center of
+                            // main island so player gets placed on outer edges
+                            if (cdt.isTargetTheEnd()) {
+                                radialDivisor = 64; // use a smaller target area to look for a safe spot
+                                if (newPos.distSqr(new Vec3i(0, 100, 0)) > 96.0) {
+                                    // further away than 96 blocks - adjust to be 80 blocks away!
+                                    if (xPos == 0.0) {
+                                        zPos = 80;
+                                    } else {
+                                        double g = zPos / xPos;
 
-                                                xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
-                                                zPos = g * xPos;
-                                            }
-                                        }
-
-                                        newPos = new BlockPos((int) xPos, yPos, (int) zPos);
-                                    } else if (cdt.isTargetTheOverworld() && Config.cryoDimTeleporterOverworldUsesPlayerSpawn.get()) {
-                                        // target is the overworld - instead of player's current position,
-                                        // we're going to take them back to their spawn point
-                                        if (serverPlayer.getRespawnDimension().location().getPath().equalsIgnoreCase("overworld")) {
-                                            BlockPos respawnPos = serverPlayer.getRespawnPosition();
-                                            newPos = new BlockPos(respawnPos.getX(), yPos, respawnPos.getZ());
-                                        }
-                                    } else if (cdt.isTargetCuboidOverworld() && Config.cryoDimTeleporterOverworldUsesPlayerSpawn.get()) {
-                                        // target is the overworld - instead of player's current position,
-                                        // we're going to take them back to their spawn point
-                                        if (serverPlayer.getRespawnDimension().location().getPath().equalsIgnoreCase("cuboid_overworld")) {
-                                            BlockPos respawnPos = serverPlayer.getRespawnPosition();
-                                            newPos = new BlockPos(respawnPos.getX(), yPos, respawnPos.getZ());
-                                        }
+                                        xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
+                                        zPos = g * xPos;
                                     }
+                                } else if (newPos.distSqr(new Vec3i(0, 100, 0)) < 64.0) {
+                                    // closer than 64 blocks - adjust to be 64 blocks away from 0,0
+                                    if (xPos == 0.0) {
+                                        zPos = 80;
+                                    } else {
+                                        double g = zPos / xPos;
 
-                                    // target pos
-                                    BlockPos targetPos = newPos;
-
-                                    while (attempts < 1024) {
-                                        while (yPos > 40 && (!destWorld.getBlockState(newPos).isSolid() ||
-                                                (destWorld.getBlockState(newPos).isSolid() &&
-                                                    (destWorld.getBlockState(newPos.above()).isSolid() ||
-                                                    destWorld.getBlockState(newPos.above().above()).isSolid()))))
-                                        {
-                                            newPos = newPos.below();
-                                            yPos = newPos.getY();
-                                        }
-
-                                        if (yPos > 40)
-                                        {
-                                            entity.teleportTo(newPos.getX() + 0.5F, yPos+2, newPos.getZ() + 0.5F);
-                                            return entity;
-                                        }
-
-                                        // progressively larger radius for random positioning
-                                        int radius = attempts / radialDivisor + 16;
-
-                                        xPos = targetPos.getX() + ((2.0d * random.nextDouble() - 1.0d) * radius);
-                                        zPos = targetPos.getY() + ((2.0d * random.nextDouble() - 1.0d) * radius);
-
-                                        //xPos = player.getRandomX(radius);
-                                        //zPos = player.getRandomZ(radius);
-
-                                         // Start at the "top" of the world
-                                        yPos = dim.logicalHeight() - 8;
-
-                                        newPos = new BlockPos((int) xPos, yPos, (int) zPos);
-                                        attempts++;
+                                        xPos = Math.sqrt((80.0 * 80.0) / (g * g + 1));
+                                        zPos = g * xPos;
                                     }
+                                }
 
-                                    if (attempts >= 1024) {
-                                        // couldn't find a spot in 256 tries - cheat and just put an oak plank under the player
+                                newPos = new BlockPos((int) xPos, yPos, (int) zPos);
+                            } else if (cdt.isTargetTheOverworld() && Config.cryoDimTeleporterOverworldUsesPlayerSpawn.get()) {
+                                // target is the overworld - instead of player's current position,
+                                // we're going to take them back to their spawn point
+                                if (serverPlayer.getRespawnDimension().location().getPath().equalsIgnoreCase("overworld")) {
+                                    BlockPos respawnPos = serverPlayer.getRespawnPosition();
+                                    if (respawnPos != null) newPos = new BlockPos(respawnPos.getX(), yPos, respawnPos.getZ());
+                                }
+                            } else if (cdt.isTargetCuboidOverworld() && Config.cryoDimTeleporterOverworldUsesPlayerSpawn.get()) {
+                                // target is the overworld - instead of player's current position,
+                                // we're going to take them back to their spawn point
+                                if (serverPlayer.getRespawnDimension().location().getPath().equalsIgnoreCase("cuboid_overworld")) {
+                                    BlockPos respawnPos = serverPlayer.getRespawnPosition();
+                                    if (respawnPos != null) newPos = new BlockPos(respawnPos.getX(), yPos, respawnPos.getZ());
+                                }
+                            }
 
-                                        destWorld.setBlock(targetPos.below().below(), Blocks.OAK_PLANKS.defaultBlockState(), Block.UPDATE_ALL);
-                                        destWorld.setBlock(targetPos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-                                        destWorld.setBlock(targetPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-                                        entity.teleportTo(targetPos.getX() + 0.5F, targetPos.getY()+1, targetPos.getZ() + 0.5F);
-                                    }
+                            // target pos
+                            BlockPos targetPos = newPos;
 
-                                    // apply potion effects - blindness, slowness & mining fatigue
-                                    player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 120));
-                                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 160));
-                                    player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 240));
+                            while (attempts < 1024) {
+                                while (yPos > 40 && (!destWorld.getBlockState(newPos).isSolid() ||
+                                        (destWorld.getBlockState(newPos).isSolid() &&
+                                            (destWorld.getBlockState(newPos.above()).isSolid() ||
+                                            destWorld.getBlockState(newPos.above().above()).isSolid()))))
+                                {
+                                    newPos = newPos.below();
+                                    yPos = newPos.getY();
+                                }
 
+                                if (yPos > 40)
+                                {
+                                    entity.teleportTo(newPos.getX() + 0.5F, yPos+2, newPos.getZ() + 0.5F);
                                     return entity;
                                 }
-                            });
 
-                            break;
+                                // progressively larger radius for random positioning
+                                int radius = attempts / radialDivisor + 16;
+
+                                xPos = targetPos.getX() + ((2.0d * random.nextDouble() - 1.0d) * radius);
+                                zPos = targetPos.getY() + ((2.0d * random.nextDouble() - 1.0d) * radius);
+
+                                //xPos = player.getRandomX(radius);
+                                //zPos = player.getRandomZ(radius);
+
+                                    // Start at the "top" of the world
+                                yPos = dim.logicalHeight() - 8;
+
+                                newPos = new BlockPos((int) xPos, yPos, (int) zPos);
+                                attempts++;
+                            }
+
+                            if (attempts >= 1024) {
+                                // couldn't find a spot in 256 tries - cheat and just put an oak plank under the player
+
+                                destWorld.setBlock(targetPos.below().below(), Blocks.OAK_PLANKS.defaultBlockState(), Block.UPDATE_ALL);
+                                destWorld.setBlock(targetPos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                                destWorld.setBlock(targetPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+                                entity.teleportTo(targetPos.getX() + 0.5F, targetPos.getY()+1, targetPos.getZ() + 0.5F);
+                            }
+
+                            // apply potion effects - blindness, slowness & mining fatigue
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 120));
+                            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 160));
+                            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 240));
+
+                            return entity;
                         }
-                    }
+                    });
                 }
             }
         }
