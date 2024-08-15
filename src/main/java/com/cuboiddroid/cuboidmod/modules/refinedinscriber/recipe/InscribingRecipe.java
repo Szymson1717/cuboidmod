@@ -290,8 +290,8 @@ public class InscribingRecipe implements Recipe<Container> {
             Ingredient middle = Ingredient.fromNetwork(buffer);
             Ingredient bottomRight = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            int workTicks = buffer.readVarInt();
-            int energyRequired = buffer.readVarInt();
+            int workTicks = buffer.readInt();
+            int energyRequired = buffer.readInt();
 
             return new InscribingRecipe(recipeId, mode, topLeft, middle, bottomRight, result, workTicks, energyRequired);
         }
@@ -302,8 +302,8 @@ public class InscribingRecipe implements Recipe<Container> {
             recipe.middle.toNetwork(buffer);
             recipe.bottomRight.toNetwork(buffer);
             buffer.writeItem(recipe.result);
-            buffer.writeVarInt(recipe.workTicks);
-            buffer.writeVarInt(recipe.energyRequired);
+            buffer.writeInt(recipe.workTicks);
+            buffer.writeInt(recipe.energyRequired);
         }
     }
 }

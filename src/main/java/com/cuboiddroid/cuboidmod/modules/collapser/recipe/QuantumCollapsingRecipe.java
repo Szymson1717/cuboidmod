@@ -212,8 +212,8 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public @Nullable QuantumCollapsingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buff) {
-            int workTicks = buff.readVarInt();
-            int inputAmount = buff.readVarInt();
+            int workTicks = buff.readInt();
+            int inputAmount = buff.readInt();
             Ingredient ingredient = Ingredient.fromNetwork(buff);
             ItemStack result = buff.readItem();
 

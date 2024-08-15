@@ -257,13 +257,13 @@ public class RecyclingRecipe implements Recipe<Container> {
         @Override
         public RecyclingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             RecyclingRecipe recipe = new RecyclingRecipe(recipeId);
-            recipe.workTicks = buffer.readVarInt();
-            recipe.energyRequired = buffer.readVarInt();
+            recipe.workTicks = buffer.readInt();
+            recipe.energyRequired = buffer.readInt();
             recipe.ingredient = Ingredient.fromNetwork(buffer);
             int resultCount = buffer.readByte();
             for (int i = 0; i < resultCount; ++i) {
                 ResourceLocation itemId = buffer.readResourceLocation();
-                int count = buffer.readVarInt();
+                int count = buffer.readInt();
                 float chance = buffer.readFloat();
                 Item item = ForgeRegistries.ITEMS.getValue(itemId);
                 recipe.results.put(new ItemStack(item, count), chance);
@@ -273,13 +273,13 @@ public class RecyclingRecipe implements Recipe<Container> {
         }
 
         public void toNetwork(FriendlyByteBuf buffer, RecyclingRecipe recipe) {
-            buffer.writeVarInt(recipe.workTicks);
-            buffer.writeVarInt(recipe.energyRequired);
+            buffer.writeInt(recipe.workTicks);
+            buffer.writeInt(recipe.energyRequired);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeByte(recipe.results.size());
             recipe.results.forEach((stack, chance) -> {
                 buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())));
-                buffer.writeVarInt(stack.getCount());
+                buffer.writeInt(stack.getCount());
                 buffer.writeFloat(chance);
             });
         }
