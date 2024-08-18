@@ -1,6 +1,8 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
+import com.cuboiddroid.cuboidmod.modules.collapser.item.QuantumSingularityItem;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipe;
+import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.cuboiddroid.cuboidmod.setup.ModTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityTicker ;
 import net.minecraft.world.level.block.Block;
@@ -29,6 +32,9 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -170,6 +176,11 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             RecipeType<ResourceGeneratingRecipe> recipeType = ResourceGeneratingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
+
+            if (cachedRecipe == null) {
+                List<ResourceGeneratingRecipe> tempRecipes = Arrays.asList(ResourceGeneratingRecipe.Serializer.getRecipes());
+                cachedRecipe = tempRecipes.stream().filter(r -> r.matches(inv, this.level)).findFirst().orElse(null);
+            }
         }
 
         return cachedRecipe;
@@ -210,6 +221,17 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
             protected void onContentsChanged(int slot) {
                 // To make sure the TE persists when the chunk is saved later we need to
                 // mark it dirty every time the item handler changes
+
+                ItemStack stack = getStackInSlot(slot);
+                if (isItemValid(slot, stack) && !stack.is(ModItems.QUANTUM_SINGULARITY.get())) {
+                    QuantumSingularityItem singularityItem = (QuantumSingularityItem) stack.getItem();
+                    ResourceLocation quantumIdentifier = singularityItem.getQuantumIdentifier(stack);
+
+                    ItemStack newStack = new ItemStack(ModItems.QUANTUM_SINGULARITY.get(), stack.getCount(), stack.getOrCreateTag());
+                    newStack.getOrCreateTag().putString(QuantumSingularityItem.QUANTUM_ID, quantumIdentifier.toString());
+                    setStackInSlot(slot, newStack);
+                }
+
                 setChanged();
             }
 
@@ -222,10 +244,10 @@ public abstract class SingularityResourceGeneratorTileEntityBase extends BlockEn
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 // can only insert singularities in the input slot
-                if (!stack.is(ModTags.Items.QUANTUM_SINGULARITIES))
-                    return stack;
+                if (isItemValid(slot, stack))
+                    return super.insertItem(slot, stack, simulate);
 
-                return super.insertItem(slot, stack, simulate);
+                return stack;
             }
         };
     }

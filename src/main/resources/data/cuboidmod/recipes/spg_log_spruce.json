@@ -1,7 +1,0 @@
-{
-  "type": "cuboidmod:power_generating",
-  "singularity": {
-    "item": "cuboidmod:spruce_log_quantum_singularity",
-    "multiplier": 1.0
-  }
-}

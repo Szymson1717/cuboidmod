@@ -107,7 +107,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, PowerGeneratingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 50, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 51, 15).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
     }
 
     // @Override

@@ -33,6 +33,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -138,6 +139,17 @@ public class Registration {
             event.registerBlockEntityRenderer(ModTileEntities.WIKIDIUM_CHEST.get(), CuboidChestTileEntityRenderer::new);
             event.registerBlockEntityRenderer(ModTileEntities.THATLDU_CHEST.get(), CuboidChestTileEntityRenderer::new);
             event.registerBlockEntityRenderer(ModTileEntities.CRYOGENIC_DIMENSIONAL_TELEPORTER.get(), CryogenicDimensionalTeleporterRenderer::new);
-        } 
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = CuboidMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static final class Common {
+        private Common() {}
+
+        @SubscribeEvent
+        public static void onClientSetup(FMLCommonSetupEvent event) {
+            QuantumSingularityRegistry.getInstance().registerRecipes();
+        }
+
     }
 }

@@ -83,9 +83,9 @@ public class TransmutingRecipeCategoryJei implements IRecipeCategory<Transmuting
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, TransmutingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 28, 4).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
-        builder.addSlot(RecipeIngredientRole.INPUT, 28, 26).addItemStacks(Arrays.asList(recipe.getIngredients().get(1).getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 90, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
+        builder.addSlot(RecipeIngredientRole.INPUT, 29, 5).addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
+        builder.addSlot(RecipeIngredientRole.INPUT, 29, 27).addItemStacks(Arrays.asList(recipe.getIngredients().get(1).getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 15).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override

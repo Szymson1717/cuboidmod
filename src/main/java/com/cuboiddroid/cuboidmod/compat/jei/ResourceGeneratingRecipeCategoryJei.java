@@ -108,8 +108,8 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ResourceGeneratingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 7, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
+        builder.addSlot(RecipeIngredientRole.INPUT, 8, 15).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 47, 15).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override

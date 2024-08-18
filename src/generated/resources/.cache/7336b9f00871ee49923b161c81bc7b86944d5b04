@@ -1,4 +1,4 @@
-// 1.20.1	2024-05-02T01:49:21.7178654	Item Models: cuboidmod
+// 1.20.1	2024-08-18T00:52:02.0610346	Item Models: cuboidmod
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/acacia_log_quantum_singularity.json
 7edc20fa0e9de9ac482329d87eb9dc039b821b42 assets/cuboidmod/models/item/aggregate.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/aluminium_quantum_singularity.json
@@ -23,8 +23,6 @@ a549c2eb42bbdb5c3bb08ee4e32affccdf207740 assets/cuboidmod/models/item/cellulose_
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/cellulose_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/clay_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/coal_quantum_singularity.json
-04be743024787c956bf39bcde79c47e2b083b339 assets/cuboidmod/models/item/cobalt_dust.json
-ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/cobalt_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/cobblestone_quantum_singularity.json
 ed2dd55ffbe83be2743f13966a37ee5ac70a2dac assets/cuboidmod/models/item/copper_quantum_singularity.json
 c48639125331a6d192f6cca9c943197873380c12 assets/cuboidmod/models/item/cryogenic_dimensional_teleporter.json

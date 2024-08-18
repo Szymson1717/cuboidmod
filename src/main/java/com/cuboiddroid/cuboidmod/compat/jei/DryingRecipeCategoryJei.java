@@ -93,8 +93,8 @@ public class DryingRecipeCategoryJei implements IRecipeCategory<DryingRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DryingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 25-GUI_START_X, 19-GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 25-GUI_START_X, 54-GUI_START_Y).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
+        builder.addSlot(RecipeIngredientRole.INPUT, 26-GUI_START_X, 20-GUI_START_Y).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 26-GUI_START_X, 55-GUI_START_Y).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override

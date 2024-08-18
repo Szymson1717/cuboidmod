@@ -1,7 +1,16 @@
 package com.cuboiddroid.cuboidmod.modules.powergen.recipe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import com.cuboiddroid.cuboidmod.modules.collapser.item.QuantumSingularityItem;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.PowerGeneratingRecipeData;
 import com.cuboiddroid.cuboidmod.modules.powergen.tile.SingularityPowerGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
+import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -94,7 +103,23 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
      */
     @Override
     public boolean matches(Container inv, Level level) {
-        return this.singularity.test(inv.getItem(SingularityPowerGeneratorTileEntityBase.SINGULARITY_INPUT));
+        ItemStack inputIngredient = inv.getItem(SingularityPowerGeneratorTileEntityBase.SINGULARITY_INPUT);
+        boolean matchesItem = this.singularity.test(inputIngredient);
+        if (!matchesItem) return false;
+        return Arrays.asList(this.singularity.getItems())
+            .stream().anyMatch(ingredient -> {
+                if (inputIngredient.getItem() instanceof QuantumSingularityItem inputIngredientItem) {
+                    if (ingredient.getItem() instanceof QuantumSingularityItem ingredientItem) {
+                        ResourceLocation ingredientIdentifier = ingredientItem.getSingularity(ingredient).getId();
+                        ResourceLocation inputIngredientIdentifier = inputIngredientItem.getSingularity(inputIngredient).getId();
+
+                        return ingredientIdentifier.equals(inputIngredientIdentifier);
+                    }
+                }
+                
+                return false;
+            }
+        );
     }
 
     /**
@@ -156,6 +181,35 @@ public class PowerGeneratingRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<PowerGeneratingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = Type.ID;
+        private static final List<PowerGeneratingRecipe> recipes = new ArrayList<>();
+
+        private PowerGeneratingRecipe generateFromSingularity(QuantumSingularity singularity) {
+            PowerGeneratingRecipeData powerGeneratingRecipeData = singularity.getPowerOutput();
+
+            ResourceLocation singularityIdentifier = singularity.getId();
+            ResourceLocation recipeIdentifier = ResourceLocation.tryParse(singularityIdentifier.toString());
+            recipeIdentifier.withSuffix(".power");
+
+            PowerGeneratingRecipe recipe = new PowerGeneratingRecipe(recipeIdentifier);
+            ItemStack singularityItem = new ItemStack(ModItems.QUANTUM_SINGULARITY.get(), 1);
+            singularityItem.getOrCreateTag().putString(QuantumSingularityItem.QUANTUM_ID, singularity.getId().toString());
+
+            recipe.singularity = Ingredient.of(singularityItem);
+            recipe.powerMultiplier = powerGeneratingRecipeData.powerOutput;
+
+            return recipe;
+        }
+
+        public void generateFromSingularities(Collection<QuantumSingularity> values) {
+            List<PowerGeneratingRecipe> tempRecipes = values.stream()
+                    .filter(singularity -> singularity.getPowerOutput() != null)
+                    .map(singularity -> generateFromSingularity(singularity)).toList();
+            recipes.addAll(tempRecipes);
+        }
+
+        public static PowerGeneratingRecipe[] getRecipes() {
+            return recipes.toArray(PowerGeneratingRecipe[]::new);
+        }
 
         /*
           JSON structure:

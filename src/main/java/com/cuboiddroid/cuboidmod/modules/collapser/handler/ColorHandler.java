@@ -12,6 +12,8 @@ public final class ColorHandler {
     public void onItemColors(RegisterColorHandlersEvent.Item event) {
         CuboidMod.LOGGER.info("CREATING ITEM COLORS");
         
+        event.register(new IColored.ItemColors(), ModItems.QUANTUM_SINGULARITY.get());
+
         event.register(new IColored.ItemColors(), ModItems.ANDESITE_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.BASALT_QUANTUM_SINGULARITY.get());
         event.register(new IColored.ItemColors(), ModItems.BLACKSTONE_QUANTUM_SINGULARITY.get());

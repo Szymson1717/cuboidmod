@@ -34,7 +34,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public abstract class QuantumCollapserTileEntityBase extends BlockEntity implements BlockEntityTicker  {
@@ -241,6 +244,11 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             RecipeType<QuantumCollapsingRecipe> recipeType = QuantumCollapsingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
+
+            if (cachedRecipe == null) {
+                List<QuantumCollapsingRecipe> tempRecipes = Arrays.asList(QuantumCollapsingRecipe.Serializer.getRecipes());
+                cachedRecipe = tempRecipes.stream().filter(r -> r.matches(inv, this.level)).findFirst().orElse(null);
+            }
         }
 
         return cachedRecipe;

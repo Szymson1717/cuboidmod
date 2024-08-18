@@ -1,10 +1,11 @@
 package com.cuboiddroid.cuboidmod.setup;
 
+import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.item.*;
 import com.cuboiddroid.cuboidmod.modules.food.*;
 import com.cuboiddroid.cuboidmod.modules.tools.*;
 import net.minecraftforge.registries.RegistryObject;
-
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
@@ -554,155 +555,208 @@ public class ModItems {
             "salt", () -> new Item(new Item.Properties()));
 
     // Quantum Singularities
+    public static final RegistryObject<Item> QUANTUM_SINGULARITY = Registration.ITEMS.register(
+            "quantum_singularity", QuantumSingularityItem::new);
+
     public static final RegistryObject<Item> NOTSOGUDIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "notsogudium_quantum_singularity", NotsogudiumQuantumSingularityItem::new);
+            "notsogudium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "notsogudium")));
 
     public static final RegistryObject<Item> KUDBEBEDDA_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "kudbebedda_quantum_singularity", KudbebeddaQuantumSingularityItem::new);
+            "kudbebedda_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "kudbebedda")));
 
     public static final RegistryObject<Item> NOTARFBADIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "notarfbadium_quantum_singularity", NotarfbadiumQuantumSingularityItem::new);
+            "notarfbadium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "notarfbadium")));
 
     public static final RegistryObject<Item> WIKIDIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "wikidium_quantum_singularity", WikidiumQuantumSingularityItem::new);
+            "wikidium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "wikidium")));
 
     public static final RegistryObject<Item> THATLDU_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "thatldu_quantum_singularity", ThatlduQuantumSingularityItem::new);
+            "thatldu_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "thatldu")));
 
     public static final RegistryObject<Item> ANDESITE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "andesite_quantum_singularity", AndesiteQuantumSingularityItem::new);
+            "andesite_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "andesite")));
 
     public static final RegistryObject<Item> BASALT_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "basalt_quantum_singularity", BasaltQuantumSingularityItem::new);
+            "basalt_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "basalt")));
 
     public static final RegistryObject<Item> BLACKSTONE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "blackstone_quantum_singularity", BlackstoneQuantumSingularityItem::new);
+            "blackstone_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "blackstone")));
 
     public static final RegistryObject<Item> CARBON_NANOTUBE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "carbon_nanotube_quantum_singularity", CarbonNanotubeQuantumSingularityItem::new);
+            "carbon_nanotube_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "carbon_nanotube")));
 
     public static final RegistryObject<Item> CELLULOSE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "cellulose_quantum_singularity", CelluloseQuantumSingularityItem::new);
+            "cellulose_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "cellulose")));
 
     public static final RegistryObject<Item> CLAY_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "clay_quantum_singularity", ClayQuantumSingularityItem::new);
+            "clay_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "clay")));
 
     public static final RegistryObject<Item> COAL_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "coal_quantum_singularity", CoalQuantumSingularityItem::new);
+            "coal_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "coal")));
 
     public static final RegistryObject<Item> COBBLESTONE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "cobblestone_quantum_singularity", CobblestoneQuantumSingularityItem::new);
+            "cobblestone_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "cobblestone")));
 
     public static final RegistryObject<Item> DIORITE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "diorite_quantum_singularity", DioriteQuantumSingularityItem::new);
+            "diorite_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "diorite")));
 
     public static final RegistryObject<Item> DIRT_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "dirt_quantum_singularity", DirtQuantumSingularityItem::new);
+            "dirt_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "dirt")));
 
     public static final RegistryObject<Item> DUST_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "dust_quantum_singularity", DustQuantumSingularityItem::new);
+            "dust_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "dust")));
 
     public static final RegistryObject<Item> GLOWSTONE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "glowstone_quantum_singularity", GlowstoneQuantumSingularityItem::new);
+            "glowstone_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "glowstone")));
 
     public static final RegistryObject<Item> GRANITE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "granite_quantum_singularity", GraniteQuantumSingularityItem::new);
+            "granite_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "granite")));
 
     public static final RegistryObject<Item> GRAVEL_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "gravel_quantum_singularity", GravelQuantumSingularityItem::new);
+            "gravel_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "gravel")));
 
     public static final RegistryObject<Item> LAPIS_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "lapis_quantum_singularity", LapisQuantumSingularityItem::new);
+            "lapis_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "lapis")));
 
     public static final RegistryObject<Item> REDSTONE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "redstone_quantum_singularity", RedstoneQuantumSingularityItem::new);
+            "redstone_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "redstone")));
 
     public static final RegistryObject<Item> SAND_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "sand_quantum_singularity", SandQuantumSingularityItem::new);
+            "sand_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "sand")));
 
     public static final RegistryObject<Item> SILICA_DUST_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "silica_dust_quantum_singularity", SilicaDustQuantumSingularityItem::new);
+            "silica_dust_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "silica_dust")));
 
     public static final RegistryObject<Item> OAK_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "oak_log_quantum_singularity", LogOakQuantumSingularityItem::new);
+            "oak_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "oak_log")));
 
     public static final RegistryObject<Item> ACACIA_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "acacia_log_quantum_singularity", LogAcaciaQuantumSingularityItem::new);
+            "acacia_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "acacia_log")));
 
     public static final RegistryObject<Item> BIRCH_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "birch_log_quantum_singularity", LogBirchQuantumSingularityItem::new);
+            "birch_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "birch_log")));
 
     public static final RegistryObject<Item> DARK_OAK_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "dark_oak_log_quantum_singularity", LogDarkOakQuantumSingularityItem::new);
+            "dark_oak_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "dark_oak_log")));
 
     public static final RegistryObject<Item> JUNGLE_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "jungle_log_quantum_singularity", LogJungleQuantumSingularityItem::new);
+            "jungle_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "jungle_log")));
 
     public static final RegistryObject<Item> SPRUCE_LOG_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "spruce_log_quantum_singularity", LogSpruceQuantumSingularityItem::new);
+            "spruce_log_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "spruce_log")));
 
     public static final RegistryObject<Item> ENDSTONE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "endstone_quantum_singularity", EndStoneQuantumSingularityItem::new);
+            "endstone_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "endstone")));
 
     public static final RegistryObject<Item> NETHERRACK_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "netherrack_quantum_singularity", NetherrackQuantumSingularityItem::new);
+            "netherrack_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "netherrack")));
 
     public static final RegistryObject<Item> ZINC_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "zinc_quantum_singularity", ZincQuantumSingularityItem::new);
+            "zinc_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "zinc")));
 
     public static final RegistryObject<Item> TIN_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "tin_quantum_singularity", TinQuantumSingularityItem::new);
+            "tin_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "tin")));
 
     public static final RegistryObject<Item> COPPER_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "copper_quantum_singularity", CopperQuantumSingularityItem::new);
+            "copper_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "copper")));
 
     public static final RegistryObject<Item> NICKEL_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "nickel_quantum_singularity", NickelQuantumSingularityItem::new);
+            "nickel_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "nickel")));
 
     public static final RegistryObject<Item> SILVER_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "silver_quantum_singularity", SilverQuantumSingularityItem::new);
+            "silver_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "silver")));
 
     public static final RegistryObject<Item> ALUMINIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "aluminium_quantum_singularity", AluminiumQuantumSingularityItem::new);
+            "aluminium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "aluminium")));
 
     public static final RegistryObject<Item> IRON_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "iron_quantum_singularity", IronQuantumSingularityItem::new);
+            "iron_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "iron")));
 
     public static final RegistryObject<Item> GOLD_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "gold_quantum_singularity", GoldQuantumSingularityItem::new);
+            "gold_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "gold")));
 
     public static final RegistryObject<Item> LEAD_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "lead_quantum_singularity", LeadQuantumSingularityItem::new);
+            "lead_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "lead")));
 
     public static final RegistryObject<Item> URANIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "uranium_quantum_singularity", UraniumQuantumSingularityItem::new);
+            "uranium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "uranium")));
 
     public static final RegistryObject<Item> URANINITE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "uraninite_quantum_singularity", UraniniteQuantumSingularityItem::new);
+            "uraninite_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "uraninite")));
 
     public static final RegistryObject<Item> OSMIUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "osmium_quantum_singularity", OsmiumQuantumSingularityItem::new);
+            "osmium_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "osmium")));
 
     public static final RegistryObject<Item> DIAMOND_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "diamond_quantum_singularity", DiamondQuantumSingularityItem::new);
+            "diamond_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "diamond")));
 
     public static final RegistryObject<Item> EMERALD_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "emerald_quantum_singularity", EmeraldQuantumSingularityItem::new);
+            "emerald_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "emerald")));
 
     public static final RegistryObject<Item> STEEL_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "steel_quantum_singularity", SteelQuantumSingularityItem::new);
+            "steel_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "steel")));
 
     public static final RegistryObject<Item> BRONZE_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "bronze_quantum_singularity", BronzeQuantumSingularityItem::new);
+            "bronze_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "bronze")));
 
     public static final RegistryObject<Item> ELECTRUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "electrum_quantum_singularity", ElectrumQuantumSingularityItem::new);
+            "electrum_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "electrum")));
 
     public static final RegistryObject<Item> INVAR_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "invar_quantum_singularity", InvarQuantumSingularityItem::new);
+            "invar_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "invar")));
 
     public static final RegistryObject<Item> PLATINUM_QUANTUM_SINGULARITY = Registration.ITEMS.register(
-            "platinum_quantum_singularity", PlatinumQuantumSingularityItem::new);
+            "platinum_quantum_singularity", () -> new QuantumSingularityItem(
+                new ResourceLocation(CuboidMod.MOD_ID, "platinum")));
 
     // this register() is only used to load the class so that the deferred register
     // stuff works
