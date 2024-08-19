@@ -216,6 +216,12 @@
   "cuboidmod.quantum_singularity.unknown": "Quantum Singularity (Unknown)",
   "cuboidmod.quantum_singularity.missing": "Missing Singularity (Check Configs)",
 
+  "cuboidmod.hover_text.more_info_prefix": "Hold",
+  "cuboidmod.hover_text.more_info_suffix": "for more info.",
+  "cuboidmod.hover_text.recipe": "Crafting Requirements:",
+  "cuboidmod.hover_text.production": "Production Output:",
+  "cuboidmod.hover_text.power": "Power Output:",
+
   "cuboidmod.hover_text.singularity_power_generator": "Produces power passively based on the tier of the generator and the singularity used.",
   "block.cuboidmod.notsogudium_singularity_power_generator": "Notsogudium Singularity Power Generator",
   "block.cuboidmod.kudbebedda_singularity_power_generator": "Kudbebedda Singularity Power Generator",

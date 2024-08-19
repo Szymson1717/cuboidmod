@@ -5,6 +5,9 @@ import java.util.List;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularityRegistry;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.CollapsingRecipeData;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.PowerGeneratingRecipeData;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.ResourceGeneratingRecipeData;
 import com.cuboiddroid.cuboidmod.util.IColored;
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -12,9 +15,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 
 public class QuantumSingularityItem extends Item implements IColored {
     private ResourceLocation forcedSingularity = null;
@@ -62,14 +71,107 @@ public class QuantumSingularityItem extends Item implements IColored {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
-        if (flag.isAdvanced()) {
-            if (forcedSingularity != null) {
-                tooltip.add(Component.literal("(Outdated Singularity)").withStyle(ChatFormatting.RED));
+        QuantumSingularity singularity = getSingularity(stack);
+        Style primaryColor = Style.EMPTY.withColor(singularity.getOverlayColor());
+        Style secondaryColor = Style.EMPTY.withColor(singularity.getUnderlayColor());
+
+        long time = System.currentTimeMillis() / 1000;
+
+        if (!showingExtras()) {
+            Minecraft minecraft = Minecraft.getInstance();
+            KeyMapping shiftKey = minecraft.options.keyShift;
+            String keyName = I18n.get(shiftKey.getName()).toUpperCase();
+
+            final Component ITEM_INFO_PREFIX = Component.translatable(CuboidMod.MOD_ID + ".hover_text.more_info_prefix");
+            final Component ITEM_INFO_SUFFIX = Component.translatable(CuboidMod.MOD_ID + ".hover_text.more_info_suffix");
+
+            final Component ITEM_ACTIVATE = Component.empty().withStyle(primaryColor)
+                .append(Component.literal(" ["))
+                .append(Component.literal(keyName).withStyle(ChatFormatting.BOLD))
+                .append(Component.literal("] "));
+
+            tooltip.add(
+                Component.empty().withStyle(ChatFormatting.GRAY).append(ITEM_INFO_PREFIX).append(ITEM_ACTIVATE).append(ITEM_INFO_SUFFIX)
+            );
+        } else {
+
+            if (singularity.getRecipe() != null) {
+                CollapsingRecipeData recipeData = singularity.getRecipe();
+                final Component RECIPE_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.recipe");
+                
+                final String inputItemOrTag = recipeData.recipeInputTag.toString();
+                final String inputCount = String.valueOf(recipeData.recipeCount);
+
+                String itemKey;
+                
+                if (recipeData.usesTag) {
+                    final TagKey<Item> itemTags = TagKey.create(Registries.ITEM, recipeData.recipeInputTag);
+                    final ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(itemTags);
+                    final List<Item> validItems = ForgeRegistries.ITEMS.getEntries().stream()
+                        .map(e -> e.getValue()).filter(i -> itemTag.contains(i)).toList();
+                    final Item item = validItems.get((int) time % validItems.size());
+                    itemKey = item.getDescriptionId();
+                } else {
+                    final Item item = ForgeRegistries.ITEMS.getValue(recipeData.recipeInput);
+                    itemKey = item.getDescriptionId();
+                }
+
+                final String inputValue = I18n.get(itemKey);
+
+                final Component ITEM_INPUT = Component.empty().withStyle(secondaryColor)
+                    .append(" (x" + inputCount + ") ").append(Component.literal(inputValue).withStyle(primaryColor));
+
+                tooltip.add(
+                    Component.empty().withStyle(ChatFormatting.GRAY).append(RECIPE_INFO).append(ITEM_INPUT)
+                );
             }
 
-            ResourceLocation quantumItem = getQuantumIdentifier(stack);
-            tooltip.add(Component.literal("Quantum Singularity ID: " + quantumItem.toString()));
+            if (singularity.getProduction() != null) {
+                ResourceGeneratingRecipeData recipeData = singularity.getProduction();
+                final Component PRODUCTION_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.production");
+                
+                final String productAmount = String.valueOf(recipeData.outputMult);
+                final String itemKey = ForgeRegistries.ITEMS.getValue(recipeData.output).getDescriptionId();
+                final String productItem = I18n.get(itemKey);
+
+                final Component ITEM_OUTPUT = Component.empty().withStyle(secondaryColor)
+                    .append(" (x" + productAmount + ") ").append(Component.literal(productItem).withStyle(primaryColor));
+
+                tooltip.add(
+                    Component.empty().withStyle(ChatFormatting.GRAY).append(PRODUCTION_INFO).append(ITEM_OUTPUT)
+                );
+            }
+
+            if (singularity.getPowerOutput() != null) {
+                PowerGeneratingRecipeData recipeData = singularity.getPowerOutput();
+                final Component POWER_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.power");
+                final Component POWER_PER_TICK = Component.literal(" ").withStyle(primaryColor)
+                    .append(String.valueOf(recipeData.powerOutput))
+                    .append(Component.literal("/").withStyle(secondaryColor))
+                    .append("⚡");
+                
+
+                tooltip.add(
+                    Component.empty().withStyle(ChatFormatting.GRAY).append(POWER_INFO).append(POWER_PER_TICK)
+                );
+            }
+
+
+            if (flag.isAdvanced()) {
+                if (forcedSingularity != null) {
+                    tooltip.add(Component.literal("(Outdated Singularity)").withStyle(ChatFormatting.RED));
+                }
+            }
         }
+
+        // if (flag.isAdvanced()) {
+        //     if (forcedSingularity != null) {
+        //         tooltip.add(Component.literal("(Outdated Singularity)").withStyle(ChatFormatting.RED));
+        //     }
+
+        //     ResourceLocation quantumItem = getQuantumIdentifier(stack);
+        //     tooltip.add(Component.literal("Quantum Singularity ID: " + quantumItem.toString()));
+        // }
     }
 
     @Override

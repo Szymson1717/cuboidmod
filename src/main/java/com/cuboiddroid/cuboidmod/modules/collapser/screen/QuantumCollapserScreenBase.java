@@ -163,11 +163,11 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
         if (amountConsumed > 0) {
             // show picture of current item being consumed
             ItemStack collapsingItem = this.tile.getCollapsingItemStackForDisplay();
-            this.renderFloatingItem(matrix, collapsingItem, this.leftPos + 12, this.topPos + 43, "");
+            this.renderFloatingItem(matrix, collapsingItem, this.leftPos + 12, this.topPos + 43, "", mouseX, mouseY);
 
             // show picture of current target item
             ItemStack singularityOutputItem = this.tile.getSingularityOutputForDisplay();
-            this.renderFloatingItem(matrix, singularityOutputItem, this.leftPos + 145, this.topPos + 43, "");
+            this.renderFloatingItem(matrix, singularityOutputItem, this.leftPos + 145, this.topPos + 43, "", mouseX, mouseY);
         }
     }
 
@@ -249,11 +249,13 @@ public class QuantumCollapserScreenBase<T extends QuantumCollapserContainerBase>
 
     */
 
-    private void renderFloatingItem(GuiGraphics matrix, ItemStack itemStack, int posX, int posY, String text) {
+    private void renderFloatingItem(GuiGraphics matrix, ItemStack itemStack, int posX, int posY, String text, int mouseX, int mouseY) {
         matrix.pose().pushPose();
         matrix.pose().translate(0.0F, 0.0F, 232.0F);
         matrix.renderItem(itemStack, posX, posY);
         matrix.renderItemDecorations(this.font, itemStack, posX, posY, text);
+        if ((Math.abs(mouseX - (posX + 8)) < 8) && (Math.abs(mouseY - (posY + 8)) < 8))
+            matrix.renderTooltip(this.font, itemStack, mouseX, mouseY);
         matrix.pose().popPose();
     }
 }
