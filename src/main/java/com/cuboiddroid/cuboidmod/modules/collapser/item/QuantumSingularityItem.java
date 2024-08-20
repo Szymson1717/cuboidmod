@@ -8,6 +8,7 @@ import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularityRe
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.CollapsingRecipeData;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.PowerGeneratingRecipeData;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.ResourceGeneratingRecipeData;
+import com.cuboiddroid.cuboidmod.setup.ModGeneratorTiers;
 import com.cuboiddroid.cuboidmod.util.IColored;
 import com.mojang.blaze3d.platform.InputConstants;
 
@@ -17,11 +18,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;    
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -94,12 +93,11 @@ public class QuantumSingularityItem extends Item implements IColored {
                 Component.empty().withStyle(ChatFormatting.GRAY).append(ITEM_INFO_PREFIX).append(ITEM_ACTIVATE).append(ITEM_INFO_SUFFIX)
             );
         } else {
+            final Component KEY_MATCH = Component.literal(" * ").withStyle(ChatFormatting.RED);
 
             if (singularity.getRecipe() != null) {
                 CollapsingRecipeData recipeData = singularity.getRecipe();
                 final Component RECIPE_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.recipe");
-                
-                final String inputItemOrTag = recipeData.recipeInputTag.toString();
                 final String inputCount = String.valueOf(recipeData.recipeCount);
 
                 String itemKey;
@@ -121,9 +119,8 @@ public class QuantumSingularityItem extends Item implements IColored {
                 final Component ITEM_INPUT = Component.empty().withStyle(secondaryColor)
                     .append(" (x" + inputCount + ") ").append(Component.literal(inputValue).withStyle(primaryColor));
 
-                tooltip.add(
-                    Component.empty().withStyle(ChatFormatting.GRAY).append(RECIPE_INFO).append(ITEM_INPUT)
-                );
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(RECIPE_INFO));
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_INPUT));
             }
 
             if (singularity.getProduction() != null) {
@@ -137,9 +134,8 @@ public class QuantumSingularityItem extends Item implements IColored {
                 final Component ITEM_OUTPUT = Component.empty().withStyle(secondaryColor)
                     .append(" (x" + productAmount + ") ").append(Component.literal(productItem).withStyle(primaryColor));
 
-                tooltip.add(
-                    Component.empty().withStyle(ChatFormatting.GRAY).append(PRODUCTION_INFO).append(ITEM_OUTPUT)
-                );
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(PRODUCTION_INFO).append(KEY_MATCH));
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_OUTPUT));
             }
 
             if (singularity.getPowerOutput() != null) {
@@ -151,10 +147,18 @@ public class QuantumSingularityItem extends Item implements IColored {
                     .append("⚡");
                 
 
-                tooltip.add(
-                    Component.empty().withStyle(ChatFormatting.GRAY).append(POWER_INFO).append(POWER_PER_TICK)
-                );
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(POWER_INFO).append(KEY_MATCH));
+                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(POWER_PER_TICK));
             }
+
+            ModGeneratorTiers productionTier = ModGeneratorTiers.NOTSOGUDIUM;
+
+            final Component TIER_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.production_info").withStyle(ChatFormatting.ITALIC);
+            final Component GENERATOR_TIER = Component.translatable(CuboidMod.MOD_ID + ".hover_text." + productionTier.name().toLowerCase() + "_tier");
+
+            tooltip.add(Component.empty());
+            tooltip.add(Component.empty().withStyle(ChatFormatting.RED).append(KEY_MATCH).append(TIER_INFO).append(" "));
+            tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append("   - ").append(GENERATOR_TIER));
 
 
             if (flag.isAdvanced()) {

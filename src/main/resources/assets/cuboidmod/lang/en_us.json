@@ -221,6 +221,13 @@
   "cuboidmod.hover_text.recipe": "Crafting Requirements:",
   "cuboidmod.hover_text.production": "Production Output:",
   "cuboidmod.hover_text.power": "Power Output:",
+  "cuboidmod.hover_text.production_info": "When using the following Generators:",
+
+  "cuboidmod.hover_text.notsogudium_tier": "Notsogudium",
+  "cuboidmod.hover_text.kudbebedda_tier": "Kudbebedda",
+  "cuboidmod.hover_text.notarfbadium_tier": "Notarfbadium",
+  "cuboidmod.hover_text.wikidium_tier": "Wikidium",
+  "cuboidmod.hover_text.thatldu_tier": "Thatldu",
 
   "cuboidmod.hover_text.singularity_power_generator": "Produces power passively based on the tier of the generator and the singularity used.",
   "block.cuboidmod.notsogudium_singularity_power_generator": "Notsogudium Singularity Power Generator",
