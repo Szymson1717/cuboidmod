@@ -27,6 +27,8 @@ import com.cuboiddroid.cuboidmod.modules.transmuter.recipe.TransmutingRecipe;
 import com.cuboiddroid.cuboidmod.modules.transmuter.screen.QuantumTransmutationChamberScreen;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModContainers;
+import com.cuboiddroid.cuboidmod.setup.ModItems;
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -40,6 +42,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @JeiPlugin
 public class CuboidModJeiPlugin implements IModPlugin {
@@ -58,8 +61,30 @@ public class CuboidModJeiPlugin implements IModPlugin {
     }
 
     private static <C extends Container, T extends Recipe<C>> List<T> getRecipesOfType(net.minecraft.world.item.crafting.RecipeType<T> recipeType) {
-        assert Minecraft.getInstance().level != null;
-        return Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(recipeType);
+        Minecraft minecraft = Minecraft.getInstance();
+        assert minecraft.level != null;
+
+        List<T> givenRecipes = minecraft.level.getRecipeManager().getAllRecipesFor(recipeType);
+        List<T> recipes = new ArrayList<>(givenRecipes);
+
+        if (recipeType.equals(PowerGeneratingRecipe.Type.INSTANCE)) {
+            List.of(PowerGeneratingRecipe.Serializer.getRecipes())
+                    .stream().forEach(r -> recipes.add((T) r));
+        } else if (recipeType.equals(ResourceGeneratingRecipe.Type.INSTANCE)) {
+            List.of(ResourceGeneratingRecipe.Serializer.getRecipes())
+                    .stream().forEach(r -> recipes.add((T) r));
+        } else if (recipeType.equals(QuantumCollapsingRecipe.Type.INSTANCE)) {
+            List.of(QuantumCollapsingRecipe.Serializer.getRecipes())
+                    .stream().forEach(r -> recipes.add((T) r));
+        }
+
+        // recipes.addAll(List.of(extras));
+        return recipes;
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.useNbtForSubtypes(ModItems.QUANTUM_SINGULARITY.get());
     }
 
     @Override

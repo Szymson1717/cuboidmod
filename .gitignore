@@ -28,3 +28,6 @@ run-data
 # Files from Forge MDK
 forge*changelog.txt
 /mdk/forge-1.16.5-36.1.0-mdk.zip
+
+#MacOS
+.DS_Store
