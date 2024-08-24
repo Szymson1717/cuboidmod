@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.cuboiddroid.cuboidmod.modules.collapser.item.QuantumSingularityItem;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
-import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.ResourceGeneratingRecipeData;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
@@ -228,6 +227,7 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
 
         public void generateFromSingularities(Collection<QuantumSingularity> values) {
             List<ResourceGeneratingRecipe> tempRecipes = values.stream()
+                    .filter(singularity -> !singularity.isDisabled())
                     .filter(singularity -> singularity.getProduction() != null)
                     .map(singularity -> generateFromSingularity(singularity))
                     .filter(singularity -> singularity != null).toList();

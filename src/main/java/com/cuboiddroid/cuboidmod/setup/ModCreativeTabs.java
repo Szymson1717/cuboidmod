@@ -33,7 +33,7 @@ public class ModCreativeTabs {
                 QuantumSingularityRegistry.getInstance().getSingularities().forEach(singularity -> {
                     ItemStack tempSingularity = new ItemStack(ModItems.QUANTUM_SINGULARITY.get());
                     tempSingularity.getOrCreateTag().putString(QuantumSingularityItem.QUANTUM_ID, singularity.getId().toString());
-                    output.accept(tempSingularity);
+                    if (!singularity.isDisabled()) output.accept(tempSingularity);
                 });
             }).title(Component.translatable("itemGroup." + CuboidMod.MOD_ID + ".singularities"))
             .build());

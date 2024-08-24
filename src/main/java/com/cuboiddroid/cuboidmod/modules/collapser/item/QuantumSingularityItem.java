@@ -5,9 +5,9 @@ import java.util.List;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularityRegistry;
-import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.CollapsingRecipeData;
-import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.PowerGeneratingRecipeData;
-import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.ResourceGeneratingRecipeData;
+import com.cuboiddroid.cuboidmod.modules.collapser.recipe.CollapsingRecipeData;
+import com.cuboiddroid.cuboidmod.modules.powergen.recipe.PowerGeneratingRecipeData;
+import com.cuboiddroid.cuboidmod.modules.resourcegen.recipe.ResourceGeneratingRecipeData;
 import com.cuboiddroid.cuboidmod.setup.ModGeneratorTiers;
 import com.cuboiddroid.cuboidmod.util.IColored;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -75,6 +75,10 @@ public class QuantumSingularityItem extends Item implements IColored {
         Style secondaryColor = Style.EMPTY.withColor(singularity.getUnderlayColor());
 
         long time = System.currentTimeMillis() / 1000;
+
+        if (singularity.isDisabled())
+            tooltip.add(Component.literal("(Disabled Singularity)").withStyle(ChatFormatting.RED));
+
 
         if (!showingExtras()) {
             Minecraft minecraft = Minecraft.getInstance();

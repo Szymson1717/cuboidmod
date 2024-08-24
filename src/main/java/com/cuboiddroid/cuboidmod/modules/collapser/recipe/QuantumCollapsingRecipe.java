@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.collapser.item.QuantumSingularityItem;
 import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
-import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity.CollapsingRecipeData;
 import com.cuboiddroid.cuboidmod.modules.collapser.tile.QuantumCollapserTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
 import com.cuboiddroid.cuboidmod.setup.ModItems;
@@ -207,7 +206,7 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
                     input = Ingredient.of(inputItem);
                 }
             } catch (Exception exception) {
-                CuboidMod.LOGGER.warn("Could not load recipe for: '" + singularity.getName() + "'");
+                CuboidMod.LOGGER.warn("Could not load recipe for: '" + singularity.getId().toString() + "'");
                 exception.printStackTrace();
             }
 
@@ -225,6 +224,7 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
 
         public void generateFromSingularities(Collection<QuantumSingularity> values) {
             List<QuantumCollapsingRecipe> tempRecipes = values.stream()
+                .filter(singularity -> !singularity.isDisabled())
                 .filter(singularity -> singularity.getRecipe() != null)
                 .map(singularity -> generateFromSingularity(singularity))
                 .filter(singularity -> singularity != null).toList();

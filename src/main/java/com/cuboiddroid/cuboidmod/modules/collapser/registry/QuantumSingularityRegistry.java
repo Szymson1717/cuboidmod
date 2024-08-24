@@ -21,6 +21,7 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +73,7 @@ public final class QuantumSingularityRegistry {
 
     private static final boolean VERBOSE_LOGGING = Config.verboseLogging.get();
 
-    private static final QuantumSingularity MISSING_SINGULARITY = new QuantumSingularity(null,
-            CuboidMod.MOD_ID + ".quantum_singularity.missing", new int[] { 0xFF0000, 0xDD0000 });
+    private static final QuantumSingularity MISSING_SINGULARITY = new QuantumSingularity(null, new int[] { 0xFF0000, 0xDD0000 });
 
     private static final QuantumSingularityRegistry INSTANCE = new QuantumSingularityRegistry();
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -81,13 +81,17 @@ public final class QuantumSingularityRegistry {
     private final Map<ResourceLocation, QuantumSingularity> singularities = new LinkedHashMap<>();
 
     public void registerSingularity(TempQuantumSingularity tempSingularity) {
-        if (this.singularities.containsKey(tempSingularity.id)) {
-            QuantumSingularity singularity = this.singularities.get(tempSingularity.id);
-            singularity.name = tempSingularity.name;
-            singularity.colors = singularity.colors;
-        }
-
         this.singularities.putIfAbsent(tempSingularity.id, new QuantumSingularity(tempSingularity));
+
+        if (this.singularities.containsKey(tempSingularity.id)) {
+            QuantumSingularity singularity = this.singularities.get(tempSingularity.id)
+                .setDisabled(tempSingularity.isDisabled());
+
+            if (tempSingularity.getColors() != null) singularity.setColors(tempSingularity.getColors());
+            if (tempSingularity.getRecipe() != null) singularity.setRecipe(tempSingularity.getRecipe());
+            if (tempSingularity.getProduction() != null) singularity.setProduction(tempSingularity.getProduction());
+            if (tempSingularity.getPowerOutput() != null) singularity.setPowerOutput(tempSingularity.getPowerOutput());
+        }
     }
 
     public List<QuantumSingularity> getSingularities() {
@@ -114,25 +118,32 @@ public final class QuantumSingularityRegistry {
 
         if (!dir.exists() && dir.mkdirs()) {
             if (VERBOSE_LOGGING) CuboidMod.LOGGER.info("Creating default singularity configs");
-            // for (QuantumSingularity singularity : defaults()) {
-            //     JsonObject json = QuantumSingularityUtils.writeToJson(singularity);
-            //     FileWriter writer = null;
 
-            //     try {
-            //         File file = new File(dir, singularity.getId().getPath() + ".json");
-            //         writer = new FileWriter(file);
-            //         GSON.toJson(json, writer);
-            //         writer.close();
-            //     } catch (Exception e) {
-            //         CuboidMod.LOGGER.error("An error occurred while generating default singularities", e);
-            //     } finally {
-            //         IOUtils.closeQuietly(writer);
-            //     }
-            // }
+            TempQuantumSingularity example = new TempQuantumSingularity(
+                new ResourceLocation(CuboidMod.MOD_ID, "example"),
+                new int[] { 0xFF00FF, 0x000000 }
+            ).setRecipe("minecraft:bedrock", 1)
+                .setProduction("minecraft:bedrock", 1, 1)
+                .setPowerOutput(1)
+                .setDisabled(true);
+
+            JsonObject json = QuantumSingularityUtils.writeToJson(example);
+            FileWriter writer = null;
+
+            try {
+                File file = new File(dir, example.getId().getPath() + ".json");
+                writer = new FileWriter(file);
+                GSON.toJson(json, writer);
+                writer.close();
+            } catch (Exception e) {
+                CuboidMod.LOGGER.error("An error occurred while generating default singularities", e);
+            } finally {
+                IOUtils.closeQuietly(writer);
+            }
         }
 
         for (QuantumSingularity singularity : defaults()) {
-            this.singularities.putIfAbsent(singularity.getId(), singularity);
+            this.singularities.put(singularity.getId(), singularity);
         }
 
         if (!dir.mkdirs() && dir.isDirectory()) {
@@ -392,10 +403,6 @@ public final class QuantumSingularityRegistry {
     }
 
     private static QuantumSingularity defaultSingularity(String identifier, int[] colors) {
-        return new QuantumSingularity(
-            new ResourceLocation(CuboidMod.MOD_ID, identifier),
-            CuboidMod.MOD_ID + ".quantum_singularity." + identifier,
-            colors
-        );
+        return new QuantumSingularity(new ResourceLocation(CuboidMod.MOD_ID, identifier), colors);
     }
 }
