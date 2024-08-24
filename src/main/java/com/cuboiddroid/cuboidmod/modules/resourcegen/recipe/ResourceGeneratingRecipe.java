@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -220,13 +221,16 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
             recipe.workTimeMultiplier = generatingRecipeData.workTimeMult;
             recipe.outputMultiplier = generatingRecipeData.outputMult;
 
+            if (resultItem.equals(Items.AIR)) return null;
+
             return recipe;
         }
 
         public void generateFromSingularities(Collection<QuantumSingularity> values) {
             List<ResourceGeneratingRecipe> tempRecipes = values.stream()
                     .filter(singularity -> singularity.getProduction() != null)
-                    .map(singularity -> generateFromSingularity(singularity)).toList();
+                    .map(singularity -> generateFromSingularity(singularity))
+                    .filter(singularity -> singularity != null).toList();
             recipes.addAll(tempRecipes);
         }
 

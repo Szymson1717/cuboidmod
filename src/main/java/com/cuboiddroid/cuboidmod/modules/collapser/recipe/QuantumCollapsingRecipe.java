@@ -211,6 +211,8 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
                 exception.printStackTrace();
             }
 
+            if (input.equals(Ingredient.EMPTY)) return null;
+
             ResourceLocation singularityIdentifier = singularity.getId();
             ResourceLocation recipeIdentifier = ResourceLocation.tryParse(singularityIdentifier.toString());
             recipeIdentifier.withSuffix(".collapsing");
@@ -224,7 +226,8 @@ public class QuantumCollapsingRecipe implements Recipe<SimpleContainer> {
         public void generateFromSingularities(Collection<QuantumSingularity> values) {
             List<QuantumCollapsingRecipe> tempRecipes = values.stream()
                 .filter(singularity -> singularity.getRecipe() != null)
-                .map(singularity -> generateFromSingularity(singularity)).toList();
+                .map(singularity -> generateFromSingularity(singularity))
+                .filter(singularity -> singularity != null).toList();
             recipes.addAll(tempRecipes);
         }
 

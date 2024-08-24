@@ -95,54 +95,67 @@ public class QuantumSingularityItem extends Item implements IColored {
         } else {
             final Component KEY_MATCH = Component.literal(" * ").withStyle(ChatFormatting.RED);
 
+            ModGeneratorTiers[] tiers = ModGeneratorTiers.values();
+            ModGeneratorTiers productionTier = tiers[(int) (time / 2) % tiers.length];
+
             if (singularity.getRecipe() != null) {
                 CollapsingRecipeData recipeData = singularity.getRecipe();
                 final Component RECIPE_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.recipe");
                 final String inputCount = String.valueOf(recipeData.recipeCount);
 
-                String itemKey;
+                String itemKey = null;
                 
                 if (recipeData.usesTag) {
                     final TagKey<Item> itemTags = TagKey.create(Registries.ITEM, recipeData.recipeInputTag);
                     final ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(itemTags);
                     final List<Item> validItems = ForgeRegistries.ITEMS.getEntries().stream()
                         .map(e -> e.getValue()).filter(i -> itemTag.contains(i)).toList();
-                    final Item item = validItems.get((int) time % validItems.size());
-                    itemKey = item.getDescriptionId();
+
+                    if (validItems.size() > 0) {
+                        final Item item = validItems.get((int) time % validItems.size());
+                        if (!item.equals(Items.AIR)) itemKey = item.getDescriptionId();
+                    }
                 } else {
                     final Item item = ForgeRegistries.ITEMS.getValue(recipeData.recipeInput);
-                    itemKey = item.getDescriptionId();
+                    if (!item.equals(Items.AIR)) itemKey = item.getDescriptionId();
                 }
 
-                final String inputValue = I18n.get(itemKey);
-
-                final Component ITEM_INPUT = Component.empty().withStyle(secondaryColor)
-                    .append(" (x" + inputCount + ") ").append(Component.literal(inputValue).withStyle(primaryColor));
-
-                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(RECIPE_INFO));
-                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_INPUT));
+                if (itemKey != null) {
+                    final String inputValue = I18n.get(itemKey);
+    
+                    final Component ITEM_INPUT = Component.empty().withStyle(secondaryColor)
+                        .append(" (x" + inputCount + ") ").append(Component.literal(inputValue).withStyle(primaryColor));
+    
+                    tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(RECIPE_INFO));
+                    tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_INPUT));
+                }
             }
 
             if (singularity.getProduction() != null) {
                 ResourceGeneratingRecipeData recipeData = singularity.getProduction();
                 final Component PRODUCTION_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.production");
                 
-                final String productAmount = String.valueOf(recipeData.outputMult);
-                final String itemKey = ForgeRegistries.ITEMS.getValue(recipeData.output).getDescriptionId();
-                final String productItem = I18n.get(itemKey);
+                final Item product = ForgeRegistries.ITEMS.getValue(recipeData.output);
+                final String productAmount = String.valueOf(recipeData.outputMult * productionTier.getItemsPerOperation());
+                final String itemKey = product.getDescriptionId();
+                final String outputValue = I18n.get(itemKey);
 
-                final Component ITEM_OUTPUT = Component.empty().withStyle(secondaryColor)
-                    .append(" (x" + productAmount + ") ").append(Component.literal(productItem).withStyle(primaryColor));
-
-                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(PRODUCTION_INFO).append(KEY_MATCH));
-                tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_OUTPUT));
+                if (!product.equals(Items.AIR)) {
+                    final Component ITEM_OUTPUT = Component.empty().withStyle(secondaryColor)
+                        .append(" (x" + productAmount + ") ").append(Component.literal(outputValue).withStyle(primaryColor));
+    
+                    tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(PRODUCTION_INFO).append(KEY_MATCH));
+                    tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(ITEM_OUTPUT));
+                }
             }
 
             if (singularity.getPowerOutput() != null) {
                 PowerGeneratingRecipeData recipeData = singularity.getPowerOutput();
+                int powerOutput = (int) (recipeData.powerOutput * productionTier.getMaxEnergyOutputPerTick());
+
                 final Component POWER_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.power");
                 final Component POWER_PER_TICK = Component.literal(" ").withStyle(primaryColor)
-                    .append(String.valueOf(recipeData.powerOutput))
+                    .append(String.valueOf(powerOutput))
                     .append(Component.literal("/").withStyle(secondaryColor))
                     .append("⚡");
                 
@@ -150,8 +163,6 @@ public class QuantumSingularityItem extends Item implements IColored {
                 tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(POWER_INFO).append(KEY_MATCH));
                 tooltip.add(Component.empty().withStyle(ChatFormatting.GRAY).append(" -").append(POWER_PER_TICK));
             }
-
-            ModGeneratorTiers productionTier = ModGeneratorTiers.NOTSOGUDIUM;
 
             final Component TIER_INFO = Component.translatable(CuboidMod.MOD_ID + ".hover_text.production_info").withStyle(ChatFormatting.ITALIC);
             final Component GENERATOR_TIER = Component.translatable(CuboidMod.MOD_ID + ".hover_text." + productionTier.name().toLowerCase() + "_tier");
