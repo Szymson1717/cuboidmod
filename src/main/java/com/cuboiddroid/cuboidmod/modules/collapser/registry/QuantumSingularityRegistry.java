@@ -189,7 +189,7 @@ public final class QuantumSingularityRegistry {
 
     private static List<QuantumSingularity> defaults() {
         return Lists.newArrayList(
-            defaultSingularity("acacia_log", new int[] { 0xC26D3F, 0x99502B })
+            defaultSingularity("acacia_log", new int[] { 0x9e552f, 0x5a554c })
                 .setRecipe("minecraft:acacia_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:acacia_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
@@ -197,19 +197,19 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/aluminum", INGOT_RECIPE_AMOUNT)
                 .setProduction("exnihilosequentia:raw_aluminum", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("andesite", new int[]{0xA8AA9A, 0x7F7F7F})
+            defaultSingularity("andesite", new int[]{ 0x88888c, 0x4a4a4a })
                 .setRecipe("minecraft:andesite", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:andesite", STONE_WORK_TIME, STONE_POWER_OUTPUT),
 
-            defaultSingularity("basalt", new int[]{0x5C5C5C, 0x353641})
+            defaultSingularity("basalt", new int[]{ 0x737373, 0x333033 })
                 .setRecipe("minecraft:basalt", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:basalt", STONE_WORK_TIME, STONE_POWER_OUTPUT),
 
-            defaultSingularity("birch_log", new int[] { 0xD7CB8D, 0xA59467 })
+            defaultSingularity("birch_log", new int[] { 0xc6b579, 0xa3a3a3 })
                 .setRecipe("minecraft:birch_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:birch_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("blackstone", new int[]{0x3C3947, 0x160F10})
+            defaultSingularity("blackstone", new int[]{0x4d4a53, 0x3b3846})
                 .setRecipe("minecraft:blackstone", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:blackstone", STONE_WORK_TIME, STONE_POWER_OUTPUT),
 
@@ -225,35 +225,35 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("cuboidmod:cellulose", NATUAL_MATERIAL_RECIPE_AMOUNT)
                 .setProduction("cuboidmod:cellulose", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("clay", new int[] { 0xAFB9D6, 0x9499A4 })
+            defaultSingularity("clay", new int[] { 0xAFB9D6, 0x636973 })
                 .setRecipe("minecraft:clay", NATUAL_MATERIAL_RECIPE_AMOUNT)
                 .setProduction("minecraft:clay_ball", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("coal", new int[] { 0x292828, 0x050505 })
+            defaultSingularity("coal", new int[] { 0x323232, 0x292828 })
                 .setRecipe("minecraft:coal_block", FUEL_MATERIAL_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:coal", FUEL_WORK_TIME, STONE_POWER_OUTPUT),
 
-            defaultSingularity("cobblestone", new int[] { 0xB5B5B5, 0x525252 })
+            defaultSingularity("cobblestone", new int[] { 0xb3b3b3, 0x747474 })
                 .setRecipe("minecraft:cobblestone", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:cobblestone", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("copper", new int[] { 0xF4AD5B, 0xB44816 })
+            defaultSingularity("copper", new int[] { 0xd37a5a, 0x639e76 })
                 .setRecipe("minecraft:copper_ingot", INGOT_RECIPE_AMOUNT)
                 .setProduction("minecraft:raw_copper", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("dark_oak_log", new int[] { 0x53381A, 0x301E0E })
+            defaultSingularity("dark_oak_log", new int[] { 0x482e17, 0x2f2413 })
                 .setRecipe("minecraft:dark_oak_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:dark_oak_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("diamond", new int[] { 0xb9f4fa, 0x39a7bd })
+            defaultSingularity("diamond", new int[] { 0x49ead6, 0x48a19a })
                 .setRecipe("minecraft:diamond", GEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:diamond", GEM_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("diorite", new int[]{0xE9E9E9, 0x8B8B8B})
+            defaultSingularity("diorite", new int[]{0xcbcbcc, 0x959595})
                 .setRecipe("minecraft:diorite", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:diorite", STONE_WORK_TIME, STONE_POWER_OUTPUT),
 
-            defaultSingularity("dirt", new int[] { 0xB9855C, 0x593D29 })
+            defaultSingularity("dirt", new int[] { 0x785439, 0x77553b })
                 .setRecipe("minecraft:dirt", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:dirt", EARTH_WORK_TIME, STONE_POWER_OUTPUT),
 
@@ -265,27 +265,27 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/electrum", INGOT_RECIPE_AMOUNT)
                 .setProduction("immersiveengineering:dust_electrum", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("emerald", new int[] { 0x4bf253, 0x04c70d })
+            defaultSingularity("emerald", new int[] { 0x17da61, 0x0f8e3f })
                 .setRecipe("minecraft:emerald", GEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:emerald", GEM_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("endstone", new int[] { 0xCDC68B, 0xEEF6B4 })
+            defaultSingularity("endstone", new int[] { 0xebf3b2, 0x898c5f })
                 .setRecipe("minecraft:end_stone", INGOT_RECIPE_AMOUNT)
                 .setProduction("minecraft:end_stone", END_MATERIAL_WORK_TIME, OTHERWORLDLY_POWER_OUTPUT),
 
-            defaultSingularity("glowstone", new int[] { 0xFBDA74, 0xCC8654 })
+            defaultSingularity("glowstone", new int[] { 0xfcba5d, 0xca8453 })
                 .setRecipe("minecraft:glowstone_dust", MISC_MATERIAL_RECIPE_AMOUNT).setPowerOutput(GLOWING_FUEL)
                 .setProduction("minecraft:glowstone_dust", DUST_WORK_TIME, DUST_POWER_OUTPUT),
 
-            defaultSingularity("gold", new int[] { 0xFEFFBD, 0xF9BD23 })
+            defaultSingularity("gold", new int[] { 0xfbdd47, 0xa38a28 })
                 .setRecipe("minecraft:gold_ingot", INGOT_RECIPE_AMOUNT)
                 .setProduction("minecraft:raw_gold", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("granite", new int[] { 0xC99781, 0x7F5646 })
+            defaultSingularity("granite", new int[] { 0x9d6a57, 0x6c4c40 })
                 .setRecipe("minecraft:granite", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:granite", STONE_WORK_TIME, STONE_POWER_OUTPUT),
 
-            defaultSingularity("gravel", new int[] { 0xa5a5a5, 0x797979 })
+            defaultSingularity("gravel", new int[] { 0x7f7d7d, 0x616161 })
                 .setRecipe("minecraft:gravel", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:gravel", GRAVEL_WORK_TIME, GRAVELY_POWER_OUTPUT),
 
@@ -293,11 +293,11 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/invar", INGOT_RECIPE_AMOUNT)
                 .setProduction("thermal:invar_dust", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("iron", new int[] { 0xECECEC, 0xB1B0B0 })
+            defaultSingularity("iron", new int[] { 0xd9d9d9, 0x939393 })
                 .setRecipe("minecraft:iron_ingot", INGOT_RECIPE_AMOUNT)
                 .setProduction("minecraft:raw_iron", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("jungle_log", new int[] { 0xBF8E6B, 0x976A44 })
+            defaultSingularity("jungle_log", new int[] { 0xa87853, 0x392d11 })
                 .setRecipe("minecraft:jungle_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:jungle_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
@@ -305,7 +305,7 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("cuboidmod:kudbebedda_ingot", THADTASMINE_RECIPE_AMOUNT)
                 .setProduction("cuboidmod:kudbebedda_chunk", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("lapis", new int[] { 0x20509C, 0x1B3588 })
+            defaultSingularity("lapis", new int[] { 0x1e4183, 0x12245c })
                 .setRecipe("minecraft:lapis_lazuli", MISC_MATERIAL_RECIPE_AMOUNT).setPowerOutput(TEMPERATE_FUEL)
                 .setProduction("minecraft:lapis_lazuli", EARTH_WORK_TIME, STONE_POWER_OUTPUT),
 
@@ -313,7 +313,7 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/lead", INGOT_RECIPE_AMOUNT)
                 .setProduction("exnihilosequentia:raw_lead", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("netherrack", new int[] { 0x501B1B, 0x854242 })
+            defaultSingularity("netherrack", new int[] { 0x4f1b1b, 0x552a2a })
                 .setRecipe("minecraft:netherrack", INGOT_RECIPE_AMOUNT)
                 .setProduction("minecraft:netherrack", NETHER_MATERIAL_WORK_TIME, OTHERWORLDLY_POWER_OUTPUT),
 
@@ -329,7 +329,7 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("cuboidmod:notsogudium_ingot", THADTASMINE_RECIPE_AMOUNT)
                 .setProduction("cuboidmod:notsogudium_chunk", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
-            defaultSingularity("oak_log", new int[] { 0xC29D62, 0x967441 })
+            defaultSingularity("oak_log", new int[] { 0xad8d54, 0x614d2f })
                 .setRecipe("minecraft:oak_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:oak_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 
@@ -341,11 +341,11 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/platinum", INGOT_RECIPE_AMOUNT)
                 .setProduction("exnihilosequentia:raw_platinum", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("redstone", new int[] { 0xE62008, 0x730C00 })
+            defaultSingularity("redstone", new int[] { 0xbb2008, 0x931505 })
                 .setRecipe("minecraft:redstone", INGOT_RECIPE_AMOUNT).setPowerOutput(ELECTRIC_FUEL)
                 .setProduction("minecraft:redstone", DUST_WORK_TIME, DUST_POWER_OUTPUT),
 
-            defaultSingularity("sand", new int[] { 0xE3DBB0, 0xD1BA8A })
+            defaultSingularity("sand", new int[] { 0xe0d8ae, 0x897e60 })
                 .setRecipe("minecraft:sand", NATUAL_ITEM_RECIPE_AMOUNT)
                 .setProduction("minecraft:sand", EARTH_WORK_TIME, STONE_POWER_OUTPUT),
 
@@ -357,7 +357,7 @@ public final class QuantumSingularityRegistry {
                 .setRecipe("#forge:ingots/silver", INGOT_RECIPE_AMOUNT)
                 .setProduction("exnihilosequentia:raw_silver", ORE_WORK_TIME, ORE_POWER_OUTPUT),
 
-            defaultSingularity("spruce_log", new int[] { 0x886539, 0x614B2E })
+            defaultSingularity("spruce_log", new int[] { 0x795933, 0x4c3217 })
                 .setRecipe("minecraft:spruce_log", LOG_RECIPE_AMOUNT).setPowerOutput(LOG_FUEL)
                 .setProduction("minecraft:spruce_log", BASE_WORK_TIME, BASE_POWER_OUTPUT),
 

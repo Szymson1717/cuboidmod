@@ -174,7 +174,7 @@ public class QuantumSingularityItem extends Item implements IColored {
 
             if (flag.isAdvanced()) {
                 if (forcedSingularity != null) {
-                    tooltip.add(Component.literal("(Outdated Singularity)").withStyle(ChatFormatting.RED));
+                    tooltip.add(Component.literal("(Outdated Singularity)").withStyle(ChatFormatting.DARK_GRAY));
                 }
             }
         }
