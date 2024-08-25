@@ -68,7 +68,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
         float xOffset = (width / scale - font.width(text)) / 2;
-        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 
@@ -76,7 +76,7 @@ public class PowerGeneratingRecipeCategoryJei implements IRecipeCategory<PowerGe
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
-        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 

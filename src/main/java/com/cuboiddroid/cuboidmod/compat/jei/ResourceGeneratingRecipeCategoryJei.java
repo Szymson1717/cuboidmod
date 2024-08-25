@@ -76,7 +76,7 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
-        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 

@@ -42,8 +42,8 @@ public class CuboidChestScreen extends AbstractContainerScreen<CuboidChestContai
 
     @Override
     protected void renderLabels(GuiGraphics matrix, int mouseX, int mouseY) {
-        matrix.drawString(this.font, this.title, 8, 6, 4210752);
-        matrix.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752);
+        matrix.drawString(this.font, this.title, 8, 6, 4210752, false);
+        matrix.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
     }
 
     @Override
