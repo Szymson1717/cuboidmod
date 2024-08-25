@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -30,11 +29,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public abstract class QuantumCollapserTileEntityBase extends BlockEntity implements BlockEntityTicker  {
@@ -157,9 +158,11 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         int outputSlotIndex = 0;
         while (!hasRoomForOutputs && outputSlotIndex < OUTPUT_SLOTS) {
             ItemStack outputSlot = this.outputItemHandler.getStackInSlot(outputSlotIndex);
+
             hasRoomForOutputs = outputSlot.isEmpty() || (!currentOutput.isEmpty() &&
-                    currentOutput.is(outputSlot.getItem()) &&
-                    currentOutput.getCount() + outputSlot.getCount() <= currentOutput.getMaxStackSize());
+                currentOutput.getCount() + outputSlot.getCount() <= currentOutput.getMaxStackSize() &&
+                ItemStack.isSameItemSameTags(currentOutput, outputSlot)
+            );
 
             outputSlotIndex++;
         }
@@ -241,6 +244,11 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         if (cachedRecipe == null || !cachedRecipe.matches(inv, this.level)) {
             RecipeType<QuantumCollapsingRecipe> recipeType = QuantumCollapsingRecipe.Type.INSTANCE;
             cachedRecipe = this.level.getRecipeManager().getRecipeFor(recipeType, inv, this.level).orElse(null);
+
+            if (cachedRecipe == null) {
+                List<QuantumCollapsingRecipe> tempRecipes = Arrays.asList(QuantumCollapsingRecipe.Serializer.getRecipes());
+                cachedRecipe = tempRecipes.stream().filter(r -> r.matches(inv, this.level)).findFirst().orElse(null);
+            }
         }
 
         return cachedRecipe;
@@ -300,8 +308,7 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
             currentIngredient = Ingredient.EMPTY;
         }
 
-        String currentOutputId = tag.getString("curOutId");
-        currentOutput = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(currentOutputId)));
+        currentOutput = ItemStack.of(tag.getCompound("curOutItem"));
     }
 
     @Override
@@ -315,12 +322,11 @@ public abstract class QuantumCollapserTileEntityBase extends BlockEntity impleme
         tag.putInt("amtConsumed", amountConsumed);
         tag.putInt("amtRequired", amountRequired);
 
-        if (currentIngredient.isEmpty())
-            tag.putString("curOutId", "");
-        else
+        if (!currentIngredient.isEmpty())
             tag.putString("curIng", currentIngredient.toJson().toString());
 
-        tag.putString("curOutId", ForgeRegistries.ITEMS.getKey(currentOutput.getItem()).toString());
+        CompoundTag item = new CompoundTag();
+        tag.put("curOutItem", currentOutput.save(item));
     }
 
     @Override

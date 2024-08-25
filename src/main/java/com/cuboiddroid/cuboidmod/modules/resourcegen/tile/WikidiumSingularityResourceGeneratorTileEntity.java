@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
-import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.WikidiumSingularityResourceGeneratorContainer;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
+import com.cuboiddroid.cuboidmod.setup.ModGeneratorTiers;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,8 +22,8 @@ public class WikidiumSingularityResourceGeneratorTileEntity extends SingularityR
     public WikidiumSingularityResourceGeneratorTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.WIKIDIUM_SINGULARITY_RESOURCE_GENERATOR.get(),
                 pos, state,
-                Config.wikidiumSingularityResourceGeneratorTicksPerOperation.get(),
-                Config.wikidiumSingularityResourceGeneratorItemsPerOperation.get(),
+                ModGeneratorTiers.WIKIDIUM.getTicksPerOperation(),
+                ModGeneratorTiers.WIKIDIUM.getItemsPerOperation(),
                 1024 * 4);
     }
 

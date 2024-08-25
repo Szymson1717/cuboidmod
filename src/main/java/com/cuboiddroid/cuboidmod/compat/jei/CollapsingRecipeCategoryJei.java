@@ -51,7 +51,7 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
         float xOffset = (width / scale - font.width(text)) / 2;
-        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 
@@ -83,8 +83,8 @@ public class CollapsingRecipeCategoryJei implements IRecipeCategory<QuantumColla
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, QuantumCollapsingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 28, 14).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 87, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
+        builder.addSlot(RecipeIngredientRole.INPUT, 29, 15).addItemStacks(Arrays.asList(recipe.getIngredient().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 88, 15).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override

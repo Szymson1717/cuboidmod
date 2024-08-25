@@ -53,7 +53,7 @@ public class RecyclingRecipeCategoryJei implements IRecipeCategory<RecyclingReci
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
         float xOffset = (width / scale - font.width(text)) / 2;
-        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (xOffset + x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 

@@ -1,9 +1,9 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.tile;
 
-import com.cuboiddroid.cuboidmod.Config;
 import com.cuboiddroid.cuboidmod.CuboidMod;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.inventory.NotsogudiumSingularityResourceGeneratorContainer;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
+import com.cuboiddroid.cuboidmod.setup.ModGeneratorTiers;
 import com.cuboiddroid.cuboidmod.setup.ModTileEntities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,8 +21,8 @@ public class NotsogudiumSingularityResourceGeneratorTileEntity extends Singulari
     public NotsogudiumSingularityResourceGeneratorTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.NOTSOGUDIUM_SINGULARITY_RESOURCE_GENERATOR.get(),
                 pos, state,
-                Config.notsogudiumSingularityResourceGeneratorTicksPerOperation.get(),
-                Config.notsogudiumSingularityResourceGeneratorItemsPerOperation.get(),
+                ModGeneratorTiers.NOTSOGUDIUM.getTicksPerOperation(),
+                ModGeneratorTiers.NOTSOGUDIUM.getItemsPerOperation(),
                 1024 * 4);
     }
 

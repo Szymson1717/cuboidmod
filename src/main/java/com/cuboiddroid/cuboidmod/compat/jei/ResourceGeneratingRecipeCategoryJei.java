@@ -76,7 +76,7 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
         PoseStack poseStack = guiGraphics.pose();
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
-        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color);
+        guiGraphics.drawString(font, text, (int) (x / scale), (int) (y / scale), color, false);
         poseStack.popPose();
     }
 
@@ -108,8 +108,8 @@ public class ResourceGeneratingRecipeCategoryJei implements IRecipeCategory<Reso
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ResourceGeneratingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 7, 14).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 14).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
+        builder.addSlot(RecipeIngredientRole.INPUT, 8, 15).addItemStacks(Arrays.asList(recipe.getSingularity().getItems()));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 47, 15).addItemStack(recipe.getResultItem(RegistryAccess.EMPTY).copy());
     }
 
     // @Override

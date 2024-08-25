@@ -1,10 +1,20 @@
 package com.cuboiddroid.cuboidmod.modules.resourcegen.recipe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import com.cuboiddroid.cuboidmod.modules.collapser.item.QuantumSingularityItem;
+import com.cuboiddroid.cuboidmod.modules.collapser.registry.QuantumSingularity;
 import com.cuboiddroid.cuboidmod.modules.resourcegen.tile.SingularityResourceGeneratorTileEntityBase;
 import com.cuboiddroid.cuboidmod.setup.ModBlocks;
+import com.cuboiddroid.cuboidmod.setup.ModItems;
 import com.google.gson.JsonObject;
 import net.minecraft.world.Container;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -96,7 +106,23 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
      */
     @Override
     public boolean matches(Container inv, Level level) {
-        return this.singularity.test(inv.getItem(SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT));
+        ItemStack inputIngredient = inv.getItem(SingularityResourceGeneratorTileEntityBase.SINGULARITY_INPUT);
+        boolean matchesItem = this.singularity.test(inputIngredient);
+        if (!matchesItem) return false;
+        return Arrays.asList(this.singularity.getItems())
+            .stream().anyMatch(ingredient -> {
+                if (inputIngredient.getItem() instanceof QuantumSingularityItem inputIngredientItem) {
+                    if (ingredient.getItem() instanceof QuantumSingularityItem ingredientItem) {
+                        ResourceLocation ingredientIdentifier = ingredientItem.getSingularity(ingredient).getId();
+                        ResourceLocation inputIngredientIdentifier = inputIngredientItem.getSingularity(inputIngredient).getId();
+
+                        return ingredientIdentifier.equals(inputIngredientIdentifier);
+                    }
+                }
+                
+                return false;
+            }
+        );
     }
 
     /**
@@ -173,6 +199,44 @@ public class ResourceGeneratingRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<ResourceGeneratingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
         public static final String ID = Type.ID;
+        private static final List<ResourceGeneratingRecipe> recipes = new ArrayList<>();
+
+        private ResourceGeneratingRecipe generateFromSingularity(QuantumSingularity singularity) {
+            ResourceGeneratingRecipeData generatingRecipeData = singularity.getProduction();
+
+            ResourceLocation singularityIdentifier = singularity.getId();
+            ResourceLocation recipeIdentifier = ResourceLocation.tryParse(singularityIdentifier.toString());
+            recipeIdentifier.withSuffix(".generating");
+
+            ResourceGeneratingRecipe recipe = new ResourceGeneratingRecipe(recipeIdentifier);
+
+            ItemStack singularityItem = new ItemStack(ModItems.QUANTUM_SINGULARITY.get(), 1);
+            singularityItem.getOrCreateTag().putString(QuantumSingularityItem.QUANTUM_ID, singularity.getId().toString());
+
+            recipe.singularity = Ingredient.of(singularityItem);
+
+            Item resultItem = ForgeRegistries.ITEMS.getValue(generatingRecipeData.output);
+            recipe.result = new ItemStack(resultItem, 1);
+            recipe.workTimeMultiplier = generatingRecipeData.workTimeMult;
+            recipe.outputMultiplier = generatingRecipeData.outputMult;
+
+            if (resultItem.equals(Items.AIR)) return null;
+
+            return recipe;
+        }
+
+        public void generateFromSingularities(Collection<QuantumSingularity> values) {
+            List<ResourceGeneratingRecipe> tempRecipes = values.stream()
+                    .filter(singularity -> !singularity.isDisabled())
+                    .filter(singularity -> singularity.getProduction() != null)
+                    .map(singularity -> generateFromSingularity(singularity))
+                    .filter(singularity -> singularity != null).toList();
+            recipes.addAll(tempRecipes);
+        }
+
+        public static ResourceGeneratingRecipe[] getRecipes() {
+            return recipes.toArray(ResourceGeneratingRecipe[]::new);
+        }
 
         /*
           JSON structure:

@@ -1,7 +1,0 @@
-{
-  "type": "cuboidmod:power_generating",
-  "singularity": {
-    "item": "cuboidmod:uranium_quantum_singularity",
-    "multiplier": 2.5
-  }
-}

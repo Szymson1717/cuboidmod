@@ -8,7 +8,8 @@
         "MinecraftServerMixin"
     ],
     "client": [
-        "ClientPackSelectorMixin"
+        "ClientPackSelectorMixin",
+        "ClientItemRendererMixin"
     ],
     "minVersion": "0.8",
     "injectors": {

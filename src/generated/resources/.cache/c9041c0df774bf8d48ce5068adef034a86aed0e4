@@ -1,9 +1,9 @@
-// 1.20.1	2024-05-01T14:56:54.4596703	Tags for minecraft:item mod id cuboidmod
+// 1.20.1	2024-08-18T00:52:02.0640358	Tags for minecraft:item mod id cuboidmod
 e04b044dcd3d34a3e43faa01fa7c2985171b84f7 data/cuboidmod/tags/items/carbon_nanotube.json
 20aa845ad152b7fdd4fce9e77ef8ed30dc857717 data/cuboidmod/tags/items/cellulose.json
 6a85da5ddd96e2528b4380ef100eb09b114a0668 data/cuboidmod/tags/items/chests.json
 15e6fe50db93a51c16d1a790a6d63ebc7fc015ab data/cuboidmod/tags/items/crafting_tables.json
-5b523e5c048c99af959a931e05ce5ae2383b5c74 data/cuboidmod/tags/items/dusts.json
+348d3931907fd084c0f0d978389002d143b7e844 data/cuboidmod/tags/items/dusts.json
 b95ee8dc7c3b4a25565d5a3f5df74600bc1b377c data/cuboidmod/tags/items/food.json
 39b055ac03603a80e4102c29cc0b1057de02b272 data/cuboidmod/tags/items/food/apple_cider_vinegar.json
 429be2163c1c2bd4f3055b0f94622e5677609f8c data/cuboidmod/tags/items/food/arachnugget.json
@@ -32,7 +32,7 @@ f5895632709693e21ebe0dee4d2ecec077b187dc data/cuboidmod/tags/items/pieces/thatld
 1997f2f98c86b018ff8815433dbc9e1687ca242a data/cuboidmod/tags/items/pieces/wikidium.json
 4b3bd8e3f24c38e20a6ee54aca7d077f38f3f9d7 data/cuboidmod/tags/items/protein_fiber.json
 1a3624ec4235e882d5156126b94ab2349ce7c5ef data/cuboidmod/tags/items/protein_paste.json
-af5793cdd5e1897dd5700a75766778b22d0d26ce data/cuboidmod/tags/items/quantum_singularities.json
+01736db47b1e96ec7b0c4fb5b54308807e959397 data/cuboidmod/tags/items/quantum_singularities.json
 ac39a34a399a37c0cebcabc36a574b31648f9212 data/cuboidmod/tags/items/quantum_singularities/aluminium.json
 76e54c88477aaca2d4155d79dc5e46e253f1d3dc data/cuboidmod/tags/items/quantum_singularities/andesite.json
 8f2abdd54f20de04f29af919288e96f462a8db9f data/cuboidmod/tags/items/quantum_singularities/basalt.json
@@ -42,7 +42,6 @@ ac39a34a399a37c0cebcabc36a574b31648f9212 data/cuboidmod/tags/items/quantum_singu
 5daff14b49882801e3b1a4808fb09d588b18591c data/cuboidmod/tags/items/quantum_singularities/cellulose.json
 a62e977ef33cea7293ea45666388871ca33cc836 data/cuboidmod/tags/items/quantum_singularities/clay.json
 d837b1e67ffa8ada5782b3f7f71695b43961c8c5 data/cuboidmod/tags/items/quantum_singularities/coal.json
-827bdd8b87b8a5c78a35156e4cd09b2a45e0f05f data/cuboidmod/tags/items/quantum_singularities/cobalt.json
 62dce329ea187e56decbdc0e9d4eb42cf91b2d6e data/cuboidmod/tags/items/quantum_singularities/cobblestone.json
 0674b9c4d792e3e8564cc98bb78e831444d5f905 data/cuboidmod/tags/items/quantum_singularities/copper.json
 43b24c2d8876080539259b5cb56294889cae6803 data/cuboidmod/tags/items/quantum_singularities/diamond.json
@@ -99,7 +98,6 @@ d565644cd7ac61d34bc246117b8f209c9a696cf2 data/forge/tags/items/crafting_tables/k
 7a7b0b60960e290ddb4764339fdf2ba4ea8d89d0 data/forge/tags/items/crafting_tables/thatldu.json
 7e8df7688014c80d73468b55c18b7f5dc18e9af5 data/forge/tags/items/crafting_tables/wikidium.json
 ff2ca4e1168a34412db36303b4a3fc4c7d2829e9 data/forge/tags/items/dusts.json
-858c018297286bc4c7717f3541eff439c1dec45a data/forge/tags/items/dusts/cobalt.json
 0a20231e0987e66f0ef953ddca570e6d96931bf6 data/forge/tags/items/dusts/kudbebedda.json
 fec77af016111ef7cd37f91ec59ee6651c52a703 data/forge/tags/items/dusts/notarfbadium.json
 168564a6558f1629136ca35d4c8d6c0abbc14338 data/forge/tags/items/dusts/notsogudium.json

@@ -205,11 +205,11 @@ public class DryingRecipe implements Recipe<Container> {
         @Override
         public DryingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             DryingRecipe recipe = new DryingRecipe(recipeId);
-            recipe.workTicks = buffer.readVarInt();
+            recipe.workTicks = buffer.readInt();
             recipe.ingredient = Ingredient.fromNetwork(buffer);
 
             ResourceLocation itemId = buffer.readResourceLocation();
-            int count = buffer.readVarInt();
+            int count = buffer.readInt();
             Item item = ForgeRegistries.ITEMS.getValue(itemId);
             recipe.resultItem = new ItemStack(item, count);
 
@@ -217,10 +217,10 @@ public class DryingRecipe implements Recipe<Container> {
         }
 
         public void toNetwork(FriendlyByteBuf buffer, DryingRecipe recipe) {
-            buffer.writeVarInt(recipe.workTicks);
+            buffer.writeInt(recipe.workTicks);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(recipe.resultItem.getItem())));
-            buffer.writeVarInt(recipe.resultItem.getCount());
+            buffer.writeInt(recipe.resultItem.getCount());
         }
     }
 }
